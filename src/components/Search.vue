@@ -52,8 +52,8 @@ defineEmits([
       </template>
     </div>
     <a
-      v-if="this.notes"
-      @click.prevent="$emit('get-album', '/playlist?list=' + this.notes.items)"
+      v-if="notes"
+      @click.prevent="$emit('get-album', '/playlist?list=' + notes.items)"
       class="more"
       >See All</a
     >
