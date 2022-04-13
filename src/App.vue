@@ -22,17 +22,17 @@ let search = ref('');
 
   <Artist
     @playall="getAlbum"
-    :title="artistTitle"
-    :desc="artistDesc"
-    :subs="artistSubs"
-    :thumbs="artistThumbs"
-    :play="artistPlay" />
+    :title="artist.title"
+    :desc="artist.description"
+    :subs="artist.subscriberCount"
+    :thumbs="artist.thumbnails"
+    :play="artist.playlistId" />
 
-  <header v-if="!artistTitle">
+  <header v-if="!artist.title">
     <div v-if="cover" class="art bg-img" :style="cover"></div>
 
     <div class="wrapper">
-      <NowPlaying :title="title" :artist="artist" />
+      <NowPlaying :title="nowtitle" :artist="nowartist" />
     </div>
   </header>
 
@@ -81,8 +81,8 @@ export default {
     return {
       artUrl: '',
       cover: '',
-      title: '',
-      artist: '',
+      nowtitle: '',
+      nowartist: '',
       state: 'play',
       audioSrc: '',
       duration: 0,
@@ -93,11 +93,13 @@ export default {
       showplaylist: false,
       loop: false,
       hls: null,
-      artistTitle: null,
-      artistDesc: null,
-      artistSubs: 0,
-      artistPlay: null,
-      artistThumbs: [],
+      artist: {
+        playlistId: null,
+        title: null,
+        description: null,
+        subscriberCount: 0,
+        thumbnails: [],
+      },
       items: {},
     };
   },
@@ -166,7 +168,12 @@ export default {
       if (!res.error) {
         return res;
       } else {
-        alert(res.message.replaceAll('Video', 'Audio').replaceAll('video', 'audio').replaceAll('watched', 'heard'));
+        alert(
+          res.message
+            .replaceAll('Video', 'Audio')
+            .replaceAll('video', 'audio')
+            .replaceAll('watched', 'heard'),
+        );
         console.error(res.message);
       }
     },
@@ -257,6 +264,8 @@ export default {
       };
 
       history.pushState({}, '', e);
+
+      this.artist = null;
     },
     async getArtist(e) {
       console.log(e);
@@ -267,13 +276,10 @@ export default {
 
       console.log(json);
 
-      this.artistTitle = json.title;
-      this.artistDesc = json.description;
-      this.artistPlay = json.playlistId;
-      this.artistSubs = json.subscriberCount;
-      this.artistThumbs = json.thumbnails;
       this.items = json.items;
       this.items.notes = json.playlistId;
+      json.items = null;
+      this.artist = json;
 
       history.pushState({}, '', '/channel/' + e);
     },
@@ -294,8 +300,8 @@ export default {
 
       this.art = res.art;
       this.cover = `--art: url(${res.art});`;
-      this.title = res.title;
-      this.artist = res.artist.split(' - ')[0];
+      this.nowtitle = res.title;
+      this.nowartist = res.artist.split(' - ')[0];
       this.duration = res.time;
       this.url = res.url;
 
@@ -318,15 +324,15 @@ export default {
         history.pushState({}, '', this.url);
       }
 
-      document.title = `Playing: ${this.title} by ${this.artist}`;
+      document.title = `Playing: ${this.nowtitle} by ${this.nowartist}`;
 
       this.setMetadata(this.art);
     },
     setMetadata(art) {
       if (navigator.mediaSession) {
         navigator.mediaSession.metadata = new MediaMetadata({
-          title: this.title,
-          artist: this.artist,
+          title: this.nowtitle,
+          artist: this.nowartist,
           artwork: [
             {
               src: art,
@@ -399,6 +405,13 @@ header {
 }
 .bg-img.lazy {
   background-image: var(--art);
+}
+.search-artists {
+  text-align: center;
+}
+.search-artists .bg-img {
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
 }
 img,
 .card,

@@ -70,10 +70,7 @@ defineEmits([
             '--art: url(' + (album.thumbnail || album.thumbnails[0].url) + ');'
           "
           @open-album="
-            $emit(
-              'get-album',
-              album.url || '/playlist?list=' + album.id,
-            )
+            $emit('get-album', album.url || '/playlist?list=' + album.id)
           " />
       </template>
     </div>
@@ -200,6 +197,7 @@ export default {
   display: grid;
   grid-template-columns: 1fr;
 }
+
 .text-full {
   padding: 1rem;
   font-size: 1.5rem;

@@ -113,3 +113,7 @@ body {
 ::-webkit-scrollbar-button:single-button {
   height: 0.75rem;
 }
+
+h2 {
+  text-align: center;
+}

@@ -13,7 +13,7 @@ defineEmits(['playall']);
       <h2>{{ title }}</h2>
       <p @click="$event.target.classList.toggle('more')">{{ desc }}</p>
       <div class="us-playwrap">
-        <PlayBtn @click="$emit('playall', '?list=' + play)" />
+        <PlayBtn @click="$emit('playall', '/playlist?list=' + play)" />
         <span class="us-box subs">{{ subs || 0 }}</span>
       </div>
     </div>
