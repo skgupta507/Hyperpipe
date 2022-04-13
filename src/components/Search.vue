@@ -29,11 +29,11 @@ defineEmits([
           :author="song.uploaderName || ''"
           :title="song.title || song.name"
           :channel="song.uploaderUrl || ''"
-          :play="song.url || song.watchId"
+          :play="song.url || '/watch?v=' + song.videoId"
           @open-song="
             $emit('get-song', {
-              url: song.url || song.watchId,
-              title: song.title,
+              url: song.url || '/watch?v=' + song.id,
+              title: song.title || song.name,
             })
           "
           @get-artist="
@@ -72,7 +72,7 @@ defineEmits([
           @open-album="
             $emit(
               'get-album',
-              album.url || '/playlist?list=' + album.playlistId,
+              album.url || '/playlist?list=' + album.id,
             )
           " />
       </template>
@@ -89,7 +89,7 @@ defineEmits([
           :author="artist.subtitle"
           :name="artist.title"
           :art="'--art: url(' + artist.thumbnails[0].url + ');'"
-          @open-album="$emit('get-artist', artist.artistId)" />
+          @open-album="$emit('get-artist', artist.id)" />
       </template>
     </div>
   </div>

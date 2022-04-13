@@ -160,8 +160,15 @@ export default {
     timeUpdate(t) {
       this.time = Math.floor((t / this.duration) * 100);
     },
-    getJson(url) {
-      return fetch(url).then((res) => res.json());
+    async getJson(url) {
+      const res = await fetch(url).then((res) => res.json());
+
+      if (!res.error) {
+        return res;
+      } else {
+        alert(res.message.replaceAll('Video', 'Audio').replaceAll('video', 'audio').replaceAll('watched', 'heard'));
+        console.error(res.message);
+      }
     },
     setSong(s) {
       this.urls = [s];
@@ -255,7 +262,7 @@ export default {
       console.log(e);
 
       const json = await this.getJson(
-        'https://hypipeapi.onrender.com/browse/' + e,
+        'https://hyperpipeapi.onrender.com/channel/' + e,
       );
 
       console.log(json);
@@ -485,17 +492,12 @@ button {
 }
 
 @media (min-width: 1024px) {
-  #app {
-    display: flex;
-    place-items: center;
-    flex-direction: column;
-  }
-
   main .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
   }
   header {
+    margin: auto;
     display: flex;
     place-items: center;
   }

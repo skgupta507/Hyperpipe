@@ -81,7 +81,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 .placeholder:empty:before {
-  --url: url('./bg_music.svg');
+  --url: url('/bg_music.svg');
   content: '';
   background-image: var(--url);
   background-size: contain;

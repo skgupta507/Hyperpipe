@@ -10,15 +10,17 @@ defineEmits(['get-artist']);
 <template>
   <div class="song card flex pop" @click="openSong($event.target)">
     <slot name="art"></slot>
+
     <span class="flex content">
       <h4>{{ title }}</h4>
       <a
         :href="channel"
         @click.prevent="$emit('get-artist', channel.split('/')[2])"
-        class="ign"
-        ><i class="ign">{{ author }}</i></a
-      >
+        class="ign">
+        <i class="ign">{{ author.replaceAll(' - Topic', '') }}</i>
+      </a>
     </span>
+
     <span class="bi bi-three-dots-vertical popup-wrap ign">
       <div class="popup ign">
         <span
@@ -26,6 +28,7 @@ defineEmits(['get-artist']);
           @click="
             $parent.$emit('add-song', { url: play, title: title })
           "></span>
+
         <span class="bi bi-share ign" @click="Share"></span>
       </div>
     </span>

@@ -38,7 +38,7 @@ defineEmits(['playthis']);
   overflow-y: auto;
 }
 .placeholder:empty:before {
-  --url: url('../assets/bg_playlist.svg');
+  --url: url('/bg_playlist.svg');
 }
 .placeholder:empty:after {
   --text: 'Add Songs to Your Playlist...';
