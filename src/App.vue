@@ -20,13 +20,15 @@ let search = ref('');
     "
     :search="search" />
 
-  <Artist
-    @playall="getAlbum"
-    :title="artist.title"
-    :desc="artist.description"
-    :subs="artist.subscriberCount"
-    :thumbs="artist.thumbnails"
-    :play="artist.playlistId" />
+  <template v-if="artist">
+    <Artist
+      @playall="getAlbum"
+      :title="artist.title"
+      :desc="artist.description"
+      :subs="artist.subscriberCount"
+      :thumbs="artist.thumbnails"
+      :play="artist.playlistId" />
+  </template>
 
   <header v-if="!artist.title">
     <div v-if="cover" class="art bg-img" :style="cover"></div>
@@ -265,7 +267,13 @@ export default {
 
       history.pushState({}, '', e);
 
-      this.artist = null;
+      this.artist = {
+        playlistId: null,
+        title: null,
+        description: null,
+        subscriberCount: 0,
+        thumbnails: [],
+      };
     },
     async getArtist(e) {
       console.log(e);
