@@ -35,9 +35,9 @@ npm run build
 
 ## Instances
 
-| Instance                     | Country | Country (Custom Scraper) | Offical |
-| ---------------------------- | ------- | ------------------------ | ------- |
-| [hyperpipe.surge.sh][hypipe] | 🇺🇸      | 🇩🇪                       | ✅      |
+| Instance                     | Country | Country (Backend) | Offical |
+| ---------------------------- | ------- | ----------------- | ------- |
+| [hyperpipe.surge.sh][hypipe] | 🇺🇸      | 🇩🇪                | ✅      |
 
 ## LICENSE
 

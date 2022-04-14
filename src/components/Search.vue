@@ -1,5 +1,9 @@
 <script setup>
-defineProps(['search', 'songItems', 'items']);
+defineProps([
+  'search',
+  'songItems',
+  'items'
+]);
 defineEmits([
   'get-song',
   'get-album',
@@ -197,7 +201,6 @@ export default {
   display: grid;
   grid-template-columns: 1fr;
 }
-
 .text-full {
   padding: 1rem;
   font-size: 1.5rem;
