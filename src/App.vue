@@ -231,7 +231,7 @@ export default {
     async getSong(e) {
       console.log(e);
 
-      const hash = new UrlSearchParams(e.substring(e.indexOf('?'))).get('v'),
+      const hash = new URLSearchParams(e.substring(e.indexOf('?'))).get('v'),
         json = await this.getJson(
           'https://pipedapi.kavin.rocks/streams/' + hash,
         );
@@ -251,7 +251,7 @@ export default {
     async getAlbum(e) {
       console.log('Album: ', e);
 
-      const hash = new UrlSearchParams(e.substring(e.indexOf('?'))).get('list'),
+      const hash = new URLSearchParams(e.substring(e.indexOf('?'))).get('list'),
         json = await this.getJson(
           'https://pipedapi.kavin.rocks/playlists/' + hash,
         );
