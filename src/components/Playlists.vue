@@ -1,5 +1,9 @@
 <script setup>
-defineProps(['url', 'urls', 'show']);
+defineProps({
+  url: String,
+  urls: Array,
+  show: Boolean,
+});
 defineEmits(['playthis']);
 </script>
 
@@ -55,35 +59,5 @@ defineEmits(['playthis']);
 }
 .pl-main {
   padding-left: 3rem;
-}
-
-.bars-wrap {
-  position: absolute;
-  height: 1.5rem;
-  width: 2rem;
-  transform: rotateZ(180deg);
-}
-.bars {
-  position: relative;
-  height: 15%;
-  width: calc(calc(100% / 3) - 0.2rem);
-  margin-left: 0.1rem;
-  background: var(--color-foreground);
-  float: left;
-  animation: heightc 1s ease infinite;
-}
-.bars:first-child {
-  animation-delay: 0.25s;
-}
-.bars:nth-child(2) {
-  animation-delay: 0.5s;
-}
-.bars:last-child {
-  margin-left: none;
-}
-@keyframes heightc {
-  50% {
-    height: 100%;
-  }
 }
 </style>

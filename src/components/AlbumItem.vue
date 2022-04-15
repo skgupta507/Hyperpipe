@@ -7,6 +7,12 @@ defineProps({
     default: '--art: linear-gradient(45deg, #88c0d0, #5e81ac);',
   },
 });
+
+const emit = defineEmits(['open-album']);
+
+function onClick() {
+  emit('open-album');
+}
 </script>
 
 <template>
@@ -19,16 +25,6 @@ defineProps({
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  methods: {
-    onClick() {
-      this.$emit('open-album');
-    },
-  },
-};
-</script>
 
 <style scoped>
 .card {

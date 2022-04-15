@@ -1,6 +1,7 @@
 <script setup>
-defineEmits(['update-search']);
 import SearchBar from '../components/SearchBar.vue';
+
+defineEmits(['update-search']);
 </script>
 
 <template>

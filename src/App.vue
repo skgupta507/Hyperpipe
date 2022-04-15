@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 
 import NavBar from './components/NavBar.vue';
 import StatusBar from './components/StatusBar.vue';
@@ -8,7 +8,310 @@ import Search from './components/Search.vue';
 import Playlists from './components/Playlists.vue';
 import Artist from './components/Artist.vue';
 
-let search = ref('');
+import { getJson, getJsonPiped } from './scripts/fetch.js'
+
+const data = reactive({
+  artUrl: '',
+  cover: '',
+  audioSrc: '',
+  url: '',
+  urls: [],
+  songItems: null,
+  hls: null,
+  items: {},
+  title: '',
+  artist: '',
+  state: 'play',
+  duration: 0,
+  time: 0,
+  showplaylist: false,
+  loop: false,
+});
+
+const artist = reactive({
+  playlistId: null,
+  title: null,
+  description: null,
+  subscriberCount: 0,
+  thumbnails: [],
+});
+
+const search = ref('');
+
+const audio = ref(null);
+
+function parseUrl() {
+  const loc = location.href.split('/');
+
+  console.log(loc);
+
+  switch (loc[3].replace(location.search, '')) {
+    case '':
+    case 'search':
+      search.value = loc[4];
+      console.log(search.value);
+      break;
+    case 'watch':
+      getSong(loc[3]);
+      console.log(loc[3]);
+      break;
+    case 'playlist':
+      getAlbum(loc[3]);
+      console.log(loc[3]);
+      break;
+    case 'channel':
+      getArtist(loc[4]);
+      console.log(loc[4]);
+    default:
+      console.log(loc);
+  }
+}
+
+function Toggle(e) {
+  console.log(e, data[e]);
+
+  if (data[e]) {
+    data[e] = false;
+  } else {
+    data[e] = true;
+  }
+}
+
+function Update(e) {
+  search.value = e;
+  console.log('update');
+}
+
+function timeUpdate(t) {
+  data.time = Math.floor( (t / data.duration) * 100 );
+}
+
+function setTime(t) {
+  audio.value.currentTime = (t / 100) * data.duration;
+}
+
+function setSong(s) {
+  data.urls = [s];
+  playNext();
+}
+
+function addSong(s) {
+  data.urls.push(s);
+
+  const index = data.urls.map((s) => s.url).indexOf(data.url);
+
+  if (
+    (index == data.urls.length - 1 && data.time > 98) ||
+    data.urls.length == 1
+  ) {
+    console.log(true);
+    playNext();
+  } else {
+    console.log(false);
+  }
+
+  console.log(s, data.urls);
+}
+
+function playThis(t) {
+  const i = data.urls.indexOf(t);
+  getSong(data.urls[i].url);
+}
+
+function playList(a) {
+  data.urls = a;
+  getSong(data.urls[0].url);
+}
+
+function playNext(u) {
+  if (data.hls) {
+    data.hls.destroy();
+  }
+
+  const i = data.urls.map((s) => s.url).indexOf(data.url),
+    next = data.urls[i + 1];
+
+  console.log('Index: ' + i);
+  console.log(data.url, data.urls, next);
+
+  if (data.urls.length > i && data.urls.length != 0 && next) {
+    getSong(next.url);
+  } else if (data.loop) {
+    data.url = data.urls[0].url;
+    getSong(data.urls[0].url);
+  } else {
+    data.urls = [];
+  }
+}
+
+async function getSong(e) {
+  console.log(e);
+
+  const hash = new URLSearchParams(e.substring(e.indexOf('?'))).get('v'),
+    json = await getJsonPiped('/streams/' + hash);
+
+  console.log(json);
+
+  Stream({
+    art: json.thumbnailUrl,
+    artist: json.uploader,
+    time: json.duration,
+    hls: json.hls,
+    stream: json.audioStreams[0].url,
+    title: json.title,
+    url: e,
+  });
+}
+
+async function getAlbum(e) {
+  console.log('Album: ', e);
+
+  const hash = new URLSearchParams(e.substring(e.indexOf('?'))).get('list'),
+    json = await getJsonPiped('/playlists/' + hash);
+
+  console.log(json, json.relatedStreams);
+
+  data.songItems = {
+    items: json.relatedStreams,
+    title: json.name,
+  };
+
+  history.pushState({}, '', e);
+
+  for (let i in artist) {
+    artist[i] = null
+  }
+}
+
+async function getArtist(e) {
+  console.log(e);
+
+  const json = await getJson(
+    'https://hyperpipeapi.onrender.com/channel/' + e,
+  );
+
+  console.log(json);
+
+  data.items = json.items;
+  data.items.notes = json.playlistId;
+  json.items = null;
+
+  for(let i in json) {
+    artist[i] = json[i];
+  };
+
+  history.pushState({}, '', '/channel/' + e);
+}
+
+function setVolume(vol) {
+  audio.value.volume = vol;
+}
+
+function playPause() {
+  if (audio.value.paused) {
+    audio.value.play();
+    data.state = 'pause';
+  } else {
+    audio.value.pause();
+    data.state = 'play';
+  }
+}
+
+function Stream(res) {
+  console.log(res);
+
+  data.art = res.art;
+  data.cover = `--art: url(${res.art});`;
+  data.nowtitle = res.title;
+  data.nowartist = res.artist.split(' - ')[0];
+  data.duration = res.time;
+  data.url = res.url;
+
+  if (!!Hls && Hls.isSupported()) {
+    data.hls = new Hls();
+
+    console.log(data.hls.levels);
+    data.hls.loadSource(res.hls);
+    data.hls.attachMedia(audio.value);
+  } else {
+    data.audioSrc = res.stream;
+  }
+}
+
+function audioCanPlay() {
+  lazyLoad();
+  audio.value.play();
+  data.state = 'pause';
+
+  if (location.pathname != '/playlist') {
+    history.pushState({}, '', data.url);
+  }
+
+  document.title = `Playing: ${data.nowtitle} by ${data.nowartist}`;
+
+  setMetadata(data.art);
+}
+
+function setMetadata(art) {
+  if (navigator.mediaSession) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: data.nowtitle,
+      artist: data.nowartist,
+      artwork: [
+        {
+          src: art,
+          type: 'image/png',
+        },
+      ],
+    });
+  }
+}
+
+function lazyLoad() {
+  let lazyElems;
+
+  if ('IntersectionObserver' in window) {
+    lazyElems = document.querySelectorAll('.bg-img:not(.lazy)');
+
+    let imgObs = new IntersectionObserver((elems, obs) => {
+      elems.forEach((elem) => {
+        setTimeout(() => {
+          if (elem.isIntersecting) {
+            let ele = elem.target;
+
+            ele.classList.add('lazy');
+            imgObs.unobserve(ele);
+          }
+        }, 20);
+      });
+    });
+
+    lazyElems.forEach((img) => {
+      imgObs.observe(img);
+    });
+  } else {
+    console.log('Failed');
+  }
+}
+
+onMounted(() => {
+  lazyLoad();
+
+  document.addEventListener('scroll', lazyLoad);
+  document.addEventListener('resize', lazyLoad);
+  document.addEventListener('orientationChange', lazyLoad);
+
+  window.addEventListener('popstate', parseUrl);
+  window.onbeforeunload = () => {
+    return 'Are you Sure?';
+  };
+
+  console.log(audio.value)
+
+  parseUrl();
+
+  console.log('Mounted <App>!');
+});
 </script>
 
 <template>
@@ -31,354 +334,51 @@ let search = ref('');
   </template>
 
   <header v-if="!artist.title">
-    <div v-if="cover" class="art bg-img" :style="cover"></div>
+    <div v-if="data.cover" class="art bg-img" :style="data.cover"></div>
 
     <div class="wrapper">
-      <NowPlaying :title="nowtitle" :artist="nowartist" />
+      <NowPlaying :title="data.nowtitle" :artist="data.nowartist" />
     </div>
   </header>
 
   <main class="placeholder">
     <Search
-      @get-song="setSong"
       @get-album="getAlbum"
       @get-artist="getArtist"
       @lazy="lazyLoad"
       @play-urls="playList"
       @add-song="addSong"
-      :items="items"
-      :songItems="songItems"
+      :items="data.items"
+      :songItems="data.songItems"
       :search="search" />
   </main>
 
   <Playlists
     @playthis="playThis"
-    :url="url"
-    :urls="urls"
-    :show="showplaylist" />
+    :url="data.url"
+    :urls="data.urls"
+    :show="data.showplaylist" />
 
   <StatusBar
     @play="playPause"
     @vol="setVolume"
     @list="Toggle"
     @loop="Toggle"
-    :state="state"
-    :time="time"
-    :show="showplaylist"
-    :loop="loop" />
+    @change-time="setTime"
+    :state="data.state"
+    :time="data.time"
+    :show="data.showplaylist"
+    :loop="data.loop" />
 
   <audio
     id="audio"
     ref="audio"
-    :src="audioSrc"
+    :src="data.audioSrc"
     @canplay="audioCanPlay"
     @timeupdate="timeUpdate($event.target.currentTime)"
     @ended="playNext"
     autoplay></audio>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      artUrl: '',
-      cover: '',
-      nowtitle: '',
-      nowartist: '',
-      state: 'play',
-      audioSrc: '',
-      duration: 0,
-      time: 0,
-      url: '',
-      urls: [],
-      songItems: null,
-      showplaylist: false,
-      loop: false,
-      hls: null,
-      artist: {
-        playlistId: null,
-        title: null,
-        description: null,
-        subscriberCount: 0,
-        thumbnails: [],
-      },
-      items: {},
-    };
-  },
-  mounted() {
-    this.lazyLoad();
-
-    document.addEventListener('scroll', this.lazyLoad);
-    document.addEventListener('resize', this.lazyLoad);
-    document.addEventListener('orientationChange', this.lazyLoad);
-
-    window.addEventListener('popstate', this.parseUrl);
-    window.onbeforeunload = () => {
-      return 'Are you Sure?';
-    };
-
-    this.parseUrl();
-
-    console.log('Mounted <App>!');
-  },
-  methods: {
-    parseUrl() {
-      const loc = location.href.split('/');
-
-      console.log(loc);
-
-      switch (loc[3].replace(location.search, '')) {
-        case '':
-        case 'search':
-          this.search = loc[4];
-          console.log(loc[4], this.search);
-          break;
-        case 'watch':
-          this.getSong(loc[3]);
-          console.log(loc[3]);
-          break;
-        case 'playlist':
-          this.getAlbum(loc[3]);
-          console.log(loc[3]);
-          break;
-        case 'channel':
-          this.getArtist(loc[4]);
-          console.log(loc[4]);
-        default:
-          console.log(loc);
-      }
-    },
-    Toggle(e) {
-      console.log(this[e]);
-
-      if (this[e]) {
-        this[e] = false;
-      } else {
-        this[e] = true;
-      }
-    },
-    Update(e) {
-      this.search = e;
-      console.log('update');
-    },
-    timeUpdate(t) {
-      this.time = Math.floor((t / this.duration) * 100);
-    },
-    async getJson(url) {
-      const res = await fetch(url).then((res) => res.json());
-
-      if (!res.error) {
-        return res;
-      } else {
-        alert(
-          res.message
-            .replaceAll('Video', 'Audio')
-            .replaceAll('video', 'audio')
-            .replaceAll('watched', 'heard'),
-        );
-        console.error(res.message);
-      }
-    },
-    setSong(s) {
-      this.urls = [s];
-
-      this.playNext();
-    },
-    addSong(s) {
-      this.urls.push(s);
-
-      const index = this.urls.map((s) => s.url).indexOf(this.url);
-
-      if (
-        (index == this.urls.length - 1 && this.time > 98) ||
-        this.urls.length == 1
-      ) {
-        console.log(true);
-        this.playNext();
-      } else {
-        console.log(false);
-      }
-
-      console.log(s, this.urls);
-    },
-    playThis(t) {
-      const i = this.urls.indexOf(t);
-      this.getSong(this.urls[i].url);
-    },
-    playList(a) {
-      this.urls = a;
-
-      this.getSong(this.urls[0].url);
-    },
-    playNext(u) {
-      if (this.hls) {
-        this.hls.destroy();
-      }
-
-      const i = this.urls.map((s) => s.url).indexOf(this.url),
-        next = this.urls[i + 1];
-
-      console.log('Index: ' + i);
-      console.log(this.url, this.urls, next);
-
-      if (this.urls.length > i && this.urls.length != 0 && next) {
-        this.getSong(next.url);
-      } else if (this.loop) {
-        this.url = this.urls[0].url;
-        this.getSong(this.urls[0].url);
-      } else {
-        this.urls = [];
-      }
-    },
-    async getSong(e) {
-      console.log(e);
-
-      const hash = new URLSearchParams(e.substring(e.indexOf('?'))).get('v'),
-        json = await this.getJson(
-          'https://pipedapi.kavin.rocks/streams/' + hash,
-        );
-
-      console.log(json);
-
-      this.Stream({
-        art: json.thumbnailUrl,
-        artist: json.uploader,
-        time: json.duration,
-        hls: json.hls,
-        stream: json.audioStreams[0].url,
-        title: json.title,
-        url: e,
-      });
-    },
-    async getAlbum(e) {
-      console.log('Album: ', e);
-
-      const hash = new URLSearchParams(e.substring(e.indexOf('?'))).get('list'),
-        json = await this.getJson(
-          'https://pipedapi.kavin.rocks/playlists/' + hash,
-        );
-
-      console.log(json, json.relatedStreams);
-
-      this.songItems = {
-        items: json.relatedStreams,
-        title: json.name,
-      };
-
-      history.pushState({}, '', e);
-
-      this.artist = {
-        playlistId: null,
-        title: null,
-        description: null,
-        subscriberCount: 0,
-        thumbnails: [],
-      };
-    },
-    async getArtist(e) {
-      console.log(e);
-
-      const json = await this.getJson(
-        'https://hyperpipeapi.onrender.com/channel/' + e,
-      );
-
-      console.log(json);
-
-      this.items = json.items;
-      this.items.notes = json.playlistId;
-      json.items = null;
-      this.artist = json;
-
-      history.pushState({}, '', '/channel/' + e);
-    },
-    setVolume(vol) {
-      this.$refs.audio.volume = vol;
-    },
-    playPause() {
-      if (this.$refs.audio.paused) {
-        this.$refs.audio.play();
-        this.state = 'pause';
-      } else {
-        this.$refs.audio.pause();
-        this.state = 'play';
-      }
-    },
-    Stream(res) {
-      console.log(res);
-
-      this.art = res.art;
-      this.cover = `--art: url(${res.art});`;
-      this.nowtitle = res.title;
-      this.nowartist = res.artist.split(' - ')[0];
-      this.duration = res.time;
-      this.url = res.url;
-
-      if (!!Hls && Hls.isSupported()) {
-        this.hls = new Hls();
-
-        console.log(this.hls.levels);
-        this.hls.loadSource(res.hls);
-        this.hls.attachMedia(this.$refs.audio);
-      } else {
-        this.audioSrc = res.stream;
-      }
-    },
-    audioCanPlay() {
-      this.lazyLoad();
-      this.$refs.audio.play();
-      this.state = 'pause';
-
-      if (location.pathname != '/playlist') {
-        history.pushState({}, '', this.url);
-      }
-
-      document.title = `Playing: ${this.nowtitle} by ${this.nowartist}`;
-
-      this.setMetadata(this.art);
-    },
-    setMetadata(art) {
-      if (navigator.mediaSession) {
-        navigator.mediaSession.metadata = new MediaMetadata({
-          title: this.nowtitle,
-          artist: this.nowartist,
-          artwork: [
-            {
-              src: art,
-              type: 'image/png',
-            },
-          ],
-        });
-      }
-    },
-    lazyLoad() {
-      let lazyElems;
-
-      if ('IntersectionObserver' in window) {
-        lazyElems = document.querySelectorAll('.bg-img:not(.lazy)');
-
-        let imgObs = new IntersectionObserver((elems, obs) => {
-          elems.forEach((elem) => {
-            setTimeout(() => {
-              if (elem.isIntersecting) {
-                let ele = elem.target;
-
-                ele.classList.add('lazy');
-                imgObs.unobserve(ele);
-              }
-            }, 20);
-          });
-        });
-
-        lazyElems.forEach((img) => {
-          imgObs.observe(img);
-        });
-      } else {
-        console.log('Failed');
-      }
-    },
-  },
-};
-</script>
 
 <style>
 @import './assets/base.css';
@@ -405,22 +405,7 @@ header {
   height: 175px;
   width: 175px;
 }
-.bg-img {
-  background-image: linear-gradient(45deg, #88c0d0, #5e81ac);
-  background-position: center;
-  background-size: cover;
-  border-radius: 0.25rem;
-}
-.bg-img.lazy {
-  background-image: var(--art);
-}
-.search-artists {
-  text-align: center;
-}
-.search-artists .bg-img {
-  border-radius: 50%;
-  margin-bottom: 0.5rem;
-}
+
 img,
 .card,
 .card-bg {
@@ -436,21 +421,6 @@ a,
   color: var(--color-foreground);
   transition: 0.4s;
 }
-button {
-  border: none;
-  background: transparent;
-  color: var(--color-text);
-  appearence: none;
-}
-.bi {
-  color: var(--color-text);
-  font-size: 1.25rem;
-  transition: color 0.3s ease;
-}
-.bi:hover,
-.bi.true {
-  color: var(--color-foreground);
-}
 .flex {
   display: flex;
   align-items: center;
@@ -463,49 +433,7 @@ button {
 .flex .bi {
   line-height: 0;
 }
-.caps {
-  text-transform: capitalize;
-}
-.pop {
-  --shadow: none;
-  --translate: 0;
-}
-.pop,
-.pop-2 {
-  transition: box-shadow 0.4s ease, transform 0.4s ease;
-}
-.pop:hover {
-  --shadow: 0.5rem 0.5rem 1rem var(--color-shadow);
-  --translate: -1.25rem;
-  box-shadow: var(--shadow);
-  transform: translateX(calc(var(--translate) / 2))
-    translateY(calc(var(--translate) / 2));
-}
-.pop-2 {
-  transform: translateX(var(--translate)) translateY(var(--translate));
-  box-shadow: var(--shadow);
-}
-.popup-wrap {
-  --display: none;
-  position: relative;
-}
-.popup-wrap:hover,
-.popup-wrap:focus,
-.popup:focus,
-.popup:active {
-  --display: flex;
-}
-.popup {
-  position: absolute;
-  display: var(--display);
-  background-color: var(--color-background);
-  padding: 0.5rem;
-  border-radius: 0.125rem;
-  z-index: 999;
-  bottom: 1.25rem;
-  box-shadow: 0 0 0.5rem var(--color-border);
-  animation: fade 0.4s ease;
-}
+
 @media (hover: hover) {
   a:hover {
     background-color: var(--color-border);
@@ -530,23 +458,6 @@ button {
   }
   .art {
     margin: 0 2rem 0 0;
-  }
-}
-
-@keyframes fade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@keyframes fill {
-  from {
-    width: 0;
-  }
-  to {
-    width: var(--width);
   }
 }
 </style>

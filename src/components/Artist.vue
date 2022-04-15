@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue';
 import PlayBtn from './PlayBtn.vue';
 
 defineProps(['title', 'desc', 'subs', 'thumbs', 'play']);

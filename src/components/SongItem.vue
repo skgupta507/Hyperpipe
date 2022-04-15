@@ -1,11 +1,43 @@
 <script setup>
-defineProps({
+const props = defineProps({
   author: String,
   title: String,
   channel: String,
   play: String,
 });
-defineEmits(['get-artist']);
+
+const emit = defineEmits(['get-artist', 'open-song']);
+
+function openSong(el) {
+  if (!el.classList.contains('ign')) {
+    emit('open-song', props.play);
+  }
+}
+
+async function Share() {
+  if ('share' in navigator) {
+    const data = {
+      title: `Listen to ${props.title} by ${props.author} on Hyperpipe`,
+      url: location.origin + props.play,
+    };
+
+    try {
+      await navigator.share(data);
+      console.log('Done Sharing!');
+    } catch (err) {
+      console.log(err);
+    }
+  } else {
+    navigator.clipboard.writeText(location.host + props.play).then(
+      () => {
+        console.log('Copied to Clipboard');
+      },
+      (err) => {
+        console.log(err);
+      },
+    );
+  }
+}
 </script>
 <template>
   <div class="song card flex pop" @click="openSong($event.target)">
@@ -34,42 +66,6 @@ defineEmits(['get-artist']);
     </span>
   </div>
 </template>
-
-<script>
-export default {
-  methods: {
-    openSong(el) {
-      if (!el.classList.contains('ign')) {
-        this.$emit('open-song', this.play);
-      }
-    },
-    async Share() {
-      if ('share' in navigator) {
-        const data = {
-          title: `Listen to ${this.title} by ${this.author} on Hyperpipe`,
-          url: location.origin + this.play,
-        };
-
-        try {
-          await navigator.share(data);
-          console.log('Done Sharing!');
-        } catch (err) {
-          console.log(err);
-        }
-      } else {
-        navigator.clipboard.writeText(location.host + this.play).then(
-          () => {
-            console.log('Copied to Clipboard');
-          },
-          (err) => {
-            console.log(err);
-          },
-        );
-      }
-    },
-  },
-};
-</script>
 
 <style scoped>
 .card {

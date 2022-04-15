@@ -45,6 +45,8 @@ npm run build
 
 Please refer to LICENSE.
 
+You can reach out to me on <TODO>
+
 ### Dependencies and Mentions
 
 - VueJS -> [MIT][vue]

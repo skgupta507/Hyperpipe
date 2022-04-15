@@ -1,13 +1,11 @@
 <script setup>
-const props = defineProps({
+defineProps({
   state: String,
   time: Number,
   show: Boolean,
   loop: Boolean,
 });
-defineEmits(['vol', 'play', 'list', 'loop']);
-
-console.log(props);
+defineEmits(['vol', 'play', 'list', 'loop', 'change-time']);
 </script>
 <template>
   <div id="statusbar" class="flex">
@@ -19,9 +17,14 @@ console.log(props);
 
       <div
         id="statusbar-progress"
-        class="progress"
-        :style="'--tw: ' + time + '%;'">
-        <div class="progress-thumb"></div>
+        class="range-wrap"
+        :style="'--fw:' + time + '%;'">
+        <input
+          :value="time"
+          type="range"
+          name="statusbar-progress"
+          max="100"
+          @input="$emit('change-time', $event.target.value)" />
       </div>
     </div>
 
@@ -77,38 +80,6 @@ console.log(props);
 .bi-infinity {
   font-size: 1.75rem !important;
 }
-.progress {
-  --h: 0.25rem;
-  --w: 5rem;
-  --th: 100%;
-  --tw: 75%;
-  background: var(--color-border);
-  height: var(--h);
-  width: var(--w);
-  transition: width 0.4s ease;
-}
-.progress.v {
-  --th: 75%;
-  --tw: 100%;
-  --h: 5rem;
-  --w: 0.25rem;
-  transform: rotateZ(180deg);
-  z-index: 999999;
-}
-.progress-thumb {
-  width: var(--tw);
-  height: var(--th);
-  background: var(--color-foreground);
-  overflow: hidden;
-  transition: width 0.4s ease;
-}
-.progress-thumb:after {
-  content: '';
-  background-color: #fff;
-  height: 0.5rem;
-  width: 0.5rem;
-  border-radius: 50%;
-}
 .popup {
   --h: 6.5rem;
   --w: 1rem;
@@ -125,6 +96,7 @@ input[type='range'] {
   background: transparent;
   color: transparent;
   cursor: pointer;
+  position: relative;
 }
 input[type='range']:focus {
   outline: none;
@@ -132,15 +104,48 @@ input[type='range']:focus {
 input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+input[type='range']:hover::-webkit-slider-thumb,
+#vol input[type='range']::-webkit-slider-thumb {
   background-color: var(--color-foreground);
+  opacity: 1;
   height: 1rem;
   width: 1rem;
   border-radius: 50%;
   margin-top: -0.45rem;
 }
 input[type='range']::-webkit-slider-runnable-track {
-  height: 0.1rem;
+  height: 100%;
   background-color: var(--color-border);
+}
+#vol input[type='range']::-webkit-slider-runnable-track {
+  height: 0.1rem;
+}
+.range-wrap {
+  --fw: 0%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 0.25rem;
+  display: inline-block;
+}
+.range-wrap:before {
+  content: '';
+  width: var(--fw);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 0.25rem;
+  background-color: var(--color-foreground);
+  transition: width 0.4s ease;
+}
+.range-wrap input[type='range'] {
+  --w: 100%;
+  --h: 100%;
+  position: absolute;
+  top: 0;
 }
 #statusbar-progress {
   width: 50vw;

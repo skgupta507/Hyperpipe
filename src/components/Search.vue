@@ -1,44 +1,141 @@
 <script setup>
-defineProps([
-  'search',
-  'songItems',
-  'items'
-]);
-defineEmits([
-  'get-song',
+import { reactive, watch } from 'vue';
+import PlayBtn from './PlayBtn.vue';
+import SongItem from './SongItem.vue';
+import AlbumItem from './AlbumItem.vue';
+
+import { getJsonPiped, getPipedQuery } from '../scripts/fetch.js'
+
+const props = defineProps(['search', 'songItems', 'items']);
+
+const emit = defineEmits([
   'get-album',
   'get-artist',
   'lazy',
   'play-urls',
   'add-song',
 ]);
+
+const data = reactive({
+  notes: null,
+  albums: null,
+  albumTitle: null,
+  songs: null,
+  recommendedArtists: null,
+});
+
+function Reset() {
+  for (let i in data) {
+    data[i] = null
+  }
+}
+
+function playAlbum() {
+  const urls = data.songs.items.map((item) => {
+    return { url: item.url, title: item.title };
+  });
+
+  emit('play-urls', urls);
+}
+
+function getSearch(q) {
+  if (q) {
+    const pq = q.split(' ').join('+');
+
+    history.pushState({}, '', `/search/${pq + getPipedQuery()}`);
+
+    document.title = 'Search Results for ' + q;
+
+    getResults(pq);
+    emit('lazy');
+  } else {
+    Reset();
+
+    history.pushState({}, '', '/');
+    document.title = 'Hyperpipe';
+
+    console.log('No Search');
+  }
+}
+
+async function getResults(q) {
+  const filters = ['music_songs', 'music_albums'];
+
+  for (let filter of filters) {
+    
+    const json = await getJsonPiped(`/search?q=${q}&filter=${filter}`);
+
+    data[filter.split('_')[1]] = json;
+    console.log(json, data);
+  }
+}
+
+watch(
+  () => props.search,
+  (n) => {
+    if (n) {
+      n = n.replace(location.search || '', '');
+
+      console.log(n);
+      getSearch(n);
+    }
+  },
+);
+
+watch(
+  () => props.songItems,
+  (i) => {
+    console.log(i);
+
+    Reset();
+
+    data.songs = {}
+    data.songs.items = i.items;
+    data.albumTitle = i.title;
+  },
+);
+
+watch(
+  () => props.items,
+  (itms) => {
+    Reset();
+
+    for (let i in itms) {
+
+      data[i] = {}
+      data[i].items = itms[i];
+
+      console.log(data[i]);
+    }
+  },
+);
 </script>
 
 <template>
-  <div v-if="songs && songs.corrected" class="text-full">
-    I Fixed your Typo, "<span class="caps">{{ songs.suggestion }}</span
+  <div v-if="data.songs && data.songs.corrected" class="text-full">
+    I Fixed your Typo, "<span class="caps">{{ data.songs.suggestion }}</span
     >"!!
   </div>
 
-  <div v-if="albumTitle" class="text-full flex">
+  <div v-if="data.albumTitle" class="text-full flex">
     <PlayBtn @click="playAlbum" />
-    <span>{{ albumTitle }}</span>
+    <span>{{ data.albumTitle }}</span>
   </div>
 
-  <div v-if="songs && songs.items[0]" class="search-songs">
+  <div v-if="data.songs && data.songs.items[0]" class="search-songs">
     <h2>Top Songs</h2>
     <div class="grid">
-      <template v-for="song in songs.items">
+      <template v-for="song in data.songs.items">
         <SongItem
           :author="song.uploaderName || ''"
           :title="song.title || song.name"
           :channel="song.uploaderUrl || ''"
-          :play="song.url || '/watch?v=' + song.videoId"
+          :play="song.url || '/watch?v=' + song.id"
           @open-song="
-            $emit('get-song', {
+            $emit('play-urls', [{
               url: song.url || '/watch?v=' + song.id,
               title: song.title || song.name,
-            })
+            }])
           "
           @get-artist="
             (e) => {
@@ -56,17 +153,18 @@ defineEmits([
       </template>
     </div>
     <a
-      v-if="notes"
-      @click.prevent="$emit('get-album', '/playlist?list=' + notes.items)"
+      v-if="data.notes"
+      @click.prevent="$emit('get-album', '/playlist?list=' + data.notes.items)"
       class="more"
+      :href="'/playlist?list=' + data.notes.items"
       >See All</a
     >
   </div>
 
-  <div v-if="albums && albums.items[0]" class="search-albums">
+  <div v-if="data.albums && data.albums.items[0]" class="search-albums">
     <h2>Albums</h2>
     <div class="grid-3">
-      <template v-for="album in albums.items">
+      <template v-for="album in data.albums.items">
         <AlbumItem
           :author="album.uploaderName || album.subtitle"
           :name="album.name || album.title"
@@ -81,11 +179,11 @@ defineEmits([
   </div>
 
   <div
-    v-if="recommendedArtists && recommendedArtists.items[0]"
+    v-if="data.recommendedArtists && data.recommendedArtists.items[0]"
     class="search-artists">
     <h2>Similar Artists</h2>
     <div class="grid-3">
-      <template v-for="artist in recommendedArtists.items">
+      <template v-for="artist in data.recommendedArtists.items">
         <AlbumItem
           :author="artist.subtitle"
           :name="artist.title"
@@ -96,99 +194,6 @@ defineEmits([
   </div>
 </template>
 
-<script>
-import PlayBtn from './PlayBtn.vue';
-import SongItem from './SongItem.vue';
-import AlbumItem from './AlbumItem.vue';
-
-export default {
-  components: {
-    PlayBtn,
-    SongItem,
-    AlbumItem,
-  },
-  data() {
-    return {
-      songs: null,
-      albums: null,
-      recommendedArtists: null,
-      albumTitle: null,
-      notes: null,
-    };
-  },
-  watch: {
-    search(NewSearch) {
-      console.log(NewSearch);
-      this.getSearch(NewSearch);
-    },
-    songItems(i) {
-      console.log(i);
-
-      this.Reset();
-
-      this.songs = {};
-      this.songs.items = i.items;
-      this.albumTitle = i.title;
-    },
-    items(itms) {
-      this.Reset();
-
-      for (let i in itms) {
-        this[i] = {};
-        this[i].items = itms[i];
-
-        console.log(this[i]);
-      }
-    },
-  },
-  methods: {
-    Reset() {
-      this.notes = null;
-      this.albums = null;
-      this.albumTitle = null;
-      this.songs = null;
-      this.recommendedArtists = null;
-    },
-    playAlbum() {
-      const urls = this.songs.items.map((item) => {
-        return { url: item.url, title: item.title };
-      });
-
-      this.$emit('play-urls', urls);
-    },
-    getSearch(q) {
-      if (q) {
-        history.pushState({}, '', `/search/${q}`);
-
-        document.title = 'Search Results for ' + q;
-
-        this.getResults(q.split(' ').join('+'));
-        this.$emit('lazy');
-      } else {
-        this.Reset();
-        history.pushState({}, '', '/');
-        document.title = 'Hyperpipe';
-
-        console.log('No Search');
-      }
-    },
-    getResults(q) {
-      const filters = ['music_songs', 'music_albums'];
-
-      for (let filter of filters) {
-        fetch(
-          `https://pipedapi.kavin.rocks/search?q=${q}&filter=${filter}`,
-        ).then((res) => {
-          res.json().then((json) => {
-            this[filter.split('_')[1]] = json;
-            console.log(json);
-          });
-        });
-      }
-    },
-  },
-};
-</script>
 <style scoped>
 .search-albums,
 .search-songs,
@@ -196,10 +201,22 @@ export default {
   place-items: start center;
   margin-bottom: 2rem;
 }
+.search-songs h2,
+.search-artists h2,
+.search-albums h2 {
+  text-align: center;
+}
 .search-albums .grid-3,
 .search-artists .grid-3 {
   display: grid;
   grid-template-columns: 1fr;
+}
+.search-artists {
+  text-align: center;
+}
+.search-artists .bg-img {
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
 }
 .text-full {
   padding: 1rem;
