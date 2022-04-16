@@ -4,7 +4,7 @@ import PlayBtn from './PlayBtn.vue';
 import SongItem from './SongItem.vue';
 import AlbumItem from './AlbumItem.vue';
 
-import { getJsonPiped, getPipedQuery } from '../scripts/fetch.js'
+import { getJsonPiped, getPipedQuery } from '../scripts/fetch.js';
 
 const props = defineProps(['search', 'songItems', 'items']);
 
@@ -26,7 +26,7 @@ const data = reactive({
 
 function Reset() {
   for (let i in data) {
-    data[i] = null
+    data[i] = null;
   }
 }
 
@@ -62,7 +62,6 @@ async function getResults(q) {
   const filters = ['music_songs', 'music_albums'];
 
   for (let filter of filters) {
-    
     const json = await getJsonPiped(`/search?q=${q}&filter=${filter}`);
 
     data[filter.split('_')[1]] = json;
@@ -89,7 +88,7 @@ watch(
 
     Reset();
 
-    data.songs = {}
+    data.songs = {};
     data.songs.items = i.items;
     data.albumTitle = i.title;
   },
@@ -101,8 +100,7 @@ watch(
     Reset();
 
     for (let i in itms) {
-
-      data[i] = {}
+      data[i] = {};
       data[i].items = itms[i];
 
       console.log(data[i]);
@@ -123,7 +121,7 @@ watch(
   </div>
 
   <div v-if="data.songs && data.songs.items[0]" class="search-songs">
-    <h2>Top Songs</h2>
+    <h2>Songs</h2>
     <div class="grid">
       <template v-for="song in data.songs.items">
         <SongItem
@@ -132,10 +130,12 @@ watch(
           :channel="song.uploaderUrl || ''"
           :play="song.url || '/watch?v=' + song.id"
           @open-song="
-            $emit('play-urls', [{
-              url: song.url || '/watch?v=' + song.id,
-              title: song.title || song.name,
-            }])
+            $emit('play-urls', [
+              {
+                url: song.url || '/watch?v=' + song.id,
+                title: song.title || song.name,
+              },
+            ])
           "
           @get-artist="
             (e) => {
@@ -182,7 +182,7 @@ watch(
     v-if="data.recommendedArtists && data.recommendedArtists.items[0]"
     class="search-artists">
     <h2>Similar Artists</h2>
-    <div class="grid-3">
+    <div class="grid-3 circle">
       <template v-for="artist in data.recommendedArtists.items">
         <AlbumItem
           :author="artist.subtitle"
@@ -213,10 +213,6 @@ watch(
 }
 .search-artists {
   text-align: center;
-}
-.search-artists .bg-img {
-  border-radius: 50%;
-  margin-bottom: 0.5rem;
 }
 .text-full {
   padding: 1rem;

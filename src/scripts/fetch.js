@@ -1,15 +1,19 @@
 export function getPipedQuery() {
-  const papi = new URLSearchParams(location.search).get('pipedapi')
+  const papi = new URLSearchParams(location.search).get('pipedapi');
 
   if (!papi) {
-    return ''
+    return '';
   }
 
-  return '?pipedapi=' + papi
+  return '?pipedapi=' + papi;
 }
 
 export async function getJson(url) {
-  const res = await fetch(url).then((res) => res.json()).catch(err => { alert(err) });
+  const res = await fetch(url)
+    .then((res) => res.json())
+    .catch((err) => {
+      alert(err);
+    });
 
   if (!res.error) {
     return res;

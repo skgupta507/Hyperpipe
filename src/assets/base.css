@@ -145,10 +145,13 @@ button {
   background-image: linear-gradient(45deg, #88c0d0, #5e81ac);
   background-position: center;
   background-size: cover;
-  border-radius: 0.25rem;
+  border-radius: .25rem;
 }
 .bg-img.lazy {
   background-image: var(--art);
+}
+.search-artists .bg-img {
+  border-radius: 50%;
 }
 
 .pop {

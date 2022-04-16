@@ -8,7 +8,7 @@ import Search from './components/Search.vue';
 import Playlists from './components/Playlists.vue';
 import Artist from './components/Artist.vue';
 
-import { getJson, getJsonPiped } from './scripts/fetch.js'
+import { getJson, getJsonPiped } from './scripts/fetch.js';
 
 const data = reactive({
   artUrl: '',
@@ -83,16 +83,11 @@ function Update(e) {
 }
 
 function timeUpdate(t) {
-  data.time = Math.floor( (t / data.duration) * 100 );
+  data.time = Math.floor((t / data.duration) * 100);
 }
 
 function setTime(t) {
   audio.value.currentTime = (t / 100) * data.duration;
-}
-
-function setSong(s) {
-  data.urls = [s];
-  playNext();
 }
 
 function addSong(s) {
@@ -127,6 +122,8 @@ function playNext(u) {
   if (data.hls) {
     data.hls.destroy();
   }
+
+  audio.value.src = '';
 
   const i = data.urls.map((s) => s.url).indexOf(data.url),
     next = data.urls[i + 1];
@@ -179,16 +176,14 @@ async function getAlbum(e) {
   history.pushState({}, '', e);
 
   for (let i in artist) {
-    artist[i] = null
+    artist[i] = null;
   }
 }
 
 async function getArtist(e) {
   console.log(e);
 
-  const json = await getJson(
-    'https://hyperpipeapi.onrender.com/channel/' + e,
-  );
+  const json = await getJson('https://hyperpipeapi.onrender.com/channel/' + e);
 
   console.log(json);
 
@@ -196,9 +191,9 @@ async function getArtist(e) {
   data.items.notes = json.playlistId;
   json.items = null;
 
-  for(let i in json) {
+  for (let i in json) {
     artist[i] = json[i];
-  };
+  }
 
   history.pushState({}, '', '/channel/' + e);
 }
@@ -220,7 +215,7 @@ function playPause() {
 function Stream(res) {
   console.log(res);
 
-  data.art = res.art;
+  data.artUrl = res.art;
   data.cover = `--art: url(${res.art});`;
   data.nowtitle = res.title;
   data.nowartist = res.artist.split(' - ')[0];
@@ -230,9 +225,12 @@ function Stream(res) {
   if (!!Hls && Hls.isSupported()) {
     data.hls = new Hls();
 
-    console.log(data.hls.levels);
-    data.hls.loadSource(res.hls);
     data.hls.attachMedia(audio.value);
+
+    data.hls.on(Hls.Events.MEDIA_ATTACHED, () => {
+      data.hls.loadSource(res.hls);
+    })
+
   } else {
     data.audioSrc = res.stream;
   }
@@ -249,20 +247,18 @@ function audioCanPlay() {
 
   document.title = `Playing: ${data.nowtitle} by ${data.nowartist}`;
 
-  setMetadata(data.art);
+  setMetadata();
 }
 
-function setMetadata(art) {
-  if (navigator.mediaSession) {
+function setMetadata() {
+  if ('mediaSession' in navigator) {
+    console.log(data.nowtitle, data.nowartist, data.artUrl)
     navigator.mediaSession.metadata = new MediaMetadata({
       title: data.nowtitle,
       artist: data.nowartist,
       artwork: [
-        {
-          src: art,
-          type: 'image/png',
-        },
-      ],
+        { src: data.artUrl, type: 'image/webp' }
+      ]
     });
   }
 }
@@ -306,7 +302,23 @@ onMounted(() => {
     return 'Are you Sure?';
   };
 
-  console.log(audio.value)
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.setActionHandler('play', playPause);
+    navigator.mediaSession.setActionHandler('pause', playPause);
+    navigator.mediaSession.setActionHandler('previoustrack', () => {
+      if (data.urls.length > 2) {
+        const i = data.urls.map(s => s.url).indexOf(data.url);
+        getSong(data.urls[i - 1].url);
+      }
+    })
+    navigator.mediaSession.setActionHandler('nexttrack', () => {
+      if (data.urls.length > 2) {
+        const i = data.urls.map(s => s.url).indexOf(data.url);
+        getSong(data.urls[i + 1].url);
+      }
+    })
+  }
+  
 
   parseUrl();
 
