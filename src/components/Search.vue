@@ -103,7 +103,7 @@ watch(
       data[i] = {};
       data[i].items = itms[i];
 
-      console.log(data[i]);
+      console.log(i + ': ' + data[i]);
     }
   },
 );
@@ -174,6 +174,15 @@ watch(
           @open-album="
             $emit('get-album', album.url || '/playlist?list=' + album.id)
           " />
+      </template>
+    </div>
+  </div>
+
+  <div v-if="data.singles && data.singles.items[0]" class="search-albums">
+    <h2>Singles</h2>
+    <div class="grid-3">
+      <template v-for="single in data.singles.items">
+        <AlbumItem :author="single.subtitle" :name="single.title" :art="'--art: url('+ single.thumbnails[0].url +');'" @open-album="$emit('get-album', '/playlist?list=' + single.id)" />
       </template>
     </div>
   </div>

@@ -149,14 +149,18 @@ async function getSong(e) {
 
   console.log(json);
 
+  data.artUrl = json.thumbnailUrl;
+  data.cover = `--art: url(${json.thumbnailUrl});`;
+  data.nowtitle = json.title;
+  data.nowartist = json.uploader.split(' - ')[0];
+  data.duration = json.duration;
+  data.url = e;
+
+  await getNext(hash);
+
   Stream({
-    art: json.thumbnailUrl,
-    artist: json.uploader,
-    time: json.duration,
     hls: json.hls,
     stream: json.audioStreams[0].url,
-    title: json.title,
-    url: e,
   });
 }
 
@@ -198,6 +202,30 @@ async function getArtist(e) {
   history.pushState({}, '', '/channel/' + e);
 }
 
+async function getNext(hash) {
+
+  if (!data.urls || data.urls.map(s => s.url).indexOf(data.url) < 0 ) {
+    
+    const json = await getJson('https://hyperpipeapi.onrender.com/next/' + hash);
+
+    data.url = '/watch?v=' + json.songs[0].id;
+    console.log(json);
+
+    data.urls = json.songs.map(i => {
+      i.url = '/watch?v=' + i.id;
+      i.id = null;
+
+      return i
+    });
+
+    console.log(data.urls)
+
+  }
+
+  setMetadata()
+
+}
+
 function setVolume(vol) {
   audio.value.volume = vol;
 }
@@ -214,13 +242,6 @@ function playPause() {
 
 function Stream(res) {
   console.log(res);
-
-  data.artUrl = res.art;
-  data.cover = `--art: url(${res.art});`;
-  data.nowtitle = res.title;
-  data.nowartist = res.artist.split(' - ')[0];
-  data.duration = res.time;
-  data.url = res.url;
 
   if (!!Hls && Hls.isSupported()) {
     data.hls = new Hls();
@@ -246,19 +267,45 @@ function audioCanPlay() {
   }
 
   document.title = `Playing: ${data.nowtitle} by ${data.nowartist}`;
-
-  setMetadata();
 }
 
 function setMetadata() {
   if ('mediaSession' in navigator) {
-    console.log(data.nowtitle, data.nowartist, data.artUrl)
+    
+    const i = data.urls.map(u => u.url).indexOf(data.url);
+
+    let artwork = [], album = undefined;
+    console.log(i);
+
+    if (i >= 0) {
+
+      album = data.urls[i].subtitle;
+
+      if (data.urls[i].thumbnails.length >= 0) {
+
+        artwork = data.urls[i].thumbnails.map(t => {
+          return {
+            sizes: t.width + 'x' + t.height,
+            src: t.url,
+            type: 'image/webp'
+          }
+        })
+
+      } else {
+        artwork = [
+          { src: data.artUrl, type: 'image/webp' }
+        ]
+      }
+
+      console.log(album, artwork)
+    
+    }
+
     navigator.mediaSession.metadata = new MediaMetadata({
       title: data.nowtitle,
       artist: data.nowartist,
-      artwork: [
-        { src: data.artUrl, type: 'image/webp' }
-      ]
+      album: album,
+      artwork: artwork
     });
   }
 }
