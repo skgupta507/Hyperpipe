@@ -42,6 +42,6 @@ function onClick() {
   width: 13rem;
 }
 .card-text {
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
 </style>

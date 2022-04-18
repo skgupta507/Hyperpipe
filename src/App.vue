@@ -203,27 +203,27 @@ async function getArtist(e) {
 }
 
 async function getNext(hash) {
-
-  if (!data.urls || data.urls.map(s => s.url).indexOf(data.url) < 0 ) {
-    
-    const json = await getJson('https://hyperpipeapi.onrender.com/next/' + hash);
+  if (!data.urls || data.urls.map((s) => s.url).indexOf(data.url) <= 0) {
+    const json = await getJson(
+      'https://hyperpipeapi.onrender.com/next/' + hash,
+    );
 
     data.url = '/watch?v=' + json.songs[0].id;
     console.log(json);
 
-    data.urls = json.songs.map(i => {
+    data.urls = json.songs.map((i) => {
       i.url = '/watch?v=' + i.id;
       i.id = null;
 
-      return i
+      return i;
     });
 
-    console.log(data.urls)
+    setMetadata();
 
+    console.log(data.urls);
+  } else {
+    setMetadata();
   }
-
-  setMetadata()
-
 }
 
 function setVolume(vol) {
@@ -250,8 +250,7 @@ function Stream(res) {
 
     data.hls.on(Hls.Events.MEDIA_ATTACHED, () => {
       data.hls.loadSource(res.hls);
-    })
-
+    });
   } else {
     data.audioSrc = res.stream;
   }
@@ -271,41 +270,35 @@ function audioCanPlay() {
 
 function setMetadata() {
   if ('mediaSession' in navigator) {
-    
-    const i = data.urls.map(u => u.url).indexOf(data.url);
+    const i = data.urls.map((u) => u.url).indexOf(data.url);
 
-    let artwork = [], album = undefined;
+    let artwork = [],
+      album = undefined;
     console.log(i);
 
     if (i >= 0) {
-
       album = data.urls[i].subtitle;
 
-      if (data.urls[i].thumbnails.length >= 0) {
-
-        artwork = data.urls[i].thumbnails.map(t => {
+      if (data.urls[i].thumbnails) {
+        artwork = data.urls[i].thumbnails.map((t) => {
           return {
             sizes: t.width + 'x' + t.height,
             src: t.url,
-            type: 'image/webp'
-          }
-        })
-
+            type: 'image/webp',
+          };
+        });
       } else {
-        artwork = [
-          { src: data.artUrl, type: 'image/webp' }
-        ]
+        artwork = [{ src: data.artUrl, type: 'image/webp' }];
       }
 
-      console.log(album, artwork)
-    
+      console.log(album, artwork);
     }
 
     navigator.mediaSession.metadata = new MediaMetadata({
       title: data.nowtitle,
       artist: data.nowartist,
       album: album,
-      artwork: artwork
+      artwork: artwork,
     });
   }
 }
@@ -354,18 +347,17 @@ onMounted(() => {
     navigator.mediaSession.setActionHandler('pause', playPause);
     navigator.mediaSession.setActionHandler('previoustrack', () => {
       if (data.urls.length > 2) {
-        const i = data.urls.map(s => s.url).indexOf(data.url);
+        const i = data.urls.map((s) => s.url).indexOf(data.url);
         getSong(data.urls[i - 1].url);
       }
-    })
+    });
     navigator.mediaSession.setActionHandler('nexttrack', () => {
       if (data.urls.length > 2) {
-        const i = data.urls.map(s => s.url).indexOf(data.url);
+        const i = data.urls.map((s) => s.url).indexOf(data.url);
         getSong(data.urls[i + 1].url);
       }
-    })
+    });
   }
-  
 
   parseUrl();
 

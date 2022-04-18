@@ -182,7 +182,11 @@ watch(
     <h2>Singles</h2>
     <div class="grid-3">
       <template v-for="single in data.singles.items">
-        <AlbumItem :author="single.subtitle" :name="single.title" :art="'--art: url('+ single.thumbnails[0].url +');'" @open-album="$emit('get-album', '/playlist?list=' + single.id)" />
+        <AlbumItem
+          :author="single.subtitle"
+          :name="single.title"
+          :art="'--art: url(' + single.thumbnails[0].url + ');'"
+          @open-album="$emit('get-album', '/playlist?list=' + single.id)" />
       </template>
     </div>
   </div>
