@@ -5,10 +5,13 @@ import NavBar from './components/NavBar.vue';
 import StatusBar from './components/StatusBar.vue';
 import NowPlaying from './components/NowPlaying.vue';
 import Search from './components/Search.vue';
+import NewPlaylist from './components/NewPlaylist.vue';
 import Playlists from './components/Playlists.vue';
 import Artist from './components/Artist.vue';
 
 import { getJson, getJsonPiped } from './scripts/fetch.js';
+import { useLazyLoad } from './scripts/util.js';
+import { useUpdatePlaylist } from './scripts/db.js'
 
 const data = reactive({
   artUrl: '',
@@ -36,7 +39,7 @@ const artist = reactive({
   thumbnails: [],
 });
 
-const search = ref('');
+const search = ref(''), page = ref('home');
 
 const audio = ref(null);
 
@@ -47,6 +50,9 @@ function parseUrl() {
 
   switch (loc[3].replace(location.search, '')) {
     case '':
+      search.value = ''
+      page.value = 'home'
+      break;
     case 'search':
       search.value = loc[4];
       console.log(search.value);
@@ -69,17 +75,7 @@ function parseUrl() {
 
 function Toggle(e) {
   console.log(e, data[e]);
-
-  if (data[e]) {
-    data[e] = false;
-  } else {
-    data[e] = true;
-  }
-}
-
-function Update(e) {
-  search.value = e;
-  console.log('update');
+  data[e] = !data[e]
 }
 
 function timeUpdate(t) {
@@ -126,7 +122,7 @@ function playNext(u) {
   audio.value.src = '';
 
   const i = data.urls.map((s) => s.url).indexOf(data.url),
-    next = data.urls[i + 1];
+        next = data.urls[i + 1];
 
   console.log('Index: ' + i);
   console.log(data.url, data.urls, next);
@@ -134,6 +130,7 @@ function playNext(u) {
   if (data.urls.length > i && data.urls.length != 0 && next) {
     getSong(next.url);
   } else if (data.loop) {
+    console.log(data.url, data.urls[0]);
     data.url = data.urls[0].url;
     getSong(data.urls[0].url);
   } else {
@@ -203,7 +200,7 @@ async function getArtist(e) {
 }
 
 async function getNext(hash) {
-  if (!data.urls || data.urls.map((s) => s.url).indexOf(data.url) <= 0) {
+  if (!data.urls || data.urls.map((s) => s.url).indexOf(data.url) < 0 || data.urls.length == 1) {
     const json = await getJson(
       'https://hyperpipeapi.onrender.com/next/' + hash,
     );
@@ -257,7 +254,7 @@ function Stream(res) {
 }
 
 function audioCanPlay() {
-  lazyLoad();
+  useLazyLoad();
   audio.value.play();
   data.state = 'pause';
 
@@ -268,12 +265,24 @@ function audioCanPlay() {
   document.title = `Playing: ${data.nowtitle} by ${data.nowartist}`;
 }
 
+function SaveTrack(e) {
+  useUpdatePlaylist(e, {
+    url: data.url,
+    title: data.nowtitle
+  }, (e) => {
+    if (e === true) {
+      console.log('Added Song To '+ e)
+    }
+  })
+}
+
 function setMetadata() {
   if ('mediaSession' in navigator) {
     const i = data.urls.map((u) => u.url).indexOf(data.url);
 
     let artwork = [],
-      album = undefined;
+        album = undefined;
+
     console.log(i);
 
     if (i >= 0) {
@@ -303,43 +312,19 @@ function setMetadata() {
   }
 }
 
-function lazyLoad() {
-  let lazyElems;
-
-  if ('IntersectionObserver' in window) {
-    lazyElems = document.querySelectorAll('.bg-img:not(.lazy)');
-
-    let imgObs = new IntersectionObserver((elems, obs) => {
-      elems.forEach((elem) => {
-        setTimeout(() => {
-          if (elem.isIntersecting) {
-            let ele = elem.target;
-
-            ele.classList.add('lazy');
-            imgObs.unobserve(ele);
-          }
-        }, 20);
-      });
-    });
-
-    lazyElems.forEach((img) => {
-      imgObs.observe(img);
-    });
-  } else {
-    console.log('Failed');
-  }
-}
-
 onMounted(() => {
-  lazyLoad();
+  useLazyLoad();
 
-  document.addEventListener('scroll', lazyLoad);
-  document.addEventListener('resize', lazyLoad);
-  document.addEventListener('orientationChange', lazyLoad);
+  document.addEventListener('scroll', useLazyLoad);
+  document.addEventListener('resize', useLazyLoad);
+  document.addEventListener('orientationChange', useLazyLoad);
 
   window.addEventListener('popstate', parseUrl);
+  
   window.onbeforeunload = () => {
-    return 'Are you Sure?';
+    if (data.url) {
+      return 'Are you Sure?';
+    }
   };
 
   if ('mediaSession' in navigator) {
@@ -359,6 +344,33 @@ onMounted(() => {
     });
   }
 
+  if ('indexedDB' in window) {
+    const req = indexedDB.open('hyperpipedb', 1)
+
+    req.onupgradeneeded = e => {
+      const db = e.target.result;
+      console.log(db)
+
+      if (!db.objectStoreNames.contains("playlist")) {
+
+        const store = db.createObjectStore("playlist", { keyPath: 'name' })
+
+        store.createIndex('urls', 'urls', {  unique: false })
+      
+      }
+    }
+
+    req.onerror = e => {
+      console.log("Please let me use indexedDB!!")
+      console.log(e)
+    }
+
+    req.onsuccess = e => {
+      window.db = e.target.result
+    }
+
+  }
+
   parseUrl();
 
   console.log('Mounted <App>!');
@@ -372,6 +384,7 @@ onMounted(() => {
         search = e;
       }
     "
+    @update-page="(e) => { page = e }"
     :search="search" />
 
   <template v-if="artist">
@@ -388,20 +401,27 @@ onMounted(() => {
     <div v-if="data.cover" class="art bg-img" :style="data.cover"></div>
 
     <div class="wrapper">
-      <NowPlaying :title="data.nowtitle" :artist="data.nowartist" />
+      <NowPlaying
+        :title="data.nowtitle"
+        :artist="data.nowartist" />
     </div>
   </header>
 
   <main class="placeholder">
-    <Search
+    <template v-if="page == 'home'">
+      <Search
       @get-album="getAlbum"
       @get-artist="getArtist"
-      @lazy="lazyLoad"
       @play-urls="playList"
       @add-song="addSong"
       :items="data.items"
       :songItems="data.songItems"
       :search="search" />
+    </template>
+    <template v-if="page == 'playlist'">
+      <NewPlaylist @play-urls="playList" />
+    </template>
+    
   </main>
 
   <Playlists
@@ -415,6 +435,7 @@ onMounted(() => {
     @vol="setVolume"
     @list="Toggle"
     @loop="Toggle"
+    @save="SaveTrack"
     @change-time="setTime"
     :state="data.state"
     :time="data.time"
@@ -492,10 +513,6 @@ a,
 }
 
 @media (min-width: 1024px) {
-  main .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
   header {
     margin: auto;
     display: flex;

@@ -5,16 +5,11 @@ import SongItem from './SongItem.vue';
 import AlbumItem from './AlbumItem.vue';
 
 import { getJsonPiped, getPipedQuery } from '../scripts/fetch.js';
+import { useLazyLoad } from '../scripts/util.js';
 
 const props = defineProps(['search', 'songItems', 'items']);
 
-const emit = defineEmits([
-  'get-album',
-  'get-artist',
-  'lazy',
-  'play-urls',
-  'add-song',
-]);
+const emit = defineEmits(['get-album', 'get-artist', 'play-urls', 'add-song']);
 
 const data = reactive({
   notes: null,
@@ -47,7 +42,7 @@ function getSearch(q) {
     document.title = 'Search Results for ' + q;
 
     getResults(pq);
-    emit('lazy');
+    useLazyLoad();
   } else {
     Reset();
 
@@ -103,7 +98,7 @@ watch(
       data[i] = {};
       data[i].items = itms[i];
 
-      console.log(i + ': ' + data[i]);
+      console.log(i, data[i]);
     }
   },
 );
@@ -111,7 +106,7 @@ watch(
 
 <template>
   <div v-if="data.songs && data.songs.corrected" class="text-full">
-    I Fixed your Typo, "<span class="caps">{{ data.songs.suggestion }}</span
+    Did you mean, "<span class="caps">{{ data.songs.suggestion }}</span
     >"!!
   </div>
 
@@ -129,11 +124,12 @@ watch(
           :title="song.title || song.name"
           :channel="song.uploaderUrl || ''"
           :play="song.url || '/watch?v=' + song.id"
+          :art="'url(' + (song.thumbnail || song.thumbnails[1].url) + ')'"
           @open-song="
             $emit('play-urls', [
               {
                 url: song.url || '/watch?v=' + song.id,
-                title: song.title || song.name,
+                title: (song.title || song.name),
               },
             ])
           "
@@ -141,15 +137,7 @@ watch(
             (e) => {
               $emit('get-artist', e);
             }
-          ">
-          <template #art>
-            <div
-              :style="`--art: url(${
-                song.thumbnail || song.thumbnails[1].url
-              });`"
-              class="pop-2 bg-img song-bg"></div>
-          </template>
-        </SongItem>
+          " />
       </template>
     </div>
     <a
@@ -168,9 +156,7 @@ watch(
         <AlbumItem
           :author="album.uploaderName || album.subtitle"
           :name="album.name || album.title"
-          :art="
-            '--art: url(' + (album.thumbnail || album.thumbnails[0].url) + ');'
-          "
+          :art="'url(' + (album.thumbnail || album.thumbnails[0].url) + ')'"
           @open-album="
             $emit('get-album', album.url || '/playlist?list=' + album.id)
           " />
@@ -185,7 +171,7 @@ watch(
         <AlbumItem
           :author="single.subtitle"
           :name="single.title"
-          :art="'--art: url(' + single.thumbnails[0].url + ');'"
+          :art="'url(' + single.thumbnails[0].url + ')'"
           @open-album="$emit('get-album', '/playlist?list=' + single.id)" />
       </template>
     </div>
@@ -200,7 +186,7 @@ watch(
         <AlbumItem
           :author="artist.subtitle"
           :name="artist.title"
-          :art="'--art: url(' + artist.thumbnails[0].url + ');'"
+          :art="'url(' + artist.thumbnails[0].url + ')'"
           @open-album="$emit('get-artist', artist.id)" />
       </template>
     </div>
@@ -219,11 +205,6 @@ watch(
 .search-albums h2 {
   text-align: center;
 }
-.search-albums .grid-3,
-.search-artists .grid-3 {
-  display: grid;
-  grid-template-columns: 1fr;
-}
 .search-artists {
   text-align: center;
 }
@@ -236,26 +217,9 @@ watch(
 .text-right {
   text-align: right;
 }
-.song-bg {
-  width: 120px;
-  height: 120px;
-}
 .more {
   margin: 1.5rem 0.5rem;
   font-weight: bold;
   font-size: 1rem;
-}
-@media (min-width: 530px) {
-  .search-albums .grid-3,
-  .search-artists .grid-3 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-}
-@media (min-width: 1024px) {
-  .search-albums .grid-3,
-  .search-artists .grid-3 {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
 }
 </style>

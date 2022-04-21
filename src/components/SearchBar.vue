@@ -1,17 +1,26 @@
 <script setup>
+import { ref } from 'vue';
+
 defineProps(['search']);
 defineEmits(['update-search']);
+
+const show = ref(false);
 </script>
 
 <template>
-  <button class="bi bi-search popup-wrap">
-    <div class="popup">
-      <input
-        type="text"
-        placeholder="Search..."
-        @change="$emit('update-search', $event.target.value)"
-        :value="search" />
-    </div>
+  <button
+    class="bi bi-search popup-wrap"
+    @mouseenter="show = true"
+    @mouseleave="show = false">
+    <Transition name="fade">
+      <div v-if="show" class="popup">
+        <input
+          type="text"
+          placeholder="Search..."
+          @change="$emit('update-search', $event.target.value)"
+          :value="search" />
+      </div>
+    </Transition>
   </button>
 </template>
 
@@ -24,8 +33,7 @@ defineEmits(['update-search']);
 }
 .popup input {
   color: var(--color-text);
-  --width: calc(100vw - 4rem);
-  width: 1.5rem;
+  width: calc(100vw - 4rem);
   max-width: 600px;
   font-size: 1rem;
   border: none;
@@ -33,10 +41,5 @@ defineEmits(['update-search']);
   background: var(--color-background-mute);
   outline: none;
   text-align: center;
-  animation: fill 0.4s ease;
-  transform: width 0.4s ease;
-}
-.popup input:hover {
-  width: var(--width);
 }
 </style>

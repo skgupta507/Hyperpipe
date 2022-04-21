@@ -141,6 +141,17 @@ button {
   text-transform: capitalize;
 }
 
+.textbox {
+  padding: .5rem 1rem;
+  color: var(--color-text);
+  background: var(--color-background-mute);
+  border-radius: .25rem;
+  font-size: 1rem;
+  border: none;
+  appearence: none;
+  outline: none;
+}
+
 .bg-img {
   background-image: linear-gradient(45deg, #88c0d0, #5e81ac);
   background-position: center;
@@ -175,25 +186,38 @@ button {
 }
 
 .popup-wrap {
-  --display: none;
   position: relative;
 }
-.popup-wrap:hover,
-.popup-wrap:focus,
-.popup:focus,
-.popup:active {
-  --display: flex;
-}
+
 .popup {
   position: absolute;
-  display: var(--display);
+  display: flex;
   background-color: var(--color-background);
   padding: 0.5rem;
   border-radius: 0.125rem;
   z-index: 999;
   bottom: 1.25rem;
   box-shadow: 0 0 0.5rem var(--color-border);
-  animation: fade 0.4s ease;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 530px) {
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (min-width: 1024px) {
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .grid-3 {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 
 .bars-wrap {
@@ -222,22 +246,15 @@ button {
 }
 
 /* Animations */
-@keyframes fade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
 }
-@keyframes fill {
-  from {
-    width: 0;
-  }
-  to {
-    width: var(--width);
-  }
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
+
 @keyframes heightc {
   50% {
     height: 100%;

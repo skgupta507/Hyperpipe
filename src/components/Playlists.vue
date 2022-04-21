@@ -8,22 +8,24 @@ defineEmits(['playthis']);
 </script>
 
 <template>
-  <div v-if="show" class="modal placeholder">
-    <template v-for="plurl in urls">
-      <div class="pl-item" @click="$emit('playthis', plurl)">
-        <span v-if="url == plurl.url" class="bars-wrap">
-          <div class="bars"></div>
-          <div class="bars"></div>
-          <div class="bars"></div>
-        </span>
-        <span class="pl-main caps">{{ plurl.title }}</span>
-      </div>
-    </template>
-  </div>
+  <Transition name="fade">
+    <div v-if="show" class="pl-modal placeholder">
+      <template v-for="plurl in urls">
+        <div class="pl-item" @click="$emit('playthis', plurl)">
+          <span v-if="url == plurl.url" class="bars-wrap">
+            <div class="bars"></div>
+            <div class="bars"></div>
+            <div class="bars"></div>
+          </span>
+          <span class="pl-main caps">{{ plurl.title }}</span>
+        </div>
+      </template>
+    </div>
+  </Transition>
 </template>
 
 <style scoped>
-.modal {
+.pl-modal {
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -37,8 +39,6 @@ defineEmits(['playthis']);
   z-index: 99999;
   box-shadow: 0.1rem 0.1rem 1rem var(--color-shadow);
   padding: 1rem;
-  transition: width 0.4s ease;
-  animation: fade 0.4s ease;
   overflow-y: auto;
 }
 .placeholder:empty:before {

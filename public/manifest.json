@@ -1,0 +1,9 @@
+{
+	"name": "Hyperpipe",
+	"short_name": "Hyperpipe",
+	"start_url": "/",
+	"display": "standalone",
+	"background_color": "#fff",
+	"description": "Privacy respecting YouTube Music Frontend.",
+
+}

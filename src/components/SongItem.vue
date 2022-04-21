@@ -1,12 +1,17 @@
 <script setup>
+import { ref, onMounted } from 'vue';
+
 const props = defineProps({
   author: String,
   title: String,
   channel: String,
   play: String,
+  art: String,
 });
 
 const emit = defineEmits(['get-artist', 'open-song']);
+
+const show = ref(false);
 
 function openSong(el) {
   if (!el.classList.contains('ign')) {
@@ -38,10 +43,14 @@ async function Share() {
     );
   }
 }
+
+onMounted(() => {
+  console.log(props)
+})
 </script>
 <template>
   <div class="song card flex pop" @click="openSong($event.target)">
-    <slot name="art"></slot>
+    <div class="pop-2 bg-img song-bg"></div>
 
     <span class="flex content">
       <h4>{{ title }}</h4>
@@ -53,16 +62,21 @@ async function Share() {
       </a>
     </span>
 
-    <span class="bi bi-three-dots-vertical popup-wrap ign">
-      <div class="popup ign">
-        <span
-          class="bi bi-plus-lg ign"
-          @click="
-            $parent.$emit('add-song', { url: play, title: title })
-          "></span>
+    <span
+      class="bi bi-three-dots-vertical popup-wrap ign"
+      @mouseenter="show = true"
+      @mouseleave="show = false">
+      <Transition name="fade">
+        <div v-if="show" class="popup ign">
+          <span
+            class="bi bi-plus-lg ign"
+            @click="
+              $parent.$emit('add-song', { url: play, title: title })
+            "></span>
 
-        <span class="bi bi-share ign" @click="Share"></span>
-      </div>
+          <span class="bi bi-share ign" @click="Share"></span>
+        </div>
+      </Transition>
     </span>
   </div>
 </template>
@@ -91,5 +105,10 @@ span.bi-three-dots-vertical {
 }
 .popup span {
   padding: 0.5rem;
+}
+.song-bg {
+  --art: v-bind('art');
+  width: 120px;
+  height: 120px;
 }
 </style>
