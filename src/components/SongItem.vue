@@ -7,19 +7,19 @@ const props = defineProps({
   channel: String,
   play: String,
   art: String,
-});
+}),
 
-const emit = defineEmits(['get-artist', 'open-song']);
+emit = defineEmits(['get-artist', 'open-song']),
 
-const show = ref(false);
+show = ref(false),
 
-function openSong(el) {
+openSong = (el) => {
   if (!el.classList.contains('ign')) {
     emit('open-song', props.play);
   }
-}
+},
 
-async function Share() {
+Share = async () => {
   if ('share' in navigator) {
     const data = {
       title: `Listen to ${props.title} by ${props.author} on Hyperpipe`,
@@ -42,11 +42,11 @@ async function Share() {
       },
     );
   }
-}
+};
 
 onMounted(() => {
-  console.log(props)
-})
+  console.log(props);
+});
 </script>
 <template>
   <div class="song card flex pop" @click="openSong($event.target)">

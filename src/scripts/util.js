@@ -1,8 +1,8 @@
 export function usePrefs(key) {
-	if (localStorage) {
-		if (localStorage.get(key)) return true
-		else return false
-	} else return false
+  if (localStorage) {
+    if (localStorage.get(key)) return true;
+    else return false;
+  } else return false;
 }
 
 export function useLazyLoad() {

@@ -3,7 +3,7 @@ defineProps({
   name: String,
   author: {
     type: String,
-    default: ''
+    default: '',
   },
   grad: String,
   art: {
@@ -39,7 +39,7 @@ defineEmits(['open-album']);
 }
 .card-bg {
   --art: v-bind('grad || art');
-  background: v-bind('grad');
+  background-color: v-bind('grad');
   height: 13rem;
   width: 13rem;
 }

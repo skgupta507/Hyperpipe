@@ -4,6 +4,5 @@
 	"start_url": "/",
 	"display": "standalone",
 	"background_color": "#fff",
-	"description": "Privacy respecting YouTube Music Frontend.",
-
+	"description": "Privacy respecting YouTube Music Frontend."
 }

@@ -1,4 +1,5 @@
 <script setup>
+import Hls from 'hls.js';
 import { ref, reactive, onMounted } from 'vue';
 
 import NavBar from './components/NavBar.vue';
@@ -11,7 +12,7 @@ import Artist from './components/Artist.vue';
 
 import { getJson, getJsonPiped } from './scripts/fetch.js';
 import { useLazyLoad } from './scripts/util.js';
-import { useUpdatePlaylist } from './scripts/db.js'
+import { useSetupDB, useUpdatePlaylist } from './scripts/db.js';
 
 const data = reactive({
   artUrl: '',
@@ -24,6 +25,7 @@ const data = reactive({
   items: {},
   title: '',
   artist: '',
+  artistUrl: '',
   state: 'play',
   duration: 0,
   time: 0,
@@ -39,7 +41,8 @@ const artist = reactive({
   thumbnails: [],
 });
 
-const search = ref(''), page = ref('home');
+const search = ref(''),
+  page = ref('home');
 
 const audio = ref(null);
 
@@ -50,8 +53,8 @@ function parseUrl() {
 
   switch (loc[3].replace(location.search, '')) {
     case '':
-      search.value = ''
-      page.value = 'home'
+      search.value = '';
+      page.value = 'home';
       break;
     case 'search':
       search.value = loc[4];
@@ -75,7 +78,7 @@ function parseUrl() {
 
 function Toggle(e) {
   console.log(e, data[e]);
-  data[e] = !data[e]
+  data[e] = !data[e];
 }
 
 function timeUpdate(t) {
@@ -122,7 +125,7 @@ function playNext(u) {
   audio.value.src = '';
 
   const i = data.urls.map((s) => s.url).indexOf(data.url),
-        next = data.urls[i + 1];
+    next = data.urls[i + 1];
 
   console.log('Index: ' + i);
   console.log(data.url, data.urls, next);
@@ -150,6 +153,7 @@ async function getSong(e) {
   data.cover = `--art: url(${json.thumbnailUrl});`;
   data.nowtitle = json.title;
   data.nowartist = json.uploader.split(' - ')[0];
+  data.artistUrl = json.uploaderUrl;
   data.duration = json.duration;
   data.url = e;
 
@@ -200,7 +204,11 @@ async function getArtist(e) {
 }
 
 async function getNext(hash) {
-  if (!data.urls || data.urls.map((s) => s.url).indexOf(data.url) < 0 || data.urls.length == 1) {
+  if (
+    !data.urls ||
+    data.urls.map((s) => s.url).indexOf(data.url) < 0 ||
+    data.urls.length == 1
+  ) {
     const json = await getJson(
       'https://hyperpipeapi.onrender.com/next/' + hash,
     );
@@ -266,14 +274,18 @@ function audioCanPlay() {
 }
 
 function SaveTrack(e) {
-  useUpdatePlaylist(e, {
-    url: data.url,
-    title: data.nowtitle
-  }, (e) => {
-    if (e === true) {
-      console.log('Added Song To '+ e)
-    }
-  })
+  useUpdatePlaylist(
+    e,
+    {
+      url: data.url,
+      title: data.nowtitle,
+    },
+    (e) => {
+      if (e === true) {
+        console.log('Added Song To ' + e);
+      }
+    },
+  );
 }
 
 function setMetadata() {
@@ -281,7 +293,7 @@ function setMetadata() {
     const i = data.urls.map((u) => u.url).indexOf(data.url);
 
     let artwork = [],
-        album = undefined;
+      album = undefined;
 
     console.log(i);
 
@@ -320,7 +332,7 @@ onMounted(() => {
   document.addEventListener('orientationChange', useLazyLoad);
 
   window.addEventListener('popstate', parseUrl);
-  
+
   window.onbeforeunload = () => {
     if (data.url) {
       return 'Are you Sure?';
@@ -344,32 +356,7 @@ onMounted(() => {
     });
   }
 
-  if ('indexedDB' in window) {
-    const req = indexedDB.open('hyperpipedb', 1)
-
-    req.onupgradeneeded = e => {
-      const db = e.target.result;
-      console.log(db)
-
-      if (!db.objectStoreNames.contains("playlist")) {
-
-        const store = db.createObjectStore("playlist", { keyPath: 'name' })
-
-        store.createIndex('urls', 'urls', {  unique: false })
-      
-      }
-    }
-
-    req.onerror = e => {
-      console.log("Please let me use indexedDB!!")
-      console.log(e)
-    }
-
-    req.onsuccess = e => {
-      window.db = e.target.result
-    }
-
-  }
+  useSetupDB()
 
   parseUrl();
 
@@ -384,7 +371,11 @@ onMounted(() => {
         search = e;
       }
     "
-    @update-page="(e) => { page = e }"
+    @update-page="
+      (e) => {
+        page = e;
+      }
+    "
     :search="search" />
 
   <template v-if="artist">
@@ -401,27 +392,24 @@ onMounted(() => {
     <div v-if="data.cover" class="art bg-img" :style="data.cover"></div>
 
     <div class="wrapper">
-      <NowPlaying
-        :title="data.nowtitle"
-        :artist="data.nowartist" />
+      <NowPlaying @get-artist="getArtist" :title="data.nowtitle" :artist="data.nowartist" :artistUrl="data.artistUrl" />
     </div>
   </header>
 
   <main class="placeholder">
     <template v-if="page == 'home'">
       <Search
-      @get-album="getAlbum"
-      @get-artist="getArtist"
-      @play-urls="playList"
-      @add-song="addSong"
-      :items="data.items"
-      :songItems="data.songItems"
-      :search="search" />
+        @get-album="getAlbum"
+        @get-artist="getArtist"
+        @play-urls="playList"
+        @add-song="addSong"
+        :items="data.items"
+        :songItems="data.songItems"
+        :search="search" />
     </template>
     <template v-if="page == 'playlist'">
       <NewPlaylist @play-urls="playList" />
     </template>
-    
   </main>
 
   <Playlists

@@ -1,25 +1,25 @@
 <script setup>
-import { reactive } from 'vue'
+import { reactive } from 'vue';
 import SearchBar from '../components/SearchBar.vue';
 
-const emit = defineEmits(['update-page', 'update-search']);
+const emit = defineEmits(['update-page', 'update-search']),
 
-const page = reactive({
+page = reactive({
   home: true,
-  playlist: false
-})
+  playlist: false,
+}),
 
-function Toggle(p) {
+Toggle = (p) => {
   for (let pg in page) {
-    page[pg] = false
+    page[pg] = false;
   }
-  page[p] = true
+  page[p] = true;
   emit('update-page', p);
-}
-function home() {
-  history.pushState('', {}, '/')
-}
+},
 
+home = () => {
+  history.pushState('', {}, '/');
+};
 </script>
 
 <template>
@@ -27,8 +27,12 @@ function home() {
     <h1 class="bi bi-vinyl" @click="home"></h1>
 
     <div class="wrap">
-      <span :class="'nav-ico bi bi-house ' + page.home" @click="Toggle('home')"></span>
-      <span :class="'nav-ico bi bi-collection ' + page.playlist" @click="Toggle('playlist')"></span>
+      <span
+        :class="'nav-ico bi bi-house ' + page.home"
+        @click="Toggle('home')"></span>
+      <span
+        :class="'nav-ico bi bi-collection ' + page.playlist"
+        @click="Toggle('playlist')"></span>
     </div>
 
     <div class="wrap">
@@ -53,14 +57,13 @@ h1.bi {
   font-size: calc(1.75rem + 1.5vw);
 }
 .bi {
-  font-size: calc(1rem + 1vw);
+  font-size: calc(1rem + 1.5vw);
 }
 .wrap {
   text-align: center;
   margin-left: auto;
-  margin-right: .5rem;
 }
 .nav-ico {
-  margin: 0 .5rem;
+  margin: 0 0.5rem;
 }
 </style>

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch } from 'vue';
-import Modal from './Modal.vue'
-import { useListPlaylists } from '../scripts/db.js'
+import Modal from './Modal.vue';
+import { useListPlaylists } from '../scripts/db.js';
 
 defineProps({
   state: String,
@@ -10,8 +10,20 @@ defineProps({
   loop: Boolean,
 });
 
-const emit = defineEmits(['vol', 'play', 'list', 'loop', 'save', 'change-time']),
-showVol = ref(false), vol = ref(1), showmenu = ref(false), showpl = ref(false), pl = ref(''), list = ref([]);
+const emit = defineEmits([
+    'vol',
+    'play',
+    'list',
+    'loop',
+    'save',
+    'change-time',
+  ]),
+  showVol = ref(false),
+  vol = ref(1),
+  showmenu = ref(false),
+  showpl = ref(false),
+  pl = ref(''),
+  list = ref([]);
 
 function Save() {
   showpl.value = true;
@@ -19,21 +31,39 @@ function Save() {
     console.log(res);
     list.value = res;
     showmenu.value = false;
-  })
+  });
 }
 </script>
 <template>
   <Teleport to="body">
     <Transition name="fade">
-      <Modal n="2" :display="showpl" title="Select Playlist to Add" @show="(e) => { showpl = e }">
+      <Modal
+        n="2"
+        :display="showpl"
+        title="Select Playlist to Add"
+        @show="
+          (e) => {
+            showpl = e;
+          }
+        ">
         <template #content>
           <template v-for="i in list">
-            <div class="flex" @click="pl = i.name"><span>{{ i.name }}</span><span class="ml-auto">{{ i.urls.length || '' }}</span></div>
+            <div class="flex item" @click="pl = i.name">
+              <span>{{ i.name }}</span
+              ><span class="ml-auto">{{ i.urls.length || '' }}</span>
+            </div>
           </template>
         </template>
         <template #buttons>
-          <button @click="showpl = false">Cancel</button>
-          <button @click="if (pl) $emit('save', pl); showpl = false">Add</button>
+          <button aria-label="Cancel" @click="showpl = false">Cancel</button>
+          <button
+            aria-label="Add Song"
+            @click="
+              if (pl) $emit('save', pl);
+              showpl = false;
+            ">
+            Add
+          </button>
         </template>
       </Modal>
     </Transition>
@@ -43,6 +73,7 @@ function Save() {
     <div class="flex statusbar-left">
       <button
         id="btn-play-pause"
+        aria-label="Play or Pause"
         :class="'bi bi-' + state"
         @click="$emit('play')"></button>
 
@@ -51,6 +82,7 @@ function Save() {
         class="range-wrap"
         :style="'--fw:' + time + '%;'">
         <input
+          aria-label="Change Time"
           :value="time"
           type="range"
           name="statusbar-progress"
@@ -62,31 +94,49 @@ function Save() {
     <div class="flex statusbar-right">
       <button
         id="vol-btn"
+        aria-label="Volume Buttons"
         @click="showVol = !showVol"
         class="popup-wrap bi bi-volume-up">
         <Transition name="fade">
           <div v-if="showVol" id="vol" class="popup">
             <input
               id="vol-input"
+              aria-label="Volume Input"
               type="range"
               :value="vol"
               max="1"
               step=".01"
-              @input="$emit('vol', $event.target.value); vol = $event.target.value" />
+              @input="
+                $emit('vol', $event.target.value);
+                vol = $event.target.value;
+              " />
           </div>
         </Transition>
       </button>
-      <button class="bi bi-three-dots" @click="showmenu = !showmenu; if (show) $emit('list', 'showplaylist')"></button>
+      <button
+        class="bi bi-three-dots"
+        aria-label="More Controls"
+        @click="
+          showmenu = !showmenu;
+          if (show) $emit('list', 'showplaylist');
+        "></button>
       <div id="menu" v-if="showmenu" class="popup">
-        <button id="addToPlaylist" title="Add Current Song to a Playlist" class="bi bi-collection" @click="Save"></button>
+        <button
+          id="addToPlaylist"
+          title="Add Current Song to a Playlist"
+          aria-label="Add Current Song to a Playlist"
+          class="bi bi-collection"
+          @click="Save"></button>
         <button
           id="list-btn"
           title="Current Playlist"
+          aria-label="Current Playlist"
           :class="'bi bi-music-note-list ' + show"
           @click="$emit('list', 'showplaylist')"></button>
         <button
           id="loop-btn"
           title="Loop"
+          aria-label="Loop"
           :class="'bi bi-infinity ' + loop"
           @click="$emit('loop', 'loop')"></button>
       </div>
@@ -125,16 +175,22 @@ function Save() {
 .ml-auto {
   margin-left: auto;
 }
+.item {
+  border-radius: 50rem 0 0 50rem;
+}
+.item:hover {
+  background-color: var(--color-background-mute);
+}
 #menu {
   bottom: 1.5rem;
   left: -1.75rem;
-  box-shadow: .5rem .5rem 2rem var(--color-shadow);
+  box-shadow: 0.5rem 0.5rem 2rem var(--color-shadow);
 }
 #vol {
   --h: 6.5rem;
   --w: 1rem;
   display: flex;
-  box-shadow: -.5rem -.5rem 2rem var(--color-shadow);
+  box-shadow: -0.5rem -0.5rem 2rem var(--color-shadow);
   transform: rotateZ(270deg) translateX(calc(calc(var(--h) / 2) - 0.5rem))
     translateY(calc(calc(var(--w) + 2rem) * -1));
 }

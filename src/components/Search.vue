@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, watch } from 'vue';
+import { ref, reactive, watch } from 'vue';
 import PlayBtn from './PlayBtn.vue';
 import SongItem from './SongItem.vue';
 import AlbumItem from './AlbumItem.vue';
@@ -7,39 +7,49 @@ import AlbumItem from './AlbumItem.vue';
 import { getJsonPiped, getPipedQuery } from '../scripts/fetch.js';
 import { useLazyLoad } from '../scripts/util.js';
 
-const props = defineProps(['search', 'songItems', 'items']);
+const props = defineProps(['search', 'songItems', 'items']),
 
-const emit = defineEmits(['get-album', 'get-artist', 'play-urls', 'add-song']);
+emit = defineEmits(['get-album', 'get-artist', 'play-urls', 'add-song']),
 
-const data = reactive({
+filters = ['music_songs', 'music_albums', 'music_artists'],
+
+filter = ref('music_songs'),
+
+isSearch = ref(/search/.test(location.pathname)),
+
+data = reactive({
   notes: null,
   albums: null,
   albumTitle: null,
   songs: null,
+  artists: null,
   recommendedArtists: null,
-});
+}),
 
-function Reset() {
+Reset = () => {
+  isSearch.value = /search/.test(location.pathname);
+
   for (let i in data) {
     data[i] = null;
   }
-}
+},
 
-function playAlbum() {
+playAlbum = () => {
   const urls = data.songs.items.map((item) => {
     return { url: item.url, title: item.title };
   });
 
   emit('play-urls', urls);
-}
+},
 
-function getSearch(q) {
+getSearch = (q) => {
   if (q) {
     const pq = q.split(' ').join('+');
 
     history.pushState({}, '', `/search/${pq + getPipedQuery()}`);
 
     document.title = 'Search Results for ' + q;
+    isSearch.value = /search/.test(location.pathname);
 
     getResults(pq);
     useLazyLoad();
@@ -51,18 +61,17 @@ function getSearch(q) {
 
     console.log('No Search');
   }
-}
+},
 
-async function getResults(q) {
-  const filters = ['music_songs', 'music_albums'];
+getResults = async (q) => {
 
-  for (let filter of filters) {
-    const json = await getJsonPiped(`/search?q=${q}&filter=${filter}`);
+  const f = filter.value || 'music_songs',
+  
+  json = await getJsonPiped(`/search?q=${q}&filter=${f}`);
 
-    data[filter.split('_')[1]] = json;
-    console.log(json, data);
-  }
-}
+  data[f.split('_')[1]] = json;
+  console.log(json, data);
+};
 
 watch(
   () => props.search,
@@ -115,6 +124,12 @@ watch(
     <span>{{ data.albumTitle }}</span>
   </div>
 
+  <div v-if="isSearch" class="filters">
+    <button v-for="f in filters" class="filter caps" @click="filter = f; Reset(); getSearch(search)" :data-active="f == filter">
+      {{ f.split('_')[1] }}
+    </button>
+  </div>
+
   <div v-if="data.songs && data.songs.items[0]" class="search-songs">
     <h2>Songs</h2>
     <div class="grid">
@@ -129,7 +144,7 @@ watch(
             $emit('play-urls', [
               {
                 url: song.url || '/watch?v=' + song.id,
-                title: (song.title || song.name),
+                title: song.title || song.name,
               },
             ])
           "
@@ -178,16 +193,16 @@ watch(
   </div>
 
   <div
-    v-if="data.recommendedArtists && data.recommendedArtists.items[0]"
+    v-if="( data.recommendedArtists && data.recommendedArtists.items[0] ) || ( data.artists && data.artists.items[0] )"
     class="search-artists">
-    <h2>Similar Artists</h2>
+    <h2>{{ data.artists ? 'Artists' : 'Similar Artists' }}</h2>
     <div class="grid-3 circle">
-      <template v-for="artist in data.recommendedArtists.items">
+      <template v-for="artist in ( data.artists ? data.artists.items : data.recommendedArtists.items)">
         <AlbumItem
           :author="artist.subtitle"
-          :name="artist.title"
-          :art="'url(' + artist.thumbnails[0].url + ')'"
-          @open-album="$emit('get-artist', artist.id)" />
+          :name="artist.name || artist.title"
+          :art="'url(' + (artist.thumbnail || artist.thumbnails[0].url) + ')'"
+          @open-album="$emit('get-artist', (artist.id || artist.url.replace('/channel/', '') ) )" />
       </template>
     </div>
   </div>
@@ -207,6 +222,27 @@ watch(
 }
 .search-artists {
   text-align: center;
+}
+.filters {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 5rem;
+}
+.filter {
+  width: calc(80% / v-bind('filters.length'));
+  max-width: 200px;
+  margin: 1rem;
+  padding: .5rem;
+  font-size: 1.25rem;
+  border-radius: .25rem;
+}
+.filter:hover {
+  background: var(--color-background-mute);
+}
+.filter[data-active=true] {
+  border-bottom: .125rem var(--color-text) solid;
+  border-radius: .25rem .25rem 0 0;
 }
 .text-full {
   padding: 1rem;

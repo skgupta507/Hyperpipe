@@ -1,4 +1,4 @@
-# Hyperpipe
+# \[WIP\] Hyperpipe
 
 ![On Codeberg](https://codeberg.org/Hyperpipe/static/raw/branch/master/on-codeberg.svg)
 
@@ -9,7 +9,7 @@ A Privacy Respecting Frontend for YouTube Music inspired and built with the help
 
 ## Usage
 
-***HYPERPIPE IS ONLY BEING DEVELOPED, EXPECT BUGS AND MESSY CODE***
+**_HYPERPIPE IS ONLY BEING DEVELOPED, EXPECT BUGS AND MESSY CODE_**
 
 ```sh
 npm install
@@ -37,17 +37,19 @@ npm run build
 
 ## Instances
 
-| Instance                     | Country (Backend) |
+|           Instance           | Country (Backend) |
 | :--------------------------: | :---------------: |
-| [hyperpipe.surge.sh][hypipe] | 🇩🇪                |
+| [hyperpipe.surge.sh][hypipe] |        🇩🇪         |
 
 ## LICENSE
 
 ### GPL v3 Only
 
-Please refer to [LICENSE][LICENSE].
+Please refer to [LICENSE][license].
 
-You can reach out to me on <TODO>
+You can reach out to me on
+
+- snematoda.751k2 [at] aleeas [dot] com
 
 ### Dependencies and Mentions
 
@@ -60,7 +62,7 @@ You can reach out to me on <TODO>
 
 [hypipe]: https://hyperpipe.surge.sh
 [piped]: https://piped.kavin.rocks
-[LICENSE]: https://codeberg.org/Hyperpipe/Hyperpipe/src/branch/main/LICENSE.txt
+[license]: https://codeberg.org/Hyperpipe/Hyperpipe/src/branch/main/LICENSE.txt
 [vue]: https://github.com/vuejs/core/blob/main/LICENSE
 [vite]: https://github.com/vitejs/vite/blob/main/LICENSE
 [bi]: https://github.com/twbs/icons/blob/main/LICENSE.md

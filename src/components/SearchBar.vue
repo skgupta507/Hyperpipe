@@ -9,6 +9,7 @@ const show = ref(false);
 
 <template>
   <button
+    aria-label="Search Button"
     class="bi bi-search popup-wrap"
     @mouseenter="show = true"
     @mouseleave="show = false">
@@ -16,6 +17,7 @@ const show = ref(false);
       <div v-if="show" class="popup">
         <input
           type="text"
+          aria-label="Search Input"
           placeholder="Search..."
           @change="$emit('update-search', $event.target.value)"
           :value="search" />

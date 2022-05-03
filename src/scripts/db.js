@@ -1,98 +1,116 @@
+export function useSetupDB() {
+  if ('indexedDB' in window) {
+    const req = indexedDB.open('hyperpipedb', 1);
+
+    req.onupgradeneeded = (e) => {
+      const db = e.target.result;
+      console.log(db);
+
+      if (!db.objectStoreNames.contains('playlist')) {
+        const store = db.createObjectStore('playlist', { keyPath: 'name' });
+
+        store.createIndex('urls', 'urls', { unique: false });
+      }
+    };
+
+    req.onerror = (e) => {
+      console.log('Please let me use indexedDB!!');
+      console.log(e);
+    };
+
+    req.onsuccess = (e) => {
+      window.db = e.target.result;
+    };
+  }
+}
+
 export function useUpdatePlaylist(key, obj, cb = () => null) {
-	
-	if (window.db && key) {
-		
-		const store = window.db.transaction(['playlist'], "readwrite").objectStore('playlist'),
-		req = store.get(key);
+  if (window.db && key) {
+    const store = window.db
+        .transaction(['playlist'], 'readwrite')
+        .objectStore('playlist'),
+      req = store.get(key);
 
-		req.onerror = (e) => {
-			console.log('Error!!', e)
-		}
+    req.onerror = (e) => {
+      console.log('Error!!', e);
+    };
 
-		req.onsuccess = e => {
-			const itm = e.target.result;
+    req.onsuccess = (e) => {
+      const itm = e.target.result;
 
-			if (itm) {
-				itm.urls.push(obj)
-				store.put(itm)
-				cb(true)
-			}
-		}
-
-	} else alert('No indexedDB Created')
-
+      if (itm) {
+        itm.urls.push(obj);
+        store.put(itm);
+        cb(true);
+      }
+    };
+  } else alert('No indexedDB Created');
 }
 
-export function useCreatePlaylist(key, obj, cb = () => null ) {
-	if (window.db && key && obj) {
-		
-		const store = window.db.transaction(['playlist'], "readwrite").objectStore('playlist'),
-		req = store.get(key);
+export function useCreatePlaylist(key, obj, cb = () => null) {
+  if (window.db && key && obj) {
+    const store = window.db
+        .transaction(['playlist'], 'readwrite')
+        .objectStore('playlist'),
+      req = store.get(key);
 
-		req.onerror = (e) => {
-			console.log('Error!!', e)
-		}
+    req.onerror = (e) => {
+      console.log('Error!!', e);
+    };
 
-		req.onsuccess = (e) => {
-			const res = e.target.result;
+    req.onsuccess = (e) => {
+      const res = e.target.result;
 
-			if (!res) {
+      if (!res) {
+        store.add({
+          name: key,
+          urls: obj,
+        });
 
-				store.add({
-					name: key, urls: obj
-				});
-
-				cb(res);
-
-			} else {
-				console.log(e.target.result);
-				alert(`Error: Playlist with name ${key} exists`)
-			}
-
-		}
-	} else alert('No indexedDB Created')
+        cb(res);
+      } else {
+        console.log(e.target.result);
+        alert(`Error: Playlist with name ${key} exists`);
+      }
+    };
+  } else alert('No indexedDB Created');
 }
 
-export function useGetPlaylist(key, cb = () => null ) {
+export function useGetPlaylist(key, cb = () => null) {
+  if (window.db && key) {
+    const store = window.db.transaction(['playlist']).objectStore('playlist'),
+      req = store.get(key);
 
-	if (window.db && key) {
-		
-		const store = window.db.transaction(['playlist']).objectStore('playlist'),
-		req = store.get(key);
+    req.onerror = (e) => {
+      console.log('Error!!', e);
+    };
 
-		req.onerror = (e) => {
-			console.log('Error!!', e)
-		}
+    req.onsuccess = (e) => {
+      const res = e.target.result;
 
-		req.onsuccess = e => {
-			const res = e.target.result;
-
-			if (res) {
-				cb(res)
-			}
-		}
-
-	} else alert('No indexedDB Created')
+      if (res) {
+        cb(res);
+      }
+    };
+  } else alert('No indexedDB Created');
 }
 
 export function useListPlaylists(cb = () => null) {
-	if (window.db) {
+  if (window.db) {
+    let pls = [];
 
-		let pls = [];
+    const store = window.db.transaction(['playlist']).objectStore('playlist'),
+      cursor = store.openCursor();
 
-		const store = window.db.transaction(['playlist']).objectStore('playlist'),
-		cursor = store.openCursor();
+    cursor.onsuccess = (e) => {
+      const pl = e.target.result;
 
-		cursor.onsuccess = (e) => {
-			const pl = e.target.result;
-
-			if (pl) {
-				pls.push(pl.value)
-				pl.continue()
-			} else {
-				cb(pls)
-			}
-
-		}
-	}
+      if (pl) {
+        pls.push(pl.value);
+        pl.continue();
+      } else {
+        cb(pls);
+      }
+    };
+  }
 }
