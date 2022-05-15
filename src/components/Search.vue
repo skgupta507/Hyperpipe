@@ -8,74 +8,64 @@ import { getJsonPiped, getPipedQuery } from '../scripts/fetch.js';
 import { useLazyLoad } from '../scripts/util.js';
 
 const props = defineProps(['search', 'songItems', 'items']),
-
-emit = defineEmits(['get-album', 'get-artist', 'play-urls', 'add-song']),
-
-filters = ['music_songs', 'music_albums', 'music_artists'],
-
-filter = ref('music_songs'),
-
-isSearch = ref(/search/.test(location.pathname)),
-
-data = reactive({
-  notes: null,
-  albums: null,
-  albumTitle: null,
-  songs: null,
-  artists: null,
-  recommendedArtists: null,
-}),
-
-Reset = () => {
-  isSearch.value = /search/.test(location.pathname);
-
-  for (let i in data) {
-    data[i] = null;
-  }
-},
-
-playAlbum = () => {
-  const urls = data.songs.items.map((item) => {
-    return { url: item.url, title: item.title };
+  emit = defineEmits(['get-album', 'get-artist', 'play-urls', 'add-song']),
+  filters = ['music_songs', 'music_albums', 'music_artists'],
+  filter = ref('music_songs'),
+  isSearch = ref(/search/.test(location.pathname)),
+  data = reactive({
+    notes: null,
+    albums: null,
+    albumTitle: null,
+    songs: null,
+    artists: null,
+    recommendedArtists: null,
   });
 
-  emit('play-urls', urls);
-},
-
-getSearch = (q) => {
-  if (q) {
-    const pq = q.split(' ').join('+');
-
-    history.pushState({}, '', `/search/${pq + getPipedQuery()}`);
-
-    document.title = 'Search Results for ' + q;
+const Reset = () => {
     isSearch.value = /search/.test(location.pathname);
 
-    getResults(pq);
-    useLazyLoad();
-  } else {
-    Reset();
+    for (let i in data) {
+      data[i] = null;
+    }
+  },
+  playAlbum = () => {
+    const urls = data.songs.items.map(item => {
+      return { url: item.url, title: item.title };
+    });
 
-    history.pushState({}, '', '/');
-    document.title = 'Hyperpipe';
+    emit('play-urls', urls);
+  },
+  getSearch = q => {
+    if (q) {
+      const pq = q.split(' ').join('+');
 
-    console.log('No Search');
-  }
-},
+      history.pushState({}, '', `/search/${pq + getPipedQuery()}`);
 
-getResults = async (q) => {
+      document.title = 'Search Results for ' + q;
+      isSearch.value = /search/.test(location.pathname);
 
-  const f = filter.value || 'music_songs',
-  
-  json = await getJsonPiped(`/search?q=${q}&filter=${f}`);
+      getResults(pq);
+      useLazyLoad();
+    } else {
+      Reset();
 
-  data[f.split('_')[1]] = json;
-  console.log(json, data);
-};
+      history.pushState({}, '', '/');
+      document.title = 'Hyperpipe';
+
+      console.log('No Search');
+    }
+  },
+  getResults = async q => {
+    const f = filter.value || 'music_songs',
+      json = await getJsonPiped(`/search?q=${q}&filter=${f}`);
+
+    data[f.split('_')[1]] = json;
+    console.log(json, data);
+  };
 
 watch(
   () => props.search,
-  (n) => {
+  n => {
     if (n) {
       n = n.replace(location.search || '', '');
 
@@ -87,7 +77,7 @@ watch(
 
 watch(
   () => props.songItems,
-  (i) => {
+  i => {
     console.log(i);
 
     Reset();
@@ -100,7 +90,7 @@ watch(
 
 watch(
   () => props.items,
-  (itms) => {
+  itms => {
     Reset();
 
     for (let i in itms) {
@@ -125,7 +115,15 @@ watch(
   </div>
 
   <div v-if="isSearch" class="filters">
-    <button v-for="f in filters" class="filter caps" @click="filter = f; Reset(); getSearch(search)" :data-active="f == filter">
+    <button
+      v-for="f in filters"
+      class="filter caps"
+      @click="
+        filter = f;
+        Reset();
+        getSearch(search);
+      "
+      :data-active="f == filter">
       {{ f.split('_')[1] }}
     </button>
   </div>
@@ -149,7 +147,7 @@ watch(
             ])
           "
           @get-artist="
-            (e) => {
+            e => {
               $emit('get-artist', e);
             }
           " />
@@ -193,16 +191,27 @@ watch(
   </div>
 
   <div
-    v-if="( data.recommendedArtists && data.recommendedArtists.items[0] ) || ( data.artists && data.artists.items[0] )"
+    v-if="
+      (data.recommendedArtists && data.recommendedArtists.items[0]) ||
+      (data.artists && data.artists.items[0])
+    "
     class="search-artists">
     <h2>{{ data.artists ? 'Artists' : 'Similar Artists' }}</h2>
     <div class="grid-3 circle">
-      <template v-for="artist in ( data.artists ? data.artists.items : data.recommendedArtists.items)">
+      <template
+        v-for="artist in data.artists
+          ? data.artists.items
+          : data.recommendedArtists.items">
         <AlbumItem
           :author="artist.subtitle"
           :name="artist.name || artist.title"
           :art="'url(' + (artist.thumbnail || artist.thumbnails[0].url) + ')'"
-          @open-album="$emit('get-artist', (artist.id || artist.url.replace('/channel/', '') ) )" />
+          @open-album="
+            $emit(
+              'get-artist',
+              artist.id || artist.url.replace('/channel/', ''),
+            )
+          " />
       </template>
     </div>
   </div>
@@ -227,22 +236,22 @@ watch(
   display: flex;
   width: 100%;
   justify-content: center;
-  margin-bottom: 5rem;
+  margin-bottom: 2rem;
 }
 .filter {
   width: calc(80% / v-bind('filters.length'));
   max-width: 200px;
   margin: 1rem;
-  padding: .5rem;
+  padding: 0.5rem;
   font-size: 1.25rem;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
 }
 .filter:hover {
   background: var(--color-background-mute);
 }
-.filter[data-active=true] {
-  border-bottom: .125rem var(--color-text) solid;
-  border-radius: .25rem .25rem 0 0;
+.filter[data-active='true'] {
+  border-bottom: 0.125rem var(--color-text) solid;
+  border-radius: 0.25rem 0.25rem 0 0;
 }
 .text-full {
   padding: 1rem;

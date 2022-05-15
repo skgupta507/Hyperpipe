@@ -1,48 +1,49 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
+import { useRand } from '../scripts/colors.js';
+
+const rand = useRand();
+
 const props = defineProps({
-  author: String,
-  title: String,
-  channel: String,
-  play: String,
-  art: String,
-}),
+    author: String,
+    title: String,
+    channel: String,
+    play: String,
+    art: String,
+  }),
+  emit = defineEmits(['get-artist', 'open-song']),
+  show = ref(false);
 
-emit = defineEmits(['get-artist', 'open-song']),
-
-show = ref(false),
-
-openSong = (el) => {
-  if (!el.classList.contains('ign')) {
-    emit('open-song', props.play);
-  }
-},
-
-Share = async () => {
-  if ('share' in navigator) {
-    const data = {
-      title: `Listen to ${props.title} by ${props.author} on Hyperpipe`,
-      url: location.origin + props.play,
-    };
-
-    try {
-      await navigator.share(data);
-      console.log('Done Sharing!');
-    } catch (err) {
-      console.log(err);
+const openSong = el => {
+    if (!el.classList.contains('ign')) {
+      emit('open-song', props.play);
     }
-  } else {
-    navigator.clipboard.writeText(location.host + props.play).then(
-      () => {
-        console.log('Copied to Clipboard');
-      },
-      (err) => {
+  },
+  Share = async () => {
+    if ('share' in navigator) {
+      const data = {
+        title: `Listen to ${props.title} by ${props.author} on Hyperpipe`,
+        url: location.origin + props.play,
+      };
+
+      try {
+        await navigator.share(data);
+        console.log('Done Sharing!');
+      } catch (err) {
         console.log(err);
-      },
-    );
-  }
-};
+      }
+    } else {
+      navigator.clipboard.writeText(location.host + props.play).then(
+        () => {
+          console.log('Copied to Clipboard');
+        },
+        err => {
+          console.log(err);
+        },
+      );
+    }
+  };
 
 onMounted(() => {
   console.log(props);
@@ -107,7 +108,8 @@ span.bi-three-dots-vertical {
   padding: 0.5rem;
 }
 .song-bg {
-  --art: v-bind('art');
+  --grad: v-bind('rand');
+  --art: v-bind('art || rand');
   width: 120px;
   height: 120px;
 }

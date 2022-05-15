@@ -12,34 +12,30 @@ import {
 } from '../scripts/db.js';
 
 const emit = defineEmits(['play-urls']),
-
-list = ref([]),
+  list = ref([]),
   show = ref(false),
   text = ref(''),
+  Play = key => {
+    console.log(key);
 
-Play = (key) => {
-  console.log(key);
-
-  useGetPlaylist(key, (res) => {
-    console.log(res);
-    emit('play-urls', res.urls);
-  });
-},
-
-List = () => {
-  useListPlaylists((res) => {
-    list.value = res;
-  });
-},
-
-Create = () => {
-  if (text.value) {
-    useCreatePlaylist(text.value, [], () => {
-      List();
-      show.value = false;
+    useGetPlaylist(key, res => {
+      console.log(res);
+      emit('play-urls', res.urls);
     });
-  }
-};
+  },
+  List = () => {
+    useListPlaylists(res => {
+      list.value = res;
+    });
+  },
+  Create = () => {
+    if (text.value) {
+      useCreatePlaylist(text.value, [], () => {
+        List();
+        show.value = false;
+      });
+    }
+  };
 
 onMounted(() => {
   List();
@@ -53,7 +49,7 @@ onMounted(() => {
       :display="show"
       title="Create a new Playlist..."
       @show="
-        (e) => {
+        e => {
           show = e;
         }
       ">

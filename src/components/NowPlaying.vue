@@ -11,15 +11,19 @@ defineProps({
   artistUrl: {
     type: String,
     default: '',
-  }
+  },
 });
-defineEmits(['get-artist'])
+defineEmits(['get-artist']);
 </script>
 
 <template>
   <div v-if="title && artist" class="wrap">
     <h1>{{ title }}</h1>
-    <h3><a :href="artistUrl" @click.prevent="$emit('get-artist', artistUrl)">{{ artist }}</a></h3>
+    <h3>
+      <a :href="artistUrl" @click.prevent="$emit('get-artist', artistUrl)">{{
+        artist
+      }}</a>
+    </h3>
   </div>
 </template>
 

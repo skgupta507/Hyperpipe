@@ -1,15 +1,16 @@
 <script setup>
-defineProps({
+import { useRand } from '../scripts/colors.js';
+
+const rand = useRand();
+
+const props = defineProps({
   name: String,
   author: {
     type: String,
     default: '',
   },
   grad: String,
-  art: {
-    type: String,
-    default: 'linear-gradient(45deg, #88c0d0, #5e81ac)',
-  },
+  art: String,
 });
 
 defineEmits(['open-album']);
@@ -38,8 +39,8 @@ defineEmits(['open-album']);
   background-color: var(--color-background);
 }
 .card-bg {
-  --art: v-bind('grad || art');
-  background-color: v-bind('grad');
+  --grad: v-bind('grad || rand');
+  --art: v-bind('art || grad || rand');
   height: 13rem;
   width: 13rem;
 }

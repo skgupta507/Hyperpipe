@@ -9,6 +9,7 @@ import Search from './components/Search.vue';
 import NewPlaylist from './components/NewPlaylist.vue';
 import Playlists from './components/Playlists.vue';
 import Artist from './components/Artist.vue';
+import Prefs from './components/Prefs.vue';
 
 import { getJson, getJsonPiped } from './scripts/fetch.js';
 import { useLazyLoad } from './scripts/util.js';
@@ -92,7 +93,7 @@ function setTime(t) {
 function addSong(s) {
   data.urls.push(s);
 
-  const index = data.urls.map((s) => s.url).indexOf(data.url);
+  const index = data.urls.map(s => s.url).indexOf(data.url);
 
   if (
     (index == data.urls.length - 1 && data.time > 98) ||
@@ -124,7 +125,8 @@ function playNext(u) {
 
   audio.value.src = '';
 
-  const i = data.urls.map((s) => s.url).indexOf(data.url),
+  const now = data.urls.filter(s => s.url === data.url)[0],
+    i = data.urls.indexOf(now),
     next = data.urls[i + 1];
 
   console.log('Index: ' + i);
@@ -188,6 +190,8 @@ async function getAlbum(e) {
 async function getArtist(e) {
   console.log(e);
 
+  e = e.replace('/channel/', '');
+
   const json = await getJson('https://hyperpipeapi.onrender.com/channel/' + e);
 
   console.log(json);
@@ -206,7 +210,7 @@ async function getArtist(e) {
 async function getNext(hash) {
   if (
     !data.urls ||
-    data.urls.map((s) => s.url).indexOf(data.url) < 0 ||
+    data.urls.filter(s => s.url == data.url) ||
     data.urls.length == 1
   ) {
     const json = await getJson(
@@ -216,12 +220,13 @@ async function getNext(hash) {
     data.url = '/watch?v=' + json.songs[0].id;
     console.log(json);
 
-    data.urls = json.songs.map((i) => {
-      i.url = '/watch?v=' + i.id;
-      i.id = null;
-
-      return i;
-    });
+    data.urls = json.songs.map(i => ({
+      ...i,
+      ...{
+        url: '/watch?v=' + i.id,
+        id: null,
+      },
+    }));
 
     setMetadata();
 
@@ -280,7 +285,7 @@ function SaveTrack(e) {
       url: data.url,
       title: data.nowtitle,
     },
-    (e) => {
+    e => {
       if (e === true) {
         console.log('Added Song To ' + e);
       }
@@ -290,18 +295,16 @@ function SaveTrack(e) {
 
 function setMetadata() {
   if ('mediaSession' in navigator) {
-    const i = data.urls.map((u) => u.url).indexOf(data.url);
+    const now = data.urls.filter(u => u.url === data.url)[0];
 
     let artwork = [],
       album = undefined;
 
-    console.log(i);
+    if (now) {
+      album = now.subtitle;
 
-    if (i >= 0) {
-      album = data.urls[i].subtitle;
-
-      if (data.urls[i].thumbnails) {
-        artwork = data.urls[i].thumbnails.map((t) => {
+      if (now.thumbnails) {
+        artwork = now.thumbnails.map(t => {
           return {
             sizes: t.width + 'x' + t.height,
             src: t.url,
@@ -344,19 +347,19 @@ onMounted(() => {
     navigator.mediaSession.setActionHandler('pause', playPause);
     navigator.mediaSession.setActionHandler('previoustrack', () => {
       if (data.urls.length > 2) {
-        const i = data.urls.map((s) => s.url).indexOf(data.url);
+        const i = data.urls.map(s => s.url).indexOf(data.url);
         getSong(data.urls[i - 1].url);
       }
     });
     navigator.mediaSession.setActionHandler('nexttrack', () => {
       if (data.urls.length > 2) {
-        const i = data.urls.map((s) => s.url).indexOf(data.url);
+        const i = data.urls.map(s => s.url).indexOf(data.url);
         getSong(data.urls[i + 1].url);
       }
     });
   }
 
-  useSetupDB()
+  useSetupDB();
 
   parseUrl();
 
@@ -367,18 +370,18 @@ onMounted(() => {
 <template>
   <NavBar
     @update-search="
-      (e) => {
+      e => {
         search = e;
       }
     "
     @update-page="
-      (e) => {
+      e => {
         page = e;
       }
     "
     :search="search" />
 
-  <template v-if="artist">
+  <template v-if="artist && page == 'home'">
     <Artist
       @playall="getAlbum"
       :title="artist.title"
@@ -392,23 +395,34 @@ onMounted(() => {
     <div v-if="data.cover" class="art bg-img" :style="data.cover"></div>
 
     <div class="wrapper">
-      <NowPlaying @get-artist="getArtist" :title="data.nowtitle" :artist="data.nowartist" :artistUrl="data.artistUrl" />
+      <NowPlaying
+        @get-artist="getArtist"
+        :title="data.nowtitle"
+        :artist="data.nowartist"
+        :artistUrl="data.artistUrl" />
     </div>
   </header>
 
   <main class="placeholder">
-    <template v-if="page == 'home'">
-      <Search
-        @get-album="getAlbum"
-        @get-artist="getArtist"
-        @play-urls="playList"
-        @add-song="addSong"
-        :items="data.items"
-        :songItems="data.songItems"
-        :search="search" />
-    </template>
+    <KeepAlive>
+      <template v-if="page == 'home'">
+        <Search
+          @get-album="getAlbum"
+          @get-artist="getArtist"
+          @play-urls="playList"
+          @add-song="addSong"
+          :items="data.items"
+          :songItems="data.songItems"
+          :search="search" />
+      </template>
+    </KeepAlive>
+
     <template v-if="page == 'playlist'">
       <NewPlaylist @play-urls="playList" />
+    </template>
+
+    <template v-if="page == 'prefs'">
+      <Prefs />
     </template>
   </main>
 

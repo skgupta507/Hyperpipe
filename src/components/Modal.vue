@@ -7,12 +7,13 @@ const props = defineProps(['display', 'title', 'n']),
 
 watch(
   () => props.display,
-  (n) => {
+  n => {
     console.log(n, props.display);
     show.value = n;
   },
 );
-watch(show, (n) => {
+
+watch(show, n => {
   emit('show', show.value);
 });
 </script>

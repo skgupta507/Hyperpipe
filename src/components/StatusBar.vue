@@ -27,7 +27,7 @@ const emit = defineEmits([
 
 function Save() {
   showpl.value = true;
-  useListPlaylists((res) => {
+  useListPlaylists(res => {
     console.log(res);
     list.value = res;
     showmenu.value = false;
@@ -42,7 +42,7 @@ function Save() {
         :display="showpl"
         title="Select Playlist to Add"
         @show="
-          (e) => {
+          e => {
             showpl = e;
           }
         ">

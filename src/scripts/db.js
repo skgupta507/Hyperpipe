@@ -2,7 +2,7 @@ export function useSetupDB() {
   if ('indexedDB' in window) {
     const req = indexedDB.open('hyperpipedb', 1);
 
-    req.onupgradeneeded = (e) => {
+    req.onupgradeneeded = e => {
       const db = e.target.result;
       console.log(db);
 
@@ -13,12 +13,12 @@ export function useSetupDB() {
       }
     };
 
-    req.onerror = (e) => {
+    req.onerror = e => {
       console.log('Please let me use indexedDB!!');
       console.log(e);
     };
 
-    req.onsuccess = (e) => {
+    req.onsuccess = e => {
       window.db = e.target.result;
     };
   }
@@ -31,11 +31,11 @@ export function useUpdatePlaylist(key, obj, cb = () => null) {
         .objectStore('playlist'),
       req = store.get(key);
 
-    req.onerror = (e) => {
+    req.onerror = e => {
       console.log('Error!!', e);
     };
 
-    req.onsuccess = (e) => {
+    req.onsuccess = e => {
       const itm = e.target.result;
 
       if (itm) {
@@ -54,11 +54,11 @@ export function useCreatePlaylist(key, obj, cb = () => null) {
         .objectStore('playlist'),
       req = store.get(key);
 
-    req.onerror = (e) => {
+    req.onerror = e => {
       console.log('Error!!', e);
     };
 
-    req.onsuccess = (e) => {
+    req.onsuccess = e => {
       const res = e.target.result;
 
       if (!res) {
@@ -81,11 +81,11 @@ export function useGetPlaylist(key, cb = () => null) {
     const store = window.db.transaction(['playlist']).objectStore('playlist'),
       req = store.get(key);
 
-    req.onerror = (e) => {
+    req.onerror = e => {
       console.log('Error!!', e);
     };
 
-    req.onsuccess = (e) => {
+    req.onsuccess = e => {
       const res = e.target.result;
 
       if (res) {
@@ -102,7 +102,7 @@ export function useListPlaylists(cb = () => null) {
     const store = window.db.transaction(['playlist']).objectStore('playlist'),
       cursor = store.openCursor();
 
-    cursor.onsuccess = (e) => {
+    cursor.onsuccess = e => {
       const pl = e.target.result;
 
       if (pl) {

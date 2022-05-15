@@ -7,9 +7,17 @@ A Privacy Respecting Frontend for YouTube Music inspired and built with the help
 ![YouTube Music](https://img.shields.io/badge/youtube-music-red?style=for-the-badge&logo=youtube)
 ![Website](https://img.shields.io/website?down_color=red&down_message=offline&label=status&style=for-the-badge&up_color=cornflowerblue&up_message=online&url=https%3A%2F%2Fhyperpipe.surge.sh)
 
-## Usage
+## Disclaimer
 
-**_HYPERPIPE IS ONLY BEING DEVELOPED, EXPECT BUGS AND MESSY CODE_**
+**_HYPERPIPE IS ONLY BEING DEVELOPED, EXPECT_**
+
+- Bugs
+- Messy Code
+- Stuff the used to work to Break in the future.
+
+_But if you see any on the following, Please open an issue_
+
+## Usage
 
 ```sh
 npm install
@@ -49,7 +57,7 @@ Please refer to [LICENSE][license].
 
 You can reach out to me on
 
-- snematoda.751k2 [at] aleeas [dot] com
+- snematoda [dot] 751k2 [at] aleeas [dot] com
 
 ### Dependencies and Mentions
 

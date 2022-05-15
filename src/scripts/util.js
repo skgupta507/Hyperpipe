@@ -12,7 +12,7 @@ export function useLazyLoad() {
     lazyElems = document.querySelectorAll('.bg-img:not(.lazy)');
 
     let imgObs = new IntersectionObserver((elems, obs) => {
-      elems.forEach((elem) => {
+      elems.forEach(elem => {
         setTimeout(() => {
           if (elem.isIntersecting) {
             let ele = elem.target;
@@ -24,7 +24,7 @@ export function useLazyLoad() {
       });
     });
 
-    lazyElems.forEach((img) => {
+    lazyElems.forEach(img => {
       imgObs.observe(img);
     });
   } else {

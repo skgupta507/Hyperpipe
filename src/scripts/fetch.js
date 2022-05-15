@@ -10,8 +10,8 @@ export function getPipedQuery() {
 
 export async function getJson(url) {
   const res = await fetch(url)
-    .then((res) => res.json())
-    .catch((err) => {
+    .then(res => res.json())
+    .catch(err => {
       alert(err);
     });
 

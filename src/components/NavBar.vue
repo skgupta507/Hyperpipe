@@ -3,23 +3,24 @@ import { reactive } from 'vue';
 import SearchBar from '../components/SearchBar.vue';
 
 const emit = defineEmits(['update-page', 'update-search']),
+  page = reactive({
+    home: true,
+    playlist: false,
+    prefs: false,
+  });
 
-page = reactive({
-  home: true,
-  playlist: false,
-}),
+const Toggle = p => {
+    for (let pg in page) {
+      page[pg] = false;
+    }
+    page[p] = true;
+    emit('update-page', p);
 
-Toggle = (p) => {
-  for (let pg in page) {
-    page[pg] = false;
-  }
-  page[p] = true;
-  emit('update-page', p);
-},
-
-home = () => {
-  history.pushState('', {}, '/');
-};
+    console.log(page[p], p);
+  },
+  home = () => {
+    history.pushState('', {}, '/');
+  };
 </script>
 
 <template>
@@ -33,12 +34,15 @@ home = () => {
       <span
         :class="'nav-ico bi bi-collection ' + page.playlist"
         @click="Toggle('playlist')"></span>
+      <span
+        :class="'nav-ico bi bi-gear ' + page.prefs"
+        @click="Toggle('prefs')"></span>
     </div>
 
     <div class="wrap">
       <SearchBar
         @update-search="
-          (e) => {
+          e => {
             $emit('update-search', e);
           }
         " />
