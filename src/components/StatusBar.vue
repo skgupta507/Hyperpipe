@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, reactive, watch } from 'vue';
 import Modal from './Modal.vue';
 import { useListPlaylists } from '../scripts/db.js';
 
@@ -8,29 +8,33 @@ defineProps({
   time: Number,
   show: Boolean,
   loop: Boolean,
+  lyrics: Boolean,
 });
 
 const emit = defineEmits([
     'vol',
     'play',
     'list',
+    'lyrics',
     'loop',
     'save',
     'change-time',
   ]),
-  showVol = ref(false),
   vol = ref(1),
-  showmenu = ref(false),
-  showpl = ref(false),
+  showme = reactive({
+    menu: false,
+    pl: false,
+    vol: false,
+  }),
   pl = ref(''),
   list = ref([]);
 
 function Save() {
-  showpl.value = true;
+  showme.pl = true;
   useListPlaylists(res => {
     console.log(res);
     list.value = res;
-    showmenu.value = false;
+    showme.menu = false;
   });
 }
 </script>
@@ -39,11 +43,11 @@ function Save() {
     <Transition name="fade">
       <Modal
         n="2"
-        :display="showpl"
+        :display="showme.pl"
         title="Select Playlist to Add"
         @show="
           e => {
-            showpl = e;
+            showme.pl = e;
           }
         ">
         <template #content>
@@ -55,12 +59,12 @@ function Save() {
           </template>
         </template>
         <template #buttons>
-          <button aria-label="Cancel" @click="showpl = false">Cancel</button>
+          <button aria-label="Cancel" @click="showme.pl = false">Cancel</button>
           <button
             aria-label="Add Song"
             @click="
               if (pl) $emit('save', pl);
-              showpl = false;
+              showme.pl = false;
             ">
             Add
           </button>
@@ -95,10 +99,10 @@ function Save() {
       <button
         id="vol-btn"
         aria-label="Volume Buttons"
-        @click="showVol = !showVol"
+        @click="showme.vol = !showme.vol"
         class="popup-wrap bi bi-volume-up">
         <Transition name="fade">
-          <div v-if="showVol" id="vol" class="popup">
+          <div v-if="showme.vol" id="vol" class="popup">
             <input
               id="vol-input"
               aria-label="Volume Input"
@@ -117,10 +121,10 @@ function Save() {
         class="bi bi-three-dots"
         aria-label="More Controls"
         @click="
-          showmenu = !showmenu;
-          if (show) $emit('list', 'showplaylist');
+          showme.menu = !showme.menu;
+          show ?? $emit('list', 'showplaylist');
         "></button>
-      <div id="menu" v-if="showmenu" class="popup">
+      <div id="menu" v-if="showme.menu" class="popup">
         <button
           id="addToPlaylist"
           title="Add Current Song to a Playlist"
@@ -133,6 +137,10 @@ function Save() {
           aria-label="Current Playlist"
           :class="'bi bi-music-note-list ' + show"
           @click="$emit('list', 'showplaylist')"></button>
+        <button
+          id="btn-lyrics"
+          :class="'bi bi-file-music ' + lyrics"
+          @click="$emit('lyrics', 'showlyrics')"></button>
         <button
           id="loop-btn"
           title="Loop"

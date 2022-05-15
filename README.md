@@ -1,4 +1,4 @@
-# \[WIP\] Hyperpipe
+# [WIP] Hyperpipe
 
 ![On Codeberg](https://codeberg.org/Hyperpipe/static/raw/branch/master/on-codeberg.svg)
 
@@ -13,9 +13,9 @@ A Privacy Respecting Frontend for YouTube Music inspired and built with the help
 
 - Bugs
 - Messy Code
-- Stuff the used to work to Break in the future.
+- Stuff that used to work to break in the future.
 
-_But if you see any on the following, Please open an issue_
+_But if you see any of the following, Please open an issue_
 
 ## Usage
 
@@ -49,15 +49,21 @@ npm run build
 | :--------------------------: | :---------------: |
 | [hyperpipe.surge.sh][hypipe] |        🇩🇪         |
 
+
 ## LICENSE
 
 ### GPL v3 Only
 
 Please refer to [LICENSE][license].
 
-You can reach out to me on
+## Help
+
+Feel free to join in on [Matrix!](https://matrix.to/#/#hyperpipe:nitro.chat)
+
+You can reach out to me personally on:
 
 - snematoda [dot] 751k2 [at] aleeas [dot] com
+- [Matrix - @snematoda:nitro.chat ](https://matrix.to/#/@snematoda:nitro.chat)
 
 ### Dependencies and Mentions
 

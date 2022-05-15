@@ -8,6 +8,7 @@ import NowPlaying from './components/NowPlaying.vue';
 import Search from './components/Search.vue';
 import NewPlaylist from './components/NewPlaylist.vue';
 import Playlists from './components/Playlists.vue';
+import Lyrics from './components/Lyrics.vue';
 import Artist from './components/Artist.vue';
 import Prefs from './components/Prefs.vue';
 
@@ -31,7 +32,9 @@ const data = reactive({
   duration: 0,
   time: 0,
   showplaylist: false,
+  showlyrics: false,
   loop: false,
+  lyrics: '',
 });
 
 const artist = reactive({
@@ -210,12 +213,14 @@ async function getArtist(e) {
 async function getNext(hash) {
   if (
     !data.urls ||
-    data.urls.filter(s => s.url == data.url) ||
+    !data.urls.filter(s => s.url == data.url)[0] ||
     data.urls.length == 1
   ) {
     const json = await getJson(
       'https://hyperpipeapi.onrender.com/next/' + hash,
     );
+
+    data.lyrics = json.lyricsId;
 
     data.url = '/watch?v=' + json.songs[0].id;
     console.log(json);
@@ -432,16 +437,24 @@ onMounted(() => {
     :urls="data.urls"
     :show="data.showplaylist" />
 
+  <Lyrics
+    v-if="data.showlyrics"
+    :id="data.lyrics"
+    :curl="data.url"
+    :iniurl="data.urls[0]?.url" />
+
   <StatusBar
     @play="playPause"
     @vol="setVolume"
     @list="Toggle"
+    @lyrics="Toggle"
     @loop="Toggle"
     @save="SaveTrack"
     @change-time="setTime"
     :state="data.state"
     :time="data.time"
     :show="data.showplaylist"
+    :lyrics="data.showlyrics"
     :loop="data.loop" />
 
   <audio
