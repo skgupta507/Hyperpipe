@@ -16,6 +16,7 @@ export function useSetupDB() {
     req.onerror = e => {
       console.log('Please let me use indexedDB!!');
       console.log(e);
+      alert(e.target.error.message);
     };
 
     req.onsuccess = e => {

@@ -1,7 +1,9 @@
 <script setup>
+/* Imports */
 import Hls from 'hls.js';
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onBeforeMount, onMounted } from 'vue';
 
+/* Components */
 import NavBar from './components/NavBar.vue';
 import StatusBar from './components/StatusBar.vue';
 import NowPlaying from './components/NowPlaying.vue';
@@ -12,14 +14,16 @@ import Lyrics from './components/Lyrics.vue';
 import Artist from './components/Artist.vue';
 import Prefs from './components/Prefs.vue';
 
+/* Composables */
 import { getJson, getJsonPiped } from './scripts/fetch.js';
-import { useLazyLoad } from './scripts/util.js';
+import { useLazyLoad, useStore } from './scripts/util.js';
 import { useSetupDB, useUpdatePlaylist } from './scripts/db.js';
 
+/* Reactivity */
 const data = reactive({
   artUrl: '',
   cover: '',
-  audioSrc: '',
+  audioSrc: [],
   url: '',
   urls: [],
   songItems: null,
@@ -50,6 +54,7 @@ const search = ref(''),
 
 const audio = ref(null);
 
+/* Functions */
 function parseUrl() {
   const loc = location.href.split('/');
 
@@ -166,7 +171,7 @@ async function getSong(e) {
 
   Stream({
     hls: json.hls,
-    stream: json.audioStreams[0].url,
+    stream: json.audioStreams,
   });
 }
 
@@ -258,7 +263,7 @@ function playPause() {
 function Stream(res) {
   console.log(res);
 
-  if (!!Hls && Hls.isSupported()) {
+  if (Hls.isSupported() && useStore().hls !== 'false') {
     data.hls = new Hls();
 
     data.hls.attachMedia(audio.value);
@@ -268,12 +273,16 @@ function Stream(res) {
     });
   } else {
     data.audioSrc = res.stream;
+    audio.value.load();
   }
 }
 
 function audioCanPlay() {
   useLazyLoad();
-  audio.value.play();
+
+  audio.value.play().catch(err => {
+    alert(err);
+  });
   data.state = 'pause';
 
   if (location.pathname != '/playlist') {
@@ -332,21 +341,31 @@ function setMetadata() {
   }
 }
 
+onBeforeMount(() => {
+  if (useStore().theme) {
+    document.body.setAttribute('data-theme', useStore().theme);
+  }
+});
+
 onMounted(() => {
   useLazyLoad();
 
+  /* Event Listeners for Lazy Loading */
   document.addEventListener('scroll', useLazyLoad);
   document.addEventListener('resize', useLazyLoad);
   document.addEventListener('orientationChange', useLazyLoad);
 
+  /* Event Listener for change in url */
   window.addEventListener('popstate', parseUrl);
 
+  /* Alert User on close if url is present */
   window.onbeforeunload = () => {
     if (data.url) {
       return 'Are you Sure?';
     }
   };
 
+  /* Media Session Controls */
   if ('mediaSession' in navigator) {
     navigator.mediaSession.setActionHandler('play', playPause);
     navigator.mediaSession.setActionHandler('pause', playPause);
@@ -364,6 +383,7 @@ onMounted(() => {
     });
   }
 
+  /* Setup IndexedDB for storing custom playlists */
   useSetupDB();
 
   parseUrl();
@@ -446,9 +466,7 @@ onMounted(() => {
   <StatusBar
     @play="playPause"
     @vol="setVolume"
-    @list="Toggle"
-    @lyrics="Toggle"
-    @loop="Toggle"
+    @toggle="Toggle"
     @save="SaveTrack"
     @change-time="setTime"
     :state="data.state"
@@ -460,11 +478,17 @@ onMounted(() => {
   <audio
     id="audio"
     ref="audio"
-    :src="data.audioSrc"
+    :volume="useStore().vol ? useStore().vol / 100 : 1"
     @canplay="audioCanPlay"
     @timeupdate="timeUpdate($event.target.currentTime)"
     @ended="playNext"
-    autoplay></audio>
+    autoplay>
+    <source
+      v-for="src in data.audioSrc"
+      :key="src.url"
+      :src="src.url"
+      :type="src.mimeType" />
+  </audio>
 </template>
 
 <style>
@@ -481,6 +505,9 @@ onMounted(() => {
 main {
   display: flex;
   flex-direction: column;
+}
+main:empty::before {
+  font-size: 3.5rem !important;
 }
 header {
   line-height: 1.5;

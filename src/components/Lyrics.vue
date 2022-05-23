@@ -9,11 +9,14 @@ const props = defineProps({
     iniurl: String,
   }),
   text = ref(''),
-  source = ref('');
+  source = ref(''),
+  status = ref(false);
 
 console.log(props);
 
 function get() {
+  status.value = false;
+
   if (props.id && props.curl === props.iniurl) {
     console.log(props.id);
 
@@ -21,6 +24,7 @@ function get() {
       res => {
         text.value = res.text;
         source.value = res.source;
+        status.value = true;
       },
     );
   } else if (props.curl) {
@@ -28,12 +32,15 @@ function get() {
       'https://hyperpipeapi.onrender.com/next/' +
         props.curl.replace('/watch?v=', ''),
     ).then(next => {
-      getJson('https://hyperpipeapi.onrender.com/browse/' + next.lyricsId).then(
-        res => {
+      if (next.lyricsId) {
+        getJson(
+          'https://hyperpipeapi.onrender.com/browse/' + next.lyricsId,
+        ).then(res => {
           text.value = res.text;
           source.value = res.source;
-        },
-      );
+          status.value = true;
+        });
+      }
     });
   }
 }
@@ -50,7 +57,9 @@ watch(
 
 <template>
   <div class="ly-modal">
-    <pre>{{ text }}</pre>
+    <pre class="placeholder" :data-loaded="curl ? status : true">{{
+      text
+    }}</pre>
     <div>{{ source }}</div>
   </div>
 </template>
@@ -78,6 +87,16 @@ pre {
   letter-spacing: 0.125rem;
   white-space: pre-wrap;
 }
+pre:empty::before {
+  --ico: '\f3a5';
+}
+pre[data-loaded='false']:empty::after {
+  --text: 'Fetching Lyrics...';
+}
+pre[data-loaded='true']:empty::after {
+  --text: 'No Lyrics...';
+}
+
 div {
   padding: 1rem;
   letter-spacing: 0.1rem;

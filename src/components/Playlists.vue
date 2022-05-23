@@ -42,11 +42,10 @@ defineEmits(['playthis']);
   overflow-y: auto;
 }
 .placeholder:empty:before {
-  --url: url('/bg_playlist.svg');
+  --ico: '\f64d';
 }
 .placeholder:empty:after {
-  --text: 'Add Songs to Your Playlist...';
-  padding-top: 2rem;
+  --text: 'Add Songs to Playlist...';
 }
 .pl-item {
   padding: 1rem;

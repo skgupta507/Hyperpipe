@@ -1,7 +1,10 @@
 <script setup>
 import { ref } from 'vue';
 
-defineProps(['search']);
+defineProps({
+  search: String,
+});
+
 defineEmits(['update-search']);
 
 const show = ref(false);
@@ -14,7 +17,7 @@ const show = ref(false);
     @mouseenter="show = true"
     @mouseleave="show = false">
     <Transition name="fade">
-      <div v-if="show" class="popup">
+      <div v-show="show" class="popup">
         <input
           type="text"
           aria-label="Search Input"

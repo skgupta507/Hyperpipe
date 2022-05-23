@@ -21,7 +21,24 @@
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
 }
 
-:root {
+:root,
+body[data-theme='dark'] {
+  --color-foreground: var(--vt-c-blue);
+  --color-background: var(--vt-c-black);
+  --color-background-soft: var(--vt-c-black-soft);
+  --color-background-mute: var(--vt-c-black-mute);
+
+  --color-border: var(--vt-c-divider-dark-2);
+  --color-border-hover: var(--vt-c-divider-dark-1);
+
+  --color-shadow: #000;
+  --color-scrollbar: var(--vt-c-blue);
+
+  --color-heading: var(--vt-c-text-dark-1);
+  --color-text: var(--vt-c-text-dark-2);
+}
+
+body[data-theme='light'] {
   --color-foreground: cornflowerblue;
   --color-background: var(--vt-c-white);
   --color-background-soft: var(--vt-c-white-soft);
@@ -35,26 +52,6 @@
 
   --color-heading: var(--vt-c-text-light-1);
   --color-text: var(--vt-c-text-light-1);
-
-  --section-gap: 160px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-foreground: var(--vt-c-blue);
-    --color-background: var(--vt-c-black);
-    --color-background-soft: var(--vt-c-black-soft);
-    --color-background-mute: var(--vt-c-black-mute);
-
-    --color-border: var(--vt-c-divider-dark-2);
-    --color-border-hover: var(--vt-c-divider-dark-1);
-
-    --color-shadow: #000;
-    --color-scrollbar: var(--vt-c-blue);
-
-    --color-heading: var(--vt-c-text-dark-1);
-    --color-text: var(--vt-c-text-dark-2);
-  }
 }
 
 *,
@@ -80,25 +77,41 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.placeholder:empty:before {
-  --url: url('/bg_music.svg');
-  content: '';
-  background-image: var(--url);
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  padding: 10rem;
+
+/* Placeholders */
+
+.placeholder:empty {
+  margin: auto 0;
+  text-align: center;
+}
+.placeholder:empty::before {
+  --ico: '\f2d1';
+  content: var(--ico);
+  display: block;
+  font-display: block;
+  font-family: bootstrap-icons !important;
+  font-style: normal;
+  font-weight: normal !important;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  vertical-align: -0.125em;
+  font-size: 3rem;
+  margin: 1rem;
+  margin-top: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 .placeholder:empty:after {
   --text: 'Start Searching...';
+  margin-bottom: auto;
   content: var(--text);
-  position: block;
-  margin-top: 1rem;
-  font-size: 1.5rem;
-  opacity: 0.6;
-  text-align: center;
+  letter-spacing: 0.125rem;
+  font-size: 1.25rem;
+  font-weight: bolder;
 }
 
+/* Scrollbars */
 ::-webkit-scrollbar {
   width: 0.35rem;
   height: 0.35rem;

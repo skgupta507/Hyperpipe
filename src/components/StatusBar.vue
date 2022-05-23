@@ -1,6 +1,9 @@
 <script setup>
 import { ref, reactive, watch } from 'vue';
+
 import Modal from './Modal.vue';
+
+import { useStore } from '../scripts/util.js';
 import { useListPlaylists } from '../scripts/db.js';
 
 defineProps({
@@ -11,16 +14,8 @@ defineProps({
   lyrics: Boolean,
 });
 
-const emit = defineEmits([
-    'vol',
-    'play',
-    'list',
-    'lyrics',
-    'loop',
-    'save',
-    'change-time',
-  ]),
-  vol = ref(1),
+const emit = defineEmits(['vol', 'play', 'toggle', 'save', 'change-time']),
+  vol = ref(useStore().vol / 100 || 1),
   showme = reactive({
     menu: false,
     pl: false,
@@ -81,10 +76,7 @@ function Save() {
         :class="'bi bi-' + state"
         @click="$emit('play')"></button>
 
-      <div
-        id="statusbar-progress"
-        class="range-wrap"
-        :style="'--fw:' + time + '%;'">
+      <div id="statusbar-progress" class="range-wrap">
         <input
           aria-label="Change Time"
           :value="time"
@@ -122,7 +114,8 @@ function Save() {
         aria-label="More Controls"
         @click="
           showme.menu = !showme.menu;
-          show ?? $emit('list', 'showplaylist');
+          show ? $emit('toggle', 'showplaylist') : '';
+          lyrics ? $emit('toggle', 'showlyrics') : '';
         "></button>
       <div id="menu" v-if="showme.menu" class="popup">
         <button
@@ -136,17 +129,17 @@ function Save() {
           title="Current Playlist"
           aria-label="Current Playlist"
           :class="'bi bi-music-note-list ' + show"
-          @click="$emit('list', 'showplaylist')"></button>
+          @click="$emit('toggle', 'showplaylist')"></button>
         <button
           id="btn-lyrics"
           :class="'bi bi-file-music ' + lyrics"
-          @click="$emit('lyrics', 'showlyrics')"></button>
+          @click="$emit('toggle', 'showlyrics')"></button>
         <button
           id="loop-btn"
           title="Loop"
           aria-label="Loop"
           :class="'bi bi-infinity ' + loop"
-          @click="$emit('loop', 'loop')"></button>
+          @click="$emit('toggle', 'loop')"></button>
       </div>
     </div>
   </div>
@@ -206,7 +199,8 @@ input[type='range'] {
   width: var(--h);
   height: var(--w);
   appearance: none;
-  -webkit-appearence: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   border: none;
   border-radius: 5rem;
   background: transparent;
@@ -217,6 +211,8 @@ input[type='range'] {
 input[type='range']:focus {
   outline: none;
 }
+
+/* Webkit */
 input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -230,7 +226,7 @@ input[type='range']:hover::-webkit-slider-thumb,
   height: 1rem;
   width: 1rem;
   border-radius: 50%;
-  margin-top: -0.45rem;
+  margin-top: -0.4rem;
 }
 input[type='range']::-webkit-slider-runnable-track {
   height: 100%;
@@ -239,6 +235,33 @@ input[type='range']::-webkit-slider-runnable-track {
 #vol input[type='range']::-webkit-slider-runnable-track {
   height: 0.1rem;
 }
+
+/* Moz */
+input[type='range']::-moz-range-thumb {
+  -moz-appearance: none;
+  appearance: none;
+  opacity: 0;
+  border: none;
+  outline: none;
+  transition: opacity 0.4s ease;
+}
+input[type='range']:hover::-moz-range-thumb,
+#vol input[type='range']::-moz-range-thumb {
+  background-color: var(--color-foreground);
+  opacity: 1;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 50%;
+  margin-top: -0.45rem;
+}
+input[type='range']::-moz-range-track {
+  height: 100%;
+  background-color: var(--color-border);
+}
+#vol input[type='range']::-moz-range-track {
+  height: 0.1rem;
+}
+
 .range-wrap {
   --fw: 0%;
   display: flex;
@@ -264,8 +287,16 @@ input[type='range']::-webkit-slider-runnable-track {
   top: 0;
 }
 #statusbar-progress {
+  --fw: v-bind('time + "%"');
   width: 50vw;
   min-width: 200px;
   max-width: 500px;
+}
+
+@media (max-width: 500px) {
+  #menu {
+    left: initial;
+    right: -0.5rem;
+  }
 }
 </style>

@@ -1,9 +1,19 @@
-export function usePrefs(key) {
-  if (localStorage) {
-    if (localStorage.get(key)) return true;
-    else return false;
-  } else return false;
-}
+export const useStore = () => {
+  try {
+    return window.localStorage;
+  } catch (err) {
+    alert(err);
+
+    const error = i => {
+      alert("Failed to Access '" + i + "' Please Enable localStorage.");
+    };
+
+    return {
+      getItem: error,
+      setItem: error,
+    };
+  }
+};
 
 export function useLazyLoad() {
   let lazyElems;

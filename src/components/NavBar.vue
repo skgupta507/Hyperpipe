@@ -2,6 +2,10 @@
 import { reactive } from 'vue';
 import SearchBar from '../components/SearchBar.vue';
 
+defineProps({
+  search: String,
+});
+
 const emit = defineEmits(['update-page', 'update-search']),
   page = reactive({
     home: true,
@@ -41,6 +45,7 @@ const Toggle = p => {
 
     <div class="wrap">
       <SearchBar
+        :search="search"
         @update-search="
           e => {
             $emit('update-search', e);
