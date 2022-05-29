@@ -234,6 +234,7 @@ button {
 }
 
 .bars-wrap {
+  left: .75rem;
   position: absolute;
   height: 1.5rem;
   width: 2rem;

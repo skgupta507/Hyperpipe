@@ -62,7 +62,7 @@ watch(show, n => {
 }
 .modal-content * {
   width: 100%;
-  padding: 1rem;
+  padding: .5rem 1rem;
 }
 .modal-close {
   color: var(--color-background);

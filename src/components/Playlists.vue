@@ -1,10 +1,13 @@
 <script setup>
+
 defineProps({
   url: String,
   urls: Array,
   show: Boolean,
 });
+
 defineEmits(['playthis']);
+
 </script>
 
 <template>
@@ -17,6 +20,9 @@ defineEmits(['playthis']);
             <div class="bars"></div>
             <div class="bars"></div>
           </span>
+          <div v-else-if="plurl.thumbnails" class="pl-img">
+            <img :src="plurl.thumbnails[0].url" :height=" plurl.thumbnails[0].height" :width="plurl.thumbnails[0].width">
+          </div>
           <span class="pl-main caps">{{ plurl.title }}</span>
         </div>
       </template>
@@ -57,6 +63,25 @@ defineEmits(['playthis']);
   background: var(--color-background-soft);
 }
 .pl-main {
-  padding-left: 3rem;
+  padding-left: 2.75rem;
+}
+.pl-img {
+  top: .45rem;
+  left: .45rem;
+  position: absolute;
+  background-image: var(--src);
+  height: 2.75rem;
+  width: 2.75rem;
+  border-radius: .125rem;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.pl-img img {
+  height: 100%;
+  width: 100%;
+  border-radius: .125rem;
+}
+.pl-img[data-active=false] {
+  display: none;
 }
 </style>

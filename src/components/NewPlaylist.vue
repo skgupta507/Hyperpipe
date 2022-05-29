@@ -71,6 +71,7 @@ onMounted(() => {
       <template v-for="i in list">
         <AlbumItem
           :name="i.name"
+          :author="'Songs • ' + i.urls.length"
           :grad="useRand()"
           @open-album="Play(i.name)" />
       </template>

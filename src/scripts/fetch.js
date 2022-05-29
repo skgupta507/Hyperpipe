@@ -1,3 +1,5 @@
+import { useStore } from './util.js'
+
 export function getPipedQuery() {
   const papi = new URLSearchParams(location.search).get('pipedapi');
 
@@ -31,7 +33,7 @@ export async function getJson(url) {
 export async function getJsonPiped(path) {
   const root =
     new URLSearchParams(location.search).get('pipedapi') ||
-    localStorage.getItem('pipedapi') ||
+    useStore().getItem('pipedapi') ||
     'pipedapi.kavin.rocks';
 
   return await getJson('https://' + root + path);

@@ -27,7 +27,6 @@ const data = reactive({
   url: '',
   urls: [],
   songItems: null,
-  hls: null,
   items: {},
   title: '',
   artist: '',
@@ -127,8 +126,8 @@ function playList(a) {
 }
 
 function playNext(u) {
-  if (data.hls) {
-    data.hls.destroy();
+  if (window.hls) {
+    window.hls.destroy();
   }
 
   audio.value.src = '';
@@ -234,7 +233,7 @@ async function getNext(hash) {
       ...i,
       ...{
         url: '/watch?v=' + i.id,
-        id: null,
+        id: undefined,
       },
     }));
 
@@ -264,12 +263,12 @@ function Stream(res) {
   console.log(res);
 
   if (Hls.isSupported() && useStore().hls !== 'false') {
-    data.hls = new Hls();
+    window.hls = new Hls();
 
-    data.hls.attachMedia(audio.value);
+    window.hls.attachMedia(audio.value);
 
-    data.hls.on(Hls.Events.MEDIA_ATTACHED, () => {
-      data.hls.loadSource(res.hls);
+    window.hls.on(Hls.Events.MEDIA_ATTACHED, () => {
+      window.hls.loadSource(res.hls);
     });
   } else {
     data.audioSrc = res.stream;
@@ -348,6 +347,11 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
+
+  if (window.hls) {
+    window.hls.destroy()
+  }
+
   useLazyLoad();
 
   /* Event Listeners for Lazy Loading */
