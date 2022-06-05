@@ -12,7 +12,7 @@ export function useRand() {
 }
 
 export function useRandColor() {
-  const r = Math.random().toString(16)
+  const r = Math.random().toString(16);
 
-  return '#' + r.substr(r.length - 6)
+  return '#' + r.substr(r.length - 6);
 }

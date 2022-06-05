@@ -17,6 +17,8 @@ A Privacy Respecting Frontend for YouTube Music inspired and built with the help
 
 _But if you see any of the following, Please open an issue_
 
+PS: Please don't forget to support your favorite artists :)
+
 ## Usage
 
 ```sh
@@ -70,9 +72,18 @@ You can reach out to me personally on:
 - VueJS -> [MIT][vue]
 - ViteJS -> [MIT][vite]
 - hls.js -> [APACHE][hls]
+- PeerJS -> [MIT][peer]
 - Bootstrap Icons -> [MIT][bi]
 - VueJS theme -> [MIT][vuetheme]
 - Nord theme -> [MIT][nord]
+
+### Similar Projects
+
+*Hyperpipe is not affiliated with any of these projects*
+
+- [Beatbump](https://github.com/snuffyDev/Beatbump) -> Alternative YouTube Music frontend built with Svelte/SvelteKit
+
+- [Cider](https://github.com/ciderapp/Cider) -> Cross-platform Apple Music experience based on Electron and Vue.js
 
 [hypipe]: https://hyperpipe.surge.sh
 [piped]: https://piped.kavin.rocks
@@ -80,6 +91,7 @@ You can reach out to me personally on:
 [vue]: https://github.com/vuejs/core/blob/main/LICENSE
 [vite]: https://github.com/vitejs/vite/blob/main/LICENSE
 [bi]: https://github.com/twbs/icons/blob/main/LICENSE.md
+[peer]: https://github.com/peers/peerjs/blob/master/LICENSE
 [hls]: https://github.com/video-dev/hls.js/blob/master/LICENSE
 [nord]: https://github.com/arcticicestudio/nord/blob/develop/LICENSE.md
 [vuetheme]: https://github.com/vuejs/theme/blob/main/LICENSE

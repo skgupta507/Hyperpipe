@@ -47,7 +47,10 @@ function Save() {
         ">
         <template #content>
           <template v-for="i in list">
-            <div class="flex item" @click="pl = i.name" :data-active="pl == i.name">
+            <div
+              class="flex item"
+              @click="pl = i.name"
+              :data-active="pl == i.name">
               <span>{{ i.name }}</span
               ><span class="ml-auto">{{ i.urls.length || '' }}</span>
             </div>
@@ -178,14 +181,14 @@ function Save() {
 }
 .item {
   background: var(--color-background);
-  border-radius: .5rem;
-  margin: .5rem 0;
+  border-radius: 0.5rem;
+  margin: 0.5rem 0;
 }
 .item:hover {
   background: var(--color-background-mute);
 }
 
-.item[data-active=true] {
+.item[data-active='true'] {
   color: var(--color-background);
   background: linear-gradient(135deg, cornflowerblue, #88c0d0);
 }

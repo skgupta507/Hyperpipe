@@ -1,17 +1,25 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 import { getJson } from '../scripts/fetch.js';
 import { useStore } from '../scripts/util.js';
 
 const instances = ref([]),
-  hls = ref(false);
+  hypInstances = ref([]),
+  hls = ref(false),
+  next = ref(false);
 
 getJson('https://piped-instances.kavin.rocks').then(i => {
   instances.value = i;
 
   console.log(i);
 });
+
+/*getJson('https://hyperpipe.codeberg.page/api/backend.json').then(i => {
+  hypInstances.value = i
+
+  console.log(i);
+});*/
 
 function getBool(val) {
   return 'bi ' + (val ? 'bi-check2' : 'bi-x-lg');
@@ -35,7 +43,14 @@ function setTheme(theme) {
   setStore('theme', theme);
 }
 
-hls.value = getStore('hls') || true;
+function getStoreBool(key, ele) {
+  ele.value = getStore(key) || true;
+}
+
+onMounted(() => {
+  getStoreBool('hls', hls);
+  getStoreBool('next', next);
+});
 </script>
 
 <template>
@@ -62,6 +77,16 @@ hls.value = getStore('hls') || true;
 
   <div class="left">
     <input
+      type="checkbox"
+      name="pref-chk-next"
+      id="pref-chk-next"
+      @change="setStore('next', $event.target.checked)"
+      v-model="next" />
+    <label for="pref-chk-next">Automatically Queue Songs</label>
+  </div>
+
+  <div class="left">
+    <input
       type="number"
       name="pref-volume"
       id="pref-volume"
@@ -72,6 +97,41 @@ hls.value = getStore('hls') || true;
     <label for="pref-volume">Default Volume</label>
   </div>
 
+  <h2>Hyperpipe Instance</h2>
+
+  <select
+    v-if="hypInstances"
+    :value="getStore('api') || 'hyperpipeapi.onrender.com'"
+    @change="setStore('api', $event.target.value)">
+    <option
+      v-for="i in hypInstances"
+      :key="i.name"
+      :value="i.api_url.replace('https://', '').replace('http://', '')">
+      {{ i.name }}
+    </option>
+  </select>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Locations</th>
+        </tr>
+      </thead>
+      <tbody v-for="i in hypInstances">
+        <tr>
+          <td>
+            {{ i.name }}
+          </td>
+          <td>
+            {{ i.locations.replaceAll(',', '') }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
   <h2>Piped Instance</h2>
   <select
     v-if="instances"
@@ -79,9 +139,9 @@ hls.value = getStore('hls') || true;
     @change="setStore('pipedapi', $event.target.value)">
     <option
       v-for="i in instances"
-      :key="i.name.replace('Official', 'Default')"
+      :key="i.name"
       :value="i.api_url.replace('https://', '').replace('http://', '')">
-      {{ i.name }}
+      {{ i.name.replace('Official', 'Default') }}
     </option>
   </select>
 

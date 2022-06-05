@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, reactive, watch, onMounted } from 'vue';
 import AlbumItem from './AlbumItem.vue';
 import Modal from './Modal.vue';
 
@@ -9,13 +9,24 @@ import {
   useListPlaylists,
   useGetPlaylist,
   useCreatePlaylist,
+  useUpdatePlaylist,
 } from '../scripts/db.js';
 
 const emit = defineEmits(['play-urls']),
   list = ref([]),
-  show = ref(false),
+  show = reactive({
+    new: false,
+    sync: false,
+  }),
   text = ref(''),
-  Play = key => {
+  sync = reactive({
+    type: 'send',
+    id: 'Please Wait...',
+    to: '',
+    peer: undefined,
+  });
+
+const Play = key => {
     console.log(key);
 
     useGetPlaylist(key, res => {
@@ -32,25 +43,90 @@ const emit = defineEmits(['play-urls']),
     if (text.value) {
       useCreatePlaylist(text.value, [], () => {
         List();
-        show.value = false;
+        show.new = false;
       });
     }
+  },
+  Send = () => {
+    const conn = sync.peer.connect(sync.to);
+
+    console.log(conn);
+
+    conn.on('open', () => {
+      List();
+      conn.send(list.value);
+    });
+
+    conn.on('close', () => {
+      show.sync = false;
+    });
+
+    conn.on('error', err => {
+      console.log(err);
+    });
   };
 
-onMounted(() => {
-  List();
-});
+watch(
+  () => show.sync,
+  () => {
+    if (show.sync === true) {
+      sync.peer = new Peer('hyp-' + Math.random().toString(36).substr(2));
+
+      sync.peer.on('open', id => {
+        sync.id = id;
+      });
+
+      sync.peer.on('connection', conn => {
+        console.log(conn);
+
+        conn.on('data', data => {
+          if (sync.type == 'rec') {
+            console.log(data);
+
+            List();
+
+            for (let i of data) {
+              const pl = list.value.filter(p => p.name == i.name)[0];
+
+              if (pl) {
+                for (let u of i.urls) {
+                  if (!pl.urls.filter(r => r.url === u.url)[0]) {
+                    useUpdatePlaylist(i.name, u, () => {
+                      console.log('Added: ' + u.name);
+                    });
+                  }
+                }
+              } else {
+                useCreatePlaylist(i.name, i.urls);
+              }
+
+              List();
+
+              if (data.indexOf(i) == data.length - 1) {
+                show.sync = false;
+              }
+            }
+          }
+        });
+      });
+    } else if (sync.peer) {
+      sync.peer.destroy();
+    }
+  },
+);
+
+onMounted(List);
 </script>
 
 <template>
   <div class="npl-wrap">
     <Modal
       n="2"
-      :display="show"
+      :display="show.new"
       title="Create a new Playlist..."
       @show="
         e => {
-          show = e;
+          show.new = e;
         }
       ">
       <template #content>
@@ -61,12 +137,62 @@ onMounted(() => {
           v-model="text" />
       </template>
       <template #buttons>
-        <button @click="show = false">Cancel</button>
+        <button @click="show.new = false">Cancel</button>
         <button @click="Create">Create</button>
       </template>
     </Modal>
 
-    <div class="npl-box bi bi-plus-lg pop" @click="show = true"></div>
+    <Modal
+      :n="sync.type == 'send' ? 2 : 1"
+      :display="show.sync"
+      title="Sync Playlists..."
+      @show="
+        e => {
+          show.sync = e;
+        }
+      ">
+      <template #content>
+        <div class="tabs">
+          <button
+            :data-active="sync.type == 'send'"
+            @click="sync.type = 'send'">
+            Send
+          </button>
+          <button :data-active="sync.type == 'rec'" @click="sync.type = 'rec'">
+            Receive
+          </button>
+        </div>
+
+        <div v-if="sync.type == 'send'">
+          <input
+            type="text"
+            class="textbox"
+            placeholder="ID ( hyp-xxxxxxxxx )"
+            @input="sync.to = $event.target.value" />
+        </div>
+
+        <div v-else-if="sync.type == 'rec'">
+          <pre>ID:</pre>
+          <pre>{{ sync.id }}</pre>
+        </div>
+      </template>
+
+      <template #buttons>
+        <button @click="show.sync = false">Cancel</button>
+        <button v-if="sync.type == 'send'" @click="Send">
+          {{ sync.type == 'send' ? 'Send' : 'Recieve' }}
+        </button>
+      </template>
+    </Modal>
+
+    <div class="grid">
+      <div class="npl-box bi bi-plus-lg pop" @click="show.new = true"></div>
+
+      <div
+        class="npl-box bi bi-arrow-repeat pop"
+        @click="show.sync = true"></div>
+    </div>
+
     <div class="grid-3">
       <template v-for="i in list">
         <AlbumItem
@@ -84,7 +210,7 @@ onMounted(() => {
   padding-bottom: 5rem;
 }
 .npl-box {
-  margin: 0 auto 5rem auto;
+  margin: 0 auto 2rem auto;
   border-radius: 0.5rem;
   background-color: var(--color-background-mute);
   padding: 2rem 3rem;
@@ -104,5 +230,33 @@ onMounted(() => {
 }
 .text-box {
   padding: 2rem;
+}
+pre {
+  white-space: pre-wrap;
+}
+.tabs {
+  margin: 0.5rem 0 1.5rem 0;
+}
+.tabs button {
+  width: calc(100% / 2);
+  background: var(--color-background);
+}
+.tabs button[data-active='true'] {
+  color: var(--color-background);
+  background: linear-gradient(135deg, cornflowerblue, #88c0d0);
+}
+.tabs button:first-child {
+  border-radius: 0.25rem 0 0 0.25rem;
+}
+.tabs button:last-child {
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+@media (min-width: 1024px) {
+  .npl-box:first-child {
+    margin: 0 1rem 0 auto;
+  }
+  .npl-box:last-child {
+    margin: 0 auto 0 1rem;
+  }
 }
 </style>

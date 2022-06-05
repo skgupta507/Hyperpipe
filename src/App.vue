@@ -220,6 +220,17 @@ async function getNext(hash) {
     !data.urls.filter(s => s.url == data.url)[0] ||
     data.urls.length == 1
   ) {
+    if (useStore().getItem('next') == 'false') {
+      data.urls = [
+        {
+          title: data.nowtitle,
+          url: '/watch?v=' + hash,
+        },
+      ];
+      setMetadata();
+      return;
+    }
+
     const json = await getJson(
       'https://hyperpipeapi.onrender.com/next/' + hash,
     );
@@ -347,9 +358,8 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
-
   if (window.hls) {
-    window.hls.destroy()
+    window.hls.destroy();
   }
 
   useLazyLoad();
