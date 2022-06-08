@@ -216,21 +216,11 @@ async function getArtist(e) {
 
 async function getNext(hash) {
   if (
-    !data.urls ||
-    !data.urls.filter(s => s.url == data.url)[0] ||
-    data.urls.length == 1
+    useStore().getItem('next') !== 'false' &&
+    (!data.urls ||
+      !data.urls.filter(s => s.url == data.url)[0] ||
+      data.urls.length == 1)
   ) {
-    if (useStore().getItem('next') == 'false') {
-      data.urls = [
-        {
-          title: data.nowtitle,
-          url: '/watch?v=' + hash,
-        },
-      ];
-      setMetadata();
-      return;
-    }
-
     const json = await getJson(
       'https://hyperpipeapi.onrender.com/next/' + hash,
     );
