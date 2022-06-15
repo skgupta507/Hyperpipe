@@ -49,7 +49,8 @@ const artist = reactive({
 });
 
 const search = ref(''),
-  page = ref('home');
+  page = ref('home'),
+  title = ref('');
 
 const audio = ref(null);
 
@@ -57,14 +58,15 @@ const audio = ref(null);
 function parseUrl() {
   const loc = location.href.split('/');
 
-  console.log(loc);
+  console.log(loc, loc[3].replace(location.search, ''));
 
   switch (loc[3].replace(location.search, '')) {
     case '':
-      search.value = '';
-      page.value = 'home';
+      title.value = 'Trending';
+      getExplore();
       break;
     case 'search':
+      title.value = '';
       search.value = loc[4];
       console.log(search.value);
       break;
@@ -73,10 +75,12 @@ function parseUrl() {
       console.log(loc[3]);
       break;
     case 'playlist':
+      title.value = '';
       getAlbum(loc[3]);
       console.log(loc[3]);
       break;
     case 'channel':
+      title.value = '';
       getArtist(loc[4]);
       console.log(loc[4]);
     default:
@@ -148,6 +152,19 @@ function playNext(u) {
   } else {
     data.urls = [];
   }
+}
+
+async function getExplore() {
+  const json = await getJson('https://hyperpipeapi.onrender.com/explore');
+
+  console.log(json);
+
+  data.items = {};
+
+  data.items = {
+    songs: json.trending,
+    albums: json.albums_and_singles,
+  };
 }
 
 async function getSong(e) {
@@ -227,22 +244,36 @@ async function getNext(hash) {
 
     data.lyrics = json.lyricsId;
 
-    data.url = '/watch?v=' + json.songs[0].id;
+    data.url = json.songs[0]
+      ? '/watch?v=' + json.songs[0].id
+      : '/watch?v=' + hash;
     console.log(json);
 
-    data.urls = json.songs.map(i => ({
-      ...i,
-      ...{
-        url: '/watch?v=' + i.id,
-        id: undefined,
-      },
-    }));
+    data.urls =
+      json.songs.length > 0
+        ? json.songs.map(i => ({
+            ...i,
+            ...{
+              url: '/watch?v=' + i.id,
+              id: undefined,
+            },
+          }))
+        : data.urls;
 
     setMetadata();
 
     console.log(data.urls);
   } else {
     setMetadata();
+
+    if (data.urls.length == 0) {
+      data.urls = [
+        {
+          title: nowtitle,
+          url: data.url,
+        },
+      ];
+    }
   }
 }
 
@@ -433,26 +464,23 @@ onMounted(() => {
   </header>
 
   <main class="placeholder">
+    <h1 v-if="title">{{ title }}</h1>
+
     <KeepAlive>
-      <template v-if="page == 'home'">
-        <Search
-          @get-album="getAlbum"
-          @get-artist="getArtist"
-          @play-urls="playList"
-          @add-song="addSong"
-          :items="data.items"
-          :songItems="data.songItems"
-          :search="search" />
-      </template>
+      <Search
+        v-if="page == 'home'"
+        @get-album="getAlbum"
+        @get-artist="getArtist"
+        @play-urls="playList"
+        @add-song="addSong"
+        :items="data.items"
+        :songItems="data.songItems"
+        :search="search" />
     </KeepAlive>
 
-    <template v-if="page == 'playlist'">
-      <NewPlaylist @play-urls="playList" />
-    </template>
+    <NewPlaylist v-if="page == 'playlist'" @play-urls="playList" />
 
-    <template v-if="page == 'prefs'">
-      <Prefs />
-    </template>
+    <Prefs v-if="page == 'prefs'" />
   </main>
 
   <Playlists
@@ -530,6 +558,11 @@ img,
   border-radius: 0.25rem;
   border-radius: 0.25rem;
 }
+h1 {
+  text-align: center;
+  padding-bottom: 1.5rem;
+}
+h1,
 h4 {
   font-weight: bold;
 }

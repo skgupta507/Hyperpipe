@@ -57,7 +57,7 @@ onMounted(() => {
       <h4>{{ title }}</h4>
       <a
         :href="channel"
-        @click.prevent="$emit('get-artist', channel.split('/')[2])"
+        @click.prevent="$emit('get-artist', channel.replace('/channel', ''))"
         class="ign">
         <i class="ign">{{ author.replaceAll(' - Topic', '') }}</i>
       </a>

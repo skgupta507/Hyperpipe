@@ -82,8 +82,7 @@ watch(
 
     Reset();
 
-    data.songs = {};
-    data.songs.items = i.items;
+    data.songs = i;
     data.albumTitle = i.title;
   },
 );
@@ -92,6 +91,8 @@ watch(
   () => props.items,
   itms => {
     Reset();
+
+    console.log(itms);
 
     for (let i in itms) {
       data[i] = {};
@@ -133,11 +134,17 @@ watch(
     <div class="grid">
       <template v-for="song in data.songs.items">
         <SongItem
-          :author="song.uploaderName || ''"
+          :author="song.uploaderName || song.subtitle"
           :title="song.title || song.name"
-          :channel="song.uploaderUrl || ''"
+          :channel="song.uploaderUrl || song.subId"
           :play="song.url || '/watch?v=' + song.id"
-          :art="'url(' + (song.thumbnail || song.thumbnails[1].url) + ')'"
+          :art="
+            'url(' +
+            (song.thumbnail ||
+              song.thumbnails[1]?.url ||
+              song.thumbnails[0]?.url) +
+            ')'
+          "
           @open-song="
             $emit('play-urls', [
               {
