@@ -2,10 +2,10 @@ export const useStore = () => {
   try {
     return window.localStorage;
   } catch (err) {
-    alert(err);
+    console.error(err);
 
     const error = i => {
-      alert("Failed to Access '" + i + "' Please Enable localStorage.");
+      console.error("Failed to Access '" + i + "' Please Enable localStorage.");
     };
 
     return {

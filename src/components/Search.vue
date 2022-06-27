@@ -67,6 +67,8 @@ watch(
   () => props.search,
   n => {
     if (n) {
+      Reset();
+
       n = n.replace(location.search || '', '');
 
       console.log(n);

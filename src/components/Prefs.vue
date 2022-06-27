@@ -15,11 +15,13 @@ getJson('https://piped-instances.kavin.rocks').then(i => {
   console.log(i);
 });
 
-/*getJson('https://hyperpipe.codeberg.page/api/backend.json').then(i => {
-  hypInstances.value = i
+getJson('https://raw.codeberg.page/Hyperpipe/pages/api/backend.json').then(
+  i => {
+    hypInstances.value = i;
 
-  console.log(i);
-});*/
+    console.log(i);
+  },
+);
 
 function getBool(val) {
   return 'bi ' + (val ? 'bi-check2' : 'bi-x-lg');

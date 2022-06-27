@@ -62,11 +62,9 @@ function parseUrl() {
 
   switch (loc[3].replace(location.search, '')) {
     case '':
-      title.value = 'Trending';
       getExplore();
       break;
     case 'search':
-      title.value = '';
       search.value = loc[4];
       console.log(search.value);
       break;
@@ -75,12 +73,10 @@ function parseUrl() {
       console.log(loc[3]);
       break;
     case 'playlist':
-      title.value = '';
       getAlbum(loc[3]);
       console.log(loc[3]);
       break;
     case 'channel':
-      title.value = '';
       getArtist(loc[4]);
       console.log(loc[4]);
     default:
@@ -464,8 +460,6 @@ onMounted(() => {
   </header>
 
   <main class="placeholder">
-    <h1 v-if="title">{{ title }}</h1>
-
     <KeepAlive>
       <Search
         v-if="page == 'home'"
@@ -516,6 +510,7 @@ onMounted(() => {
     @ended="playNext"
     autoplay>
     <source
+      v-if="useStore().getItem('hls') != 'false'"
       v-for="src in data.audioSrc"
       :key="src.url"
       :src="src.url"

@@ -1,12 +1,20 @@
 <script setup>
+import { ref, onUpdated } from 'vue';
 import PlayBtn from './PlayBtn.vue';
 
 defineProps(['title', 'desc', 'subs', 'thumbs', 'play']);
 defineEmits(['playall']);
+
+const show = ref(-1);
+show.value = location.pathname.indexOf('/channel/UC');
+
+onUpdated(() => {
+  show.value = location.pathname.indexOf('/channel/UC');
+});
 </script>
 
 <template>
-  <div v-if="title" class="us-wrap">
+  <div v-if="show == 0 && title" class="us-wrap">
     <div class="bg-imgfill" :style="'--art: url(' + thumbs[1].url + ');'"></div>
     <div class="us-main">
       <h2>{{ title }}</h2>
