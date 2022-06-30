@@ -11,6 +11,7 @@ import Search from './components/Search.vue';
 import NewPlaylist from './components/NewPlaylist.vue';
 import Playlists from './components/Playlists.vue';
 import Lyrics from './components/Lyrics.vue';
+import Info from './components/Info.vue';
 import Artist from './components/Artist.vue';
 import Prefs from './components/Prefs.vue';
 
@@ -29,6 +30,7 @@ const data = reactive({
   songItems: null,
   items: {},
   title: '',
+  description: '',
   artist: '',
   artistUrl: '',
   state: 'play',
@@ -36,6 +38,7 @@ const data = reactive({
   time: 0,
   showplaylist: false,
   showlyrics: false,
+  showinfo: false,
   loop: false,
   lyrics: '',
 });
@@ -172,6 +175,7 @@ async function getSong(e) {
   console.log(json);
 
   data.artUrl = json.thumbnailUrl;
+  data.description = json.description;
   data.cover = `--art: url(${json.thumbnailUrl});`;
   data.nowtitle = json.title;
   data.nowartist = json.uploader.split(' - ')[0];
@@ -488,6 +492,8 @@ onMounted(() => {
     :id="data.lyrics"
     :curl="data.url"
     :iniurl="data.urls[0]?.url" />
+
+  <Info v-if="data.showinfo" :text="data.description" />
 
   <StatusBar
     @play="playPause"

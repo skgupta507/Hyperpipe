@@ -3,6 +3,8 @@ import { ref, watch } from 'vue';
 
 import { getJson } from '../scripts/fetch.js';
 
+import TextModal from './TextModal.vue';
+
 const props = defineProps({
     id: String,
     curl: String,
@@ -56,37 +58,17 @@ watch(
 </script>
 
 <template>
-  <div class="ly-modal">
-    <pre class="placeholder" :data-loaded="curl ? status : true">{{
-      text
-    }}</pre>
-    <div>{{ source }}</div>
-  </div>
+  <TextModal>
+    <template #content>
+      <pre class="placeholder" :data-loaded="curl ? status : true">{{
+        text
+      }}</pre>
+      <div>{{ source }}</div>
+    </template>
+  </TextModal>
 </template>
 
 <style scoped>
-.ly-modal {
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  top: 2rem;
-  bottom: 5rem;
-  right: 1rem;
-  width: 30rem;
-  max-width: calc(100% - 2rem);
-  background: var(--color-background-mute);
-  border-radius: 0.5rem;
-  z-index: 99999;
-  box-shadow: 0.1rem 0.1rem 1rem var(--color-shadow);
-  padding: 1rem;
-  overflow-y: auto;
-}
-pre {
-  font-family: inherit;
-  font-size: 1.25rem;
-  letter-spacing: 0.125rem;
-  white-space: pre-wrap;
-}
 pre:empty::before {
   --ico: '\f3a5';
 }
@@ -95,11 +77,5 @@ pre[data-loaded='false']:empty::after {
 }
 pre[data-loaded='true']:empty::after {
   --text: 'No Lyrics...';
-}
-
-div {
-  padding: 1rem;
-  letter-spacing: 0.1rem;
-  font-weight: 600;
 }
 </style>

@@ -122,6 +122,11 @@ function Save() {
         "></button>
       <div id="menu" v-if="showme.menu" class="popup">
         <button
+          id="info-btn"
+          class="bi bi-info-circle"
+          aria-label="Show Information About Song"
+          @click="$emit('toggle', 'showinfo')"></button>
+        <button
           id="addToPlaylist"
           title="Add Current Song to a Playlist"
           aria-label="Add Current Song to a Playlist"
