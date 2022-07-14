@@ -7,6 +7,7 @@ import { ref, reactive, onBeforeMount, onMounted } from 'vue';
 import NavBar from './components/NavBar.vue';
 import StatusBar from './components/StatusBar.vue';
 import NowPlaying from './components/NowPlaying.vue';
+import Genres from './components/Genres.vue';
 import Search from './components/Search.vue';
 import NewPlaylist from './components/NewPlaylist.vue';
 import Playlists from './components/Playlists.vue';
@@ -52,36 +53,44 @@ const artist = reactive({
 });
 
 const search = ref(''),
+  genreid = ref(''),
   page = ref('home'),
-  title = ref('');
+  path = ref(location.pathname);
 
 const audio = ref(null);
 
 /* Functions */
 function parseUrl() {
-  const loc = location.href.split('/');
+  const loc = location.pathname.split('/'),
+    base = loc[1].replace(location.search, '');
 
-  console.log(loc, loc[3].replace(location.search, ''));
+  console.log(loc, base);
 
-  switch (loc[3].replace(location.search, '')) {
+  path.value = location.pathname;
+
+  switch (base) {
     case '':
       getExplore();
       break;
     case 'search':
-      search.value = loc[4];
+      search.value = loc[2];
       console.log(search.value);
       break;
     case 'watch':
-      getSong(loc[3]);
-      console.log(loc[3]);
+      getSong(loc[1] + location.search);
+      console.log(loc[1]);
       break;
     case 'playlist':
-      getAlbum(loc[3]);
-      console.log(loc[3]);
+      getAlbum(loc[1] + location.search);
+      console.log(loc[1]);
       break;
     case 'channel':
-      getArtist(loc[4]);
-      console.log(loc[4]);
+      getArtist(loc[1]);
+      console.log(loc[1]);
+      break;
+    case 'explore':
+      genreid.value = loc[2];
+      page.value = 'genres';
     default:
       console.log(loc);
   }
@@ -474,6 +483,18 @@ onMounted(() => {
         :items="data.items"
         :songItems="data.songItems"
         :search="search" />
+    </KeepAlive>
+
+    <KeepAlive>
+      <Genres
+        v-if="page == 'genres'"
+        :id="genreid"
+        @get-album="
+          e => {
+            getAlbum(e);
+            page = 'home';
+          }
+        " />
     </KeepAlive>
 
     <NewPlaylist v-if="page == 'playlist'" @play-urls="playList" />

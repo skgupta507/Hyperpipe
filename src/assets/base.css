@@ -54,6 +54,22 @@ body[data-theme='light'] {
   --color-text: var(--vt-c-text-light-1);
 }
 
+body[data-theme='nord'] {
+  --color-foreground: var(--vt-c-blue);
+  --color-background: #2e3440;
+  --color-background-soft: #3b4252;
+  --color-background-mute: #434c5e;
+
+  --color-border: #4c566a;
+  --color-border-hover: #4c566a;
+
+  --color-shadow: #4c566a;
+  --color-scrollbar: var(--vt-c-blue);
+
+  --color-heading: #d8dee9;
+  --color-text: #d8dee9;
+}
+
 *,
 *::before,
 *::after {
@@ -146,7 +162,8 @@ button {
   transition: color 0.3s ease;
 }
 .bi:hover,
-.bi.true {
+.bi.true,
+.bi[data-active='true'] {
   color: var(--color-foreground);
 }
 

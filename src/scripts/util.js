@@ -1,4 +1,8 @@
-export const useStore = () => {
+export function useRoute(l) {
+  history.pushState({}, '', l);
+}
+
+export function useStore() {
   try {
     return window.localStorage;
   } catch (err) {
@@ -13,7 +17,7 @@ export const useStore = () => {
       setItem: error,
     };
   }
-};
+}
 
 export function useLazyLoad() {
   let lazyElems;

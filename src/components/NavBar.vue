@@ -11,6 +11,7 @@ const emit = defineEmits(['update-page', 'update-search']),
     home: true,
     playlist: false,
     prefs: false,
+    genres: false,
   });
 
 const Toggle = p => {
@@ -33,13 +34,20 @@ const Toggle = p => {
 
     <div class="wrap">
       <span
-        :class="'nav-ico bi bi-house ' + page.home"
+        class="nav-ico bi bi-house"
+        :data-active="page.home"
         @click="Toggle('home')"></span>
       <span
-        :class="'nav-ico bi bi-collection ' + page.playlist"
+        class="nav-ico bi bi-compass"
+        :data-active="page.genres"
+        @click="Toggle('genres')"></span>
+      <span
+        class="nav-ico bi bi-collection"
+        :data-active="page.playlist"
         @click="Toggle('playlist')"></span>
       <span
-        :class="'nav-ico bi bi-gear ' + page.prefs"
+        class="nav-ico bi bi-gear"
+        :data-active="page.prefs"
         @click="Toggle('prefs')"></span>
     </div>
 
@@ -64,6 +72,7 @@ nav {
 }
 h1.bi {
   font-size: calc(1.75rem + 1.5vw);
+  padding-bottom: 0;
 }
 .bi {
   font-size: calc(1rem + 1.5vw);
@@ -74,5 +83,10 @@ h1.bi {
 }
 .nav-ico {
   margin: 0 0.5rem;
+}
+@media (min-width: 1024px) {
+  .bi {
+    font-size: 1.5rem;
+  }
 }
 </style>
