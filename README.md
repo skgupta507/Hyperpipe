@@ -75,6 +75,7 @@ You can reach out to me personally on:
 - PeerJS -> [MIT][peer]
 - Bootstrap Icons -> [MIT][bi]
 - VueJS theme -> [MIT][vuetheme]
+- Dracula theme -> [MIT][dracula]
 - Nord theme -> [MIT][nord]
 
 ### Similar Projects
@@ -95,3 +96,4 @@ You can reach out to me personally on:
 [hls]: https://github.com/video-dev/hls.js/blob/master/LICENSE
 [nord]: https://github.com/arcticicestudio/nord/blob/develop/LICENSE.md
 [vuetheme]: https://github.com/vuejs/theme/blob/main/LICENSE
+[dracula]: https://github.com/dracula/dracula-theme/blob/master/LICENSE

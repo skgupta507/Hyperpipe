@@ -1,28 +1,20 @@
 <script setup>
-defineProps({
-  title: {
-    type: String,
-    default: '',
-  },
-  artist: {
-    type: String,
-    default: '',
-  },
-  artistUrl: {
-    type: String,
-    default: '',
-  },
-});
+import { useData } from '@/stores/player.js';
+
+const data = useData();
+
 defineEmits(['get-artist']);
 </script>
 
 <template>
-  <div v-if="title && artist" class="wrap">
-    <h1>{{ title }}</h1>
+  <div v-if="data.state.title && data.state.artist" class="wrap">
+    <h1>{{ data.state.title }}</h1>
     <h3>
-      <a :href="artistUrl" @click.prevent="$emit('get-artist', artistUrl)">{{
-        artist
-      }}</a>
+      <a
+        :href="data.state.artistUrl"
+        @click.prevent="$emit('get-artist', data.state.artistUrl)"
+        >{{ data.state.artist }}</a
+      >
     </h3>
   </div>
 </template>

@@ -2,30 +2,9 @@
 import { reactive } from 'vue';
 import SearchBar from '../components/SearchBar.vue';
 
-defineProps({
-  search: String,
-});
+import { useNav } from '@/stores/misc.js';
 
-const emit = defineEmits(['update-page', 'update-search']),
-  page = reactive({
-    home: true,
-    playlist: false,
-    prefs: false,
-    genres: false,
-  });
-
-const Toggle = p => {
-    for (let pg in page) {
-      page[pg] = false;
-    }
-    page[p] = true;
-    emit('update-page', p);
-
-    console.log(page[p], p);
-  },
-  home = () => {
-    history.pushState('', {}, '/');
-  };
+const nav = useNav();
 </script>
 
 <template>
@@ -35,30 +14,24 @@ const Toggle = p => {
     <div class="wrap">
       <span
         class="nav-ico bi bi-house"
-        :data-active="page.home"
-        @click="Toggle('home')"></span>
+        :data-active="nav.state.page == 'home'"
+        @click="nav.state.page = 'home'"></span>
       <span
         class="nav-ico bi bi-compass"
-        :data-active="page.genres"
-        @click="Toggle('genres')"></span>
+        :data-active="nav.state.page == 'genres'"
+        @click="nav.state.page = 'genres'"></span>
       <span
         class="nav-ico bi bi-collection"
-        :data-active="page.playlist"
-        @click="Toggle('playlist')"></span>
+        :data-active="nav.state.page == 'playlist'"
+        @click="nav.state.page = 'playlist'"></span>
       <span
         class="nav-ico bi bi-gear"
-        :data-active="page.prefs"
-        @click="Toggle('prefs')"></span>
+        :data-active="nav.state.page == 'prefs'"
+        @click="nav.state.page = 'prefs'"></span>
     </div>
 
     <div class="wrap">
-      <SearchBar
-        :search="search"
-        @update-search="
-          e => {
-            $emit('update-search', e);
-          }
-        " />
+      <SearchBar />
     </div>
   </nav>
 </template>

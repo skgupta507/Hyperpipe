@@ -132,9 +132,9 @@ onMounted(get);
 
 @media (min-width: 1024px) {
   .btn-grid {
-    grid-template-columns: calc(100% / 5) calc(100% / 5) calc(100% / 5) calc(
-        100% / 5
-      ) calc(100% / 5);
+    grid-template-columns:
+      calc(100% / 5) calc(100% / 5) calc(100% / 5) calc(100% / 5)
+      calc(100% / 5);
   }
 }
 </style>

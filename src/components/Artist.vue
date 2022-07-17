@@ -2,7 +2,10 @@
 import { ref, onUpdated } from 'vue';
 import PlayBtn from './PlayBtn.vue';
 
-defineProps(['title', 'desc', 'subs', 'thumbs', 'play']);
+import { useArtist } from '@/stores/results.js';
+
+const artist = useArtist();
+
 defineEmits(['playall']);
 
 const show = ref(-1);
@@ -14,14 +17,21 @@ onUpdated(() => {
 </script>
 
 <template>
-  <div v-if="show == 0 && title" class="us-wrap">
-    <div class="bg-imgfill" :style="'--art: url(' + thumbs[1].url + ');'"></div>
+  <div v-if="show == 0 && artist.state.title" class="us-wrap">
+    <div
+      class="bg-imgfill"
+      :style="'--art: url(' + artist.state.thumbnails[1].url + ');'"></div>
     <div class="us-main">
-      <h2>{{ title }}</h2>
-      <p @click="$event.target.classList.toggle('more')">{{ desc }}</p>
+      <h2>{{ artist.state.title }}</h2>
+      <p @click="$event.target.classList.toggle('more')">
+        {{ artist.state.description }}
+      </p>
       <div class="us-playwrap">
-        <PlayBtn @click="$emit('playall', '/playlist?list=' + play)" />
-        <span class="us-box subs">{{ subs || 0 }}</span>
+        <PlayBtn
+          @click="
+            $emit('playall', '/playlist?list=' + artist.state.playlistId)
+          " />
+        <span class="us-box subs">{{ artist.state.subscriberCount || 0 }}</span>
       </div>
     </div>
   </div>

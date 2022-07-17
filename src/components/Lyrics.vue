@@ -1,38 +1,31 @@
 <script setup>
 import { ref, watch } from 'vue';
 
-import { getJson } from '../scripts/fetch.js';
+import { getJson } from '@/scripts/fetch.js';
+import { useData } from '@/stores/player.js';
 
 import TextModal from './TextModal.vue';
 
-const props = defineProps({
-    id: String,
-    curl: String,
-    iniurl: String,
-  }),
+const data = useData(),
   text = ref(''),
   source = ref(''),
   status = ref(false);
 
-console.log(props);
-
 function get() {
   status.value = false;
 
-  if (props.id && props.curl === props.iniurl) {
-    console.log(props.id);
-
-    getJson('https://hyperpipeapi.onrender.com/browse/' + props.id).then(
-      res => {
-        text.value = res.text;
-        source.value = res.source;
-        status.value = true;
-      },
-    );
-  } else if (props.curl) {
+  if (data.state.lyrics && data.state.urls === data.state.urls[0]?.url) {
+    getJson(
+      'https://hyperpipeapi.onrender.com/browse/' + data.state.lyrics,
+    ).then(res => {
+      text.value = res.text;
+      source.value = res.source;
+      status.value = true;
+    });
+  } else if (data.state.urls[0]?.url) {
     getJson(
       'https://hyperpipeapi.onrender.com/next/' +
-        props.curl.replace('/watch?v=', ''),
+        data.state.urls[0]?.url.replace('/watch?v=', ''),
     ).then(next => {
       if (next.lyricsId) {
         getJson(
@@ -50,7 +43,7 @@ function get() {
 get();
 
 watch(
-  () => props.curl,
+  () => data.state.urls[0]?.url,
   () => {
     get();
   },
@@ -60,22 +53,24 @@ watch(
 <template>
   <TextModal>
     <template #content>
-      <pre class="placeholder" :data-loaded="curl ? status : true">{{
-        text
-      }}</pre>
+      <pre
+        class="placeholder"
+        :data-loaded="data.state.urls[0]?.url ? status : true"
+        >{{ text }}</pre
+      >
       <div>{{ source }}</div>
     </template>
   </TextModal>
 </template>
 
 <style scoped>
-pre:empty::before {
+.placeholder:empty::before {
   --ico: '\f3a5';
 }
-pre[data-loaded='false']:empty::after {
+.placeholder[data-loaded='false']:empty::after {
   --text: 'Fetching Lyrics...';
 }
-pre[data-loaded='true']:empty::after {
+.placeholder[data-loaded='true']:empty::after {
   --text: 'No Lyrics...';
 }
 </style>

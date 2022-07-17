@@ -3,6 +3,12 @@
 	"short_name": "Hyperpipe",
 	"start_url": "/",
 	"display": "standalone",
-	"background_color": "#fff",
-	"description": "Privacy respecting YouTube Music Frontend."
+	"background_color": "#000",
+	"description": "Privacy respecting YouTube Music Frontend.",
+	"icons": [
+		{
+			"src": "/favicon.svg",
+			"sizes": "any"
+		}
+	]
 }

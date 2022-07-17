@@ -6,16 +6,12 @@ import Modal from './Modal.vue';
 import { useStore } from '../scripts/util.js';
 import { useListPlaylists } from '../scripts/db.js';
 
-defineProps({
-  state: String,
-  time: Number,
-  show: Boolean,
-  loop: Boolean,
-  lyrics: Boolean,
-});
+import { usePlayer } from '../stores/player.js';
 
-const emit = defineEmits(['vol', 'play', 'toggle', 'save', 'change-time']),
-  vol = ref(useStore().vol / 100 || 1),
+const player = usePlayer(),
+  store = useStore();
+
+const emit = defineEmits(['vol', 'save', 'change-time']),
   showme = reactive({
     menu: false,
     pl: false,
@@ -76,13 +72,13 @@ function Save() {
       <button
         id="btn-play-pause"
         aria-label="Play or Pause"
-        :class="'bi bi-' + state"
-        @click="$emit('play')"></button>
+        :class="'bi bi-' + player.state.status"
+        @click="player.toggle('play')"></button>
 
       <div id="statusbar-progress" class="range-wrap">
         <input
           aria-label="Change Time"
-          :value="time"
+          :value="player.state.time"
           type="range"
           name="statusbar-progress"
           max="100"
@@ -102,13 +98,10 @@ function Save() {
               id="vol-input"
               aria-label="Volume Input"
               type="range"
-              :value="vol"
+              :value="player.state.vol"
               max="1"
               step=".01"
-              @input="
-                $emit('vol', $event.target.value);
-                vol = $event.target.value;
-              " />
+              @input="player.state.vol = $event.target.value" />
           </div>
         </Transition>
       </button>
@@ -117,15 +110,15 @@ function Save() {
         aria-label="More Controls"
         @click="
           showme.menu = !showme.menu;
-          show ? $emit('toggle', 'showplaylist') : '';
-          lyrics ? $emit('toggle', 'showlyrics') : '';
+          player.state.playlist ? player.toggle('playlist') : '';
+          player.state.lyrics ? player.toggle('lyrics') : '';
         "></button>
       <div id="menu" v-if="showme.menu" class="popup">
         <button
           id="info-btn"
           class="bi bi-info-circle"
           aria-label="Show Information About Song"
-          @click="$emit('toggle', 'showinfo')"></button>
+          @click="player.toggle('info')"></button>
         <button
           id="addToPlaylist"
           title="Add Current Song to a Playlist"
@@ -136,18 +129,21 @@ function Save() {
           id="list-btn"
           title="Current Playlist"
           aria-label="Current Playlist"
-          :class="'bi bi-music-note-list ' + show"
-          @click="$emit('toggle', 'showplaylist')"></button>
+          class="bi bi-music-note-list"
+          :data-active="player.state.playlist"
+          @click="player.toggle('playlist')"></button>
         <button
           id="btn-lyrics"
-          :class="'bi bi-file-music ' + lyrics"
-          @click="$emit('toggle', 'showlyrics')"></button>
+          class="bi bi-file-music"
+          :data-active="player.state.lyrics"
+          @click="player.toggle('lyrics')"></button>
         <button
           id="loop-btn"
           title="Loop"
           aria-label="Loop"
-          :class="'bi bi-infinity ' + loop"
-          @click="$emit('toggle', 'loop')"></button>
+          class="bi bi-infinity"
+          :data-active="player.state.loop"
+          @click="player.toggle('loop')"></button>
       </div>
     </div>
   </div>
@@ -302,7 +298,7 @@ input[type='range']::-moz-range-track {
   top: 0;
 }
 #statusbar-progress {
-  --fw: v-bind('time + "%"');
+  --fw: v-bind('player.state.time + "%"');
   width: 50vw;
   min-width: 200px;
   max-width: 500px;

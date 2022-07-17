@@ -1,60 +1,39 @@
 <script setup>
 /* Imports */
 import Hls from 'hls.js';
-import { ref, reactive, onBeforeMount, onMounted } from 'vue';
+import { ref, watch, reactive, onBeforeMount, onMounted } from 'vue';
 
 /* Components */
-import NavBar from './components/NavBar.vue';
-import StatusBar from './components/StatusBar.vue';
-import NowPlaying from './components/NowPlaying.vue';
-import Genres from './components/Genres.vue';
-import Search from './components/Search.vue';
-import NewPlaylist from './components/NewPlaylist.vue';
-import Playlists from './components/Playlists.vue';
-import Lyrics from './components/Lyrics.vue';
-import Info from './components/Info.vue';
-import Artist from './components/Artist.vue';
-import Prefs from './components/Prefs.vue';
+import NavBar from '@/components/NavBar.vue';
+import StatusBar from '@/components/StatusBar.vue';
+import NowPlaying from '@/components/NowPlaying.vue';
+import Genres from '@/components/Genres.vue';
+import Search from '@/components/Search.vue';
+import NewPlaylist from '@/components/NewPlaylist.vue';
+import Playlists from '@/components/Playlists.vue';
+import Lyrics from '@/components/Lyrics.vue';
+import Info from '@/components/Info.vue';
+import Artist from '@/components/Artist.vue';
+import Prefs from '@/components/Prefs.vue';
 
 /* Composables */
-import { getJson, getJsonPiped } from './scripts/fetch.js';
-import { useLazyLoad, useStore } from './scripts/util.js';
-import { useSetupDB, useUpdatePlaylist } from './scripts/db.js';
+import { getJson, getJsonPiped } from '@/scripts/fetch.js';
+import { useLazyLoad, useStore, useRoute } from '@/scripts/util.js';
+import { useSetupDB, useUpdatePlaylist } from '@/scripts/db.js';
 
-/* Reactivity */
-const data = reactive({
-  artUrl: '',
-  cover: '',
-  audioSrc: [],
-  url: '',
-  urls: [],
-  songItems: null,
-  items: {},
-  title: '',
-  description: '',
-  artist: '',
-  artistUrl: '',
-  state: 'play',
-  duration: 0,
-  time: 0,
-  showplaylist: false,
-  showlyrics: false,
-  showinfo: false,
-  loop: false,
-  lyrics: '',
-});
+/* Stores */
+import { useData, usePlayer } from '@/stores/player.js';
+import { useResults, useArtist } from '@/stores/results.js';
+import { useNav } from '@/stores/misc.js';
 
-const artist = reactive({
-  playlistId: null,
-  title: null,
-  description: null,
-  subscriberCount: 0,
-  thumbnails: [],
-});
+const store = useStore(),
+  data = useData(),
+  player = usePlayer(),
+  results = useResults(),
+  artist = useArtist(),
+  nav = useNav();
 
-const search = ref(''),
-  genreid = ref(''),
-  page = ref('home'),
+const genreid = ref(''),
   path = ref(location.pathname);
 
 const audio = ref(null);
@@ -73,8 +52,8 @@ function parseUrl() {
       getExplore();
       break;
     case 'search':
-      search.value = loc[2];
-      console.log(search.value);
+      nav.state.search = loc[2];
+      console.log(nav.state.search);
       break;
     case 'watch':
       getSong(loc[1] + location.search);
@@ -85,56 +64,44 @@ function parseUrl() {
       console.log(loc[1]);
       break;
     case 'channel':
-      getArtist(loc[1]);
-      console.log(loc[1]);
+      getArtist(loc[2]);
+      console.log(loc[2]);
       break;
     case 'explore':
       genreid.value = loc[2];
-      page.value = 'genres';
+      nav.state.page = 'genres';
     default:
       console.log(loc);
   }
 }
 
-function Toggle(e) {
-  console.log(e, data[e]);
-  data[e] = !data[e];
-}
-
-function timeUpdate(t) {
-  data.time = Math.floor((t / data.duration) * 100);
-}
-
 function setTime(t) {
-  audio.value.currentTime = (t / 100) * data.duration;
+  audio.value.currentTime = (t / 100) * player.state.duration;
 }
 
 function addSong(s) {
-  data.urls.push(s);
+  data.state.urls.push(s);
 
-  const index = data.urls.map(s => s.url).indexOf(data.url);
+  const index = data.state.urls.map(s => s.url).indexOf(data.state.url);
 
   if (
-    (index == data.urls.length - 1 && data.time > 98) ||
-    data.urls.length == 1
+    (index == data.state.urls.length - 1 && player.state.time > 98) ||
+    data.state.urls.length == 1
   ) {
-    console.log(true);
     playNext();
-  } else {
-    console.log(false);
   }
 
-  console.log(s, data.urls);
+  console.log(s, data.state.urls);
 }
 
 function playThis(t) {
-  const i = data.urls.indexOf(t);
-  getSong(data.urls[i].url);
+  const i = data.state.urls.indexOf(t);
+  getSong(data.state.urls[i].url);
 }
 
 function playList(a) {
-  data.urls = a;
-  getSong(data.urls[0].url);
+  data.state.urls = a;
+  getSong(data.state.urls[0].url);
 }
 
 function playNext(u) {
@@ -144,21 +111,21 @@ function playNext(u) {
 
   audio.value.src = '';
 
-  const now = data.urls.filter(s => s.url === data.url)[0],
-    i = data.urls.indexOf(now),
-    next = data.urls[i + 1];
+  const now = data.state.urls.filter(s => s.url === data.state.url)[0],
+    i = data.state.urls.indexOf(now),
+    next = data.state.urls[i + 1];
 
   console.log('Index: ' + i);
-  console.log(data.url, data.urls, next);
+  console.log(data.state.url, data.state.urls, next);
 
-  if (data.urls.length > i && data.urls.length != 0 && next) {
+  if (data.state.urls.length > i && data.state.urls.length != 0 && next) {
     getSong(next.url);
-  } else if (data.loop) {
-    console.log(data.url, data.urls[0]);
-    data.url = data.urls[0].url;
-    getSong(data.urls[0].url);
+  } else if (player.state.loop) {
+    console.log(data.state.url, data.state.urls[0]);
+    data.state.url = data.state.urls[0].url;
+    getSong(data.state.urls[0].url);
   } else {
-    data.urls = [];
+    data.state.urls = [];
   }
 }
 
@@ -167,9 +134,9 @@ async function getExplore() {
 
   console.log(json);
 
-  data.items = {};
+  results.items.value = {};
 
-  data.items = {
+  results.items.value = {
     songs: json.trending,
     albums: json.albums_and_singles,
   };
@@ -183,14 +150,13 @@ async function getSong(e) {
 
   console.log(json);
 
-  data.artUrl = json.thumbnailUrl;
-  data.description = json.description;
-  data.cover = `--art: url(${json.thumbnailUrl});`;
-  data.nowtitle = json.title;
-  data.nowartist = json.uploader.split(' - ')[0];
-  data.artistUrl = json.uploaderUrl;
-  data.duration = json.duration;
-  data.url = e;
+  data.state.art = json.thumbnailUrl;
+  data.state.description = json.description;
+  data.state.title = json.title;
+  data.state.artist = json.uploader.replace(' - Topic', '');
+  data.state.artistUrl = json.uploaderUrl;
+  player.state.duration = json.duration;
+  data.state.url = e;
 
   await getNext(hash);
 
@@ -208,16 +174,15 @@ async function getAlbum(e) {
 
   console.log(json, json.relatedStreams);
 
-  data.songItems = {
+  results.resetItems();
+  results.setItem('songs', {
     items: json.relatedStreams,
     title: json.name,
-  };
+  });
 
-  history.pushState({}, '', e);
+  useRoute(e);
 
-  for (let i in artist) {
-    artist[i] = null;
-  }
+  artist.reset();
 }
 
 async function getArtist(e) {
@@ -229,36 +194,40 @@ async function getArtist(e) {
 
   console.log(json);
 
-  data.items = json.items;
-  data.items.notes = json.playlistId;
-  json.items = null;
-
-  for (let i in json) {
-    artist[i] = json[i];
+  for (let i in json.items) {
+    results.setItem(i, { items: json.items[i] });
   }
 
-  history.pushState({}, '', '/channel/' + e);
+  console.log(results.items);
+
+  json.items = undefined;
+
+  artist.reset();
+  artist.set(json);
+
+  useRoute('/channel/' + e);
 }
 
 async function getNext(hash) {
   if (
-    useStore().getItem('next') !== 'false' &&
-    (!data.urls ||
-      !data.urls.filter(s => s.url == data.url)[0] ||
-      data.urls.length == 1)
+    store.getItem('next') !== 'false' &&
+    (!data.state.urls ||
+      !data.state.urls.filter(s => s.url == data.state.url)[0] ||
+      data.state.urls.length == 1)
   ) {
     const json = await getJson(
       'https://hyperpipeapi.onrender.com/next/' + hash,
     );
 
-    data.lyrics = json.lyricsId;
+    data.state.lyrics = json.lyricsId;
 
-    data.url = json.songs[0]
+    data.state.url = json.songs[0]
       ? '/watch?v=' + json.songs[0].id
       : '/watch?v=' + hash;
+
     console.log(json);
 
-    data.urls =
+    data.state.urls =
       json.songs.length > 0
         ? json.songs.map(i => ({
             ...i,
@@ -267,43 +236,29 @@ async function getNext(hash) {
               id: undefined,
             },
           }))
-        : data.urls;
+        : data.state.urls;
 
     setMetadata();
 
-    console.log(data.urls);
+    console.log(data.state.urls);
   } else {
     setMetadata();
 
-    if (data.urls.length == 0) {
-      data.urls = [
+    if (data.state.urls.length == 0) {
+      data.state.urls = [
         {
           title: nowtitle,
-          url: data.url,
+          url: data.state.url,
         },
       ];
     }
   }
 }
 
-function setVolume(vol) {
-  audio.value.volume = vol;
-}
-
-function playPause() {
-  if (audio.value.paused) {
-    audio.value.play();
-    data.state = 'pause';
-  } else {
-    audio.value.pause();
-    data.state = 'play';
-  }
-}
-
 function Stream(res) {
   console.log(res);
 
-  if (Hls.isSupported() && useStore().hls !== 'false') {
+  if (Hls.isSupported() && store.hls !== 'false') {
     window.hls = new Hls();
 
     window.hls.attachMedia(audio.value);
@@ -312,7 +267,7 @@ function Stream(res) {
       window.hls.loadSource(res.hls);
     });
   } else {
-    data.audioSrc = res.stream;
+    data.state.src = res.stream;
     audio.value.load();
   }
 }
@@ -320,24 +275,23 @@ function Stream(res) {
 function audioCanPlay() {
   useLazyLoad();
 
-  audio.value.play().catch(err => {
-    alert(err);
-  });
-  data.state = 'pause';
-
-  if (location.pathname != '/playlist') {
-    history.pushState({}, '', data.url);
+  if (audio.value.paused) {
+    player.toggle('play');
   }
 
-  document.title = `Playing: ${data.nowtitle} by ${data.nowartist}`;
+  if (location.pathname != '/playlist') {
+    useRoute(data.state.url);
+  }
+
+  document.title = `Playing: ${data.state.title} by ${data.state.artist}`;
 }
 
 function SaveTrack(e) {
   useUpdatePlaylist(
     e,
     {
-      url: data.url,
-      title: data.nowtitle,
+      url: data.state.url,
+      title: data.state.title,
     },
     e => {
       if (e === true) {
@@ -349,7 +303,7 @@ function SaveTrack(e) {
 
 function setMetadata() {
   if ('mediaSession' in navigator) {
-    const now = data.urls.filter(u => u.url === data.url)[0];
+    const now = data.state.urls.filter(u => u.url === data.state.url)[0];
 
     let artwork = [],
       album = undefined;
@@ -366,24 +320,44 @@ function setMetadata() {
           };
         });
       } else {
-        artwork = [{ src: data.artUrl, type: 'image/webp' }];
+        artwork = [{ src: data.state.art, type: 'image/webp' }];
       }
 
       console.log(album, artwork);
     }
 
     navigator.mediaSession.metadata = new MediaMetadata({
-      title: data.nowtitle,
-      artist: data.nowartist,
+      title: data.state.title,
+      artist: data.state.artist,
       album: album,
       artwork: artwork,
     });
   }
 }
 
+watch(
+  () => player.state.play,
+  () => {
+    if (audio.value.paused) {
+      audio.value
+        .play()
+        .then(() => {
+          player.state.state = 'pause';
+        })
+        .catch(err => {
+          alert(err);
+          player.state.state = 'play';
+        });
+    } else {
+      player.state.state = 'play';
+      audio.value.pause();
+    }
+  },
+);
+
 onBeforeMount(() => {
-  if (useStore().theme) {
-    document.body.setAttribute('data-theme', useStore().theme);
+  if (store.theme) {
+    document.body.setAttribute('data-theme', store.theme);
   }
 });
 
@@ -404,25 +378,31 @@ onMounted(() => {
 
   /* Alert User on close if url is present */
   window.onbeforeunload = () => {
-    if (data.url) {
+    if (data.state.url) {
       return 'Are you Sure?';
     }
   };
 
   /* Media Session Controls */
   if ('mediaSession' in navigator) {
-    navigator.mediaSession.setActionHandler('play', playPause);
-    navigator.mediaSession.setActionHandler('pause', playPause);
+    navigator.mediaSession.setActionHandler('play', () => {
+      player.state.state = 'play';
+    });
+
+    navigator.mediaSession.setActionHandler('pause', () => {
+      player.state.state = 'pause';
+    });
+
     navigator.mediaSession.setActionHandler('previoustrack', () => {
-      if (data.urls.length > 2) {
-        const i = data.urls.map(s => s.url).indexOf(data.url);
-        getSong(data.urls[i - 1].url);
+      if (data.state.urls.length > 2) {
+        const i = data.state.urls.map(s => s.url).indexOf(data.state.url);
+        getSong(data.state.urls[i - 1].url);
       }
     });
     navigator.mediaSession.setActionHandler('nexttrack', () => {
-      if (data.urls.length > 2) {
-        const i = data.urls.map(s => s.url).indexOf(data.url);
-        getSong(data.urls[i + 1].url);
+      if (data.state.urls.length > 2) {
+        const i = data.state.urls.map(s => s.url).indexOf(data.state.url);
+        getSong(data.state.urls[i + 1].url);
       }
     });
   }
@@ -437,108 +417,66 @@ onMounted(() => {
 </script>
 
 <template>
-  <NavBar
-    @update-search="
-      e => {
-        search = e;
-      }
-    "
-    @update-page="
-      e => {
-        page = e;
-      }
-    "
-    :search="search" />
+  <NavBar />
 
-  <template v-if="artist && page == 'home'">
-    <Artist
-      @playall="getAlbum"
-      :title="artist.title"
-      :desc="artist.description"
-      :subs="artist.subscriberCount"
-      :thumbs="artist.thumbnails"
-      :play="artist.playlistId" />
+  <template v-if="artist.state.title && nav.state.page == 'home'">
+    <Artist @playall="getAlbum" />
   </template>
 
-  <header v-if="!artist.title">
-    <div v-if="data.cover" class="art bg-img" :style="data.cover"></div>
+  <header v-if="!artist.state.title">
+    <div v-show="data.state.art" class="art bg-img"></div>
 
     <div class="wrapper">
-      <NowPlaying
-        @get-artist="getArtist"
-        :title="data.nowtitle"
-        :artist="data.nowartist"
-        :artistUrl="data.artistUrl" />
+      <NowPlaying @get-artist="getArtist" />
     </div>
   </header>
 
   <main class="placeholder">
     <KeepAlive>
       <Search
-        v-if="page == 'home'"
+        v-if="nav.state.page == 'home'"
         @get-album="getAlbum"
         @get-artist="getArtist"
         @play-urls="playList"
-        @add-song="addSong"
-        :items="data.items"
-        :songItems="data.songItems"
-        :search="search" />
+        @add-song="addSong" />
     </KeepAlive>
 
     <KeepAlive>
       <Genres
-        v-if="page == 'genres'"
+        v-if="nav.state.page == 'genres'"
         :id="genreid"
         @get-album="
           e => {
             getAlbum(e);
-            page = 'home';
+            nav.state.page = 'home';
           }
         " />
     </KeepAlive>
 
-    <NewPlaylist v-if="page == 'playlist'" @play-urls="playList" />
+    <NewPlaylist v-if="nav.state.page == 'playlist'" @play-urls="playList" />
 
-    <Prefs v-if="page == 'prefs'" />
+    <Prefs v-if="nav.state.page == 'prefs'" />
   </main>
 
-  <Playlists
-    @playthis="playThis"
-    :url="data.url"
-    :urls="data.urls"
-    :show="data.showplaylist" />
+  <Playlists v-if="player.state.playlist" @playthis="playThis" />
 
-  <Lyrics
-    v-if="data.showlyrics"
-    :id="data.lyrics"
-    :curl="data.url"
-    :iniurl="data.urls[0]?.url" />
+  <Lyrics v-if="player.state.lyrics" />
 
-  <Info v-if="data.showinfo" :text="data.description" />
+  <Info v-if="player.state.info" :text="data.state.description" />
 
-  <StatusBar
-    @play="playPause"
-    @vol="setVolume"
-    @toggle="Toggle"
-    @save="SaveTrack"
-    @change-time="setTime"
-    :state="data.state"
-    :time="data.time"
-    :show="data.showplaylist"
-    :lyrics="data.showlyrics"
-    :loop="data.loop" />
+  <StatusBar @save="SaveTrack" @change-time="setTime" />
 
   <audio
     id="audio"
     ref="audio"
-    :volume="useStore().vol ? useStore().vol / 100 : 1"
+    :volume="player.state.vol"
     @canplay="audioCanPlay"
-    @timeupdate="timeUpdate($event.target.currentTime)"
+    @timeupdate="player.setTime($event.target.currentTime)"
     @ended="playNext"
     autoplay>
     <source
-      v-if="useStore().getItem('hls') != 'false'"
-      v-for="src in data.audioSrc"
+      v-if="store.getItem('hls') != 'false'"
+      v-for="src in data.state.audioSrc"
       :key="src.url"
       :src="src.url"
       :type="src.mimeType" />
@@ -573,7 +511,9 @@ header {
   height: 175px;
   width: 175px;
 }
-
+.bg-img {
+  --art: v-bind(`url(${data.state.art}) `);
+}
 img,
 .card,
 .card-bg {

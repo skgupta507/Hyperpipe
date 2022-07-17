@@ -1,13 +1,9 @@
 <script setup>
 import { ref } from 'vue';
+import { useNav } from '@/stores/misc.js';
 
-defineProps({
-  search: String,
-});
-
-defineEmits(['update-search']);
-
-const show = ref(false);
+const show = ref(false),
+  nav = useNav();
 </script>
 
 <template>
@@ -22,8 +18,8 @@ const show = ref(false);
           type="text"
           aria-label="Search Input"
           placeholder="Search..."
-          @change="$emit('update-search', $event.target.value)"
-          :value="search" />
+          @change="nav.state.search = $event.target.value"
+          :value="nav.state.search" />
       </div>
     </Transition>
   </button>

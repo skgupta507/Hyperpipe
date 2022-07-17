@@ -10,7 +10,18 @@ const parse = d =>
 <template>
   <TextModal>
     <template #content>
-      <pre>{{ parse(text.replaceAll('<br>', '\n')) }}</pre>
+      <pre class="placeholder">{{ 
+        text ? parse(text.replaceAll('<br>', '\n')) : ''
+      }}</pre>
     </template>
   </TextModal>
 </template>
+
+<style scoped>
+.placeholder:empty::before {
+  --ico: '\F3B9';
+}
+.placeholder:empty::after {
+  --text: 'No Information Available...';
+}
+</style>

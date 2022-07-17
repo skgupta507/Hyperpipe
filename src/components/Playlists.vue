@@ -1,19 +1,18 @@
 <script setup>
-defineProps({
-  url: String,
-  urls: Array,
-  show: Boolean,
-});
+import { useData, usePlayer } from '@/stores/player.js';
+
+const player = usePlayer(),
+  data = useData();
 
 defineEmits(['playthis']);
 </script>
 
 <template>
   <Transition name="fade">
-    <div v-if="show" class="pl-modal placeholder">
-      <template v-for="plurl in urls">
+    <div class="pl-modal placeholder">
+      <template v-for="plurl in data.state.urls">
         <div class="pl-item" @click="$emit('playthis', plurl)">
-          <span v-if="url == plurl.url" class="bars-wrap">
+          <span v-if="data.state.url == plurl.url" class="bars-wrap">
             <div class="bars"></div>
             <div class="bars"></div>
             <div class="bars"></div>
@@ -22,7 +21,8 @@ defineEmits(['playthis']);
             <img
               :src="plurl.thumbnails[0].url"
               :height="plurl.thumbnails[0].height"
-              :width="plurl.thumbnails[0].width" />
+              :width="plurl.thumbnails[0].width"
+              loading="lazy" />
           </div>
           <span class="pl-main caps">{{ plurl.title }}</span>
         </div>

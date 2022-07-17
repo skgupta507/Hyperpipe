@@ -70,6 +70,22 @@ body[data-theme='nord'] {
   --color-text: #d8dee9;
 }
 
+body[data-theme='dracula'] {
+  --color-foreground: #bd93f9;
+  --color-background: #282a36;
+  --color-background-soft: #44475a;
+  --color-background-mute: #44475a;
+
+  --color-border: #44475a;
+  --color-border-hover: #44475a;
+
+  --color-shadow: #6272a4;
+  --color-scrollbar: #bd93f9;
+
+  --color-heading: var(--vt-c-text-dark-1);
+  --color-text: var(--vt-c-text-dark-2);
+}
+
 *,
 *::before,
 *::after {

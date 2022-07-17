@@ -1,13 +1,16 @@
 <script setup>
+defineProps(['ico']);
 defineEmits(['click']);
 </script>
 
 <template>
-  <button class="bi bi-play" @click="$emit('click')"></button>
+  <button
+    :class="'bi bi-' + (ico ? ico : 'play')"
+    @click="$emit('click')"></button>
 </template>
 
 <style scoped>
-button {
+.bi {
   height: 4rem;
   width: 4rem;
   font-size: 4rem;
@@ -21,10 +24,14 @@ button {
   transition: background 0.4s ease;
   margin-right: auto;
 }
-button:before {
+.bi-play:before {
   padding-left: 0.2rem;
 }
-button:hover {
+.bi:hover,
+.bi:not(.bi-play) {
   background: transparent;
+}
+.bi:not(.bi-play) {
+  font-size: 3rem;
 }
 </style>

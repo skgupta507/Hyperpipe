@@ -1,39 +1,44 @@
 <script setup>
-import { ref, reactive, watch } from 'vue';
+import { ref, reactive, watch, onUpdated } from 'vue';
+
 import PlayBtn from './PlayBtn.vue';
 import SongItem from './SongItem.vue';
 import AlbumItem from './AlbumItem.vue';
 
 import { getJsonPiped, getPipedQuery } from '../scripts/fetch.js';
-import { useLazyLoad } from '../scripts/util.js';
+import { useLazyLoad, useRoute } from '../scripts/util.js';
+import { useCreatePlaylist } from '../scripts/db.js';
 
-const props = defineProps(['search', 'songItems', 'items']),
-  emit = defineEmits(['get-album', 'get-artist', 'play-urls', 'add-song']),
+import { useResults, useArtist } from '@/stores/results.js';
+import { useNav } from '@/stores/misc.js';
+
+const results = useResults(),
+  nav = useNav(),
+  artist = useArtist();
+
+const emit = defineEmits(['get-album', 'get-artist', 'play-urls', 'add-song']),
   filters = ['music_songs', 'music_albums', 'music_artists'],
   filter = ref('music_songs'),
-  isSearch = ref(/search/.test(location.pathname)),
-  data = reactive({
-    notes: null,
-    albums: null,
-    albumTitle: null,
-    songs: null,
-    artists: null,
-    recommendedArtists: null,
-  });
+  isSearch = ref(/search/.test(location.pathname));
 
-const Reset = () => {
-    isSearch.value = /search/.test(location.pathname);
-
-    for (let i in data) {
-      data[i] = null;
-    }
-  },
-  playAlbum = () => {
-    const urls = data.songs.items.map(item => {
+const playAlbum = () => {
+    const urls = results.items?.songs?.items?.map(item => {
       return { url: item.url, title: item.title };
     });
 
     emit('play-urls', urls);
+  },
+  saveAlbum = () => {
+    const urls = results.items?.songs?.items?.map(item => {
+        return { url: item.url, title: item.title };
+      }),
+      title = results.items?.songs?.title;
+
+    if (title) {
+      useCreatePlaylist(title, urls, () => {
+        alert('Saved!');
+      });
+    }
   },
   getSearch = q => {
     if (q) {
@@ -47,74 +52,60 @@ const Reset = () => {
       getResults(pq);
       useLazyLoad();
     } else {
-      Reset();
+      results.resetItems();
 
-      history.pushState({}, '', '/');
+      useRoute('/');
       document.title = 'Hyperpipe';
 
       console.log('No Search');
     }
   },
   getResults = async q => {
-    const f = filter.value || 'music_songs',
-      json = await getJsonPiped(`/search?q=${q}&filter=${f}`);
+    results.resetItems();
 
-    data[f.split('_')[1]] = json;
-    console.log(json, data);
+    const f = filter.value || 'music_songs',
+      json = await getJsonPiped(`/search?q=${q}&filter=${f}`),
+      key = f.split('_')[1];
+
+    results.setItem(key, json);
+
+    console.log(json, key);
   };
 
 watch(
-  () => props.search,
+  () => nav.state.search,
   n => {
     if (n) {
-      Reset();
-
       n = n.replace(location.search || '', '');
 
       console.log(n);
+
+      artist.reset();
       getSearch(n);
     }
   },
 );
 
-watch(
-  () => props.songItems,
-  i => {
-    console.log(i);
-
-    Reset();
-
-    data.songs = i;
-    data.albumTitle = i.title;
-  },
-);
-
-watch(
-  () => props.items,
-  itms => {
-    Reset();
-
-    console.log(itms);
-
-    for (let i in itms) {
-      data[i] = {};
-      data[i].items = itms[i];
-
-      console.log(i, data[i]);
-    }
-  },
-);
+onUpdated(() => {
+  isSearch.value = /search/.test(location.pathname);
+});
 </script>
 
 <template>
-  <div v-if="data.songs && data.songs.corrected" class="text-full">
-    Did you mean, "<span class="caps">{{ data.songs.suggestion }}</span
+  <div
+    v-if="results.items.songs && results.items.songs.corrected"
+    class="text-full">
+    Did you mean, "<span class="caps">{{
+      results.items?.songs?.suggestion
+    }}</span
     >"!!
   </div>
 
-  <div v-if="data.albumTitle" class="text-full flex">
+  <div v-if="results.items?.songs?.title" class="text-full flex">
     <PlayBtn @click="playAlbum" />
-    <span>{{ data.albumTitle }}</span>
+    <PlayBtn ico="plus" @click="saveAlbum" />
+
+    <span>{{ results.items?.songs?.title }}</span>
   </div>
 
   <div v-if="isSearch" class="filters">
@@ -123,18 +114,19 @@ watch(
       class="filter caps"
       @click="
         filter = f;
-        Reset();
-        getSearch(search);
+        getSearch(nav.state.search);
       "
       :data-active="f == filter">
       {{ f.split('_')[1] }}
     </button>
   </div>
 
-  <div v-if="data.songs && data.songs.items[0]" class="search-songs">
+  <div
+    v-if="results.items.songs && results.items.songs.items[0]"
+    class="search-songs">
     <h2>Songs</h2>
     <div class="grid">
-      <template v-for="song in data.songs.items">
+      <template v-for="song in results.items.songs.items">
         <SongItem
           :author="song.uploaderName || song.subtitle"
           :title="song.title || song.name"
@@ -163,18 +155,22 @@ watch(
       </template>
     </div>
     <a
-      v-if="data.notes"
-      @click.prevent="$emit('get-album', '/playlist?list=' + data.notes.items)"
+      v-if="results.items.notes"
+      @click.prevent="
+        $emit('get-album', '/playlist?list=' + results.items.notes.items)
+      "
       class="more"
-      :href="'/playlist?list=' + data.notes.items"
+      :href="'/playlist?list=' + results.items.notes.items"
       >See All</a
     >
   </div>
 
-  <div v-if="data.albums && data.albums.items[0]" class="search-albums">
+  <div
+    v-if="results.items.albums && results.items.albums.items[0]"
+    class="search-albums">
     <h2>Albums</h2>
     <div class="grid-3">
-      <template v-for="album in data.albums.items">
+      <template v-for="album in results.items.albums.items">
         <AlbumItem
           :author="album.uploaderName || album.subtitle"
           :name="album.name || album.title"
@@ -186,10 +182,12 @@ watch(
     </div>
   </div>
 
-  <div v-if="data.singles && data.singles.items[0]" class="search-albums">
+  <div
+    v-if="results.items.singles && results.items.singles.items[0]"
+    class="search-albums">
     <h2>Singles</h2>
     <div class="grid-3">
-      <template v-for="single in data.singles.items">
+      <template v-for="single in results.items.singles.items">
         <AlbumItem
           :author="single.subtitle"
           :name="single.title"
@@ -201,16 +199,17 @@ watch(
 
   <div
     v-if="
-      (data.recommendedArtists && data.recommendedArtists.items[0]) ||
-      (data.artists && data.artists.items[0])
+      (results.items.recommendedArtists &&
+        results.items.recommendedArtists.items[0]) ||
+      (results.items.artists && results.items.artists.items[0])
     "
     class="search-artists">
-    <h2>{{ data.artists ? 'Artists' : 'Similar Artists' }}</h2>
+    <h2>{{ results.items.artists ? 'Artists' : 'Similar Artists' }}</h2>
     <div class="grid-3 circle">
       <template
-        v-for="artist in data.artists
-          ? data.artists.items
-          : data.recommendedArtists.items">
+        v-for="artist in results.items.artists
+          ? results.items.artists.items
+          : results.items.recommendedArtists.items">
         <AlbumItem
           :author="artist.subtitle"
           :name="artist.name || artist.title"
@@ -240,6 +239,9 @@ watch(
 }
 .search-artists {
   text-align: center;
+}
+:deep(.bi-play) {
+  margin-right: 0.75rem;
 }
 .filters {
   display: flex;
