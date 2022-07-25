@@ -69,6 +69,7 @@ const Play = key => {
 watch(
   () => show.sync,
   () => {
+    import('https://unpkg.com/peerjs@1.3.2/dist/peerjs.min.js');
     if (show.sync === true) {
       sync.peer = new Peer('hyp-' + Math.random().toString(36).substr(2));
 

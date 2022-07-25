@@ -242,16 +242,16 @@ async function getNext(hash) {
 
     console.log(data.state.urls);
   } else {
-    setMetadata();
-
     if (data.state.urls.length == 0) {
       data.state.urls = [
         {
-          title: nowtitle,
+          title: data.state.title,
           url: data.state.url,
         },
       ];
     }
+
+    setMetadata();
   }
 }
 
@@ -339,17 +339,13 @@ watch(
   () => player.state.play,
   () => {
     if (audio.value.paused) {
-      audio.value
-        .play()
-        .then(() => {
-          player.state.state = 'pause';
-        })
-        .catch(err => {
-          alert(err);
-          player.state.state = 'play';
-        });
+      player.state.status = 'pause';
+      audio.value.play().catch(err => {
+        alert(err);
+        player.state.status = 'play';
+      });
     } else {
-      player.state.state = 'play';
+      player.state.status = 'play';
       audio.value.pause();
     }
   },
@@ -386,11 +382,16 @@ onMounted(() => {
   /* Media Session Controls */
   if ('mediaSession' in navigator) {
     navigator.mediaSession.setActionHandler('play', () => {
-      player.state.state = 'play';
+      player.state.status = 'pause';
+      audio.value.play().catch(err => {
+        alert(err);
+        player.state.status = 'play';
+      });
     });
 
     navigator.mediaSession.setActionHandler('pause', () => {
-      player.state.state = 'pause';
+      audio.value.pause();
+      player.state.status = 'play';
     });
 
     navigator.mediaSession.setActionHandler('previoustrack', () => {
@@ -512,7 +513,7 @@ header {
   width: 175px;
 }
 .bg-img {
-  --art: v-bind(`url(${data.state.art}) `);
+  --art: v-bind('"url(" + data.state.art + ")"');
 }
 img,
 .card,

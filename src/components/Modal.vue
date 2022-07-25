@@ -49,6 +49,7 @@ watch(show, n => {
 }
 .modal-box {
   width: 50vw;
+  max-height: 90vh;
   border-radius: 0.5rem;
   background-color: var(--color-background-soft);
 }
@@ -59,6 +60,8 @@ watch(show, n => {
 }
 .modal-content {
   padding: 1rem;
+  max-height: calc(90vh - 8rem);
+  overflow-y: auto;
 }
 .modal-content * {
   width: 100%;

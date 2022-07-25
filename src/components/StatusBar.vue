@@ -72,7 +72,8 @@ function Save() {
       <button
         id="btn-play-pause"
         aria-label="Play or Pause"
-        :class="'bi bi-' + player.state.status"
+        class="bi"
+        :class="'bi-' + player.state.status"
         @click="player.toggle('play')"></button>
 
       <div id="statusbar-progress" class="range-wrap">
@@ -225,6 +226,7 @@ input[type='range']:focus {
 
 /* Webkit */
 input[type='range']::-webkit-slider-thumb {
+  background-color: var(--color-foreground);
   -webkit-appearance: none;
   appearance: none;
   opacity: 0;
@@ -232,7 +234,6 @@ input[type='range']::-webkit-slider-thumb {
 }
 input[type='range']:hover::-webkit-slider-thumb,
 #vol input[type='range']::-webkit-slider-thumb {
-  background-color: var(--color-foreground);
   opacity: 1;
   height: 1rem;
   width: 1rem;
@@ -290,6 +291,7 @@ input[type='range']::-moz-range-track {
   height: 0.25rem;
   background-color: var(--color-foreground);
   transition: width 0.4s ease;
+  z-index: 2;
 }
 .range-wrap input[type='range'] {
   --w: 100%;
