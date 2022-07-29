@@ -1,6 +1,5 @@
 <script setup>
 /* Imports */
-import Hls from 'hls.js';
 import { ref, watch, reactive, onBeforeMount, onMounted } from 'vue';
 
 /* Components */
@@ -56,6 +55,7 @@ function parseUrl() {
       console.log(nav.state.search);
       break;
     case 'watch':
+      player.state.status = 'circle';
       getSong(loc[1] + location.search);
       console.log(loc[1]);
       break;
@@ -109,7 +109,7 @@ function playNext(u) {
     window.hls.destroy();
   }
 
-  audio.value.src = '';
+  player.state.src = '';
 
   const now = data.state.urls.filter(s => s.url === data.state.url)[0],
     i = data.state.urls.indexOf(now),
@@ -163,6 +163,7 @@ async function getSong(e) {
   Stream({
     hls: json.hls,
     stream: json.audioStreams,
+    duration: json.duration,
   });
 }
 
@@ -255,20 +256,48 @@ async function getNext(hash) {
   }
 }
 
-function Stream(res) {
+async function Stream(res) {
   console.log(res);
+  if (
+    store.dash === 'true' &&
+    window.MediaSource !== undefined &&
+    res.stream.length > 0
+  ) {
+    /* WIP */
 
-  if (Hls.isSupported() && store.hls !== 'false') {
-    window.hls = new Hls();
+    const { useDash } = await import('@/scripts/dash.js');
 
-    window.hls.attachMedia(audio.value);
+    console.log(useDash);
 
-    window.hls.on(Hls.Events.MEDIA_ATTACHED, () => {
-      window.hls.loadSource(res.hls);
-    });
-  } else {
-    data.state.src = res.stream;
+    const rawDash = useDash(res.stream, res.duration),
+      blob = new Blob([rawDash], { type: 'application/dash+xml' }),
+      dashUrl = URL.createObjectURL(blob);
+
+    data.state.src = [
+      {
+        url: dashUrl,
+        mimeType: 'application/dash+xml',
+      },
+    ];
+
+    data.state.src.push(...res.stream);
+
     audio.value.load();
+  } else {
+    window.Hls = await import('hls.js');
+
+    if (Hls.isSupported() && store.hls !== 'false') {
+      window.hls = new Hls.default();
+
+      window.hls.attachMedia(audio.value);
+
+      window.hls.on(Hls.default.Events.MEDIA_ATTACHED, () => {
+        window.hls.loadSource(res.hls);
+      });
+    } else {
+      data.state.src = res.stream;
+      audio.value.load();
+    }
   }
 }
 
@@ -341,7 +370,7 @@ watch(
     if (audio.value.paused) {
       player.state.status = 'pause';
       audio.value.play().catch(err => {
-        alert(err);
+        console.error(err);
         player.state.status = 'play';
       });
     } else {
@@ -476,8 +505,8 @@ onMounted(() => {
     @ended="playNext"
     autoplay>
     <source
-      v-if="store.getItem('hls') != 'false'"
-      v-for="src in data.state.audioSrc"
+      v-if="store.dash === 'true' || !(store.getItem('hls') != 'false')"
+      v-for="src in data.state.src"
       :key="src.url"
       :src="src.url"
       :type="src.mimeType" />

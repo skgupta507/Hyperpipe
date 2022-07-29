@@ -10,13 +10,16 @@
     "check": "prettier --check ."
   },
   "dependencies": {
+    "buffer": "^6.0.3",
     "hls.js": "^1.1.5",
+    "peerjs": "^1.4.6",
     "pinia": "^2.0.16",
-    "vue": "^3.2.31"
+    "vue": "^3.2.31",
+    "xml-js": "^1.6.11"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^2.2.2",
+    "@vitejs/plugin-vue": "^3.0.1",
     "prettier": "^2.6.2",
-    "vite": "^2.8.4"
+    "vite": "^3.0.3"
   }
 }

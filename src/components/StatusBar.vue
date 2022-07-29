@@ -172,6 +172,10 @@ function Save() {
 .bi-pause {
   font-size: 2.5rem !important;
 }
+.bi-circle {
+  font-size: 2rem;
+  animation: blink infinite ease 1s;
+}
 .bi-volume-up {
   font-size: 1.5rem !important;
 }

@@ -68,8 +68,11 @@ const Play = key => {
 
 watch(
   () => show.sync,
-  () => {
-    import('https://unpkg.com/peerjs@1.3.2/dist/peerjs.min.js');
+  async () => {
+    const { Peer } = await import('peerjs');
+
+    window.Peer = Peer;
+
     if (show.sync === true) {
       sync.peer = new Peer('hyp-' + Math.random().toString(36).substr(2));
 
@@ -173,8 +176,7 @@ onMounted(List);
         </div>
 
         <div v-else-if="sync.type == 'rec'">
-          <pre>ID:</pre>
-          <pre>{{ sync.id }}</pre>
+          <pre>ID: {{ sync.id }}</pre>
         </div>
       </template>
 
