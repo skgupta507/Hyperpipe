@@ -1,3 +1,9 @@
+import DOMPurify from 'dompurify';
+
+export function useSanitize(txt) {
+  return DOMPurify.sanitize(txt);
+}
+
 export function useRoute(l) {
   history.pushState({}, '', l);
 }

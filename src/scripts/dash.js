@@ -1,4 +1,4 @@
-import { Buffer } from 'buffer';
+import { Buffer } from 'buffer/';
 window.Buffer = Buffer;
 import { json2xml } from 'xml-js';
 

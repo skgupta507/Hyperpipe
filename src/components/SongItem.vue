@@ -3,6 +3,8 @@ import { ref, onMounted } from 'vue';
 
 import { useRand } from '../scripts/colors.js';
 
+import { useArtist } from '@/stores/results.js';
+
 const rand = useRand();
 
 const props = defineProps({
@@ -46,7 +48,7 @@ const openSong = el => {
   };
 
 onMounted(() => {
-  console.log(props);
+  console.log(props.channel, useArtist().state.playlistId);
 });
 </script>
 <template>
@@ -56,8 +58,17 @@ onMounted(() => {
     <span class="flex content">
       <h4>{{ title }}</h4>
       <a
-        :href="channel"
-        @click.prevent="$emit('get-artist', channel.replace('/channel/', ''))"
+        :href="
+          channel != '[]' ? channel : '/channel/' + useArtist().state.playlistId
+        "
+        @click.prevent="
+          $emit(
+            'get-artist',
+            channel != '[]'
+              ? channel.replace('/channel/', '')
+              : useArtist().state.playlistId,
+          )
+        "
         class="ign">
         <i class="ign">{{ author.replaceAll(' - Topic', '') }}</i>
       </a>

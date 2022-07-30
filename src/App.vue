@@ -4,6 +4,7 @@ import { ref, watch, reactive, onBeforeMount, onMounted } from 'vue';
 
 /* Components */
 import NavBar from '@/components/NavBar.vue';
+import Player from '@/components/Player.vue';
 import StatusBar from '@/components/StatusBar.vue';
 import NowPlaying from '@/components/NowPlaying.vue';
 import Genres from '@/components/Genres.vue';
@@ -34,8 +35,6 @@ const store = useStore(),
 
 const genreid = ref(''),
   path = ref(location.pathname);
-
-const audio = ref(null);
 
 /* Functions */
 function parseUrl() {
@@ -75,10 +74,6 @@ function parseUrl() {
   }
 }
 
-function setTime(t) {
-  audio.value.currentTime = (t / 100) * player.state.duration;
-}
-
 function addSong(s) {
   data.state.urls.push(s);
 
@@ -105,10 +100,6 @@ function playList(a) {
 }
 
 function playNext(u) {
-  if (window.hls) {
-    window.hls.destroy();
-  }
-
   player.state.src = '';
 
   const now = data.state.urls.filter(s => s.url === data.state.url)[0],
@@ -156,15 +147,11 @@ async function getSong(e) {
   data.state.artist = json.uploader.replace(' - Topic', '');
   data.state.artistUrl = json.uploaderUrl;
   player.state.duration = json.duration;
+  player.state.hls = json.hls;
+  player.state.streams = json.audioStreams;
   data.state.url = e;
 
   await getNext(hash);
-
-  Stream({
-    hls: json.hls,
-    stream: json.audioStreams,
-    duration: json.duration,
-  });
 }
 
 async function getAlbum(e) {
@@ -256,80 +243,6 @@ async function getNext(hash) {
   }
 }
 
-async function Stream(res) {
-  console.log(res);
-  if (
-    store.dash === 'true' &&
-    window.MediaSource !== undefined &&
-    res.stream.length > 0
-  ) {
-    /* WIP */
-
-    const { useDash } = await import('@/scripts/dash.js');
-
-    console.log(useDash);
-
-    const rawDash = useDash(res.stream, res.duration),
-      blob = new Blob([rawDash], { type: 'application/dash+xml' }),
-      dashUrl = URL.createObjectURL(blob);
-
-    data.state.src = [
-      {
-        url: dashUrl,
-        mimeType: 'application/dash+xml',
-      },
-    ];
-
-    data.state.src.push(...res.stream);
-
-    audio.value.load();
-  } else {
-    window.Hls = await import('hls.js');
-
-    if (Hls.isSupported() && store.hls !== 'false') {
-      window.hls = new Hls.default();
-
-      window.hls.attachMedia(audio.value);
-
-      window.hls.on(Hls.default.Events.MEDIA_ATTACHED, () => {
-        window.hls.loadSource(res.hls);
-      });
-    } else {
-      data.state.src = res.stream;
-      audio.value.load();
-    }
-  }
-}
-
-function audioCanPlay() {
-  useLazyLoad();
-
-  if (audio.value.paused) {
-    player.toggle('play');
-  }
-
-  if (location.pathname != '/playlist') {
-    useRoute(data.state.url);
-  }
-
-  document.title = `Playing: ${data.state.title} by ${data.state.artist}`;
-}
-
-function SaveTrack(e) {
-  useUpdatePlaylist(
-    e,
-    {
-      url: data.state.url,
-      title: data.state.title,
-    },
-    e => {
-      if (e === true) {
-        console.log('Added Song To ' + e);
-      }
-    },
-  );
-}
-
 function setMetadata() {
   if ('mediaSession' in navigator) {
     const now = data.state.urls.filter(u => u.url === data.state.url)[0];
@@ -364,21 +277,20 @@ function setMetadata() {
   }
 }
 
-watch(
-  () => player.state.play,
-  () => {
-    if (audio.value.paused) {
-      player.state.status = 'pause';
-      audio.value.play().catch(err => {
-        console.error(err);
-        player.state.status = 'play';
-      });
-    } else {
-      player.state.status = 'play';
-      audio.value.pause();
-    }
-  },
-);
+function SaveTrack(e) {
+  useUpdatePlaylist(
+    e,
+    {
+      url: data.state.url,
+      title: data.state.title,
+    },
+    e => {
+      if (e === true) {
+        console.log('Added Song To ' + e);
+      }
+    },
+  );
+}
 
 onBeforeMount(() => {
   if (store.theme) {
@@ -387,10 +299,6 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
-  if (window.hls) {
-    window.hls.destroy();
-  }
-
   useLazyLoad();
 
   /* Event Listeners for Lazy Loading */
@@ -407,35 +315,6 @@ onMounted(() => {
       return 'Are you Sure?';
     }
   };
-
-  /* Media Session Controls */
-  if ('mediaSession' in navigator) {
-    navigator.mediaSession.setActionHandler('play', () => {
-      player.state.status = 'pause';
-      audio.value.play().catch(err => {
-        alert(err);
-        player.state.status = 'play';
-      });
-    });
-
-    navigator.mediaSession.setActionHandler('pause', () => {
-      audio.value.pause();
-      player.state.status = 'play';
-    });
-
-    navigator.mediaSession.setActionHandler('previoustrack', () => {
-      if (data.state.urls.length > 2) {
-        const i = data.state.urls.map(s => s.url).indexOf(data.state.url);
-        getSong(data.state.urls[i - 1].url);
-      }
-    });
-    navigator.mediaSession.setActionHandler('nexttrack', () => {
-      if (data.state.urls.length > 2) {
-        const i = data.state.urls.map(s => s.url).indexOf(data.state.url);
-        getSong(data.state.urls[i + 1].url);
-      }
-    });
-  }
 
   /* Setup IndexedDB for storing custom playlists */
   useSetupDB();
@@ -494,23 +373,9 @@ onMounted(() => {
 
   <Info v-if="player.state.info" :text="data.state.description" />
 
-  <StatusBar @save="SaveTrack" @change-time="setTime" />
+  <StatusBar @save="SaveTrack" />
 
-  <audio
-    id="audio"
-    ref="audio"
-    :volume="player.state.vol"
-    @canplay="audioCanPlay"
-    @timeupdate="player.setTime($event.target.currentTime)"
-    @ended="playNext"
-    autoplay>
-    <source
-      v-if="store.dash === 'true' || !(store.getItem('hls') != 'false')"
-      v-for="src in data.state.src"
-      :key="src.url"
-      :src="src.url"
-      :type="src.mimeType" />
-  </audio>
+  <Player @ended="playNext" />
 </template>
 
 <style>

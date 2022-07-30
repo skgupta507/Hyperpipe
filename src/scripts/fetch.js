@@ -1,4 +1,4 @@
-import { useStore } from './util.js';
+import { useStore, useSanitize } from './util.js';
 
 export function getPipedQuery() {
   const papi = new URLSearchParams(location.search).get('pipedapi');
@@ -7,7 +7,7 @@ export function getPipedQuery() {
     return '';
   }
 
-  return '?pipedapi=' + papi;
+  return '?pipedapi=' + useSanitize(papi);
 }
 
 export async function getJson(url) {
@@ -27,9 +27,7 @@ export async function getJson(url) {
     );
     console.error(res.message);
   } else if (res) {
-    return res;
-  } else {
-    return;
+    return JSON.parse(useSanitize(JSON.stringify(res)));
   }
 }
 

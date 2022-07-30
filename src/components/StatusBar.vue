@@ -11,7 +11,7 @@ import { usePlayer } from '../stores/player.js';
 const player = usePlayer(),
   store = useStore();
 
-const emit = defineEmits(['vol', 'save', 'change-time']),
+const emit = defineEmits(['save']),
   showme = reactive({
     menu: false,
     pl: false,
@@ -83,7 +83,10 @@ function Save() {
           type="range"
           name="statusbar-progress"
           max="100"
-          @input="$emit('change-time', $event.target.value)" />
+          @input="
+            player.state.currentTime =
+              ($event.target.value / 100) * player.state.duration
+          " />
       </div>
     </div>
 
