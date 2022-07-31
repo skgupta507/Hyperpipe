@@ -50,7 +50,7 @@ npm run build
 |           Instance           | Country (Backend) |
 | :--------------------------: | :---------------: |
 | [hyperpipe.surge.sh][hypipe] |        🇩🇪         |
-
+| [hyperpipe.esmailelbob.xyz][hypipe] |         🇨🇦         |
 
 ## LICENSE
 
