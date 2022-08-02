@@ -125,12 +125,8 @@ async function getExplore() {
 
   console.log(json);
 
-  results.items.value = {};
-
-  results.items.value = {
-    songs: json.trending,
-    albums: json.albums_and_singles,
-  };
+  results.setItem('songs', { items: json.trending });
+  results.setItem('albums', { items: json.albums_and_singles });
 }
 
 async function getSong(e) {
