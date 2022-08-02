@@ -39,3 +39,9 @@ export async function getJsonPiped(path) {
 
   return await getJson('https://' + root + path);
 }
+
+export async function getJsonHyp(path) {
+  const root = useStore().getItem('api') || 'hyperpipeapi.onrender.com';
+
+  return await getJson('https://' + root + path);
+}

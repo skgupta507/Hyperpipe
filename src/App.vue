@@ -17,7 +17,7 @@ import Artist from '@/components/Artist.vue';
 import Prefs from '@/components/Prefs.vue';
 
 /* Composables */
-import { getJson, getJsonPiped } from '@/scripts/fetch.js';
+import { getJsonHyp, getJsonPiped } from '@/scripts/fetch.js';
 import { useLazyLoad, useStore, useRoute } from '@/scripts/util.js';
 import { useSetupDB, useUpdatePlaylist } from '@/scripts/db.js';
 
@@ -121,7 +121,7 @@ function playNext(u) {
 }
 
 async function getExplore() {
-  const json = await getJson('https://hyperpipeapi.onrender.com/explore');
+  const json = await getJsonHyp('/explore');
 
   console.log(json);
 
@@ -178,7 +178,7 @@ async function getArtist(e) {
 
   e = e.replace('/channel/', '');
 
-  const json = await getJson('https://hyperpipeapi.onrender.com/channel/' + e);
+  const json = await getJsonHyp('/channel/' + e);
 
   console.log(json);
 
@@ -203,9 +203,7 @@ async function getNext(hash) {
       !data.state.urls.filter(s => s.url == data.state.url)[0] ||
       data.state.urls.length == 1)
   ) {
-    const json = await getJson(
-      'https://hyperpipeapi.onrender.com/next/' + hash,
-    );
+    const json = await getJsonHyp('/next/' + hash);
 
     data.state.lyrics = json.lyricsId;
 

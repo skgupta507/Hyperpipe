@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch } from 'vue';
 
-import { getJson } from '@/scripts/fetch.js';
+import { getJsonHyp } from '@/scripts/fetch.js';
 import { useData } from '@/stores/player.js';
 
 import TextModal from './TextModal.vue';
@@ -15,22 +15,17 @@ function get() {
   status.value = false;
 
   if (data.state.lyrics && data.state.urls === data.state.urls[0]?.url) {
-    getJson(
-      'https://hyperpipeapi.onrender.com/browse/' + data.state.lyrics,
-    ).then(res => {
+    getJsonHyp('/browse/' + data.state.lyrics).then(res => {
       text.value = res.text;
       source.value = res.source;
       status.value = true;
     });
   } else if (data.state.urls[0]?.url) {
-    getJson(
-      'https://hyperpipeapi.onrender.com/next/' +
-        data.state.urls[0]?.url.replace('/watch?v=', ''),
+    getJsonHyp(
+      '/next/' + data.state.urls[0]?.url.replace('/watch?v=', ''),
     ).then(next => {
       if (next.lyricsId) {
-        getJson(
-          'https://hyperpipeapi.onrender.com/browse/' + next.lyricsId,
-        ).then(res => {
+        getJsonHyp('/browse/' + next.lyricsId).then(res => {
           text.value = res.text;
           source.value = res.source;
           status.value = true;
