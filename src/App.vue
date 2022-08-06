@@ -327,7 +327,10 @@ onMounted(() => {
   </template>
 
   <header v-if="!artist.state.title">
-    <div v-show="data.state.art" class="art bg-img"></div>
+    <div
+      v-show="data.state.art"
+      class="art bg-img"
+      :style="'--art: url(' + data.state.art + ')'"></div>
 
     <div class="wrapper">
       <NowPlaying @get-artist="getArtist" />
@@ -399,9 +402,6 @@ header {
   margin: 0 auto 2rem;
   height: 175px;
   width: 175px;
-}
-.bg-img {
-  --art: v-bind('"url(" + data.state.art + ")"');
 }
 img,
 .card,

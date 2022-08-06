@@ -1,8 +1,15 @@
 FROM node:alpine AS build
 
+ARG api
+ARG pipedapi
+
 WORKDIR /app/
 
 COPY . .
+
+RUN sed -i "s/hyperpipeapi.onrender.com/$api/g" src/scripts/fetch.js src/components/Prefs.vue
+
+RUN sed -i "s/pipedapi.kavin.rocks/$pipedapi/g" src/scripts/fetch.js src/components/Prefs.vue
 
 RUN npm install && \
     npm run build
