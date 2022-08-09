@@ -1,7 +1,9 @@
 import DOMPurify from 'dompurify';
 
 export function useSanitize(txt) {
-  return DOMPurify.sanitize(txt);
+  return DOMPurify.sanitize(txt, {
+    ALLOWED_TAGS: ['br'],
+  });
 }
 
 export function useRoute(l) {

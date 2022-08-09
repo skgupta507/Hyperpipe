@@ -72,16 +72,6 @@ onMounted(() => {
   <div class="left">
     <input
       type="checkbox"
-      name="pref-chk-hls"
-      id="pref-chk-hls"
-      @change="setStore('hls', $event.target.checked)"
-      v-model="hls" />
-    <label for="pref-chk-hls">Live Streaming</label>
-  </div>
-
-  <div class="left">
-    <input
-      type="checkbox"
       name="pref-chk-next"
       id="pref-chk-next"
       @change="setStore('next', $event.target.checked)"
@@ -90,6 +80,34 @@ onMounted(() => {
   </div>
 
   <div class="left">
+    <label for="pref-codec">Codec</label>
+    <select
+      id="pref-codec"
+      name="pref-codec"
+      :value="getStore('codec') || 'opus:mp4a'"
+      @change="setStore('codec', $event.target.value)">
+      <option value="opus:mp4a">opus, mp4a</option>
+      <option value="mp4a:opus">mp4a, opus</option>
+      <option value="opus">opus</option>
+      <option value="mp4a">mp4a</option>
+    </select>
+  </div>
+
+  <div class="left">
+    <label for="pref-quality">Quality</label>
+    <select
+      id="pref-quality"
+      name="pref-quality"
+      :value="getStore('quality') || 'auto'"
+      @change="setStore('quality', $event.target.value)">
+      <option value="auto">auto</option>
+      <option value="best">best</option>
+      <option value="worst">worst</option>
+    </select>
+  </div>
+
+  <div class="left">
+    <label for="pref-volume">Default Volume</label>
     <input
       type="number"
       name="pref-volume"
@@ -98,7 +116,6 @@ onMounted(() => {
       min="0"
       :value="getStore('vol') || 100"
       @change="setStore('vol', $event.target.value)" />
-    <label for="pref-volume">Default Volume</label>
   </div>
 
   <h2>Hyperpipe Instance</h2>
@@ -236,6 +253,9 @@ label[for^='pref-chk'] {
   float: left;
   margin: 0 auto;
   padding: 1rem;
+}
+.left + .left {
+  padding: 0;
 }
 .table-wrap {
   overflow-x: auto;

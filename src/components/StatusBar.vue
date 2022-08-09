@@ -116,6 +116,7 @@ function Save() {
           showme.menu = !showme.menu;
           player.state.playlist ? player.toggle('playlist') : '';
           player.state.lyrics ? player.toggle('lyrics') : '';
+          player.state.info ? player.toggle('info') : '';
         "></button>
       <div id="menu" v-if="showme.menu" class="popup">
         <button

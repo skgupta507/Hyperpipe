@@ -1,5 +1,12 @@
 <script setup>
-import { ref, watch, onMounted, onUpdated } from 'vue';
+import {
+  ref,
+  watch,
+  onMounted,
+  onUpdated,
+  onBeforeUnmount,
+  onUnmounted,
+} from 'vue';
 import muxjs from 'mux.js';
 window.muxjs = muxjs;
 
@@ -61,10 +68,10 @@ async function Stream() {
         if (shaka.Player.isBrowserSupported) {
           const audioPlayer = new shaka.Player(audio.value);
 
-          const codecs = [];
+          const codecs = useStore().getItem('codec');
 
           audioPlayer.configure({
-            preferredAudioCodecs: ['opus', 'mp4a'],
+            preferredAudioCodecs: codecs ? codecs.split(':') : ['opus', 'mp4a'],
             manifest: {
               disableVideo: true,
             },
@@ -75,10 +82,45 @@ async function Stream() {
       });
   }
 
+  const quality = useStore().getItem('quality');
+
   if (url) {
-    window.audioPlayer.load(url, 0, mime).catch(err => {
-      console.error('Code: ' + err.code, err);
-    });
+    window.audioPlayer
+      .load(url, 0, mime)
+      .then(() => {
+        if (quality && quality != 'auto') {
+          window.audioPlayer.configure('abr.enabled', false);
+
+          const tracks = window.audioPlayer.getVariantTracks();
+
+          let sel;
+
+          if (quality == 'best') {
+            let best = { bandwidth: 0 };
+
+            tracks.forEach(track => {
+              if (track.bandwidth > best.bandwidth) best = track;
+            });
+
+            sel = best;
+          } else if (quality == 'worst') {
+            let worst = { bandwidth: 10 ** 8 };
+
+            tracks.forEach(track => {
+              if (track.bandwidth < worst.bandwidth) worst = track;
+            });
+
+            sel = worst;
+          }
+
+          if (sel) {
+            window.audioPlayer.selectVariantTrack(sel);
+          }
+        }
+      })
+      .catch(err => {
+        console.error('Code: ' + err.code, err);
+      });
   }
 }
 
@@ -124,19 +166,19 @@ onMounted(() => {
       audio.value.pause();
       player.state.status = 'play';
     });
+  }
+});
 
-    navigator.mediaSession.setActionHandler('previoustrack', () => {
-      if (data.state.urls.length > 2) {
-        const i = data.state.urls.map(s => s.url).indexOf(data.state.url);
-        getSong(data.state.urls[i - 1].url);
-      }
-    });
-    navigator.mediaSession.setActionHandler('nexttrack', () => {
-      if (data.state.urls.length > 2) {
-        const i = data.state.urls.map(s => s.url).indexOf(data.state.url);
-        getSong(data.state.urls[i + 1].url);
-      }
-    });
+onBeforeUnmount(() => {
+  if (window.audioPlayer) {
+    window.audioPlayer.destroy();
+    window.audioPlayer = undefined;
+  }
+});
+onUnmounted(() => {
+  if (window.audioPlayer) {
+    window.audioPlayer.destroy();
+    window.audioPlayer = undefined;
   }
 });
 </script>

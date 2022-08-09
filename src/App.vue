@@ -178,6 +178,8 @@ async function getArtist(e) {
 
   console.log(json);
 
+  results.resetItems();
+
   for (let i in json.items) {
     results.setItem(i, { items: json.items[i] });
   }
@@ -309,6 +311,20 @@ onMounted(() => {
       return 'Are you Sure?';
     }
   };
+
+  /* Media Controls */
+  navigator.mediaSession.setActionHandler('previoustrack', () => {
+    if (data.state.urls.length > 2) {
+      const i = data.state.urls.map(s => s.url).indexOf(data.state.url);
+      getSong(data.state.urls[i - 1].url);
+    }
+  });
+  navigator.mediaSession.setActionHandler('nexttrack', () => {
+    if (data.state.urls.length > 2) {
+      const i = data.state.urls.map(s => s.url).indexOf(data.state.url);
+      getSong(data.state.urls[i + 1].url);
+    }
+  });
 
   /* Setup IndexedDB for storing custom playlists */
   useSetupDB();
