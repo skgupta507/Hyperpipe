@@ -30,11 +30,15 @@ const playAlbum = () => {
   },
   saveAlbum = () => {
     const urls = results.items?.songs?.items?.map(item => {
-        return { url: item.url, title: item.title };
-      }),
-      title = results.items?.songs?.title;
+      return { url: item.url, title: item.title };
+    });
+
+    let title = results.items?.songs?.title;
 
     if (title) {
+      if (title == 'Songs')
+        title += ' - ' + results.items.songs.items[0].uploaderName;
+
       useCreatePlaylist(title, urls, () => {
         alert('Saved!');
       });

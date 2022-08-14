@@ -68,9 +68,17 @@ function parseUrl() {
       break;
     case 'explore':
       genreid.value = loc[2];
-      nav.state.page = 'genres';
+      nav.state.page = 'explore';
+      break;
+    case 'library':
+      nav.state.page = 'library';
+      break;
+    case 'prefs':
+      nav.state.page = 'prefs';
+      break;
     default:
       console.log(loc);
+      break;
   }
 }
 
@@ -336,7 +344,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <NavBar />
+  <NavBar @explore="getExplore" />
 
   <template v-if="artist.state.title && nav.state.page == 'home'">
     <Artist @playall="getAlbum" />
@@ -365,17 +373,12 @@ onMounted(() => {
 
     <KeepAlive>
       <Genres
-        v-if="nav.state.page == 'genres'"
+        v-if="nav.state.page == 'explore'"
         :id="genreid"
-        @get-album="
-          e => {
-            getAlbum(e);
-            nav.state.page = 'home';
-          }
-        " />
+        @get-album="getAlbum" />
     </KeepAlive>
 
-    <NewPlaylist v-if="nav.state.page == 'playlist'" @play-urls="playList" />
+    <NewPlaylist v-if="nav.state.page == 'library'" @play-urls="playList" />
 
     <Prefs v-if="nav.state.page == 'prefs'" />
   </main>

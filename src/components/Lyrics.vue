@@ -14,31 +14,29 @@ const data = useData(),
 function get() {
   status.value = false;
 
-  if (data.state.lyrics && data.state.urls === data.state.urls[0]?.url) {
-    getJsonHyp('/browse/' + data.state.lyrics).then(res => {
+  const set = id => {
+    getJsonHyp('/browse/' + id).then(res => {
       text.value = res.text;
       source.value = res.source;
       status.value = true;
     });
-  } else if (data.state.urls[0]?.url) {
-    getJsonHyp(
-      '/next/' + data.state.urls[0]?.url.replace('/watch?v=', ''),
-    ).then(next => {
-      if (next.lyricsId) {
-        getJsonHyp('/browse/' + next.lyricsId).then(res => {
-          text.value = res.text;
-          source.value = res.source;
-          status.value = true;
-        });
-      }
-    });
+  };
+
+  if (data.state.lyrics && data.state.urls === data.state.url) {
+    set(data.state.lyrics);
+  } else if (data.state.url) {
+    getJsonHyp('/next/' + data.state.url.replace('/watch?v=', '')).then(
+      next => {
+        if (next.lyricsId) set(next.lyricsId);
+      },
+    );
   }
 }
 
 get();
 
 watch(
-  () => data.state.urls[0]?.url,
+  () => data.state.url,
   () => {
     get();
   },

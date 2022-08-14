@@ -4,7 +4,26 @@ import SearchBar from '../components/SearchBar.vue';
 
 import { useNav } from '@/stores/misc.js';
 
+import { useRoute } from '@/scripts/util.js';
+
+const emit = defineEmits(['explore']);
+
 const nav = useNav();
+
+function home() {
+  useRoute('/');
+  nav.state.page = 'home';
+  emit('explore');
+}
+
+function set(page) {
+  nav.state.page = page;
+  if (page == 'home') {
+    useRoute('/');
+  } else {
+    useRoute(`/${page}/`);
+  }
+}
 </script>
 
 <template>
@@ -15,19 +34,19 @@ const nav = useNav();
       <span
         class="nav-ico bi bi-house"
         :data-active="nav.state.page == 'home'"
-        @click="nav.state.page = 'home'"></span>
+        @click="set('home')"></span>
       <span
         class="nav-ico bi bi-compass"
-        :data-active="nav.state.page == 'genres'"
-        @click="nav.state.page = 'genres'"></span>
+        :data-active="nav.state.page == 'explore'"
+        @click="set('explore')"></span>
       <span
         class="nav-ico bi bi-collection"
-        :data-active="nav.state.page == 'playlist'"
-        @click="nav.state.page = 'playlist'"></span>
+        :data-active="nav.state.page == 'library'"
+        @click="set('library')"></span>
       <span
         class="nav-ico bi bi-gear"
         :data-active="nav.state.page == 'prefs'"
-        @click="nav.state.page = 'prefs'"></span>
+        @click="set('prefs')"></span>
     </div>
 
     <div class="wrap">

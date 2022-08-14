@@ -1,7 +1,7 @@
 <script setup>
-import { reactive, ref, onMounted } from 'vue';
+import { reactive, ref, onMounted, onUnmounted } from 'vue';
 
-import { getJson } from '../scripts/fetch.js';
+import { getJsonHyp } from '../scripts/fetch.js';
 import { useRandColor } from '../scripts/colors.js';
 import { useRoute } from '../scripts/util.js';
 
@@ -19,24 +19,27 @@ const data = reactive({
   btns = reactive({
     moods: [],
     genres: [],
-  });
+  }),
+  todo = ['title', 'community', 'spotlight', 'featured'];
 
 function get(id) {
-  if (props.id || id) {
-    getJson(
-      'https://hyperpipeapi.onrender.com/genres/' + (props.id || id),
-    ).then(res => {
+  if (props.id || typeof id == 'string') {
+    getJsonHyp('/genres/' + (props.id || id)).then(res => {
       console.log(res);
 
-      for (let i of ['title', 'community', 'spotlight', 'featured']) {
+      for (let i of todo) {
         data[i] = res[i];
       }
 
       useRoute('/explore/' + (props.id || id));
     });
   } else {
-    getJson('https://hyperpipeapi.onrender.com/genres').then(res => {
+    getJsonHyp('/genres').then(res => {
       console.log(res);
+
+      for (let i of todo) {
+        data[i] = undefined;
+      }
 
       for (let i of ['moods', 'genres']) {
         btns[i] = res[i];
@@ -52,6 +55,8 @@ onMounted(get);
 
 <template>
   <template v-if="data.title">
+    <i class="bi bi-arrow-left back" @click="get"> Back</i>
+
     <h2 class="head">{{ data.title }}</h2>
 
     <template v-for="type in ['featured', 'spotlight', 'community']">
@@ -62,7 +67,10 @@ onMounted(get);
             :name="i.title"
             :author="i.subtitle"
             :art="'url(' + i.thumbnails[0].url + ')'"
-            @open-album="$emit('get-album', '/playlist?list=' + i.id)" />
+            @open-album="
+              $emit('get-album', '/playlist?list=' + i.id);
+              nav.state.page = 'home';
+            " />
         </template>
       </div>
     </template>
@@ -96,6 +104,9 @@ onMounted(get);
 </template>
 
 <style scoped>
+.back {
+  width: fit-content;
+}
 .btn-grid {
   display: grid;
   grid-template-columns: calc(100% / 3) calc(100% / 3) calc(100% / 3);
