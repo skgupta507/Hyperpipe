@@ -15,7 +15,6 @@
     "mux.js": "^6.2.0",
     "peerjs": "^1.4.6",
     "pinia": "^2.0.16",
-    "readable-stream": "^4.1.0",
     "shaka-player": "^4.1.2",
     "stream-browserify": "^3.0.0",
     "vue": "^3.2.31",

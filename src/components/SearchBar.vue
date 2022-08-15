@@ -18,7 +18,10 @@ const show = ref(false),
           type="text"
           aria-label="Search Input"
           placeholder="Search..."
-          @change="nav.state.search = $event.target.value"
+          @change="
+            nav.state.search = $event.target.value;
+            nav.state.page = 'home';
+          "
           :value="nav.state.search" />
       </div>
     </Transition>

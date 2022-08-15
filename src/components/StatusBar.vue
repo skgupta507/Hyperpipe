@@ -319,5 +319,8 @@ input[type='range']::-moz-range-track {
     left: initial;
     right: -0.5rem;
   }
+  #statusbar-progress {
+    min-width: initial;
+  }
 }
 </style>

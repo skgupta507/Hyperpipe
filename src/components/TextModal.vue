@@ -10,7 +10,7 @@
   flex-direction: column;
   position: fixed;
   top: 2rem;
-  bottom: 5rem;
+  bottom: calc(5rem + 5vh);
   right: 1rem;
   width: 30rem;
   max-width: calc(100% - 2rem);
@@ -33,4 +33,6 @@
   letter-spacing: 0.1rem;
   font-weight: 600;
 }
+
+@media();
 </style>

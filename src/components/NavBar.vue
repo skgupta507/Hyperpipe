@@ -17,12 +17,16 @@ function home() {
 }
 
 function set(page) {
-  nav.state.page = page;
   if (page == 'home') {
     useRoute('/');
   } else {
     useRoute(`/${page}/`);
   }
+
+  if (page == 'home' && nav.state.page == 'home') {
+    emit('explore');
+  }
+  nav.state.page = page;
 }
 </script>
 

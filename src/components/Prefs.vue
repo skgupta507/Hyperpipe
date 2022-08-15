@@ -277,6 +277,8 @@ th {
 }
 td {
   text-align: center;
+  max-width: 40vw;
+  overflow-wrap: break-word;
 }
 td.bi {
   color: indianred;
@@ -290,5 +292,11 @@ footer {
 }
 footer .bi:before {
   font-size: 1.75rem;
+}
+@media (max-width: 500px) {
+  select,
+  input {
+    max-width: 100% !important;
+  }
 }
 </style>
