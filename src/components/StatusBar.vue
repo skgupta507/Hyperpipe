@@ -118,38 +118,40 @@ function Save() {
           player.state.lyrics ? player.toggle('lyrics') : '';
           player.state.info ? player.toggle('info') : '';
         "></button>
-      <div id="menu" v-if="showme.menu" class="popup">
-        <button
-          id="info-btn"
-          class="bi bi-info-circle"
-          aria-label="Show Information About Song"
-          @click="player.toggle('info')"></button>
-        <button
-          id="addToPlaylist"
-          title="Add Current Song to a Playlist"
-          aria-label="Add Current Song to a Playlist"
-          class="bi bi-collection"
-          @click="Save"></button>
-        <button
-          id="list-btn"
-          title="Current Playlist"
-          aria-label="Current Playlist"
-          class="bi bi-music-note-list"
-          :data-active="player.state.playlist"
-          @click="player.toggle('playlist')"></button>
-        <button
-          id="btn-lyrics"
-          class="bi bi-file-music"
-          :data-active="player.state.lyrics"
-          @click="player.toggle('lyrics')"></button>
-        <button
-          id="loop-btn"
-          title="Loop"
-          aria-label="Loop"
-          class="bi bi-infinity"
-          :data-active="player.state.loop"
-          @click="player.toggle('loop')"></button>
-      </div>
+      <Transition name="fade">
+        <div id="menu" v-if="showme.menu" class="popup">
+          <button
+            id="info-btn"
+            class="bi bi-info-circle"
+            aria-label="Show Information About Song"
+            @click="player.toggle('info')"></button>
+          <button
+            id="addToPlaylist"
+            title="Add Current Song to a Playlist"
+            aria-label="Add Current Song to a Playlist"
+            class="bi bi-collection"
+            @click="Save"></button>
+          <button
+            id="list-btn"
+            title="Current Playlist"
+            aria-label="Current Playlist"
+            class="bi bi-music-note-list"
+            :data-active="player.state.playlist"
+            @click="player.toggle('playlist')"></button>
+          <button
+            id="btn-lyrics"
+            class="bi bi-file-music"
+            :data-active="player.state.lyrics"
+            @click="player.toggle('lyrics')"></button>
+          <button
+            id="loop-btn"
+            title="Loop"
+            aria-label="Loop"
+            class="bi bi-infinity"
+            :data-active="player.state.loop"
+            @click="player.toggle('loop')"></button>
+        </div>
+      </Transition>
     </div>
   </div>
 </template>
@@ -165,12 +167,8 @@ function Save() {
   background: var(--color-background);
   min-height: 15vh;
 }
-.statusbar-left {
-  margin-left: auto;
-}
 .statusbar-right {
   margin-left: 0.5rem;
-  margin-right: auto;
 }
 .bi-play,
 .bi-pause {

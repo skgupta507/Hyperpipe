@@ -63,6 +63,7 @@ onMounted(() => {
     @change="setTheme($event.target.value)">
     <option value="dark">Dark (Default)</option>
     <option value="light">Light</option>
+    <option value="blur">Blur</option>
     <option value="dracula">Dracula</option>
     <option value="nord">Nord</option>
   </select>

@@ -38,6 +38,24 @@ body[data-theme='dark'] {
   --color-text: var(--vt-c-text-dark-2);
 }
 
+body[data-theme='black'] {
+  --color-background: #000;
+  --color-shadow: var(--vt-c-black);
+}
+
+body[data-theme='blur'] #statusbar,
+body[data-theme='blur'] .txt-modal,
+body[data-theme='blur'] .pl-modal,
+body[data-theme='blur'] .modal-box,
+body[data-theme='blur'] .popup input[type='text'] {
+  background: #11111199;
+  backdrop-filter: blur(10px);
+}
+
+body[data-theme='blur'] .modal {
+  backdrop-filter: blur(5px);
+}
+
 body[data-theme='light'] {
   --color-foreground: cornflowerblue;
   --color-background: var(--vt-c-white);

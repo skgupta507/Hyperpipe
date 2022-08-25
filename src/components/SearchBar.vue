@@ -30,6 +30,7 @@ const show = ref(false),
 
 <style scoped>
 .popup {
+  background: transparent;
   right: 0;
   top: -0.5rem;
   bottom: -0.5rem;

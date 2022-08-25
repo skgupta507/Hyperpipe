@@ -173,6 +173,7 @@ async function getAlbum(e) {
   });
 
   useRoute(e);
+  nav.state.page = 'home';
 
   artist.reset();
 }
@@ -200,6 +201,7 @@ async function getArtist(e) {
   artist.set(json);
 
   useRoute('/channel/' + e);
+  nav.state.page = 'home';
 }
 
 async function getNext(hash) {
@@ -385,11 +387,17 @@ onMounted(() => {
     <Prefs v-if="nav.state.page == 'prefs'" />
   </main>
 
-  <Playlists v-if="player.state.playlist" @playthis="playThis" />
+  <Transition name="fade">
+    <Playlists v-if="player.state.playlist" @playthis="playThis" />
+  </Transition>
 
-  <Lyrics v-if="player.state.lyrics" />
+  <Transition name="fade">
+    <Lyrics v-if="player.state.lyrics" />
+  </Transition>
 
-  <Info v-if="player.state.info" :text="data.state.description" />
+  <Transition name="fade">
+    <Info v-if="player.state.info" :text="data.state.description" />
+  </Transition>
 
   <StatusBar @save="SaveTrack" />
 

@@ -33,6 +33,4 @@
   letter-spacing: 0.1rem;
   font-weight: 600;
 }
-
-@media();
 </style>
