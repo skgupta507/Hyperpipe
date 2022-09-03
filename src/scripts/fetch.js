@@ -45,3 +45,21 @@ export async function getJsonHyp(path) {
 
   return await getJson('https://' + root + path);
 }
+
+export async function getJsonAuth(path, opts) {
+  const root = useStore().getItem('authapi') || 'pipedapi.kavin.rocks';
+
+  return await fetch('https://' + root + path, opts).then(res => res.json());
+}
+
+export async function getAuthPlaylists() {
+  if (!!useStore().getItem('auth')) {
+    const res = await getJsonAuth('/user/playlists', {
+      headers: {
+        Authorization: useStore().getItem('auth'),
+      },
+    });
+
+    return res.filter(i => i.name.startsWith('Playlist - '));
+  }
+}

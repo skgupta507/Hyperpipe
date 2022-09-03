@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useNav } from '@/stores/misc.js';
+import { useT } from '@/scripts/i18n.js';
 
 const show = ref(false),
   nav = useNav();
@@ -17,7 +18,7 @@ const show = ref(false),
         <input
           type="text"
           aria-label="Search Input"
-          placeholder="Search..."
+          :placeholder="useT('title.search') + '...'"
           @change="
             nav.state.search = $event.target.value;
             nav.state.page = 'home';

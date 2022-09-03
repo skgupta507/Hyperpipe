@@ -18,7 +18,8 @@ import Prefs from '@/components/Prefs.vue';
 
 /* Composables */
 import { getJsonHyp, getJsonPiped } from '@/scripts/fetch.js';
-import { useLazyLoad, useStore, useRoute } from '@/scripts/util.js';
+import { useStore, useRoute } from '@/scripts/util.js';
+import { useT, useSetupLocale } from '@/scripts/i18n.js';
 import { useSetupDB, useUpdatePlaylist } from '@/scripts/db.js';
 
 /* Stores */
@@ -283,35 +284,17 @@ function setMetadata() {
   }
 }
 
-function SaveTrack(e) {
-  useUpdatePlaylist(
-    e,
-    {
-      url: data.state.url,
-      title: data.state.title,
-    },
-    e => {
-      if (e === true) {
-        console.log('Added Song To ' + e);
-      }
-    },
-  );
-}
-
 onBeforeMount(() => {
   if (store.theme) {
     document.body.setAttribute('data-theme', store.theme);
   }
+
+  if (store.locale) {
+    useSetupLocale(store.locale);
+  }
 });
 
 onMounted(() => {
-  useLazyLoad();
-
-  /* Event Listeners for Lazy Loading */
-  document.addEventListener('scroll', useLazyLoad);
-  document.addEventListener('resize', useLazyLoad);
-  document.addEventListener('orientationChange', useLazyLoad);
-
   /* Event Listener for change in url */
   window.addEventListener('popstate', parseUrl);
 
@@ -355,17 +338,18 @@ onMounted(() => {
   </template>
 
   <header v-if="!artist.state.title">
-    <div
-      v-show="data.state.art"
-      class="art bg-img"
-      :style="'--art: url(' + data.state.art + ')'"></div>
+    <img
+      v-if="data.state.art"
+      class="art"
+      loading="lazy"
+      :src="data.state.art" />
 
     <div class="wrapper">
       <NowPlaying @get-artist="getArtist" />
     </div>
   </header>
 
-  <main class="placeholder">
+  <main class="placeholder" :data-placeholder="useT('info.search')">
     <KeepAlive>
       <Search
         v-if="nav.state.page == 'home'"
@@ -382,7 +366,10 @@ onMounted(() => {
         @get-album="getAlbum" />
     </KeepAlive>
 
-    <NewPlaylist v-if="nav.state.page == 'library'" @play-urls="playList" />
+    <NewPlaylist
+      v-if="nav.state.page == 'library'"
+      @play-urls="playList"
+      @open-playlist="getAlbum" />
 
     <Prefs v-if="nav.state.page == 'prefs'" />
   </main>
@@ -399,7 +386,7 @@ onMounted(() => {
     <Info v-if="player.state.info" :text="data.state.description" />
   </Transition>
 
-  <StatusBar @save="SaveTrack" />
+  <StatusBar />
 
   <Player @ended="playNext" />
 </template>

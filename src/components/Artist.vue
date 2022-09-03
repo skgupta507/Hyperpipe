@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onUpdated } from 'vue';
-import PlayBtn from './PlayBtn.vue';
+import Btn from './Btn.vue';
 
 import { useArtist } from '@/stores/results.js';
 
@@ -18,16 +18,14 @@ onUpdated(() => {
 
 <template>
   <div v-if="show == 0 && artist.state.title" class="us-wrap">
-    <div
-      class="bg-imgfill"
-      :style="'--art: url(' + artist.state.thumbnails[1].url + ');'"></div>
+    <img class="bg-imgfill" :src="artist.state.thumbnails[1].url" />
     <div class="us-main">
       <h2>{{ artist.state.title }}</h2>
       <p @click="$event.target.classList.toggle('more')">
         {{ artist.state.description }}
       </p>
       <div class="us-playwrap">
-        <PlayBtn
+        <Btn
           @click="
             $emit('playall', '/playlist?list=' + artist.state.playlistId)
           " />
@@ -46,10 +44,6 @@ onUpdated(() => {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: var(--art);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   filter: blur(5px) opacity(50%);
 }
 .us-main {
@@ -59,6 +53,7 @@ onUpdated(() => {
   flex-direction: column;
   padding: 1rem;
   box-shadow: inset 0 0 10rem #000;
+  z-index: 1;
 }
 h2 {
   padding: 1rem;

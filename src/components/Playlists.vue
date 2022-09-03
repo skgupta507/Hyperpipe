@@ -1,5 +1,6 @@
 <script setup>
 import { useData, usePlayer } from '@/stores/player.js';
+import { useT } from '@/scripts/i18n.js';
 
 const player = usePlayer(),
   data = useData();
@@ -9,7 +10,7 @@ defineEmits(['playthis']);
 
 <template>
   <Transition name="fade">
-    <div class="pl-modal placeholder">
+    <div class="pl-modal placeholder" :data-placeholder="useT('playlist.add')">
       <template v-for="plurl in data.state.urls">
         <div class="pl-item" @click="$emit('playthis', plurl)">
           <span v-if="data.state.url == plurl.url" class="bars-wrap">
@@ -50,9 +51,6 @@ defineEmits(['playthis']);
 }
 .placeholder:empty:before {
   --ico: '\f64d';
-}
-.placeholder:empty:after {
-  --text: 'Add Songs to Playlist...';
 }
 .pl-item {
   padding: 1rem;

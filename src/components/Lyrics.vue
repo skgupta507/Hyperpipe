@@ -3,6 +3,7 @@ import { ref, watch } from 'vue';
 
 import { getJsonHyp } from '@/scripts/fetch.js';
 import { useData } from '@/stores/player.js';
+import { useT } from '@/scripts/i18n.js';
 
 import TextModal from './TextModal.vue';
 
@@ -48,7 +49,11 @@ watch(
     <template #content>
       <pre
         class="placeholder"
-        :data-loaded="data.state.urls[0]?.url ? status : true"
+        :data-placeholder="
+          data.state.urls[0]?.url && !status
+            ? useT('info.lyrics.load')
+            : useT('info.lyrics.void')
+        "
         >{{ text }}</pre
       >
       <div>{{ source }}</div>
@@ -59,11 +64,5 @@ watch(
 <style scoped>
 .placeholder:empty::before {
   --ico: '\f3a5';
-}
-.placeholder[data-loaded='false']:empty::after {
-  --text: 'Fetching Lyrics...';
-}
-.placeholder[data-loaded='true']:empty::after {
-  --text: 'No Lyrics...';
 }
 </style>

@@ -2,8 +2,8 @@
 import { reactive, ref, onMounted, onUnmounted } from 'vue';
 
 import { getJsonHyp } from '../scripts/fetch.js';
-import { useRandColor } from '../scripts/colors.js';
 import { useRoute } from '../scripts/util.js';
+import { useT } from '@/scripts/i18n.js';
 
 import AlbumItem from './AlbumItem.vue';
 
@@ -55,18 +55,18 @@ onMounted(get);
 
 <template>
   <template v-if="data.title">
-    <i class="bi bi-arrow-left back" @click="get"> Back</i>
+    <i class="bi bi-arrow-left back" @click="get"> {{ useT('action.back') }}</i>
 
     <h2 class="head">{{ data.title }}</h2>
 
     <template v-for="type in ['featured', 'spotlight', 'community']">
-      <h3 class="head">{{ type }}</h3>
+      <h3 class="head">{{ useT('title.' + type) }}</h3>
       <div class="grid-3">
         <template v-for="i in data[type]">
           <AlbumItem
             :name="i.title"
             :author="i.subtitle"
-            :art="'url(' + i.thumbnails[0].url + ')'"
+            :art="i.thumbnails[0].url"
             @open-album="
               $emit('get-album', '/playlist?list=' + i.id);
               nav.state.page = 'home';
@@ -77,7 +77,7 @@ onMounted(get);
   </template>
 
   <template v-else>
-    <h2 v-if="btns.moods.length > 0">Moods</h2>
+    <h2 v-if="btns.moods.length > 0">{{ useT('title.moods') }}</h2>
 
     <div class="btn-grid">
       <button
@@ -89,7 +89,7 @@ onMounted(get);
       </button>
     </div>
 
-    <h2 v-if="btns.genres.length > 0">Genres</h2>
+    <h2 v-if="btns.genres.length > 0">{{ useT('title.genres') }}</h2>
 
     <div class="btn-grid">
       <button

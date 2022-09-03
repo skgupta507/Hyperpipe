@@ -1,24 +1,22 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-import { getJson } from '../scripts/fetch.js';
-import { useStore } from '../scripts/util.js';
+import { getJson } from '@/scripts/fetch.js';
+import { SUPPORTED_LOCALES, useT, useSetupLocale } from '@/scripts/i18n.js';
+import { useStore } from '@/scripts/util.js';
 
 const instances = ref([]),
   hypInstances = ref([]),
-  hls = ref(false),
   next = ref(false);
 
 getJson('https://piped-instances.kavin.rocks').then(i => {
   instances.value = i;
-
   console.log(i);
 });
 
 getJson('https://raw.codeberg.page/Hyperpipe/pages/api/backend.json').then(
   i => {
     hypInstances.value = i;
-
     console.log(i);
   },
 );
@@ -45,18 +43,22 @@ function setTheme(theme) {
   setStore('theme', theme);
 }
 
+function setLang(locale) {
+  useSetupLocale(locale);
+  setStore('locale', locale);
+}
+
 function getStoreBool(key, ele) {
   ele.value = getStore(key) || true;
 }
 
 onMounted(() => {
-  getStoreBool('hls', hls);
   getStoreBool('next', next);
 });
 </script>
 
 <template>
-  <h2>Theme</h2>
+  <h2>{{ useT('pref.theme') }}</h2>
   <select
     id="pref-theme"
     :value="getTheme()"
@@ -68,7 +70,16 @@ onMounted(() => {
     <option value="nord">Nord</option>
   </select>
 
-  <h2>Audio Player</h2>
+  <h2>Language</h2>
+
+  <select
+    id="pref-lang"
+    :value="getStore('locale') || 'en'"
+    @change="setLang($event.target.value)">
+    <option v-for="i in SUPPORTED_LOCALES" :value="i.code">{{ i.name }}</option>
+  </select>
+
+  <h2>{{ useT('pref.player') }}</h2>
 
   <div class="left">
     <input
@@ -77,11 +88,11 @@ onMounted(() => {
       id="pref-chk-next"
       @change="setStore('next', $event.target.checked)"
       v-model="next" />
-    <label for="pref-chk-next">Automatically Queue Songs</label>
+    <label for="pref-chk-next">{{ useT('pref.auto_queue') }}</label>
   </div>
 
   <div class="left">
-    <label for="pref-codec">Codec</label>
+    <label for="pref-codec">{{ useT('pref.codec') }}</label>
     <select
       id="pref-codec"
       name="pref-codec"
@@ -95,20 +106,20 @@ onMounted(() => {
   </div>
 
   <div class="left">
-    <label for="pref-quality">Quality</label>
+    <label for="pref-quality">{{ useT('pref.quality') }}</label>
     <select
       id="pref-quality"
       name="pref-quality"
       :value="getStore('quality') || 'auto'"
       @change="setStore('quality', $event.target.value)">
-      <option value="auto">auto</option>
-      <option value="best">best</option>
-      <option value="worst">worst</option>
+      <option value="auto">{{ useT('pref.auto') }}</option>
+      <option value="best">{{ useT('pref.best') }}</option>
+      <option value="worst">{{ useT('pref.worst') }}</option>
     </select>
   </div>
 
   <div class="left">
-    <label for="pref-volume">Default Volume</label>
+    <label for="pref-volume">{{ useT('pref.volume') }}</label>
     <input
       type="number"
       name="pref-volume"
@@ -119,7 +130,7 @@ onMounted(() => {
       @change="setStore('vol', $event.target.value)" />
   </div>
 
-  <h2>Hyperpipe Instance</h2>
+  <h2>{{ useT('pref.instances.hyp') }}</h2>
 
   <select
     v-if="hypInstances"
@@ -137,8 +148,8 @@ onMounted(() => {
     <table>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Locations</th>
+          <th>{{ useT('pref.instances.name') }}</th>
+          <th>{{ useT('pref.instances.loc') }}</th>
         </tr>
       </thead>
       <tbody v-for="i in hypInstances">
@@ -154,7 +165,7 @@ onMounted(() => {
     </table>
   </div>
 
-  <h2>Piped Instance</h2>
+  <h2>{{ useT('pref.instances.piped') }}</h2>
   <select
     v-if="instances"
     :value="getStore('pipedapi') || 'pipedapi.kavin.rocks'"
@@ -167,15 +178,29 @@ onMounted(() => {
     </option>
   </select>
 
+  <h3>{{ useT('pref.instances.auth') }}</h3>
+
+  <select
+    v-if="instances"
+    :value="getStore('authapi') || 'pipedapi.kavin.rocks'"
+    @change="setStore('authapi', $event.target.value)">
+    <option
+      v-for="i in instances"
+      :key="i.name"
+      :value="i.api_url.replace('https://', '').replace('http://', '')">
+      {{ i.name.replace('Official', 'Default') }}
+    </option>
+  </select>
+
   <div class="table-wrap">
     <table>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Locations</th>
-          <th>CDN</th>
-          <th>Up to Date</th>
-          <th>Version</th>
+          <th>{{ useT('pref.instances.name') }}</th>
+          <th>{{ useT('pref.instances.loc') }}</th>
+          <th>{{ useT('pref.instances.cdn') }}</th>
+          <th>{{ useT('pref.instances.up_to_date') }}</th>
+          <th>{{ useT('pref.instances.version') }}</th>
         </tr>
       </thead>
       <tbody v-for="i in instances">
@@ -201,7 +226,7 @@ onMounted(() => {
       class="bi bi-code-slash"
       target="_blank"
       rel="noreferrer noopener"
-      href="https://codeberg.org/Hyperpipe/Hyperpipe"></a>
+      href="https://codeberg.org/Hyperpipe/Hyperpipe" />
   </footer>
 </template>
 
@@ -210,6 +235,7 @@ h2 {
   margin-top: 1rem;
 }
 h2,
+h3,
 label,
 footer {
   text-align: center;

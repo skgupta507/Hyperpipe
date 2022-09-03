@@ -1,4 +1,5 @@
 <script setup>
+import { useT } from '@/scripts/i18n.js';
 import TextModal from './TextModal.vue';
 
 defineProps(['text']);
@@ -10,7 +11,7 @@ const parse = d =>
 <template>
   <TextModal>
     <template #content>
-      <pre class="placeholder">{{ 
+      <pre class="placeholder" :data-placeholder="useT('info.no_info')">{{ 
         text ? parse(text.replaceAll('<br>', '\n')) : ''
       }}</pre>
     </template>
@@ -20,8 +21,5 @@ const parse = d =>
 <style scoped>
 .placeholder:empty::before {
   --ico: '\F3B9';
-}
-.placeholder:empty::after {
-  --text: 'No Information Available...';
 }
 </style>

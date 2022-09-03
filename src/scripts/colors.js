@@ -10,9 +10,3 @@ export function useRand() {
   const i = Math.floor(Math.random() * c.length);
   return c[i];
 }
-
-export function useRandColor() {
-  const r = Math.random().toString(16);
-
-  return '#' + r.substr(r.length - 6);
-}

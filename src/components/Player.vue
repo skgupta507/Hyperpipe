@@ -10,8 +10,7 @@ import {
 import muxjs from 'mux.js';
 window.muxjs = muxjs;
 
-import { useLazyLoad, useStore, useRoute } from '@/scripts/util.js';
-
+import { useStore, useRoute } from '@/scripts/util.js';
 import { useData, usePlayer } from '@/stores/player.js';
 
 defineEmits(['ended']);
@@ -23,8 +22,6 @@ const player = usePlayer(),
 const audio = ref(null);
 
 function audioCanPlay() {
-  useLazyLoad();
-
   player.state.status = 'pause';
   audio.value.play().catch(err => {
     console.error(err);

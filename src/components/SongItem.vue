@@ -53,7 +53,7 @@ onMounted(() => {
 </script>
 <template>
   <div class="song card flex pop" @click="openSong($event.target)">
-    <div class="pop-2 bg-img song-bg"></div>
+    <img class="pop-2 bg-img song-bg" loading="lazy" :src="art" alt />
 
     <span class="flex content">
       <h4>{{ title }}</h4>
@@ -120,7 +120,6 @@ span.bi-three-dots-vertical {
 }
 .song-bg {
   --grad: v-bind('rand');
-  --art: v-bind('art || rand');
   width: 120px;
   height: 120px;
 }

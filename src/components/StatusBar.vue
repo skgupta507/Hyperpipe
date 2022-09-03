@@ -3,12 +3,15 @@ import { ref, reactive, watch } from 'vue';
 
 import Modal from './Modal.vue';
 
-import { useStore } from '../scripts/util.js';
-import { useListPlaylists } from '../scripts/db.js';
+import { useStore } from '@/scripts/util.js';
+import { useListPlaylists, useUpdatePlaylist } from '@/scripts/db.js';
+import { getAuthPlaylists, getJsonAuth } from '@/scripts/fetch.js';
+import { useT } from '@/scripts/i18n.js';
 
-import { usePlayer } from '../stores/player.js';
+import { useData, usePlayer } from '@/stores/player.js';
 
-const player = usePlayer(),
+const data = useData(),
+  player = usePlayer(),
   store = useStore();
 
 const emit = defineEmits(['save']),
@@ -18,15 +21,52 @@ const emit = defineEmits(['save']),
     vol: false,
   }),
   pl = ref(''),
-  list = ref([]);
+  list = ref([]),
+  remote = ref([]),
+  plRemote = ref(false);
 
-function Save() {
+function List() {
   showme.pl = true;
   useListPlaylists(res => {
     console.log(res);
     list.value = res;
     showme.menu = false;
   });
+  getAuthPlaylists().then(res => {
+    remote.value = res;
+  });
+}
+
+function Save() {
+  if (pl.value) {
+    if (plRemote.value == true && store.auth) {
+      getJsonAuth('/user/playlists/add', {
+        method: 'POST',
+        headers: {
+          Authorization: store.auth,
+        },
+        body: JSON.stringify({
+          playlistId: pl.value,
+          videoId: new URL(
+            'https://example.com' + data.state.url,
+          ).searchParams.get('v'),
+        }),
+      });
+    } else if (plRemote.value == false) {
+      useUpdatePlaylist(
+        pl.value,
+        {
+          url: data.state.url,
+          title: data.state.title,
+        },
+        e => {
+          if (e === true) {
+            console.log('Added Song');
+          }
+        },
+      );
+    }
+  }
 }
 </script>
 <template>
@@ -45,22 +85,38 @@ function Save() {
           <template v-for="i in list">
             <div
               class="flex item"
-              @click="pl = i.name"
-              :data-active="pl == i.name">
+              @click="
+                pl = i.name;
+                plRemote = false;
+              "
+              :data-active="pl == i.name && plRemote == false">
               <span>{{ i.name }}</span
               ><span class="ml-auto">{{ i.urls.length || '' }}</span>
             </div>
           </template>
+          <template v-for="i in remote">
+            <div
+              class="flex item"
+              @click="
+                pl = i.id;
+                plRemote = true;
+              "
+              :data-active="pl == i.id && plRemote == true">
+              <span>{{ i.name }}</span>
+            </div>
+          </template>
         </template>
         <template #buttons>
-          <button aria-label="Cancel" @click="showme.pl = false">Cancel</button>
+          <button aria-label="Cancel" @click="showme.pl = false">
+            {{ useT('action.cancel') }}
+          </button>
           <button
             aria-label="Add Song"
             @click="
-              if (pl) $emit('save', pl);
+              Save();
               showme.pl = false;
             ">
-            Add
+            {{ useT('action.add') }}
           </button>
         </template>
       </Modal>
@@ -124,13 +180,14 @@ function Save() {
             id="info-btn"
             class="bi bi-info-circle"
             aria-label="Show Information About Song"
+            :data-active="player.state.info"
             @click="player.toggle('info')"></button>
           <button
             id="addToPlaylist"
             title="Add Current Song to a Playlist"
             aria-label="Add Current Song to a Playlist"
             class="bi bi-collection"
-            @click="Save"></button>
+            @click="List"></button>
           <button
             id="list-btn"
             title="Current Playlist"
@@ -166,6 +223,7 @@ function Save() {
   border-top: 0.25rem solid var(--color-foreground);
   background: var(--color-background);
   min-height: 15vh;
+  z-index: 2;
 }
 .statusbar-right {
   margin-left: 0.5rem;

@@ -1,18 +1,21 @@
 <script setup>
 import { ref, reactive, watch, onUpdated } from 'vue';
 
-import PlayBtn from './PlayBtn.vue';
+import Btn from './Btn.vue';
 import SongItem from './SongItem.vue';
 import AlbumItem from './AlbumItem.vue';
 
-import { getJsonPiped, getPipedQuery } from '../scripts/fetch.js';
-import { useLazyLoad, useRoute } from '../scripts/util.js';
-import { useCreatePlaylist } from '../scripts/db.js';
+import { getJsonPiped, getPipedQuery } from '@/scripts/fetch.js';
+import { useRoute } from '@/scripts/util.js';
+import { useCreatePlaylist } from '@/scripts/db.js';
+import { useT } from '@/scripts/i18n.js';
 
 import { useResults, useArtist } from '@/stores/results.js';
+import { useData } from '@/stores/player.js';
 import { useNav } from '@/stores/misc.js';
 
 const results = useResults(),
+  data = useData(),
   nav = useNav(),
   artist = useArtist();
 
@@ -21,17 +24,11 @@ const emit = defineEmits(['get-album', 'get-artist', 'play-urls', 'add-song']),
   filter = ref('music_songs'),
   isSearch = ref(/search/.test(location.pathname));
 
-const playAlbum = () => {
-    const urls = results.items?.songs?.items?.map(item => {
-      return { url: item.url, title: item.title };
-    });
-
-    emit('play-urls', urls);
-  },
-  saveAlbum = () => {
-    const urls = results.items?.songs?.items?.map(item => {
-      return { url: item.url, title: item.title };
-    });
+const saveAlbum = () => {
+    const urls = results.items?.songs?.items?.map(item => ({
+      url: item.url,
+      title: item.title,
+    }));
 
     let title = results.items?.songs?.title;
 
@@ -54,7 +51,6 @@ const playAlbum = () => {
       isSearch.value = /search/.test(location.pathname);
 
       getResults(pq);
-      useLazyLoad();
     } else {
       results.resetItems();
 
@@ -72,7 +68,6 @@ const playAlbum = () => {
       key = f.split('_')[1];
 
     results.setItem(key, json);
-
     console.log(json, key);
   };
 
@@ -106,8 +101,27 @@ onUpdated(() => {
   </div>
 
   <div v-if="results.items?.songs?.title" class="text-full flex">
-    <PlayBtn @click="playAlbum" />
-    <PlayBtn ico="plus" @click="saveAlbum" />
+    <Btn
+      @click="
+        $emit(
+          'play-urls',
+          results.items?.songs?.items?.map(item => ({
+            url: item.url,
+            title: item.title,
+          })),
+        )
+      " />
+    <Btn ico="star" @click="saveAlbum" />
+    <Btn
+      ico="plus-lg"
+      @click="
+        data.state.urls.push(
+          ...results.items.songs.items.map(i => ({
+            url: i.url,
+            title: i.title,
+          })),
+        )
+      " />
 
     <span>{{ results.items?.songs?.title }}</span>
   </div>
@@ -121,14 +135,14 @@ onUpdated(() => {
         getSearch(nav.state.search);
       "
       :data-active="f == filter">
-      {{ f.split('_')[1] }}
+      {{ useT('title.' + f.split('_')[1]) }}
     </button>
   </div>
 
   <div
     v-if="results.items.songs && results.items.songs.items[0]"
     class="search-songs">
-    <h2>Songs</h2>
+    <h2>{{ useT('title.songs') }}</h2>
     <div class="grid">
       <template v-for="song in results.items.songs.items">
         <SongItem
@@ -137,11 +151,7 @@ onUpdated(() => {
           :channel="song.uploaderUrl || song.subId"
           :play="song.url || '/watch?v=' + song.id"
           :art="
-            'url(' +
-            (song.thumbnail ||
-              song.thumbnails[1]?.url ||
-              song.thumbnails[0]?.url) +
-            ')'
+            song.thumbnail || song.thumbnails[1]?.url || song.thumbnails[0]?.url
           "
           @open-song="
             $emit('play-urls', [
@@ -165,20 +175,20 @@ onUpdated(() => {
       "
       class="more"
       :href="'/playlist?list=' + results.items.notes.items"
-      >See All</a
+      >{{ useT('info.see_all') }}</a
     >
   </div>
 
   <div
     v-if="results.items.albums && results.items.albums.items[0]"
     class="search-albums">
-    <h2>Albums</h2>
+    <h2>{{ useT('title.albums') }}</h2>
     <div class="grid-3">
       <template v-for="album in results.items.albums.items">
         <AlbumItem
           :author="album.uploaderName || album.subtitle"
           :name="album.name || album.title"
-          :art="'url(' + (album.thumbnail || album.thumbnails[0].url) + ')'"
+          :art="album.thumbnail || album.thumbnails[0].url"
           @open-album="
             $emit('get-album', album.url || '/playlist?list=' + album.id)
           " />
@@ -189,13 +199,13 @@ onUpdated(() => {
   <div
     v-if="results.items.singles && results.items.singles.items[0]"
     class="search-albums">
-    <h2>Singles</h2>
+    <h2>{{ useT('title.singles') }}</h2>
     <div class="grid-3">
       <template v-for="single in results.items.singles.items">
         <AlbumItem
           :author="single.subtitle"
           :name="single.title"
-          :art="'url(' + single.thumbnails[0].url + ')'"
+          :art="single.thumbnails[0].url"
           @open-album="$emit('get-album', '/playlist?list=' + single.id)" />
       </template>
     </div>
@@ -208,7 +218,13 @@ onUpdated(() => {
       (results.items.artists && results.items.artists.items[0])
     "
     class="search-artists">
-    <h2>{{ results.items.artists ? 'Artists' : 'Similar Artists' }}</h2>
+    <h2>
+      {{
+        results.items.artists
+          ? useT('title.artists')
+          : useT('title.similar_artists')
+      }}
+    </h2>
     <div class="grid-3 circle">
       <template
         v-for="artist in results.items.artists
@@ -217,7 +233,7 @@ onUpdated(() => {
         <AlbumItem
           :author="artist.subtitle"
           :name="artist.name || artist.title"
-          :art="'url(' + (artist.thumbnail || artist.thumbnails[0].url) + ')'"
+          :art="artist.thumbnail || artist.thumbnails[0].url"
           @open-album="
             $emit(
               'get-artist',
@@ -244,8 +260,14 @@ onUpdated(() => {
 .search-artists {
   text-align: center;
 }
+:deep(.bi) {
+  margin-right: 0;
+}
 :deep(.bi-play) {
-  margin-right: 0.75rem;
+  margin-right: 1rem;
+}
+:deep(.bi-plus-lg) {
+  margin-right: auto;
 }
 .filters {
   display: flex;

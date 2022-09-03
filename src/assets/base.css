@@ -153,9 +153,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 .placeholder:empty:after {
-  --text: 'Start Searching...';
+  content: attr(data-placeholder)'...';
   margin-bottom: auto;
-  content: var(--text);
   letter-spacing: 0.125rem;
   font-size: 1.25rem;
   font-weight: bolder;
@@ -215,15 +214,15 @@ button {
   appearence: none;
   outline: none;
 }
-
+img {
+  object-fit: cover;
+}
 .bg-img {
+  appearance: none;
   background-image: var(--grad);
   background-position: center;
   background-size: cover;
   border-radius: 0.25rem;
-}
-.bg-img.lazy {
-  background-image: var(--art);
 }
 .search-artists .bg-img {
   border-radius: 50%;

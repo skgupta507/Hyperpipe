@@ -1,9 +1,13 @@
 <script setup>
 import { ref, reactive, watch, onMounted } from 'vue';
+
 import AlbumItem from './AlbumItem.vue';
 import Modal from './Modal.vue';
 
-import { useRand } from '../scripts/colors.js';
+import { useRand } from '@/scripts/colors.js';
+import { useStore } from '@/scripts/util.js';
+import { getJsonAuth, getAuthPlaylists } from '@/scripts/fetch.js';
+import { useT } from '@/scripts/i18n.js';
 
 import {
   useListPlaylists,
@@ -12,7 +16,10 @@ import {
   useUpdatePlaylist,
 } from '../scripts/db.js';
 
-const emit = defineEmits(['play-urls']),
+const store = useStore(),
+  auth = ref(!!store.auth);
+
+const emit = defineEmits(['play-urls', 'open-playlist']),
   list = ref([]),
   show = reactive({
     new: false,
@@ -24,7 +31,15 @@ const emit = defineEmits(['play-urls']),
     id: 'Please Wait...',
     to: '',
     peer: undefined,
+  }),
+  user = reactive({
+    username: undefined,
+    password: undefined,
+    playlists: [],
+    create: false,
   });
+
+const pathname = url => new URL(url).pathname;
 
 const Play = key => {
     console.log(key);
@@ -64,6 +79,44 @@ const Play = key => {
     conn.on('error', err => {
       console.log(err);
     });
+  };
+
+const Login = async () => {
+    if (user.username && user.password) {
+      const { token } = await getJsonAuth('/login', {
+        method: 'POST',
+        body: JSON.stringify({
+          username: user.username,
+          password: user.password,
+        }),
+      });
+
+      store.setItem('auth', token);
+      auth.value = true;
+    }
+  },
+  getPlaylists = async () => {
+    const res = await getAuthPlaylists();
+
+    user.playlists = res;
+    console.log(user.playlists);
+  },
+  createPlaylist = async () => {
+    if (text.value) {
+      const res = await getJsonAuth('/user/playlists/create', {
+        method: 'POST',
+        body: JSON.stringify({
+          name: `Playlist - ${text.value}`,
+        }),
+        headers: {
+          Authorization: store.auth,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      getPlaylists();
+      show.new = false;
+    }
   };
 
 watch(
@@ -119,7 +172,12 @@ watch(
   },
 );
 
-onMounted(List);
+watch(auth, getPlaylists);
+
+onMounted(async () => {
+  await getPlaylists();
+  List();
+});
 </script>
 
 <template>
@@ -127,13 +185,22 @@ onMounted(List);
     <Modal
       n="2"
       :display="show.new"
-      title="Create a new Playlist..."
+      :title="useT('playlist.create')"
       @show="
         e => {
           show.new = e;
         }
       ">
       <template #content>
+        <div v-if="auth" class="tabs">
+          <button :data-active="!user.create" @click="user.create = false">
+            {{ useT('title.local') }}
+          </button>
+          <button :data-active="user.create" @click="user.create = true">
+            {{ useT('title.remote') }}
+          </button>
+        </div>
+
         <input
           type="text"
           placeholder="Playlist name..."
@@ -141,15 +208,17 @@ onMounted(List);
           v-model="text" />
       </template>
       <template #buttons>
-        <button @click="show.new = false">Cancel</button>
-        <button @click="Create">Create</button>
+        <button @click="show.new = false">{{ useT('action.cancel') }}</button>
+        <button @click="user.create ? createPlaylist() : Create()">
+          {{ useT('action.create') }}
+        </button>
       </template>
     </Modal>
 
     <Modal
       :n="sync.type == 'send' ? 2 : 1"
       :display="show.sync"
-      title="Sync Playlists..."
+      :title="useT('playlist.sync')"
       @show="
         e => {
           show.sync = e;
@@ -160,10 +229,10 @@ onMounted(List);
           <button
             :data-active="sync.type == 'send'"
             @click="sync.type = 'send'">
-            Send
+            {{ useT('action.send') }}
           </button>
           <button :data-active="sync.type == 'rec'" @click="sync.type = 'rec'">
-            Receive
+            {{ useT('action.receive') }}
           </button>
         </div>
 
@@ -181,9 +250,11 @@ onMounted(List);
       </template>
 
       <template #buttons>
-        <button @click="show.sync = false">Cancel</button>
+        <button @click="show.sync = false">{{ useT('action.cancel') }}</button>
         <button v-if="sync.type == 'send'" @click="Send">
-          {{ sync.type == 'send' ? 'Send' : 'Recieve' }}
+          {{
+            sync.type == 'send' ? useT('action.send') : useT('action.recieve')
+          }}
         </button>
       </template>
     </Modal>
@@ -196,6 +267,8 @@ onMounted(List);
         @click="show.sync = true"></div>
     </div>
 
+    <h2 v-if="list.length > 0">{{ useT('playlist.local') }}</h2>
+
     <div class="grid-3">
       <template v-for="i in list">
         <AlbumItem
@@ -205,10 +278,48 @@ onMounted(List);
           @open-album="Play(i.name)" />
       </template>
     </div>
+
+    <h2 class="login-h">{{ useT('playlist.remote') }}</h2>
+
+    <div v-if="auth" class="grid-3">
+      <template v-for="i in user.playlists">
+        <AlbumItem
+          :name="i.name.replace('Playlist - ', '')"
+          :art="pathname(i.thumbnail) != '/' ? i.thumbnail : undefined"
+          @open-album="$emit('open-playlist', '/playlists?list=' + i.id)" />
+      </template>
+    </div>
+    <form v-else class="login" @submit.prevent>
+      <input
+        @change="user.username = $event.target.value"
+        type="text"
+        placeholder="username"
+        class="textbox" />
+      <input
+        @change="user.password = $event.target.value"
+        type="password"
+        placeholder="password"
+        class="textbox" />
+      <button @click="Login" class="textbox">{{ useT('title.login') }}</button>
+
+      <p>
+        Don't have an account? register on
+        <a
+          href="https://piped.kavin.rocks/register"
+          target="_blank"
+          rel="noreferrer noopener"
+          >Piped</a
+        >
+      </p>
+    </form>
   </div>
 </template>
 
 <style scoped>
+h2 {
+  text-align: center;
+  margin: 2rem;
+}
 .npl-wrap {
   padding-bottom: 5rem;
 }
@@ -244,7 +355,9 @@ pre {
   width: calc(100% / 2);
   background: var(--color-background);
 }
-.tabs button[data-active='true'] {
+.tabs button[data-active='true'],
+.login button {
+  font-weight: bold;
   color: var(--color-background);
   background: linear-gradient(135deg, cornflowerblue, #88c0d0);
 }
@@ -253,6 +366,15 @@ pre {
 }
 .tabs button:last-child {
   border-radius: 0 0.25rem 0.25rem 0;
+}
+.login {
+  display: block;
+  margin: 1rem auto;
+}
+.login > * {
+  margin: 1rem auto;
+  display: block;
+  text-align: center;
 }
 @media (min-width: 1024px) {
   .npl-box:first-child {

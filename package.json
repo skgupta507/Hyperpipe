@@ -12,18 +12,19 @@
   "dependencies": {
     "bootstrap-icons": "^1.9.1",
     "buffer": "^6.0.3",
-    "dompurify": "^2.3.10",
+    "dompurify": "^2.4.0",
     "mux.js": "^6.2.0",
-    "peerjs": "^1.4.6",
-    "pinia": "^2.0.16",
-    "shaka-player": "^4.1.2",
+    "peerjs": "^1.4.7",
+    "pinia": "^2.0.21",
+    "shaka-player": "^4.2.1",
     "stream-browserify": "^3.0.0",
-    "vue": "^3.2.31",
+    "vue": "^3.2.38",
+    "vue-i18n": "^9.2.2",
     "xml-js": "^1.6.11"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^3.0.1",
-    "prettier": "^2.6.2",
-    "vite": "^3.0.3"
+    "@vitejs/plugin-vue": "^3.0.3",
+    "prettier": "^2.7.1",
+    "vite": "^3.0.9"
   }
 }

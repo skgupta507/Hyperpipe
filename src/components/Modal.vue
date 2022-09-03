@@ -58,6 +58,9 @@ watch(show, n => {
   padding: 1rem 2rem;
   border-bottom: 1px solid var(--color-shadow);
 }
+.modal-title:after {
+  content: '...';
+}
 .modal-content {
   padding: 1rem;
   max-height: calc(90vh - 8rem);

@@ -32,6 +32,7 @@ defineEmits(['click']);
   background: transparent;
 }
 .bi:not(.bi-play) {
-  font-size: 3rem;
+  font-size: 1.75rem;
+  width: 3.5rem;
 }
 </style>

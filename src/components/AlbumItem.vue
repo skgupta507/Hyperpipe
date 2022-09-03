@@ -10,7 +10,10 @@ const props = defineProps({
     default: '',
   },
   grad: String,
-  art: String,
+  art: {
+    type: String,
+    default: 'https://upload.wikimedia.org/wikipedia/commons/c/ca/1x1.png',
+  },
 });
 
 defineEmits(['open-album']);
@@ -18,7 +21,7 @@ defineEmits(['open-album']);
 
 <template>
   <div class="album card pop" @click="$emit('open-album')">
-    <div class="card-bg bg-img pop-2"></div>
+    <img class="card-bg bg-img pop-2" :src="art" loading="lazy" alt />
 
     <div class="card-text">
       <h4>{{ name }}</h4>
@@ -40,7 +43,6 @@ defineEmits(['open-album']);
 }
 .card-bg {
   --grad: v-bind('grad || rand');
-  --art: v-bind('art || grad || rand');
   height: 13rem;
   width: 13rem;
 }
