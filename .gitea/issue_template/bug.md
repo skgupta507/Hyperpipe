@@ -1,4 +1,9 @@
-
+---
+name: "Report a bug"
+about: "Is Hyperpipe not behaving as expected? Report a bug so that it can be fixed as soon as possible."
+labels:
+  - "Kind: Bug"
+---
 ## Browser
 
 - [ ] Chromium-Based
