@@ -13,8 +13,6 @@ window.muxjs = muxjs;
 import { useStore, useRoute } from '@/scripts/util.js';
 import { useData, usePlayer } from '@/stores/player.js';
 
-defineEmits(['ended']);
-
 const player = usePlayer(),
   data = useData(),
   store = useStore();
@@ -187,6 +185,6 @@ onUnmounted(() => {
     :volume="player.state.vol"
     @canplay="audioCanPlay"
     @timeupdate="player.setTime($event.target.currentTime)"
-    @ended="$emit('ended')"
+    @ended="data.playNext"
     autoplay></audio>
 </template>

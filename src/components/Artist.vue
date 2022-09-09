@@ -2,22 +2,21 @@
 import { ref, onUpdated } from 'vue';
 import Btn from './Btn.vue';
 
-import { useArtist } from '@/stores/results.js';
+import { useResults, useArtist } from '@/stores/results.js';
 
-const artist = useArtist();
+const artist = useArtist(),
+  results = useResults();
 
-defineEmits(['playall']);
-
-const show = ref(-1);
+/*const show = ref(-1);
 show.value = location.pathname.indexOf('/channel/UC');
 
 onUpdated(() => {
   show.value = location.pathname.indexOf('/channel/UC');
-});
+});*/
 </script>
 
 <template>
-  <div v-if="show == 0 && artist.state.title" class="us-wrap">
+  <div class="us-wrap">
     <img class="bg-imgfill" :src="artist.state.thumbnails[1].url" />
     <div class="us-main">
       <h2>{{ artist.state.title }}</h2>
@@ -27,7 +26,7 @@ onUpdated(() => {
       <div class="us-playwrap">
         <Btn
           @click="
-            $emit('playall', '/playlist?list=' + artist.state.playlistId)
+            results.getAlbum('/playlist?list=' + artist.state.playlistId)
           " />
         <span class="us-box subs">{{ artist.state.subscriberCount || 0 }}</span>
       </div>

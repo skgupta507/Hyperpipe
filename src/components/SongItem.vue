@@ -4,8 +4,12 @@ import { ref, onMounted } from 'vue';
 import { useRand } from '../scripts/colors.js';
 
 import { useArtist } from '@/stores/results.js';
+import { useData, usePlayer } from '@/stores/player.js';
 
-const rand = useRand();
+const rand = useRand(),
+  data = useData(),
+  player = usePlayer(),
+  artist = useArtist();
 
 const props = defineProps({
     author: String,
@@ -14,13 +18,30 @@ const props = defineProps({
     play: String,
     art: String,
   }),
-  emit = defineEmits(['get-artist', 'open-song']),
+  emit = defineEmits(['open-song']),
   show = ref(false);
 
 const openSong = el => {
     if (!el.classList.contains('ign')) {
       emit('open-song', props.play);
     }
+  },
+  addSong = () => {
+    data.state.urls.push({
+      url: props.play,
+      title: props.title,
+      thumbnails: [{ url: props.art }],
+    });
+
+    const index = data.state.urls.map(s => s.url).indexOf(data.state.url);
+
+    console.log(data.state.urls);
+
+    if (
+      (index == data.state.urls.length - 1 && player.state.time > 98) ||
+      data.state.urls.length == 1
+    )
+      emit('open-song', props.play);
   },
   Share = async () => {
     if ('share' in navigator) {
@@ -48,7 +69,7 @@ const openSong = el => {
   };
 
 onMounted(() => {
-  console.log(props.channel, useArtist().state.playlistId);
+  console.log(props.channel, artist.state.playlistId);
 });
 </script>
 <template>
@@ -58,19 +79,14 @@ onMounted(() => {
     <span class="flex content">
       <h4>{{ title }}</h4>
       <a
-        :href="
-          channel != '[]' ? channel : '/channel/' + useArtist().state.playlistId
-        "
+        :href="channel != '[]' ? channel : ''"
         @click.prevent="
-          $emit(
-            'get-artist',
-            channel != '[]'
-              ? channel.replace('/channel/', '')
-              : useArtist().state.playlistId,
-          )
+          channel != '[]'
+            ? artist.getArtist(channel.replace('/channel/', ''))
+            : ''
         "
         class="ign">
-        <i class="ign">{{ author.replaceAll(' - Topic', '') }}</i>
+        <i class="ign">{{ author ? author.replaceAll(' - Topic', '') : '' }}</i>
       </a>
     </span>
 
@@ -80,11 +96,7 @@ onMounted(() => {
       @mouseleave="show = false">
       <Transition name="fade">
         <div v-if="show" class="popup ign">
-          <span
-            class="bi bi-plus-lg ign"
-            @click="
-              $parent.$emit('add-song', { url: play, title: title })
-            "></span>
+          <span class="bi bi-plus-lg ign" @click="addSong"></span>
 
           <span class="bi bi-share ign" @click="Share"></span>
         </div>

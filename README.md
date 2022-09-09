@@ -2,7 +2,7 @@
 
 ![On Codeberg](https://codeberg.org/Hyperpipe/static/raw/branch/master/on-codeberg.svg)
 
-A Privacy Respecting Frontend for YouTube Music inspired and built with the help [Piped][piped] and YouTube's InnerTube API.
+A Privacy Respecting Frontend for YouTube Music inspired and built with the help of [Piped][piped] and YouTube's InnerTube API.
 
 ![YouTube Music](https://img.shields.io/badge/youtube-music-red?style=for-the-badge&logo=youtube)
 ![Website](https://img.shields.io/website?down_color=red&down_message=offline&label=status&style=for-the-badge&up_color=cornflowerblue&up_message=online&url=https%3A%2F%2Fhyperpipe.surge.sh)
@@ -102,8 +102,6 @@ You can reach out to me personally on:
 - [Beatbump](https://github.com/snuffyDev/Beatbump) -> Alternative YouTube Music frontend built with Svelte/SvelteKit
 
 - [Cider](https://github.com/ciderapp/Cider) -> Cross-platform Apple Music experience based on Electron and Vue.js
-
-- [Ossia](https://github.com/shie1/ossia) -> Ossia Music Player is a free, open source alternative to YouTube Music.
 
 [hypipe]: https://hyperpipe.surge.sh
 [piped]: https://piped.kavin.rocks

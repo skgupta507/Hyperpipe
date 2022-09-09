@@ -46,7 +46,9 @@ const Play = key => {
 
     useGetPlaylist(key, res => {
       console.log(res);
-      emit('play-urls', res.urls);
+      if (res.urls.length > 0) {
+        emit('play-urls', res.urls);
+      } else alert('No songs to play!');
     });
   },
   List = () => {
@@ -83,7 +85,7 @@ const Play = key => {
 
 const Login = async () => {
     if (user.username && user.password) {
-      const { token } = await getJsonAuth('/login', {
+      const res = await getJsonAuth('/login', {
         method: 'POST',
         body: JSON.stringify({
           username: user.username,
@@ -91,9 +93,24 @@ const Login = async () => {
         }),
       });
 
-      store.setItem('auth', token);
-      auth.value = true;
+      if (!res.error) {
+        store.setItem('auth', res.token);
+        auth.value = true;
+      } else alert(res.error);
     }
+  },
+  Logout = async () => {
+    const res = await getJsonAuth('/logout', {
+      method: 'POST',
+      headers: {
+        Authorization: store.auth,
+      },
+    });
+
+    if (!res.error) {
+      store.removeItem('auth');
+      auth.value = false;
+    } else alert(res.error);
   },
   getPlaylists = async () => {
     const res = await getAuthPlaylists();
@@ -175,8 +192,8 @@ watch(
 watch(auth, getPlaylists);
 
 onMounted(async () => {
-  await getPlaylists();
   List();
+  await getPlaylists();
 });
 </script>
 
@@ -291,15 +308,19 @@ onMounted(async () => {
     </div>
     <form v-else class="login" @submit.prevent>
       <input
-        @change="user.username = $event.target.value"
+        class="textbox"
         type="text"
         placeholder="username"
-        class="textbox" />
+        autocomplete="username"
+        @change="user.username = $event.target.value"
+        required />
       <input
-        @change="user.password = $event.target.value"
+        class="textbox"
         type="password"
         placeholder="password"
-        class="textbox" />
+        autocomplete="password"
+        @change="user.password = $event.target.value"
+        required />
       <button @click="Login" class="textbox">{{ useT('title.login') }}</button>
 
       <p>
@@ -312,6 +333,8 @@ onMounted(async () => {
         >
       </p>
     </form>
+
+    <button v-if="auth" @click="Logout" class="logout textbox">Logout</button>
   </div>
 </template>
 
@@ -356,10 +379,16 @@ pre {
   background: var(--color-background);
 }
 .tabs button[data-active='true'],
-.login button {
+.login button,
+button.logout {
   font-weight: bold;
   color: var(--color-background);
   background: linear-gradient(135deg, cornflowerblue, #88c0d0);
+}
+button.logout {
+  margin: 1rem auto;
+  display: block;
+  background: linear-gradient(135deg, indianred, #bf616a);
 }
 .tabs button:first-child {
   border-radius: 0.25rem 0 0 0.25rem;

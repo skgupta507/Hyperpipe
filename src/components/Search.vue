@@ -19,7 +19,7 @@ const results = useResults(),
   nav = useNav(),
   artist = useArtist();
 
-const emit = defineEmits(['get-album', 'get-artist', 'play-urls', 'add-song']),
+const emit = defineEmits(['play-urls']),
   filters = ['music_songs', 'music_albums', 'music_artists'],
   filter = ref('music_songs'),
   isSearch = ref(/search/.test(location.pathname));
@@ -108,6 +108,7 @@ onUpdated(() => {
           results.items?.songs?.items?.map(item => ({
             url: item.url,
             title: item.title,
+            thumbnails: [{ url: item.thumbnail }],
           })),
         )
       " />
@@ -119,6 +120,7 @@ onUpdated(() => {
           ...results.items.songs.items.map(i => ({
             url: i.url,
             title: i.title,
+            thumbnails: [{ url: i.thumbnail }],
           })),
         )
       " />
@@ -158,23 +160,26 @@ onUpdated(() => {
               {
                 url: song.url || '/watch?v=' + song.id,
                 title: song.title || song.name,
+                thumbnails: [
+                  {
+                    url:
+                      song.thumbnail ||
+                      song.thumbnails[1]?.url ||
+                      song.thumbnails[0]?.url,
+                  },
+                ],
               },
             ])
-          "
-          @get-artist="
-            e => {
-              $emit('get-artist', e);
-            }
           " />
       </template>
     </div>
     <a
-      v-if="results.items.notes"
+      v-if="artist.state.playlistId"
       @click.prevent="
-        $emit('get-album', '/playlist?list=' + results.items.notes.items)
+        results.getAlbum('/playlist?list=' + artist.state.playlistId)
       "
       class="more"
-      :href="'/playlist?list=' + results.items.notes.items"
+      :href="'/playlist?list=' + artist.state.playlistId"
       >{{ useT('info.see_all') }}</a
     >
   </div>
@@ -190,7 +195,7 @@ onUpdated(() => {
           :name="album.name || album.title"
           :art="album.thumbnail || album.thumbnails[0].url"
           @open-album="
-            $emit('get-album', album.url || '/playlist?list=' + album.id)
+            results.getAlbum(album.url || '/playlist?list=' + album.id)
           " />
       </template>
     </div>
@@ -206,7 +211,7 @@ onUpdated(() => {
           :author="single.subtitle"
           :name="single.title"
           :art="single.thumbnails[0].url"
-          @open-album="$emit('get-album', '/playlist?list=' + single.id)" />
+          @open-album="results.getAlbum('/playlist?list=' + single.id)" />
       </template>
     </div>
   </div>
@@ -235,10 +240,7 @@ onUpdated(() => {
           :name="artist.name || artist.title"
           :art="artist.thumbnail || artist.thumbnails[0].url"
           @open-album="
-            $emit(
-              'get-artist',
-              artist.id || artist.url.replace('/channel/', ''),
-            )
+            artist.getArtist(artist.id || artist.url.replace('/channel/', ''))
           " />
       </template>
     </div>

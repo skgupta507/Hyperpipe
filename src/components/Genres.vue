@@ -1,14 +1,16 @@
 <script setup>
 import { reactive, ref, onMounted, onUnmounted } from 'vue';
 
-import { getJsonHyp } from '../scripts/fetch.js';
-import { useRoute } from '../scripts/util.js';
+import { useResults } from '@/stores/results.js';
+
+import { getJsonHyp } from '@/scripts/fetch.js';
+import { useRoute } from '@/scripts/util.js';
 import { useT } from '@/scripts/i18n.js';
 
 import AlbumItem from './AlbumItem.vue';
 
-const props = defineProps(['id']);
-defineEmits(['get-album']);
+const props = defineProps(['id']),
+  { getAlbum } = useResults();
 
 const data = reactive({
     title: '',
@@ -68,7 +70,7 @@ onMounted(get);
             :author="i.subtitle"
             :art="i.thumbnails[0].url"
             @open-album="
-              $emit('get-album', '/playlist?list=' + i.id);
+              getAlbum('/playlist?list=' + i.id);
               nav.state.page = 'home';
             " />
         </template>

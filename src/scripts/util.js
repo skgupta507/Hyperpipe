@@ -26,3 +26,33 @@ export function useStore() {
     };
   }
 }
+
+export function useMetadata(url, urls, data) {
+  if ('mediaSession' in navigator) {
+    const now = urls.filter(u => u.url === url)[0];
+
+    let artwork = [],
+      album = undefined;
+
+    if (now) {
+      album = now.subtitle;
+
+      if (now.thumbnails) {
+        artwork = now.thumbnails.map(t => ({
+          sizes: t.width && t.height ? t.width + 'x' + t.height : '512x512',
+          src: t.url,
+          type: 'image/webp',
+        }));
+      } else artwork = [{ src: data.art, type: 'image/webp' }];
+
+      console.log(album, artwork);
+    }
+
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: data.title,
+      artist: data.artist,
+      album: album,
+      artwork: artwork,
+    });
+  }
+}

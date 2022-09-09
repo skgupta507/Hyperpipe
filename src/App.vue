@@ -17,8 +17,7 @@ import Artist from '@/components/Artist.vue';
 import Prefs from '@/components/Prefs.vue';
 
 /* Composables */
-import { getJsonHyp, getJsonPiped } from '@/scripts/fetch.js';
-import { useStore, useRoute } from '@/scripts/util.js';
+import { useStore } from '@/scripts/util.js';
 import { useT, useSetupLocale } from '@/scripts/i18n.js';
 import { useSetupDB, useUpdatePlaylist } from '@/scripts/db.js';
 
@@ -48,7 +47,7 @@ function parseUrl() {
 
   switch (base) {
     case '':
-      getExplore();
+      results.getExplore();
       break;
     case 'search':
       nav.state.search = loc[2];
@@ -56,15 +55,15 @@ function parseUrl() {
       break;
     case 'watch':
       player.state.status = 'circle';
-      getSong(loc[1] + location.search);
+      data.getSong(loc[1] + location.search);
       console.log(loc[1]);
       break;
     case 'playlist':
-      getAlbum(loc[1] + location.search);
+      results.getAlbum(loc[1] + location.search);
       console.log(loc[1]);
       break;
     case 'channel':
-      getArtist(loc[2]);
+      artist.getArtist(loc[2]);
       console.log(loc[2]);
       break;
     case 'explore':
@@ -83,212 +82,24 @@ function parseUrl() {
   }
 }
 
-function addSong(s) {
-  data.state.urls.push(s);
-
-  const index = data.state.urls.map(s => s.url).indexOf(data.state.url);
-
-  if (
-    (index == data.state.urls.length - 1 && player.state.time > 98) ||
-    data.state.urls.length == 1
-  ) {
-    playNext();
-  }
-
-  console.log(s, data.state.urls);
-}
-
 function playThis(t) {
   const i = data.state.urls.indexOf(t);
-  getSong(data.state.urls[i].url);
+  data.getSong(data.state.urls[i].url);
 }
 
 function playList(a) {
   data.state.urls = a;
-  getSong(data.state.urls[0].url);
+  data.getSong(data.state.urls[0].url);
 }
 
-function playNext(u) {
-  player.state.src = '';
-
-  const now = data.state.urls.filter(s => s.url === data.state.url)[0],
-    i = data.state.urls.indexOf(now),
-    next = data.state.urls[i + 1];
-
-  console.log('Index: ' + i);
-  console.log(data.state.url, data.state.urls, next);
-
-  if (data.state.urls.length > i && data.state.urls.length != 0 && next) {
-    getSong(next.url);
-  } else if (player.state.loop) {
-    console.log(data.state.url, data.state.urls[0]);
-    data.state.url = data.state.urls[0].url;
-    getSong(data.state.urls[0].url);
-  } else {
-    data.state.urls = [];
-  }
-}
-
-async function getExplore() {
-  const json = await getJsonHyp('/explore');
-
-  console.log(json);
-
-  results.setItem('songs', { items: json.trending });
-  results.setItem('albums', { items: json.albums_and_singles });
-}
-
-async function getSong(e) {
-  console.log(e);
-
-  const hash = new URLSearchParams(e.substring(e.indexOf('?'))).get('v'),
-    json = await getJsonPiped('/streams/' + hash);
-
-  console.log(json);
-
-  data.state.art = json.thumbnailUrl;
-  data.state.description = json.description;
-  data.state.title = json.title;
-  data.state.artist = json.uploader.replace(' - Topic', '');
-  data.state.artistUrl = json.uploaderUrl;
-  player.state.duration = json.duration;
-  player.state.hls = json.hls;
-  player.state.streams = json.audioStreams;
-  data.state.url = e;
-
-  await getNext(hash);
-}
-
-async function getAlbum(e) {
-  console.log('Album: ', e);
-
-  const hash = new URLSearchParams(e.substring(e.indexOf('?'))).get('list'),
-    json = await getJsonPiped('/playlists/' + hash);
-
-  console.log(json, json.relatedStreams);
-
-  results.resetItems();
-  results.setItem('songs', {
-    items: json.relatedStreams,
-    title: json.name,
-  });
-
-  useRoute(e);
-  nav.state.page = 'home';
-
-  artist.reset();
-}
-
-async function getArtist(e) {
-  console.log(e);
-
-  e = e.replace('/channel/', '');
-
-  const json = await getJsonHyp('/channel/' + e);
-
-  console.log(json);
-
-  results.resetItems();
-
-  for (let i in json.items) {
-    results.setItem(i, { items: json.items[i] });
-  }
-
-  console.log(results.items);
-
-  json.items = undefined;
-
-  artist.reset();
-  artist.set(json);
-
-  useRoute('/channel/' + e);
-  nav.state.page = 'home';
-}
-
-async function getNext(hash) {
-  if (
-    store.getItem('next') !== 'false' &&
-    (!data.state.urls ||
-      !data.state.urls.filter(s => s.url == data.state.url)[0] ||
-      data.state.urls.length == 1)
-  ) {
-    const json = await getJsonHyp('/next/' + hash);
-
-    data.state.lyrics = json.lyricsId;
-
-    data.state.url = json.songs[0]
-      ? '/watch?v=' + json.songs[0].id
-      : '/watch?v=' + hash;
-
-    console.log(json);
-
-    data.state.urls =
-      json.songs.length > 0
-        ? json.songs.map(i => ({
-            ...i,
-            ...{
-              url: '/watch?v=' + i.id,
-              id: undefined,
-            },
-          }))
-        : data.state.urls;
-
-    setMetadata();
-
-    console.log(data.state.urls);
-  } else {
-    if (data.state.urls.length == 0) {
-      data.state.urls = [
-        {
-          title: data.state.title,
-          url: data.state.url,
-        },
-      ];
-    }
-
-    setMetadata();
-  }
-}
-
-function setMetadata() {
-  if ('mediaSession' in navigator) {
-    const now = data.state.urls.filter(u => u.url === data.state.url)[0];
-
-    let artwork = [],
-      album = undefined;
-
-    if (now) {
-      album = now.subtitle;
-
-      if (now.thumbnails) {
-        artwork = now.thumbnails.map(t => {
-          return {
-            sizes: t.width + 'x' + t.height,
-            src: t.url,
-            type: 'image/webp',
-          };
-        });
-      } else {
-        artwork = [{ src: data.state.art, type: 'image/webp' }];
-      }
-
-      console.log(album, artwork);
-    }
-
-    navigator.mediaSession.metadata = new MediaMetadata({
-      title: data.state.title,
-      artist: data.state.artist,
-      album: album,
-      artwork: artwork,
-    });
-  }
-}
-
+/* Lifestyle hooks */
 onBeforeMount(() => {
+  /* Set the default theme if set */
   if (store.theme) {
     document.body.setAttribute('data-theme', store.theme);
   }
 
+  /* Set the default locale if set */
   if (store.locale) {
     useSetupLocale(store.locale);
   }
@@ -310,13 +121,13 @@ onMounted(() => {
     navigator.mediaSession.setActionHandler('previoustrack', () => {
       if (data.state.urls.length > 2) {
         const i = data.state.urls.map(s => s.url).indexOf(data.state.url);
-        getSong(data.state.urls[i - 1].url);
+        data.getSong(data.state.urls[i - 1].url);
       }
     });
     navigator.mediaSession.setActionHandler('nexttrack', () => {
       if (data.state.urls.length > 2) {
         const i = data.state.urls.map(s => s.url).indexOf(data.state.url);
-        getSong(data.state.urls[i + 1].url);
+        data.getSong(data.state.urls[i + 1].url);
       }
     });
   }
@@ -331,10 +142,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <NavBar @explore="getExplore" />
+  <NavBar @explore="results.getExplore" />
 
   <template v-if="artist.state.title && nav.state.page == 'home'">
-    <Artist @playall="getAlbum" />
+    <Artist />
   </template>
 
   <header v-if="!artist.state.title">
@@ -345,31 +156,23 @@ onMounted(() => {
       :src="data.state.art" />
 
     <div class="wrapper">
-      <NowPlaying @get-artist="getArtist" />
+      <NowPlaying @get-artist="artist.getArtist" />
     </div>
   </header>
 
   <main class="placeholder" :data-placeholder="useT('info.search')">
     <KeepAlive>
-      <Search
-        v-if="nav.state.page == 'home'"
-        @get-album="getAlbum"
-        @get-artist="getArtist"
-        @play-urls="playList"
-        @add-song="addSong" />
+      <Search v-if="nav.state.page == 'home'" @play-urls="playList" />
     </KeepAlive>
 
     <KeepAlive>
-      <Genres
-        v-if="nav.state.page == 'explore'"
-        :id="genreid"
-        @get-album="getAlbum" />
+      <Genres v-if="nav.state.page == 'explore'" :id="genreid" />
     </KeepAlive>
 
     <NewPlaylist
       v-if="nav.state.page == 'library'"
       @play-urls="playList"
-      @open-playlist="getAlbum" />
+      @open-playlist="results.getAlbum" />
 
     <Prefs v-if="nav.state.page == 'prefs'" />
   </main>
@@ -388,7 +191,7 @@ onMounted(() => {
 
   <StatusBar />
 
-  <Player @ended="playNext" />
+  <Player />
 </template>
 
 <style>

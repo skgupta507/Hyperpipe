@@ -227,6 +227,11 @@ onMounted(() => {
       target="_blank"
       rel="noreferrer noopener"
       href="https://codeberg.org/Hyperpipe/Hyperpipe" />
+    <a
+      class="bi bi-eye"
+      target="_blank"
+      rel="noreferrer noopener"
+      href="https://codeberg.org/Hyperpipe/Hyperpipe/wiki/Privacy" />
   </footer>
 </template>
 
@@ -319,6 +324,12 @@ footer {
 }
 footer .bi:before {
   font-size: 1.75rem;
+  vertical-align: -0.45rem;
+}
+footer .bi {
+  padding: 0.5rem;
+  margin: 0 0.25rem;
+  border-radius: 0.25rem;
 }
 @media (max-width: 500px) {
   select,

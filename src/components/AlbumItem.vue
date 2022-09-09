@@ -1,5 +1,5 @@
 <script setup>
-import { useRand } from '../scripts/colors.js';
+import { useRand } from '@/scripts/colors.js';
 
 const rand = useRand();
 
@@ -12,7 +12,7 @@ const props = defineProps({
   grad: String,
   art: {
     type: String,
-    default: 'https://upload.wikimedia.org/wikipedia/commons/c/ca/1x1.png',
+    default: '/1x1.png',
   },
 });
 
