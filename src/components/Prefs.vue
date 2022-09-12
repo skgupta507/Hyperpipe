@@ -2,10 +2,11 @@
 import { ref, onMounted } from 'vue';
 
 import { getJson } from '@/scripts/fetch.js';
-import { SUPPORTED_LOCALES, useT, useSetupLocale } from '@/scripts/i18n.js';
+import { SUPPORTED_LOCALES, useI18n } from '@/stores/misc.js';
 import { useStore } from '@/scripts/util.js';
 
-const instances = ref([]),
+const { t, setupLocale } = useI18n(),
+  instances = ref([]),
   hypInstances = ref([]),
   next = ref(false);
 
@@ -44,7 +45,7 @@ function setTheme(theme) {
 }
 
 function setLang(locale) {
-  useSetupLocale(locale);
+  setupLocale(locale);
   setStore('locale', locale);
 }
 
@@ -58,7 +59,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <h2>{{ useT('pref.theme') }}</h2>
+  <h2>{{ t('pref.theme') }}</h2>
   <select
     id="pref-theme"
     :value="getTheme()"
@@ -79,7 +80,7 @@ onMounted(() => {
     <option v-for="i in SUPPORTED_LOCALES" :value="i.code">{{ i.name }}</option>
   </select>
 
-  <h2>{{ useT('pref.player') }}</h2>
+  <h2>{{ t('pref.player') }}</h2>
 
   <div class="left">
     <input
@@ -88,11 +89,11 @@ onMounted(() => {
       id="pref-chk-next"
       @change="setStore('next', $event.target.checked)"
       v-model="next" />
-    <label for="pref-chk-next">{{ useT('pref.auto_queue') }}</label>
+    <label for="pref-chk-next">{{ t('pref.auto_queue') }}</label>
   </div>
 
   <div class="left">
-    <label for="pref-codec">{{ useT('pref.codec') }}</label>
+    <label for="pref-codec">{{ t('pref.codec') }}</label>
     <select
       id="pref-codec"
       name="pref-codec"
@@ -106,20 +107,20 @@ onMounted(() => {
   </div>
 
   <div class="left">
-    <label for="pref-quality">{{ useT('pref.quality') }}</label>
+    <label for="pref-quality">{{ t('pref.quality') }}</label>
     <select
       id="pref-quality"
       name="pref-quality"
       :value="getStore('quality') || 'auto'"
       @change="setStore('quality', $event.target.value)">
-      <option value="auto">{{ useT('pref.auto') }}</option>
-      <option value="best">{{ useT('pref.best') }}</option>
-      <option value="worst">{{ useT('pref.worst') }}</option>
+      <option value="auto">{{ t('pref.auto') }}</option>
+      <option value="best">{{ t('pref.best') }}</option>
+      <option value="worst">{{ t('pref.worst') }}</option>
     </select>
   </div>
 
   <div class="left">
-    <label for="pref-volume">{{ useT('pref.volume') }}</label>
+    <label for="pref-volume">{{ t('pref.volume') }}</label>
     <input
       type="number"
       name="pref-volume"
@@ -130,7 +131,7 @@ onMounted(() => {
       @change="setStore('vol', $event.target.value)" />
   </div>
 
-  <h2>{{ useT('pref.instances.hyp') }}</h2>
+  <h2>{{ t('instances.hyp') }}</h2>
 
   <select
     v-if="hypInstances"
@@ -148,8 +149,8 @@ onMounted(() => {
     <table>
       <thead>
         <tr>
-          <th>{{ useT('pref.instances.name') }}</th>
-          <th>{{ useT('pref.instances.loc') }}</th>
+          <th>{{ t('instances.name') }}</th>
+          <th>{{ t('instances.loc') }}</th>
         </tr>
       </thead>
       <tbody v-for="i in hypInstances">
@@ -165,7 +166,7 @@ onMounted(() => {
     </table>
   </div>
 
-  <h2>{{ useT('pref.instances.piped') }}</h2>
+  <h2>{{ t('instances.piped') }}</h2>
   <select
     v-if="instances"
     :value="getStore('pipedapi') || 'pipedapi.kavin.rocks'"
@@ -178,7 +179,7 @@ onMounted(() => {
     </option>
   </select>
 
-  <h3>{{ useT('pref.instances.auth') }}</h3>
+  <h3>{{ t('instances.auth') }}</h3>
 
   <select
     v-if="instances"
@@ -196,11 +197,11 @@ onMounted(() => {
     <table>
       <thead>
         <tr>
-          <th>{{ useT('pref.instances.name') }}</th>
-          <th>{{ useT('pref.instances.loc') }}</th>
-          <th>{{ useT('pref.instances.cdn') }}</th>
-          <th>{{ useT('pref.instances.up_to_date') }}</th>
-          <th>{{ useT('pref.instances.version') }}</th>
+          <th>{{ t('instances.name') }}</th>
+          <th>{{ t('instances.loc') }}</th>
+          <th>{{ t('instances.cdn') }}</th>
+          <th>{{ t('instances.up_to_date') }}</th>
+          <th>{{ t('instances.version') }}</th>
         </tr>
       </thead>
       <tbody v-for="i in instances">

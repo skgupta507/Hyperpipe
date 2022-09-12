@@ -8,13 +8,13 @@ import AlbumItem from './AlbumItem.vue';
 import { getJsonPiped, getPipedQuery } from '@/scripts/fetch.js';
 import { useRoute } from '@/scripts/util.js';
 import { useCreatePlaylist } from '@/scripts/db.js';
-import { useT } from '@/scripts/i18n.js';
 
 import { useResults, useArtist } from '@/stores/results.js';
 import { useData } from '@/stores/player.js';
-import { useNav } from '@/stores/misc.js';
+import { useNav, useI18n } from '@/stores/misc.js';
 
-const results = useResults(),
+const { t } = useI18n(),
+  results = useResults(),
   data = useData(),
   nav = useNav(),
   artist = useArtist();
@@ -137,14 +137,14 @@ onUpdated(() => {
         getSearch(nav.state.search);
       "
       :data-active="f == filter">
-      {{ useT('title.' + f.split('_')[1]) }}
+      {{ t('title.' + f.split('_')[1]) }}
     </button>
   </div>
 
   <div
     v-if="results.items.songs && results.items.songs.items[0]"
     class="search-songs">
-    <h2>{{ useT('title.songs') }}</h2>
+    <h2>{{ t('title.songs') }}</h2>
     <div class="grid">
       <template v-for="song in results.items.songs.items">
         <SongItem
@@ -180,14 +180,14 @@ onUpdated(() => {
       "
       class="more"
       :href="'/playlist?list=' + artist.state.playlistId"
-      >{{ useT('info.see_all') }}</a
+      >{{ t('info.see_all') }}</a
     >
   </div>
 
   <div
     v-if="results.items.albums && results.items.albums.items[0]"
     class="search-albums">
-    <h2>{{ useT('title.albums') }}</h2>
+    <h2>{{ t('title.albums') }}</h2>
     <div class="grid-3">
       <template v-for="album in results.items.albums.items">
         <AlbumItem
@@ -204,7 +204,7 @@ onUpdated(() => {
   <div
     v-if="results.items.singles && results.items.singles.items[0]"
     class="search-albums">
-    <h2>{{ useT('title.singles') }}</h2>
+    <h2>{{ t('title.singles') }}</h2>
     <div class="grid-3">
       <template v-for="single in results.items.singles.items">
         <AlbumItem
@@ -225,9 +225,7 @@ onUpdated(() => {
     class="search-artists">
     <h2>
       {{
-        results.items.artists
-          ? useT('title.artists')
-          : useT('title.similar_artists')
+        results.items.artists ? t('title.artists') : t('title.similar_artists')
       }}
     </h2>
     <div class="grid-3 circle">

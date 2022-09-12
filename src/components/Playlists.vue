@@ -1,8 +1,9 @@
 <script setup>
 import { useData, usePlayer } from '@/stores/player.js';
-import { useT } from '@/scripts/i18n.js';
+import { useI18n } from '@/stores/misc.js';
 
-const player = usePlayer(),
+const { t } = useI18n(),
+  player = usePlayer(),
   data = useData();
 
 defineEmits(['playthis']);
@@ -10,7 +11,7 @@ defineEmits(['playthis']);
 
 <template>
   <Transition name="fade">
-    <div class="pl-modal placeholder" :data-placeholder="useT('playlist.add')">
+    <div class="pl-modal placeholder" :data-placeholder="t('playlist.add')">
       <template v-for="plurl in data.state.urls">
         <div class="pl-item" @click="$emit('playthis', plurl)">
           <span v-if="data.state.url == plurl.url" class="bars-wrap">

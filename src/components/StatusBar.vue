@@ -6,11 +6,12 @@ import Modal from './Modal.vue';
 import { useStore } from '@/scripts/util.js';
 import { useListPlaylists, useUpdatePlaylist } from '@/scripts/db.js';
 import { getAuthPlaylists, getJsonAuth } from '@/scripts/fetch.js';
-import { useT } from '@/scripts/i18n.js';
 
 import { useData, usePlayer } from '@/stores/player.js';
+import { useI18n } from '@/stores/misc.js';
 
-const data = useData(),
+const { t } = useI18n(),
+  data = useData(),
   player = usePlayer(),
   store = useStore();
 
@@ -108,7 +109,7 @@ function Save() {
         </template>
         <template #buttons>
           <button aria-label="Cancel" @click="showme.pl = false">
-            {{ useT('action.cancel') }}
+            {{ t('action.cancel') }}
           </button>
           <button
             aria-label="Add Song"
@@ -116,7 +117,7 @@ function Save() {
               Save();
               showme.pl = false;
             ">
-            {{ useT('action.add') }}
+            {{ t('action.add') }}
           </button>
         </template>
       </Modal>

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-import { useRand } from '../scripts/colors.js';
+import { useRand } from '@/scripts/colors.js';
 
 import { useArtist } from '@/stores/results.js';
 import { useData, usePlayer } from '@/stores/player.js';

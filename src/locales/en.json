@@ -41,25 +41,25 @@
     "auto": "auto",
     "best": "best",
     "worst": "worst",
-    "volume": "Default Volume",
-    "instances": {
-      "hyp": "Hyperpipe Instance",
-      "piped": "Piped Instance",
-      "auth": "Authentication Instance",
-      "name": "Name",
-      "loc": "Locations",
-      "cdn": "CDN",
-      "up_to_date": "Up to Date",
-      "version": "Version"
-    }
+    "volume": "Default Volume"
   },
   "info": {
     "see_all": "See All",
     "search": "Start Searching",
-    "no_info": "No Information Available",
-    "lyrics": {
-      "load": "Fetching Lyrics",
-      "void": "No Lyrics"
-    }
+    "no_info": "No Information Available"
+  },
+  "instances": {
+    "hyp": "Hyperpipe Instance",
+    "piped": "Piped Instance",
+    "auth": "Authentication Instance",
+    "name": "Name",
+    "loc": "Locations",
+    "cdn": "CDN",
+    "up_to_date": "Up to Date",
+    "version": "Version"
+  },
+  "lyrics": {
+    "load": "Fetching Lyrics",
+    "void": "No Lyrics"
   }
 }

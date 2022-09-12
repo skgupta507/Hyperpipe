@@ -18,15 +18,15 @@ import Prefs from '@/components/Prefs.vue';
 
 /* Composables */
 import { useStore } from '@/scripts/util.js';
-import { useT, useSetupLocale } from '@/scripts/i18n.js';
 import { useSetupDB, useUpdatePlaylist } from '@/scripts/db.js';
 
 /* Stores */
 import { useData, usePlayer } from '@/stores/player.js';
 import { useResults, useArtist } from '@/stores/results.js';
-import { useNav } from '@/stores/misc.js';
+import { useNav, useI18n } from '@/stores/misc.js';
 
-const store = useStore(),
+const { t, setupLocale } = useI18n(),
+  store = useStore(),
   data = useData(),
   player = usePlayer(),
   results = useResults(),
@@ -101,7 +101,7 @@ onBeforeMount(() => {
 
   /* Set the default locale if set */
   if (store.locale) {
-    useSetupLocale(store.locale);
+    setupLocale(store.locale);
   }
 });
 
@@ -160,7 +160,7 @@ onMounted(() => {
     </div>
   </header>
 
-  <main class="placeholder" :data-placeholder="useT('info.search')">
+  <main class="placeholder" :data-placeholder="t('info.search')">
     <KeepAlive>
       <Search v-if="nav.state.page == 'home'" @play-urls="playList" />
     </KeepAlive>

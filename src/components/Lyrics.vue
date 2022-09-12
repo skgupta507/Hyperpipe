@@ -3,11 +3,12 @@ import { ref, watch } from 'vue';
 
 import { getJsonHyp } from '@/scripts/fetch.js';
 import { useData } from '@/stores/player.js';
-import { useT } from '@/scripts/i18n.js';
+import { useI18n } from '@/stores/misc.js';
 
 import TextModal from './TextModal.vue';
 
-const data = useData(),
+const { t } = useI18n(),
+  data = useData(),
   text = ref(''),
   source = ref(''),
   status = ref(false);
@@ -51,8 +52,8 @@ watch(
         class="placeholder"
         :data-placeholder="
           data.state.urls[0]?.url && !status
-            ? useT('info.lyrics.load')
-            : useT('info.lyrics.void')
+            ? t('lyrics.load')
+            : t('lyrics.void')
         "
         >{{ text }}</pre
       >

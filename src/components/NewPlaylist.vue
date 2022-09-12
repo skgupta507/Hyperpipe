@@ -7,7 +7,7 @@ import Modal from './Modal.vue';
 import { useRand } from '@/scripts/colors.js';
 import { useStore } from '@/scripts/util.js';
 import { getJsonAuth, getAuthPlaylists } from '@/scripts/fetch.js';
-import { useT } from '@/scripts/i18n.js';
+import { useI18n } from '@/stores/misc.js';
 
 import {
   useListPlaylists,
@@ -16,7 +16,8 @@ import {
   useUpdatePlaylist,
 } from '../scripts/db.js';
 
-const store = useStore(),
+const { t } = useI18n(),
+  store = useStore(),
   auth = ref(!!store.auth);
 
 const emit = defineEmits(['play-urls', 'open-playlist']),
@@ -202,7 +203,7 @@ onMounted(async () => {
     <Modal
       n="2"
       :display="show.new"
-      :title="useT('playlist.create')"
+      :title="t('playlist.create')"
       @show="
         e => {
           show.new = e;
@@ -211,10 +212,10 @@ onMounted(async () => {
       <template #content>
         <div v-if="auth" class="tabs">
           <button :data-active="!user.create" @click="user.create = false">
-            {{ useT('title.local') }}
+            {{ t('title.local') }}
           </button>
           <button :data-active="user.create" @click="user.create = true">
-            {{ useT('title.remote') }}
+            {{ t('title.remote') }}
           </button>
         </div>
 
@@ -225,9 +226,9 @@ onMounted(async () => {
           v-model="text" />
       </template>
       <template #buttons>
-        <button @click="show.new = false">{{ useT('action.cancel') }}</button>
+        <button @click="show.new = false">{{ t('action.cancel') }}</button>
         <button @click="user.create ? createPlaylist() : Create()">
-          {{ useT('action.create') }}
+          {{ t('action.create') }}
         </button>
       </template>
     </Modal>
@@ -235,7 +236,7 @@ onMounted(async () => {
     <Modal
       :n="sync.type == 'send' ? 2 : 1"
       :display="show.sync"
-      :title="useT('playlist.sync')"
+      :title="t('playlist.sync')"
       @show="
         e => {
           show.sync = e;
@@ -246,10 +247,10 @@ onMounted(async () => {
           <button
             :data-active="sync.type == 'send'"
             @click="sync.type = 'send'">
-            {{ useT('action.send') }}
+            {{ t('action.send') }}
           </button>
           <button :data-active="sync.type == 'rec'" @click="sync.type = 'rec'">
-            {{ useT('action.receive') }}
+            {{ t('action.receive') }}
           </button>
         </div>
 
@@ -267,11 +268,9 @@ onMounted(async () => {
       </template>
 
       <template #buttons>
-        <button @click="show.sync = false">{{ useT('action.cancel') }}</button>
+        <button @click="show.sync = false">{{ t('action.cancel') }}</button>
         <button v-if="sync.type == 'send'" @click="Send">
-          {{
-            sync.type == 'send' ? useT('action.send') : useT('action.recieve')
-          }}
+          {{ sync.type == 'send' ? t('action.send') : t('action.recieve') }}
         </button>
       </template>
     </Modal>
@@ -284,7 +283,7 @@ onMounted(async () => {
         @click="show.sync = true"></div>
     </div>
 
-    <h2 v-if="list.length > 0">{{ useT('playlist.local') }}</h2>
+    <h2 v-if="list.length > 0">{{ t('playlist.local') }}</h2>
 
     <div class="grid-3">
       <template v-for="i in list">
@@ -296,7 +295,7 @@ onMounted(async () => {
       </template>
     </div>
 
-    <h2 class="login-h">{{ useT('playlist.remote') }}</h2>
+    <h2 class="login-h">{{ t('playlist.remote') }}</h2>
 
     <div v-if="auth" class="grid-3">
       <template v-for="i in user.playlists">
@@ -321,7 +320,7 @@ onMounted(async () => {
         autocomplete="password"
         @change="user.password = $event.target.value"
         required />
-      <button @click="Login" class="textbox">{{ useT('title.login') }}</button>
+      <button @click="Login" class="textbox">{{ t('title.login') }}</button>
 
       <p>
         Don't have an account? register on
