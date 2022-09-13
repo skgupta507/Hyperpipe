@@ -54,7 +54,11 @@ defineEmits(['playthis']);
   --ico: '\f64d';
 }
 .pl-item {
-  padding: 1rem;
+  display: flex;
+  align-items: center;
+  grid-column-gap: 1rem;
+  padding: 0.4rem;
+  padding-right: 1rem;
   margin: 0.125rem;
   border-radius: 0.25rem;
   background: var(--color-background);
@@ -63,16 +67,15 @@ defineEmits(['playthis']);
   background: var(--color-background-soft);
 }
 .pl-main {
-  padding-left: 2.75rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .pl-img {
-  top: 0.45rem;
-  left: 0.45rem;
-  position: absolute;
+  flex-shrink: 0;
   background-image: var(--src);
   height: 2.75rem;
   width: 2.75rem;
-  border-radius: 0.125rem;
   background-size: contain;
   background-repeat: no-repeat;
 }
