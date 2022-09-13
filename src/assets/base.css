@@ -285,19 +285,17 @@ img {
 }
 
 .bars-wrap {
-  left: 0.75rem;
-  position: absolute;
-  height: 1.5rem;
-  width: 2rem;
-  transform: rotateZ(180deg);
+  flex-shrink: 0;
+  display: flex;
+  grid-column-gap: 0.15rem;
+  height: 2.75rem;
+  width: 2.75rem;
+  transform: rotateZ(180deg) scale(0.65);
 }
 .bars {
-  position: relative;
   height: 15%;
-  width: calc(calc(100% / 3) - 0.2rem);
-  margin-left: 0.1rem;
+  width: 100%;
   background: var(--color-foreground);
-  float: left;
   animation: heightc 1s ease infinite;
 }
 .bars:first-child {
@@ -305,9 +303,6 @@ img {
 }
 .bars:nth-child(2) {
   animation-delay: 0.5s;
-}
-.bars:last-child {
-  margin-left: none;
 }
 
 /* Animations */
