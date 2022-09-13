@@ -10,7 +10,15 @@ export const SUPPORTED_LOCALES = [
   },
   {
     code: 'fr',
-    name: 'French',
+    name: 'Français',
+  },
+  {
+    code: 'ja',
+    name: '日本語',
+  },
+  {
+    code: 'ko',
+    name: '한국어',
   },
 ];
 
