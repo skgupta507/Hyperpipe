@@ -53,6 +53,18 @@ Please see [hyperpipe.codeberg.page](https://hyperpipe.codeberg.page)
 
 - [Libredirect](https://codeberg.org/LibRedirect/libredirect) -> For Redirecting YouTube Music links to Hyperpipe.
 
+## Translation
+
+### Weblate
+
+[![Translation Status](https://hosted.weblate.org/widgets/hyperpipe/-/open-graph.png)](https://hosted.weblate.org/engage/hyperpipe/)
+
+![Translation Status](https://hosted.weblate.org/widgets/hyperpipe/-/multi-auto.svg)
+
+### Codeberg
+
+[See History](https://codeberg.org/Hyperpipe/Hyperpipe/pulls?q=&type=all&labels=69451)
+
 ## LICENSE
 
 ### AGPL-3.0-or-later

@@ -5,12 +5,20 @@ import en from '@/locales/en.json';
 
 export const SUPPORTED_LOCALES = [
   {
+    code: 'de',
+    name: 'Deutsch',
+  },
+  {
     code: 'en',
     name: 'English',
   },
   {
     code: 'fr',
     name: 'Français',
+  },
+  {
+    code: 'it',
+    name: 'Italiano',
   },
   {
     code: 'ja',
