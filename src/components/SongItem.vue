@@ -113,7 +113,7 @@ onMounted(() => {
 span.content {
   padding: 1rem;
   flex-direction: column;
-  align-items: initial;
+  align-items: flex-start;
   flex-basis: calc(calc(100% - 120px) - 4rem);
 }
 span.bi-three-dots-vertical {
