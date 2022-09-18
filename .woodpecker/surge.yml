@@ -1,19 +1,12 @@
 pipeline:
-  build:
+  deploy:
     image: node:alpine
     commands:
       - npm install
       - npm run build
-      - npm i -g surge
-    when:
-      branch: main
-      event: push
-      
-  deploy:
-    image: alpine
-    commands:
+      - npm install surge
       - cp dist/index.html dist/200.html
-      - surge ./dist hyperpipe.surge.sh
+      - npx surge ./dist hyperpipe.surge.sh
     secrets: [ surge_login, surge_token ]
     when:
       branch: main
