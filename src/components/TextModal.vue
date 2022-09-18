@@ -26,6 +26,7 @@
   font-size: 1.25rem;
   letter-spacing: 0.125rem;
   white-space: pre-wrap;
+  word-break: break-word;
 }
 
 :deep(div) {
