@@ -149,13 +149,12 @@ onMounted(() => {
   </template>
 
   <header v-if="!artist.state.title">
-    <img
-      v-if="data.state.art"
-      class="art"
-      loading="lazy"
-      :src="data.state.art" />
-
     <div class="wrapper">
+      <img
+        v-if="data.state.art"
+        class="art"
+        loading="lazy"
+        :src="data.state.art" />
       <NowPlaying @get-artist="artist.getArtist" />
     </div>
   </header>
@@ -215,9 +214,17 @@ header {
   line-height: 1.5;
   padding-bottom: 2.5rem;
 }
+header .wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  grid-gap: 2rem;
+  padding: 1.5rem;
+  background-color: var(--color-background-soft);
+  border-radius: 0.5rem;
+}
 .art {
   display: block;
-  margin: 0 auto 2rem;
   height: 175px;
   width: 175px;
 }
@@ -261,19 +268,8 @@ a,
 }
 
 @media (min-width: 1024px) {
-  header {
-    margin: auto;
-    display: flex;
-    place-items: center;
-  }
-
   header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-  .art {
-    margin: 0 2rem 0 0;
+    flex-direction: row;
   }
 }
 </style>
