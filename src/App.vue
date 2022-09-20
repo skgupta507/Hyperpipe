@@ -149,7 +149,7 @@ onMounted(() => {
   </template>
 
   <header v-if="!artist.state.title">
-    <div class="wrapper">
+    <div v-if="data.state.title" class="wrapper">
       <img
         v-if="data.state.art"
         class="art"
