@@ -56,9 +56,9 @@ defineEmits(['playthis']);
 .pl-item {
   display: flex;
   align-items: center;
-  grid-column-gap: 1rem;
+  min-height: 3.55rem;
+  grid-column-gap: 0.4rem;
   padding: 0.4rem;
-  padding-right: 1rem;
   margin: 0.125rem;
   border-radius: 0.25rem;
   background: var(--color-background);

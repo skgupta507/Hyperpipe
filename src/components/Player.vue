@@ -83,33 +83,23 @@ async function Stream() {
     window.audioPlayer
       .load(url, 0, mime)
       .then(() => {
+        window.audioPlayer.configure('abr.enabled', true);
+
         if (quality && quality != 'auto') {
           window.audioPlayer.configure('abr.enabled', false);
 
-          const tracks = window.audioPlayer.getVariantTracks();
+          const tracks = window.audioPlayer.getVariantTracks(),
+            bandwidths = tracks.map(i => i.bandwidth);
 
           let sel;
 
-          if (quality == 'best') {
-            let best = { bandwidth: 0 };
-
-            tracks.forEach(track => {
-              if (track.bandwidth > best.bandwidth) best = track;
-            });
-
-            sel = best;
-          } else if (quality == 'worst') {
-            let worst = { bandwidth: 10 ** 8 };
-
-            tracks.forEach(track => {
-              if (track.bandwidth < worst.bandwidth) worst = track;
-            });
-
-            sel = worst;
-          }
+          if (quality == 'best') sel = Math.max(...bandwidths);
+          else if (quality == 'worst') sel = Math.min(...bandwidths);
 
           if (sel) {
-            window.audioPlayer.selectVariantTrack(sel);
+            window.audioPlayer.selectVariantTrack(
+              tracks[bandwidths.indexOf(sel)],
+            );
           }
         }
       })

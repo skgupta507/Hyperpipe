@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 
 import { getJson } from '@/scripts/fetch.js';
 import { SUPPORTED_LOCALES, useI18n } from '@/stores/misc.js';
@@ -52,6 +52,22 @@ function setLang(locale) {
 function getStoreBool(key, ele) {
   ele.value = getStore(key) || true;
 }
+
+const verifyApi = computed(() =>
+    hypInstances.value
+      .map(i => i.api_url.replace('https://', '').replace('http://'))
+      .includes(getStore('api') || 'hyperpipeapi.onrender.com'),
+  ),
+  verifyPipedApi = computed(() =>
+    instances.value
+      .map(i => i.api_url.replace('https://', ''))
+      .includes(getStore('pipedapi') || 'pipedapi.kavin.rocks'),
+  ),
+  verifyAuthApi = computed(() =>
+    instances.value
+      .map(i => i.api_url.replace('https://', ''))
+      .includes(getStore('authapi') || 'pipedapi.kavin.rocks'),
+  );
 
 onMounted(() => {
   getStoreBool('next', next);
@@ -143,6 +159,10 @@ onMounted(() => {
       :value="i.api_url.replace('https://', '').replace('http://', '')">
       {{ i.name }}
     </option>
+
+    <option v-if="!verifyApi">
+      {{ getStore('api') || 'hyperpipeapi.onrender.com' }}
+    </option>
   </select>
 
   <div class="table-wrap">
@@ -174,8 +194,12 @@ onMounted(() => {
     <option
       v-for="i in instances"
       :key="i.name"
-      :value="i.api_url.replace('https://', '').replace('http://', '')">
+      :value="i.api_url.replace('https://', '')">
       {{ i.name.replace('Official', 'Default') }}
+    </option>
+
+    <option v-if="!verifyPipedApi">
+      {{ getStore('pipedapi') || 'pipedapi.kavin.rocks' }}
     </option>
   </select>
 
@@ -188,8 +212,12 @@ onMounted(() => {
     <option
       v-for="i in instances"
       :key="i.name"
-      :value="i.api_url.replace('https://', '').replace('http://', '')">
+      :value="i.api_url.replace('https://', '')">
       {{ i.name.replace('Official', 'Default') }}
+    </option>
+
+    <option v-if="!verifyAuthApi">
+      {{ getStore('authapi') || 'pipedapi.kavin.rocks' }}
     </option>
   </select>
 
