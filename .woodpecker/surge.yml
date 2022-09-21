@@ -10,7 +10,7 @@ pipeline:
   deploy:
     image: node:alpine
     commands:
-      - npm install surge && npm audit fix
+      - npm install surge
       - cp dist/index.html dist/200.html
       - npx surge ./dist hyperpipe.surge.sh
     secrets: [surge_login, surge_token]
