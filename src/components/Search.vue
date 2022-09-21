@@ -230,15 +230,15 @@ onUpdated(() => {
     </h2>
     <div class="grid-3 circle">
       <template
-        v-for="artist in results.items.artists
+        v-for="a in results.items.artists
           ? results.items.artists.items
           : results.items.recommendedArtists.items">
         <AlbumItem
-          :author="artist.subtitle"
-          :name="artist.name || artist.title"
-          :art="artist.thumbnail || artist.thumbnails[0].url"
+          :author="a.subtitle"
+          :name="a.name || a.title"
+          :art="a.thumbnail || a.thumbnails[0].url"
           @open-album="
-            artist.getArtist(artist.id || artist.url.replace('/channel/', ''))
+            artist.getArtist(a.id || a.url.replace('/channel/', ''))
           " />
       </template>
     </div>
