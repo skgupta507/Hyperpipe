@@ -144,7 +144,7 @@ onUpdated(() => {
   <div
     v-if="results.items.songs && results.items.songs.items[0]"
     class="search-songs">
-    <h2>{{ t('title.songs') }}</h2>
+    <h2 v-if="!isSearch">{{ t('title.songs') }}</h2>
     <div class="grid">
       <template v-for="song in results.items.songs.items">
         <SongItem
@@ -187,7 +187,7 @@ onUpdated(() => {
   <div
     v-if="results.items.albums && results.items.albums.items[0]"
     class="search-albums">
-    <h2>{{ t('title.albums') }}</h2>
+    <h2 v-if="!isSearch">{{ t('title.albums') }}</h2>
     <div class="grid-3">
       <template v-for="album in results.items.albums.items">
         <AlbumItem
@@ -223,7 +223,7 @@ onUpdated(() => {
       (results.items.artists && results.items.artists.items[0])
     "
     class="search-artists">
-    <h2>
+    <h2 v-if="!isSearch">
       {{
         results.items.artists ? t('title.artists') : t('title.similar_artists')
       }}
