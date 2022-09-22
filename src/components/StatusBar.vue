@@ -205,9 +205,14 @@ function Save() {
             id="loop-btn"
             title="Loop"
             aria-label="Loop"
-            class="bi bi-infinity"
-            :data-active="player.state.loop"
-            @click="player.toggle('loop')"></button>
+            class="bi"
+            :class="player.state.loop < 2 ? 'bi-repeat' : 'bi-repeat-1'"
+            :data-active="player.state.loop > 0"
+            @click="
+              player.state.loop < 2
+                ? player.state.loop++
+                : (player.state.loop = 0)
+            "></button>
         </div>
       </Transition>
     </div>
@@ -237,11 +242,10 @@ function Save() {
   font-size: 2rem;
   animation: blink infinite ease 1s;
 }
-.bi-volume-up {
+.bi-volume-up,
+.bi-repeat,
+.bi-repeat-1 {
   font-size: 1.5rem !important;
-}
-.bi-infinity {
-  font-size: 1.75rem !important;
 }
 .ml-auto {
   margin-left: auto;

@@ -97,21 +97,21 @@ export const useData = defineStore('data', () => {
 
   function playNext(u) {
     const now = state.urls.filter(s => s.url === state.url)[0],
-      i = state.urls.indexOf(now),
-      next = state.urls[i + 1];
+      i = state.urls.indexOf(now);
 
-    console.log('Index: ' + i);
-    console.log(state.url, state.urls, next);
-
-    if (state.urls.length > i && state.urls.length != 0 && next) {
-      getSong(next.url);
-    } else if (player.state.loop) {
+    if (player.state.loop == 2) getSong(state.url);
+    else if (
+      state.urls.length > i &&
+      state.urls.length != 0 &&
+      state.urls[i + 1]
+    )
+      getSong(state.urls[i + 1].url);
+    else if (player.state.loop == 1) {
       console.log(state.url, state.urls[0]);
+
       state.url = state.urls[0].url;
       getSong(state.urls[0].url);
-    } else {
-      state.urls = [];
-    }
+    } else state.urls = [];
   }
 
   return { state, getSong, playNext };
@@ -119,7 +119,7 @@ export const useData = defineStore('data', () => {
 
 export const usePlayer = defineStore('player', () => {
   const state = reactive({
-    loop: false,
+    loop: 0,
     play: false,
     status: 'play',
     hls: '',
