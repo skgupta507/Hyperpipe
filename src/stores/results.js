@@ -8,7 +8,8 @@ import { useRoute } from '@/scripts/util.js';
 
 export const useResults = defineStore('results', () => {
   const items = ref({}),
-    search = ref('');
+    search = ref(''),
+    playlistId = ref('');
 
   function setItem(key, val) {
     items.value[key] = val;
@@ -20,13 +21,14 @@ export const useResults = defineStore('results', () => {
     for (let i in items.value) {
       items.value[i] = undefined;
     }
+    playlistId.value = '';
   }
 
   async function getExplore() {
     const json = await getJsonHyp('/explore');
 
     console.log(json);
-    useArtist().reset();
+    resetItems();
 
     setItem('songs', { items: json.trending });
     setItem('albums', { items: json.albums_and_singles });
@@ -41,6 +43,14 @@ export const useResults = defineStore('results', () => {
     console.log(json, json.relatedStreams);
 
     resetItems();
+
+    if (
+      /[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}/.test(
+        hash,
+      )
+    )
+      playlistId.value = hash;
+
     setItem('songs', {
       items: json.relatedStreams,
       title: json.name,
@@ -48,11 +58,17 @@ export const useResults = defineStore('results', () => {
 
     useRoute(e);
     useNav().state.page = 'home';
-
-    useArtist().reset();
   }
 
-  return { items, search, setItem, resetItems, getExplore, getAlbum };
+  return {
+    items,
+    search,
+    playlistId,
+    setItem,
+    resetItems,
+    getExplore,
+    getAlbum,
+  };
 });
 
 export const useArtist = defineStore('artist', () => {

@@ -22,9 +22,33 @@ const { t } = useI18n(),
 const emit = defineEmits(['play-urls']),
   filters = ['music_songs', 'music_albums', 'music_artists'],
   filter = ref('music_songs'),
-  isSearch = ref(/search/.test(location.pathname));
+  isSearch = ref(/search/.test(location.pathname)),
+  albumMenu = ref(false);
 
-const saveAlbum = () => {
+const shuffleAdd = () => {
+    const songs = results.items.songs.items.map(i => ({
+        url: i.url,
+        title: i.title,
+        thumbnails: [{ url: i.thumbnail }],
+      })),
+      copy = [];
+
+    let nos = songs.length;
+
+    while (nos) {
+      const i = Math.floor(Math.random() * nos--);
+
+      copy.push(songs[i]);
+
+      songs[i] = songs[nos];
+      delete songs[nos];
+    }
+
+    console.log(songs, copy);
+
+    emit('play-urls', copy);
+  },
+  saveAlbum = () => {
     const urls = results.items?.songs?.items?.map(item => ({
       url: item.url,
       title: item.title,
@@ -112,20 +136,32 @@ onUpdated(() => {
           })),
         )
       " />
-    <Btn ico="star" @click="saveAlbum" />
-    <Btn
-      ico="plus-lg"
-      @click="
-        data.state.urls.push(
-          ...results.items.songs.items.map(i => ({
-            url: i.url,
-            title: i.title,
-            thumbnails: [{ url: i.thumbnail }],
-          })),
-        )
-      " />
 
-    <span>{{ results.items?.songs?.title }}</span>
+    <Btn ico="three-dots" @click="albumMenu = !albumMenu">
+      <template #menu>
+        <Transition name="fade">
+          <div v-if="albumMenu" class="alb popup">
+            <button class="bi bi-bookmark-plus" @click="saveAlbum"></button>
+
+            <button
+              class="bi bi-plus-lg"
+              @click="
+                data.state.urls.push(
+                  ...results.items.songs.items.map(i => ({
+                    url: i.url,
+                    title: i.title,
+                    thumbnails: [{ url: i.thumbnail }],
+                  })),
+                )
+              "></button>
+
+            <button class="bi bi-shuffle" @click="shuffleAdd"></button>
+          </div>
+        </Transition>
+      </template>
+    </Btn>
+
+    <span class="ml-auto">{{ results.items?.songs?.title }}</span>
   </div>
 
   <div v-if="isSearch" class="filters">
@@ -146,8 +182,9 @@ onUpdated(() => {
     class="search-songs">
     <h2 v-if="!isSearch">{{ t('title.songs') }}</h2>
     <div class="grid">
-      <template v-for="song in results.items.songs.items">
+      <template v-for="(song, index) in results.items.songs.items">
         <SongItem
+          :index="index"
           :author="song.uploaderName || song.subtitle"
           :title="song.title || song.name"
           :channel="song.uploaderUrl || song.subId"
@@ -264,10 +301,18 @@ onUpdated(() => {
   margin-right: 0;
 }
 :deep(.bi-play) {
-  margin-right: 1rem;
+  margin-right: 0.75rem;
 }
-:deep(.bi-plus-lg) {
-  margin-right: auto;
+:deep(.ml-auto) {
+  margin-left: auto;
+}
+.alb {
+  bottom: 2.5rem;
+  border-radius: 0.25rem;
+  box-shadow: -0.5rem 0.5rem 1rem var(--color-shadow);
+}
+.alb .bi {
+  padding: 0.5rem;
 }
 .filters {
   display: flex;

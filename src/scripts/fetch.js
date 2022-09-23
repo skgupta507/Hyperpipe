@@ -49,17 +49,57 @@ export async function getJsonHyp(path) {
 export async function getJsonAuth(path, opts) {
   const root = useStore().getItem('authapi') || 'pipedapi.kavin.rocks';
 
-  return await fetch('https://' + root + path, opts).then(res => res.json());
+  return await fetch('https://' + root + path, opts)
+    .then(res => res.json())
+    .catch(err => {
+      alert(err);
+    });
+}
+
+export async function useAuthCreatePlaylist(name) {
+  const auth = useStore().getItem('auth');
+
+  if (auth && name) {
+    return await getJsonAuth('/user/playlists/create', {
+      method: 'POST',
+      body: JSON.stringify({
+        name: `Playlist - ${name}`,
+      }),
+      headers: {
+        Authorization: auth,
+        'Content-Type': 'application/json',
+      },
+    });
+  }
 }
 
 export async function getAuthPlaylists() {
-  if (!!useStore().getItem('auth')) {
+  const auth = useStore().getItem('auth');
+
+  if (auth) {
     const res = await getJsonAuth('/user/playlists', {
       headers: {
-        Authorization: useStore().getItem('auth'),
+        Authorization: auth,
       },
     });
 
     return res.filter(i => i.name.startsWith('Playlist - '));
+  }
+}
+
+export async function useAuthAddToPlaylist(id, path) {
+  const auth = useStore().getItem('auth');
+
+  if (auth && id && path) {
+    return getJsonAuth('/user/playlists/add', {
+      method: 'POST',
+      headers: {
+        Authorization: auth,
+      },
+      body: JSON.stringify({
+        playlistId: id,
+        videoId: new URL('https://example.com' + path).searchParams.get('v'),
+      }),
+    });
   }
 }
