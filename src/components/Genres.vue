@@ -126,9 +126,13 @@ onMounted(get);
   letter-spacing: 0.125rem;
   background-color: var(--color-background-mute);
   color: var(--btn-color);
+  transition: background-color 0.1s ease;
 }
 .btn:hover {
   background-color: var(--color-background-soft);
+}
+.btn:active {
+  background-color: var(--color-border);
 }
 .head {
   margin-top: 1.75rem;

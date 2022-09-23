@@ -62,9 +62,13 @@ defineEmits(['playthis']);
   margin: 0.125rem;
   border-radius: 0.25rem;
   background: var(--color-background);
+  transition: background-color 0.1s ease;
 }
 .pl-item:hover {
   background: var(--color-background-soft);
+}
+.pl-item:active {
+  background: var(--color-border);
 }
 .pl-main {
   overflow: hidden;
