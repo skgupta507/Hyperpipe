@@ -48,6 +48,13 @@ const shuffleAdd = () => {
 
     emit('play-urls', copy);
   },
+  removeSong = i => {
+    console.log(i);
+
+    try {
+      results.items.songs.items.splice(i, 1);
+    } catch {}
+  },
   saveAlbum = () => {
     const urls = results.items?.songs?.items?.map(item => ({
       url: item.url,
@@ -192,6 +199,7 @@ onUpdated(() => {
           :art="
             song.thumbnail || song.thumbnails[1]?.url || song.thumbnails[0]?.url
           "
+          @remove="removeSong"
           @open-song="
             $emit('play-urls', [
               {
