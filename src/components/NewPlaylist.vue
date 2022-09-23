@@ -6,7 +6,11 @@ import Modal from './Modal.vue';
 
 import { useRand } from '@/scripts/colors.js';
 import { useStore } from '@/scripts/util.js';
-import { getJsonAuth, getAuthPlaylists } from '@/scripts/fetch.js';
+import {
+  useAuthCreatePlaylist,
+  getAuthPlaylists,
+  getJsonAuth,
+} from '@/scripts/fetch.js';
 import { useI18n } from '@/stores/misc.js';
 
 import {
@@ -121,16 +125,7 @@ const Login = async () => {
   },
   createPlaylist = async () => {
     if (text.value) {
-      const res = await getJsonAuth('/user/playlists/create', {
-        method: 'POST',
-        body: JSON.stringify({
-          name: `Playlist - ${text.value}`,
-        }),
-        headers: {
-          Authorization: store.auth,
-          'Content-Type': 'application/json',
-        },
-      });
+      const res = await useAuthCreatePlaylist(text.value);
 
       getPlaylists();
       show.new = false;

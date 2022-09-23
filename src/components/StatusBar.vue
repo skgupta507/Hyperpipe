@@ -5,7 +5,11 @@ import Modal from './Modal.vue';
 
 import { useStore } from '@/scripts/util.js';
 import { useListPlaylists, useUpdatePlaylist } from '@/scripts/db.js';
-import { getAuthPlaylists, getJsonAuth } from '@/scripts/fetch.js';
+import {
+  getAuthPlaylists,
+  useAuthCreatePlaylist,
+  useAuthAddToPlaylist,
+} from '@/scripts/fetch.js';
 
 import { useData, usePlayer } from '@/stores/player.js';
 import { useI18n } from '@/stores/misc.js';
@@ -24,7 +28,9 @@ const emit = defineEmits(['save']),
   pl = ref(''),
   list = ref([]),
   remote = ref([]),
-  plRemote = ref(false);
+  plRemote = ref(false),
+  liked = ref(undefined),
+  liking = ref(false);
 
 function List() {
   showme.pl = true;
@@ -41,18 +47,7 @@ function List() {
 function Save() {
   if (pl.value) {
     if (plRemote.value == true && store.auth) {
-      getJsonAuth('/user/playlists/add', {
-        method: 'POST',
-        headers: {
-          Authorization: store.auth,
-        },
-        body: JSON.stringify({
-          playlistId: pl.value,
-          videoId: new URL(
-            'https://example.com' + data.state.url,
-          ).searchParams.get('v'),
-        }),
-      });
+      setAuthAddToPlaylist(data.state.url);
     } else if (plRemote.value == false) {
       useUpdatePlaylist(
         pl.value,
@@ -68,6 +63,26 @@ function Save() {
       );
     }
   }
+}
+
+async function Like() {
+  liking.value = true;
+
+  remote.value = await getAuthPlaylists();
+
+  let fav = remote.value.filter(i => i.name == 'Playlist - Favorites')[0];
+
+  if (!fav) {
+    const { playlistId } = await useAuthCreatePlaylist('Favorites');
+
+    fav = { id: playlistId };
+  }
+
+  const { message } = await useAuthAddToPlaylist(fav.id, data.state.url);
+
+  if (message == 'ok') liked.value = data.state.url;
+
+  liking.value = false;
 }
 </script>
 <template>
@@ -183,12 +198,24 @@ function Save() {
             aria-label="Show Information About Song"
             :data-active="player.state.info"
             @click="player.toggle('info')"></button>
+
+          <button
+            v-if="store.auth"
+            id="like-btn"
+            title="Add song to favorites"
+            class="bi blink"
+            :class="data.state.url == liked ? 'bi-heart-fill' : 'bi-heart'"
+            :data-active="data.state.url == liked"
+            :data-loading="liking"
+            @click="Like"></button>
+
           <button
             id="addToPlaylist"
             title="Add Current Song to a Playlist"
             aria-label="Add Current Song to a Playlist"
             class="bi bi-collection"
             @click="List"></button>
+
           <button
             id="list-btn"
             title="Current Playlist"
@@ -196,11 +223,13 @@ function Save() {
             class="bi bi-music-note-list"
             :data-active="player.state.playlist"
             @click="player.toggle('playlist')"></button>
+
           <button
             id="btn-lyrics"
             class="bi bi-file-music"
             :data-active="player.state.lyrics"
             @click="player.toggle('lyrics')"></button>
+
           <button
             id="loop-btn"
             title="Loop"

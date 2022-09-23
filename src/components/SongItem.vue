@@ -1,24 +1,28 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
+import { getJsonAuth } from '@/scripts/fetch.js';
 import { useRand } from '@/scripts/colors.js';
+import { useStore } from '@/scripts/util.js';
 
-import { useArtist } from '@/stores/results.js';
+import { useArtist, useResults } from '@/stores/results.js';
 import { useData, usePlayer } from '@/stores/player.js';
 
 const rand = useRand(),
   data = useData(),
   player = usePlayer(),
-  artist = useArtist();
+  artist = useArtist(),
+  { playlistId } = useResults();
 
 const props = defineProps({
+    index: Number,
     author: String,
     title: String,
     channel: String,
     play: String,
     art: String,
   }),
-  emit = defineEmits(['open-song']),
+  emit = defineEmits(['open-song', 'remove']),
   show = ref(false);
 
 const openSong = el => {
@@ -43,6 +47,24 @@ const openSong = el => {
     )
       emit('open-song', props.play);
   },
+  Remove = () => {
+    // WIP
+
+    const auth = useStore().getItem('auth');
+
+    if (auth) {
+      getJsonAuth('/user/playlists/remove', {
+        method: 'POST',
+        headers: {
+          Authorization: auth,
+        },
+        body: {
+          index,
+          playlistId,
+        },
+      });
+    }
+  },
   Share = async () => {
     if ('share' in navigator) {
       const data = {
@@ -59,7 +81,7 @@ const openSong = el => {
     } else {
       navigator.clipboard.writeText(location.host + props.play).then(
         () => {
-          console.log('Copied to Clipboard');
+          alert('Copied to Clipboard');
         },
         err => {
           console.log(err);
@@ -79,12 +101,8 @@ onMounted(() => {
     <span class="flex content">
       <h4>{{ title }}</h4>
       <a
-        :href="channel != '[]' ? channel : ''"
-        @click.prevent="
-          channel != '[]'
-            ? artist.getArtist(channel.replace('/channel/', ''))
-            : ''
-        "
+        :href="channel"
+        @click.prevent="artist.getArtist(channel.replace('/channel/', ''))"
         class="ign">
         <i class="ign">{{ author ? author.replaceAll(' - Topic', '') : '' }}</i>
       </a>
@@ -96,6 +114,12 @@ onMounted(() => {
       @mouseleave="show = false">
       <Transition name="fade">
         <div v-if="show" class="popup ign">
+          <!-- TODO: Check if user is admin -->
+          <span
+            v-if="useStore().auth && playlistId"
+            class="bi bi-dash-lg ign"
+            @click="Remove"></span>
+
           <span class="bi bi-plus-lg ign" @click="addSong"></span>
 
           <span class="bi bi-share ign" @click="Share"></span>
@@ -134,5 +158,8 @@ span.bi-three-dots-vertical {
   --grad: v-bind('rand');
   width: 120px;
   height: 120px;
+}
+.bi-dash-lg {
+  color: indianred;
 }
 </style>

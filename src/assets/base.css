@@ -284,6 +284,7 @@ img {
   }
 }
 
+/* Animations */
 .bars-wrap {
   flex-shrink: 0;
   display: flex;
@@ -305,7 +306,10 @@ img {
   animation-delay: 0.5s;
 }
 
-/* Animations */
+.blink[data-loading='true'] {
+  animation: blink infinite ease 1s;
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;
