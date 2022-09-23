@@ -200,6 +200,15 @@ button {
 .bi[data-active='true'] {
   color: var(--color-foreground);
 }
+.bi.clickable::before {
+  border-radius: 50%;
+  transition: background-color 0.1s ease, box-shadow 0.1s ease;
+}
+
+.bi.clickable:active::before {
+  background-color: var(--color-border);
+  box-shadow: 0 0 0 0.5rem var(--color-border);
+}
 
 .caps {
   text-transform: capitalize;

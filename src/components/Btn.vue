@@ -4,7 +4,7 @@ defineEmits(['click']);
 </script>
 
 <template>
-  <button :class="'bi bi-' + (ico ? ico : 'play')" @click="$emit('click')">
+  <button :class="'bi clickable bi-' + (ico ? ico : 'play')" @click="$emit('click')">
     <slot name="menu"></slot>
   </button>
 </template>

@@ -141,10 +141,10 @@ onUpdated(() => {
       <template #menu>
         <Transition name="fade">
           <div v-if="albumMenu" class="alb popup">
-            <button class="bi bi-bookmark-plus" @click="saveAlbum"></button>
+            <button class="bi bi-bookmark-plus clickable" @click="saveAlbum"></button>
 
             <button
-              class="bi bi-plus-lg"
+              class="bi bi-plus-lg clickable"
               @click="
                 data.state.urls.push(
                   ...results.items.songs.items.map(i => ({
@@ -155,7 +155,7 @@ onUpdated(() => {
                 )
               "></button>
 
-            <button class="bi bi-shuffle" @click="shuffleAdd"></button>
+            <button class="bi bi-shuffle clickable" @click="shuffleAdd"></button>
           </div>
         </Transition>
       </template>

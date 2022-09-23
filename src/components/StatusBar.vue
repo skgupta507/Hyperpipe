@@ -144,7 +144,7 @@ async function Like() {
       <button
         id="btn-play-pause"
         aria-label="Play or Pause"
-        class="bi"
+        class="bi clickable"
         :class="'bi-' + player.state.status"
         @click="player.toggle('play')"></button>
 
@@ -167,7 +167,7 @@ async function Like() {
         id="vol-btn"
         aria-label="Volume Buttons"
         @click="showme.vol = !showme.vol"
-        class="popup-wrap bi bi-volume-up">
+        class="popup-wrap bi bi-volume-up clickable">
         <Transition name="fade">
           <div v-if="showme.vol" id="vol" class="popup">
             <input
@@ -182,7 +182,7 @@ async function Like() {
         </Transition>
       </button>
       <button
-        class="bi bi-three-dots"
+        class="bi bi-three-dots clickable"
         aria-label="More Controls"
         @click="
           showme.menu = !showme.menu;
@@ -194,7 +194,7 @@ async function Like() {
         <div id="menu" v-if="showme.menu" class="popup">
           <button
             id="info-btn"
-            class="bi bi-info-circle"
+            class="bi bi-info-circle clickable"
             aria-label="Show Information About Song"
             :data-active="player.state.info"
             @click="player.toggle('info')"></button>
@@ -203,7 +203,7 @@ async function Like() {
             v-if="store.auth"
             id="like-btn"
             title="Add song to favorites"
-            class="bi blink"
+            class="bi blink clickable"
             :class="data.state.url == liked ? 'bi-heart-fill' : 'bi-heart'"
             :data-active="data.state.url == liked"
             :data-loading="liking"
@@ -213,20 +213,20 @@ async function Like() {
             id="addToPlaylist"
             title="Add Current Song to a Playlist"
             aria-label="Add Current Song to a Playlist"
-            class="bi bi-collection"
+            class="bi bi-collection clickable"
             @click="List"></button>
 
           <button
             id="list-btn"
             title="Current Playlist"
             aria-label="Current Playlist"
-            class="bi bi-music-note-list"
+            class="bi bi-music-note-list clickable"
             :data-active="player.state.playlist"
             @click="player.toggle('playlist')"></button>
 
           <button
             id="btn-lyrics"
-            class="bi bi-file-music"
+            class="bi bi-file-music clickable"
             :data-active="player.state.lyrics"
             @click="player.toggle('lyrics')"></button>
 
@@ -234,7 +234,7 @@ async function Like() {
             id="loop-btn"
             title="Loop"
             aria-label="Loop"
-            class="bi"
+            class="bi clickable"
             :class="player.state.loop < 2 ? 'bi-repeat' : 'bi-repeat-1'"
             :data-active="player.state.loop > 0"
             @click="
