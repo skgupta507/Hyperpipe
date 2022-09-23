@@ -80,7 +80,7 @@ h1.bi {
 }
 h1.bi svg {
   width: calc(1.75rem + 1.5vw);
-  height: auto;
+  height: calc(1.75rem + 1.5vw);
   fill: currentColor;
 }
 .bi {
