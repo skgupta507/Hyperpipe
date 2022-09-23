@@ -38,9 +38,6 @@ defineEmits(['open-album']);
   padding: 1rem;
   margin: auto;
 }
-.card:hover {
-  background-color: var(--color-background);
-}
 .card-bg {
   --grad: v-bind('grad || rand');
   height: 13rem;

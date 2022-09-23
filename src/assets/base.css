@@ -238,20 +238,26 @@ img {
   border-radius: 50%;
 }
 
-.pop {
-  --shadow: none;
-  --translate: 0;
-}
 .pop,
 .pop-2 {
-  transition: box-shadow 0.4s ease, transform 0.4s ease;
+  transition: background-color 0.4s ease, box-shadow 0.4s ease, color 0.3s ease, transform 0.4s ease;
 }
-.pop:hover {
-  --shadow: 0.5rem 0.5rem 1rem var(--color-shadow);
-  --translate: -1.25rem;
+.pop {
+  --background: none;
+  --shadow: none;
+  --translate: 0;
+  background: var(--background);
   box-shadow: var(--shadow);
   transform: translateX(calc(var(--translate) / 2))
     translateY(calc(var(--translate) / 2));
+}
+.pop:hover {
+  --background: var(--color-background-soft);
+  --shadow: 0.5rem 0.5rem 1rem var(--color-shadow);
+  --translate: -1.25rem;
+}
+.pop:active {
+  --background: var(--color-border);
 }
 .pop-2 {
   transform: translateX(var(--translate)) translateY(var(--translate));
