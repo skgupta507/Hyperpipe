@@ -48,20 +48,24 @@ const openSong = el => {
       emit('open-song', props.play);
   },
   Remove = () => {
-    // WIP
-
     const auth = useStore().getItem('auth');
 
-    if (auth) {
+    if (auth && confirm('Are you sure?')) {
       getJsonAuth('/user/playlists/remove', {
         method: 'POST',
         headers: {
           Authorization: auth,
         },
-        body: {
-          index,
+        body: JSON.stringify({
+          index: props.index,
           playlistId,
-        },
+        }),
+      }).then(json => {
+        console.log(json);
+
+        if (!json.error) {
+          if (json.message == 'ok') emit('remove', props.index);
+        } else alert(json.error);
       });
     }
   },

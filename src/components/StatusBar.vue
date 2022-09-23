@@ -47,7 +47,7 @@ function List() {
 function Save() {
   if (pl.value) {
     if (plRemote.value == true && store.auth) {
-      setAuthAddToPlaylist(data.state.url);
+      useAuthAddToPlaylist(pl.value, data.state.url);
     } else if (plRemote.value == false) {
       useUpdatePlaylist(
         pl.value,
