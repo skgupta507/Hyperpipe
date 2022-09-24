@@ -121,12 +121,12 @@ onMounted(() => {
           <!-- TODO: Check if user is admin -->
           <span
             v-if="useStore().auth && playlistId"
-            class="bi bi-dash-lg ign"
+            class="bi bi-dash-lg clickable ign"
             @click="Remove"></span>
 
-          <span class="bi bi-plus-lg ign" @click="addSong"></span>
+          <span class="bi bi-plus-lg clickable ign" @click="addSong"></span>
 
-          <span class="bi bi-share ign" @click="Share"></span>
+          <span class="bi bi-share clickable ign" @click="Share"></span>
         </div>
       </Transition>
     </span>

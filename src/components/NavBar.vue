@@ -43,19 +43,19 @@ function set(page) {
 
     <div class="wrap">
       <span
-        class="nav-ico bi bi-house"
+        class="nav-ico bi bi-house clickable"
         :data-active="nav.state.page == 'home'"
         @click="set('home')"></span>
       <span
-        class="nav-ico bi bi-compass"
+        class="nav-ico bi bi-compass clickable"
         :data-active="nav.state.page == 'explore'"
         @click="set('explore')"></span>
       <span
-        class="nav-ico bi bi-collection"
+        class="nav-ico bi bi-collection clickable"
         :data-active="nav.state.page == 'library'"
         @click="set('library')"></span>
       <span
-        class="nav-ico bi bi-gear"
+        class="nav-ico bi bi-gear clickable"
         :data-active="nav.state.page == 'prefs'"
         @click="set('prefs')"></span>
     </div>

@@ -341,15 +341,12 @@ h2 {
   padding-bottom: 5rem;
 }
 .npl-box {
+  --background: var(--color-background-mute);
   margin: 0 auto 2rem auto;
   border-radius: 0.5rem;
-  background-color: var(--color-background-mute);
   padding: 2rem 3rem;
   font-size: 4rem;
   width: 10rem;
-}
-.npl-box:hover {
-  background-color: var(--color-background-soft);
 }
 .npl-round {
   float: left;

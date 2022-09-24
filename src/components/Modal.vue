@@ -20,7 +20,7 @@ watch(show, n => {
 <template>
   <Transition name="fade">
     <div class="modal" v-if="show">
-      <span class="bi bi-x-lg modal-close" @click="show = false"></span>
+      <span class="bi bi-x-lg clickable modal-close" @click="show = false"></span>
       <div class="modal-box">
         <div class="modal-title">{{ title }}</div>
         <div class="modal-content">
@@ -91,6 +91,7 @@ watch(show, n => {
   font-size: 1rem;
   font-weight: bold;
   border-right: 1px solid var(--color-shadow);
+  transition: background-color 0.1s ease;
 }
 .modal-buttons button:first-child {
   color: indianred;
@@ -102,6 +103,9 @@ watch(show, n => {
 }
 .modal-buttons button:hover {
   background-color: var(--color-background-mute);
+}
+.modal-buttons button:active {
+  background-color: var(--color-border);
 }
 
 @media (max-width: 530px) {
