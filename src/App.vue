@@ -241,6 +241,15 @@ a,
   color: var(--color-foreground);
   transition: 0.4s;
 }
+a:focus {
+  background-color: var(--color-border);
+  outline: none;
+}
+a:focus-visible {
+  outline: 0.15rem solid var(--color-border);
+  outline-offset: 0.2rem;
+  transition: none;
+}
 .flex {
   display: flex;
   align-items: center;

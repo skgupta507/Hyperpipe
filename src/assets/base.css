@@ -176,16 +176,32 @@ body {
   height: 0.75rem;
 }
 
-*:focus {
-  outline: none;
-}
-
 button {
   padding: 1px 6px;
   border: none;
   background: transparent;
   color: var(--color-text);
   appearence: none;
+}
+button:focus {
+  outline: none;
+}
+button:focus-visible {
+  border-radius: 0.25rem;
+  outline: 0.2rem solid var(--color-border);
+}
+
+input,
+select {
+  outline: none;
+}
+input:hover,
+select:hover {
+  outline: 0.1rem solid var(--color-border-hover);
+}
+input:focus,
+select:focus {
+  outline: 0.1rem solid var(--color-foreground);
 }
 
 /* Components and Helpers */
@@ -222,7 +238,6 @@ button {
   font-size: 1rem;
   border: none;
   appearence: none;
-  outline: none;
 }
 img {
   object-fit: cover;

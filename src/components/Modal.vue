@@ -95,14 +95,24 @@ watch(show, n => {
 }
 .modal-buttons button:first-child {
   color: indianred;
+}
+.modal-buttons button:first-child,
+.modal-buttons button:first-child:focus {
   border-bottom-left-radius: 0.5rem;
 }
 .modal-buttons button:last-child {
   border: none;
+}
+.modal-buttons button:last-child,
+.modal-buttons button:last-child:focus {
   border-bottom-right-radius: 0.5rem;
 }
 .modal-buttons button:hover {
   background-color: var(--color-background-mute);
+}
+.modal-buttons button:focus {
+  background-color: var(--color-background-mute);
+  border-radius: 0;
 }
 .modal-buttons button:active {
   background-color: var(--color-border);

@@ -279,7 +279,6 @@ input {
   font-size: 1rem;
   margin: 1rem auto;
   padding: 0.5rem 0.75rem;
-  outline: none;
   border: none;
   color: var(--color-text);
   max-width: 20rem;
