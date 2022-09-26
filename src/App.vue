@@ -242,11 +242,11 @@ a,
   transition: 0.4s;
 }
 a:focus {
-  background-color: var(--color-border);
   outline: none;
 }
 a:focus-visible {
-  outline: 0.15rem solid var(--color-border);
+  border-radius: 0.25rem;
+  outline: 0.2rem solid var(--color-border);
   outline-offset: 0.2rem;
   transition: none;
 }
