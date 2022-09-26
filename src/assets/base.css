@@ -145,7 +145,6 @@ body {
   font-variant: normal;
   text-transform: none;
   line-height: 1;
-  vertical-align: -0.125em;
   font-size: 3rem;
   margin: 1rem;
   margin-top: auto;
@@ -185,7 +184,7 @@ button {
   border: none;
   background: transparent;
   color: var(--color-text);
-  appearence: none;
+  appearance: none;
 }
 
 /* Components and Helpers */
@@ -221,7 +220,7 @@ button {
   border-radius: 0.25rem;
   font-size: 1rem;
   border: none;
-  appearence: none;
+  appearance: none;
   outline: none;
 }
 img {
