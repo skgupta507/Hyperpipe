@@ -351,7 +351,7 @@ td.bi[data-active='true'] {
 footer {
   margin-bottom: 2rem;
 }
-footer .bi:before {
+footer .bi::before {
   font-size: 1.75rem;
   vertical-align: -0.45rem;
 }

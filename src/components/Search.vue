@@ -194,7 +194,7 @@ onUpdated(() => {
           :index="index"
           :author="song.uploaderName || song.subtitle"
           :title="song.title || song.name"
-          :channel="song.uploaderUrl || song.subId"
+          :channel="song.uploaderUrl || '/channel/' + song.subId"
           :play="song.url || '/watch?v=' + song.id"
           :art="
             song.thumbnail || song.thumbnails[1]?.url || song.thumbnails[0]?.url

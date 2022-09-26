@@ -85,12 +85,12 @@ p.more {
   color: var(--color-foreground);
   box-shadow: 0 0 1rem var(--color-background-mute);
 }
-.subs:after {
+.subs::after {
   content: ' Subscribers';
   font-weight: bold;
 }
 @media (max-width: 400px) {
-  .subs:after {
+  .subs::after {
     content: ' Subs';
   }
 }
