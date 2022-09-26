@@ -145,19 +145,23 @@ body {
   font-variant: normal;
   text-transform: none;
   line-height: 1;
-  vertical-align: -0.125em;
   font-size: 3rem;
   margin: 1rem;
   margin-top: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.placeholder:empty:after {
+.placeholder:empty::after {
   content: attr(data-placeholder)'...';
   margin-bottom: auto;
   letter-spacing: 0.125rem;
   font-size: 1.25rem;
   font-weight: bolder;
+}
+
+/* Text selection */
+::selection {
+  background-color: var(--color-border);
 }
 
 /* Scrollbars */
@@ -181,7 +185,7 @@ button {
   border: none;
   background: transparent;
   color: var(--color-text);
-  appearence: none;
+  appearance: none;
 }
 button:focus {
   outline: none;
@@ -237,7 +241,8 @@ select:focus {
   border-radius: 0.25rem;
   font-size: 1rem;
   border: none;
-  appearence: none;
+  appearance: none;
+  outline: none;
 }
 img {
   object-fit: cover;
