@@ -24,7 +24,7 @@ defineEmits(['click']);
   transition: background 0.4s ease;
   margin-right: auto;
 }
-.bi-play:before {
+.bi-play::before {
   padding-left: 0.2rem;
 }
 .bi:hover,

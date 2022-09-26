@@ -50,7 +50,7 @@ defineEmits(['playthis']);
   padding: 1rem;
   overflow-y: auto;
 }
-.placeholder:empty:before {
+.placeholder:empty::before {
   --ico: '\f64d';
 }
 .pl-item {

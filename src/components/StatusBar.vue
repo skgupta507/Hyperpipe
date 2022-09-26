@@ -380,7 +380,7 @@ input[type='range']::-moz-range-track {
   height: 0.25rem;
   display: inline-block;
 }
-.range-wrap:before {
+.range-wrap::before {
   content: '';
   width: var(--fw);
   position: absolute;

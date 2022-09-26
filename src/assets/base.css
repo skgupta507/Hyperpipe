@@ -151,7 +151,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.placeholder:empty:after {
+.placeholder:empty::after {
   content: attr(data-placeholder)'...';
   margin-bottom: auto;
   letter-spacing: 0.125rem;
