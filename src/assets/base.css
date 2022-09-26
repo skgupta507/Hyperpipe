@@ -160,6 +160,11 @@ body {
   font-weight: bolder;
 }
 
+/* Text selection */
+::selection {
+  background-color: var(--color-border);
+}
+
 /* Scrollbars */
 ::-webkit-scrollbar {
   width: 0.35rem;
