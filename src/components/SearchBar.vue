@@ -16,7 +16,7 @@ const { t } = useI18n(),
     <Transition name="fade">
       <div v-show="show" class="popup">
         <input
-          type="text"
+          type="search"
           aria-label="Search Input"
           :placeholder="t('title.search') + '...'"
           @change="
@@ -45,7 +45,6 @@ const { t } = useI18n(),
   border: none;
   border-radius: inherit;
   background: var(--color-background-mute);
-  outline: none;
   text-align: center;
 }
 </style>
