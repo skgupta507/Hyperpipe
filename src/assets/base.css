@@ -209,7 +209,7 @@ select:focus {
 }
 
 /* Search cancel button */
-::-webkit-search-cancel-button {
+input[type="search"]::-webkit-search-cancel-button {
   -webkit-appearance: none;
   height: 1.5rem;
   margin: 0 0.5em;
@@ -218,7 +218,7 @@ select:focus {
   cursor: pointer;
   content: url('/x-lg.svg');
 }
-::-webkit-search-cancel-button:hover {
+input[type="search"]::-webkit-search-cancel-button:hover {
   background-color: var(--color-border);
 }
 
