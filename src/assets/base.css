@@ -343,17 +343,22 @@ img {
   width: 2.75rem;
   transform: rotateZ(180deg) scale(0.65);
 }
-.bars {
+.bars-wrap .bars {
   height: 15%;
   width: 100%;
   background: var(--color-foreground);
+}
+.bars-wrap.pause .bars {
   animation: heightc 1s ease infinite;
 }
-.bars:first-child {
+.bars-wrap.pause .bars:first-child {
   animation-delay: 0.25s;
 }
-.bars:nth-child(2) {
+.bars-wrap.pause .bars:nth-child(2) {
   animation-delay: 0.5s;
+}
+.bars-wrap.play .bars {
+  animation: none;
 }
 
 .blink[data-loading='true'] {
