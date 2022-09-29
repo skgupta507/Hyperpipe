@@ -318,8 +318,12 @@ input[type='range'] {
   cursor: pointer;
   position: relative;
 }
+input[type='range']:hover,
 input[type='range']:focus {
-  outline: none;
+  outline-style: none;
+}
+input[type='range']:focus-visible {
+  outline-style: solid;
 }
 
 /* Webkit */
