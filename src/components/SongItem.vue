@@ -11,8 +11,7 @@ import { useData, usePlayer } from '@/stores/player.js';
 const rand = useRand(),
   data = useData(),
   player = usePlayer(),
-  artist = useArtist(),
-  { playlistId } = useResults();
+  artist = useArtist();
 
 const props = defineProps({
     index: Number,
@@ -21,6 +20,7 @@ const props = defineProps({
     channel: String,
     play: String,
     art: String,
+    playlistId: String,
   }),
   emit = defineEmits(['open-song', 'remove']),
   show = ref(false);
@@ -58,7 +58,7 @@ const openSong = el => {
         },
         body: JSON.stringify({
           index: props.index,
-          playlistId,
+          playlistId: props.playlistId,
         }),
       }).then(json => {
         console.log(json);
@@ -120,12 +120,10 @@ onMounted(() => {
         <div v-if="show" class="popup ign">
           <!-- TODO: Check if user is admin -->
           <span
-            v-if="useStore().auth && playlistId"
+            v-if="playlistId"
             class="bi bi-dash-lg clickable ign"
             @click="Remove"></span>
-
           <span class="bi bi-plus-lg clickable ign" @click="addSong"></span>
-
           <span class="bi bi-share clickable ign" @click="Share"></span>
         </div>
       </Transition>

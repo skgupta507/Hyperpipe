@@ -9,6 +9,8 @@ import { getJsonHyp } from '@/scripts/fetch.js';
 import { useResults, useArtist } from '@/stores/results.js';
 import { useI18n } from '@/stores/misc.js';
 
+defineEmits(['play-urls']);
+
 const { getArtist } = useArtist(),
   results = useResults(),
   { t } = useI18n();
@@ -73,7 +75,20 @@ onMounted(() => {
         :title="i.title"
         :author="i.subtitle"
         :channel="'/channel/' + i.subId"
-        :art="i.thumbnails[0].url" />
+        :art="i.thumbnails[0].url"
+        @open-song="
+          $emit('play-urls', [
+            {
+              url: '/watch?v=' + i.id,
+              title: i.title,
+              thumbnails: [
+                {
+                  url: i.thumbnails[1]?.url || i.thumbnails[0]?.url,
+                },
+              ],
+            },
+          ])
+        " />
     </div>
   </template>
 </template>

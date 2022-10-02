@@ -196,6 +196,7 @@ onUpdated(() => {
       <template v-for="(song, index) in results.items.songs.items">
         <SongItem
           :index="index"
+          :playlistId="song.playlistId"
           :author="song.uploaderName || song.subtitle"
           :title="song.title || song.name"
           :channel="song.uploaderUrl || '/channel/' + song.subId"

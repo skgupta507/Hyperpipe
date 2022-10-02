@@ -185,7 +185,7 @@ onMounted(() => {
     </KeepAlive>
 
     <KeepAlive>
-      <Charts v-if="nav.state.page == 'charts'" />
+      <Charts v-if="nav.state.page == 'charts'" @play-urls="playList" />
     </KeepAlive>
 
     <NewPlaylist

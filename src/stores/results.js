@@ -51,8 +51,12 @@ export const useResults = defineStore('results', () => {
       /[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}/.test(
         hash,
       )
-    )
-      console.log('Piped playlists!!'); //json.relatedStreams = json.relatedStreams.map(i => ({ ...i, ...{auth: true}))
+    ) {
+      json.relatedStreams = json.relatedStreams.map(i => {
+        i.playlistId = hash;
+        return i;
+      });
+    }
 
     setItem('songs', {
       items: json.relatedStreams,
