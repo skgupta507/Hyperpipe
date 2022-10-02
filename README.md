@@ -1,6 +1,6 @@
 # Hyperpipe
 
-![Logo](https://codeberg.org/Hyperpipe/Hyperpipe/raw/branch/main/public/android-chrome-512x512.png)
+![Logo](https://codeberg.org/Hyperpipe/Hyperpipe/raw/branch/main/public/android-chrome-192x192.png)
 
 A Privacy Respecting Frontend for YouTube Music inspired and built with the help of [Piped][piped] and YouTube's InnerTube API.
 
