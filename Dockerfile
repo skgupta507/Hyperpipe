@@ -7,9 +7,9 @@ WORKDIR /app/
 
 COPY . .
 
-RUN sed -i "s/hyperpipeapi.onrender.com/$api/g" index.html src/scripts/fetch.js src/components/Prefs.vue
+RUN sed -i "s/hyperpipeapi.onrender.com/$api/g" index.html src/scripts/fetch.js
 
-RUN sed -i "s/pipedapi.kavin.rocks/$pipedapi/g" index.html src/scripts/fetch.js src/components/Prefs.vue
+RUN sed -i "s/pipedapi.kavin.rocks/$pipedapi/g" index.html src/scripts/fetch.js
 
 RUN npm install && \
     npm run build

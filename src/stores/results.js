@@ -9,7 +9,7 @@ import { useRoute } from '@/scripts/util.js';
 export const useResults = defineStore('results', () => {
   const items = ref({}),
     search = ref(''),
-    playlistId = ref('');
+    chartsId = ref('');
 
   function setItem(key, val) {
     items.value[key] = val;
@@ -21,7 +21,6 @@ export const useResults = defineStore('results', () => {
     for (let i in items.value) {
       items.value[i] = undefined;
     }
-    playlistId.value = '';
   }
 
   async function getExplore() {
@@ -29,6 +28,10 @@ export const useResults = defineStore('results', () => {
 
     console.log(json);
     resetItems();
+
+    chartsId.value = json.chartsId;
+
+    console.log(chartsId.value, json.chartsId);
 
     setItem('songs', { items: json.trending });
     setItem('albums', { items: json.albums_and_singles });
@@ -49,7 +52,7 @@ export const useResults = defineStore('results', () => {
         hash,
       )
     )
-      playlistId.value = hash;
+      console.log('Piped playlists!!'); //json.relatedStreams = json.relatedStreams.map(i => ({ ...i, ...{auth: true}))
 
     setItem('songs', {
       items: json.relatedStreams,
@@ -63,7 +66,7 @@ export const useResults = defineStore('results', () => {
   return {
     items,
     search,
-    playlistId,
+    chartsId,
     setItem,
     resetItems,
     getExplore,

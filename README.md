@@ -1,15 +1,15 @@
-# [WIP] Hyperpipe
+# Hyperpipe
 
-![On Codeberg](https://codeberg.org/Hyperpipe/static/raw/branch/master/on-codeberg.svg)
+![Logo](https://codeberg.org/Hyperpipe/Hyperpipe/raw/branch/main/public/android-chrome-192x192.png)
 
 A Privacy Respecting Frontend for YouTube Music inspired and built with the help of [Piped][piped] and YouTube's InnerTube API.
 
-![YouTube Music](https://img.shields.io/badge/youtube-music-red?style=for-the-badge&logo=youtube)
+![YouTube Music](https://img.shields.io/badge/youtube-music-red?style=for-the-badge&logo=youtube-music)
 ![Website](https://img.shields.io/website?down_color=red&down_message=offline&label=status&style=for-the-badge&up_color=cornflowerblue&up_message=online&url=https%3A%2F%2Fhyperpipe.surge.sh)
 
 ## Disclaimer
 
-**_HYPERPIPE IS ONLY BEING DEVELOPED, EXPECT_**
+**_HYPERPIPE IS VERY EXPIRIMENTAL, EXPECT_**
 
 - Bugs
 - Messy Code
@@ -96,8 +96,9 @@ You can reach out to me personally on:
 - snematoda [dot] 751k2 [at] aleeas [dot] com
 - [Matrix - @snematoda:nitro.chat](https://matrix.to/#/@snematoda:nitro.chat)
 
-### Dependencies and Mentions
+### Dependencies & Acknowledgments
 
+- [Denevola](https://codeberg.org/Hyperpipe/Hyperpipe/pulls/22) -> for Hyperpipe's logo
 - VueJS -> [MIT][vue]
 - ViteJS -> [MIT][vite]
 - shaka-player -> [Apache-2.0][shaka]
@@ -106,6 +107,7 @@ You can reach out to me personally on:
 - VueJS theme -> [MIT][vuetheme]
 - Dracula theme -> [MIT][dracula]
 - Nord theme -> [MIT][nord]
+
 
 ### Similar Projects
 

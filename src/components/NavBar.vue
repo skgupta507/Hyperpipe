@@ -1,6 +1,8 @@
 <script setup>
 import { reactive } from 'vue';
-import SearchBar from '../components/SearchBar.vue';
+
+import SearchBar from '@/components/SearchBar.vue';
+import IcoHyp from '@/assets/icons/IcoHyp.vue';
 
 import { useNav } from '@/stores/misc.js';
 
@@ -33,12 +35,7 @@ function set(page) {
 <template>
   <nav>
     <h1 class="bi" @click="home">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-        <path
-          d="M5.097 13.097a2.904 2.904 0 0 1 5.806 0A2.905 2.905 0 0 1 8 16a2.905 2.905 0 0 1-2.903-2.903Z" />
-        <path
-          d="M2.194 11.618a1.614 1.614 0 1 0 2.258 1.479c0-.661-.399-1.23-.968-1.479v-4.87l3.097 2.065v-4.31l1.432-2.18 1.406 2.09v4.4l3.097-2.065v4.87a1.614 1.614 0 1 0 2.258 1.479c0-.661-.398-1.23-.968-1.479v-7.27L10.71 6.413v-2.4L7.987 0 5.29 4.116v2.297L2.194 4.348v7.27Z" />
-      </svg>
+      <IcoHyp />
     </h1>
 
     <div class="wrap">
@@ -50,6 +47,10 @@ function set(page) {
         class="nav-ico bi bi-compass clickable"
         :data-active="nav.state.page == 'explore'"
         @click="set('explore')"></span>
+      <span
+        class="nav-ico bi bi-graph-down clickable"
+        :data-active="nav.state.page == 'charts'"
+        @click="set('charts')"></span>
       <span
         class="nav-ico bi bi-collection clickable"
         :data-active="nav.state.page == 'library'"

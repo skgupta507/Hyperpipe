@@ -1,20 +1,32 @@
 <script setup>
 /* Imports */
-import { ref, watch, reactive, onBeforeMount, onMounted } from 'vue';
+import {
+  ref,
+  watch,
+  reactive,
+  defineAsyncComponent,
+  onBeforeMount,
+  onMounted,
+} from 'vue';
 
 /* Components */
 import NavBar from '@/components/NavBar.vue';
 import Player from '@/components/Player.vue';
 import StatusBar from '@/components/StatusBar.vue';
 import NowPlaying from '@/components/NowPlaying.vue';
-import Genres from '@/components/Genres.vue';
 import Search from '@/components/Search.vue';
-import NewPlaylist from '@/components/NewPlaylist.vue';
 import Playlists from '@/components/Playlists.vue';
 import Lyrics from '@/components/Lyrics.vue';
 import Info from '@/components/Info.vue';
 import Artist from '@/components/Artist.vue';
-import Prefs from '@/components/Prefs.vue';
+
+/* Async Components */
+const Genres = defineAsyncComponent(() => import('@/components/Genres.vue')),
+  Charts = defineAsyncComponent(() => import('@/components/Charts.vue')),
+  NewPlaylist = defineAsyncComponent(() =>
+    import('@/components/NewPlaylist.vue'),
+  ),
+  Prefs = defineAsyncComponent(() => import('@/components/Prefs.vue'));
 
 /* Composables */
 import { useStore } from '@/scripts/util.js';
@@ -69,6 +81,9 @@ function parseUrl() {
     case 'explore':
       genreid.value = loc[2];
       nav.state.page = 'explore';
+      break;
+    case 'charts':
+      nav.state.page = 'charts';
       break;
     case 'library':
       nav.state.page = 'library';
@@ -167,6 +182,10 @@ onMounted(() => {
 
     <KeepAlive>
       <Genres v-if="nav.state.page == 'explore'" :id="genreid" />
+    </KeepAlive>
+
+    <KeepAlive>
+      <Charts v-if="nav.state.page == 'charts'" />
     </KeepAlive>
 
     <NewPlaylist

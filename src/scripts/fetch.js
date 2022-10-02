@@ -1,5 +1,8 @@
 import { useStore, useSanitize } from './util.js';
 
+export const PIPED_INSTANCE = 'pipedapi.kavin.rocks';
+export const HYPERPIPE_INSTANCE = 'hyperpipeapi.onrender.com';
+
 export function getPipedQuery() {
   const papi = new URLSearchParams(location.search).get('pipedapi');
 
@@ -35,19 +38,19 @@ export async function getJsonPiped(path) {
   const root =
     new URLSearchParams(location.search).get('pipedapi') ||
     useStore().getItem('pipedapi') ||
-    'pipedapi.kavin.rocks';
+    PIPED_INSTANCE;
 
   return await getJson('https://' + root + path);
 }
 
 export async function getJsonHyp(path) {
-  const root = useStore().getItem('api') || 'hyperpipeapi.onrender.com';
+  const root = useStore().getItem('api') || HYPERPIPE_INSTANCE;
 
   return await getJson('https://' + root + path);
 }
 
 export async function getJsonAuth(path, opts) {
-  const root = useStore().getItem('authapi') || 'pipedapi.kavin.rocks';
+  const root = useStore().getItem('authapi') || PIPED_INSTANCE;
 
   return await fetch('https://' + root + path, opts)
     .then(res => res.json())

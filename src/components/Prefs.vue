@@ -1,9 +1,14 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 
-import { getJson } from '@/scripts/fetch.js';
-import { SUPPORTED_LOCALES, useI18n } from '@/stores/misc.js';
+import {
+  PIPED_INSTANCE,
+  HYPERPIPE_INSTANCE,
+  getJson,
+} from '@/scripts/fetch.js';
 import { useStore } from '@/scripts/util.js';
+
+import { SUPPORTED_LOCALES, useI18n } from '@/stores/misc.js';
 
 const { t, setupLocale } = useI18n(),
   instances = ref([]),
@@ -56,17 +61,17 @@ function getStoreBool(key, ele) {
 const verifyApi = computed(() =>
     hypInstances.value
       .map(i => i.api_url.replace('https://', '').replace('http://'))
-      .includes(getStore('api') || 'hyperpipeapi.onrender.com'),
+      .includes(getStore('api') || PIPED_INSTANCE),
   ),
   verifyPipedApi = computed(() =>
     instances.value
       .map(i => i.api_url.replace('https://', ''))
-      .includes(getStore('pipedapi') || 'pipedapi.kavin.rocks'),
+      .includes(getStore('pipedapi') || PIPED_INSTANCE),
   ),
   verifyAuthApi = computed(() =>
     instances.value
       .map(i => i.api_url.replace('https://', ''))
-      .includes(getStore('authapi') || 'pipedapi.kavin.rocks'),
+      .includes(getStore('authapi') || PIPED_INSTANCE),
   );
 
 onMounted(() => {
@@ -78,6 +83,7 @@ onMounted(() => {
   <h2>{{ t('pref.theme') }}</h2>
   <select
     id="pref-theme"
+    class="input"
     :value="getTheme()"
     @change="setTheme($event.target.value)">
     <option value="dark">Dark (Default)</option>
@@ -91,6 +97,7 @@ onMounted(() => {
 
   <select
     id="pref-lang"
+    class="input"
     :value="getStore('locale') || 'en'"
     @change="setLang($event.target.value)">
     <option v-for="i in SUPPORTED_LOCALES" :value="i.code">{{ i.name }}</option>
@@ -103,6 +110,7 @@ onMounted(() => {
       type="checkbox"
       name="pref-chk-next"
       id="pref-chk-next"
+      class="input"
       @change="setStore('next', $event.target.checked)"
       v-model="next" />
     <label for="pref-chk-next">{{ t('pref.auto_queue') }}</label>
@@ -113,6 +121,7 @@ onMounted(() => {
     <select
       id="pref-codec"
       name="pref-codec"
+      class="input"
       :value="getStore('codec') || 'opus:mp4a'"
       @change="setStore('codec', $event.target.value)">
       <option value="opus:mp4a">opus, mp4a</option>
@@ -127,6 +136,7 @@ onMounted(() => {
     <select
       id="pref-quality"
       name="pref-quality"
+      class="input"
       :value="getStore('quality') || 'auto'"
       @change="setStore('quality', $event.target.value)">
       <option value="auto">{{ t('pref.auto') }}</option>
@@ -141,6 +151,7 @@ onMounted(() => {
       type="number"
       name="pref-volume"
       id="pref-volume"
+      class="input"
       max="100"
       min="0"
       :value="getStore('vol') || 100"
@@ -151,7 +162,8 @@ onMounted(() => {
 
   <select
     v-if="hypInstances"
-    :value="getStore('api') || 'hyperpipeapi.onrender.com'"
+    class="input"
+    :value="getStore('api') || HYPERPIPE_INSTANCE"
     @change="setStore('api', $event.target.value)">
     <option
       v-for="i in hypInstances"
@@ -161,7 +173,7 @@ onMounted(() => {
     </option>
 
     <option v-if="!verifyApi">
-      {{ getStore('api') || 'hyperpipeapi.onrender.com' }}
+      {{ getStore('api') || HYPERPIPE_INSTANCE }}
     </option>
   </select>
 
@@ -189,7 +201,8 @@ onMounted(() => {
   <h2>{{ t('instances.piped') }}</h2>
   <select
     v-if="instances"
-    :value="getStore('pipedapi') || 'pipedapi.kavin.rocks'"
+    class="input"
+    :value="getStore('pipedapi') || PIPED_INSTANCE"
     @change="setStore('pipedapi', $event.target.value)">
     <option
       v-for="i in instances"
@@ -199,7 +212,7 @@ onMounted(() => {
     </option>
 
     <option v-if="!verifyPipedApi">
-      {{ getStore('pipedapi') || 'pipedapi.kavin.rocks' }}
+      {{ getStore('pipedapi') || PIPED_INSTANCE }}
     </option>
   </select>
 
@@ -207,7 +220,8 @@ onMounted(() => {
 
   <select
     v-if="instances"
-    :value="getStore('authapi') || 'pipedapi.kavin.rocks'"
+    class="input"
+    :value="getStore('authapi') || PIPED_INSTANCE"
     @change="setStore('authapi', $event.target.value)">
     <option
       v-for="i in instances"
@@ -217,7 +231,7 @@ onMounted(() => {
     </option>
 
     <option v-if="!verifyAuthApi">
-      {{ getStore('authapi') || 'pipedapi.kavin.rocks' }}
+      {{ getStore('authapi') || PIPED_INSTANCE }}
     </option>
   </select>
 
@@ -273,17 +287,6 @@ h3,
 label,
 footer {
   text-align: center;
-}
-select,
-input {
-  font-size: 1rem;
-  margin: 1rem auto;
-  padding: 0.5rem 0.75rem;
-  border: none;
-  color: var(--color-text);
-  max-width: 20rem;
-  border-radius: 0.125rem;
-  background-color: var(--color-background-mute);
 }
 input[type='number'] {
   width: 4.5rem;

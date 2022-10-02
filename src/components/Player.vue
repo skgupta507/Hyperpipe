@@ -7,6 +7,7 @@ import {
   onBeforeUnmount,
   onUnmounted,
 } from 'vue';
+
 import muxjs from 'mux.js';
 window.muxjs = muxjs;
 

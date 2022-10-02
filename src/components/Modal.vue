@@ -20,7 +20,9 @@ watch(show, n => {
 <template>
   <Transition name="fade">
     <div class="modal" v-if="show">
-      <span class="bi bi-x-lg clickable modal-close" @click="show = false"></span>
+      <span
+        class="bi bi-x-lg clickable modal-close"
+        @click="show = false"></span>
       <div class="modal-box">
         <div class="modal-title">{{ title }}</div>
         <div class="modal-content">

@@ -4,7 +4,9 @@ defineEmits(['click']);
 </script>
 
 <template>
-  <button :class="'bi clickable bi-' + (ico ? ico : 'play')" @click="$emit('click')">
+  <button
+    :class="'bi clickable bi-' + (ico ? ico : 'play')"
+    @click="$emit('click')">
     <slot name="menu"></slot>
   </button>
 </template>
@@ -24,12 +26,18 @@ defineEmits(['click']);
   transition: background 0.4s ease;
   margin-right: auto;
 }
+.bi-play {
+  color: var(--color-background-soft);
+  box-shadow: 0 0 1rem var(--color-foreground);
+  transition: all 0.4s ease;
+}
 .bi-play::before {
   padding-left: 0.2rem;
 }
 .bi:hover,
 .bi:not(.bi-play) {
   background: transparent;
+  box-shadow: none;
 }
 .bi:not(.bi-play) {
   font-size: 1.75rem;

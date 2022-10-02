@@ -6,13 +6,6 @@ import { useResults, useArtist } from '@/stores/results.js';
 
 const artist = useArtist(),
   results = useResults();
-
-/*const show = ref(-1);
-show.value = location.pathname.indexOf('/channel/UC');
-
-onUpdated(() => {
-  show.value = location.pathname.indexOf('/channel/UC');
-});*/
 </script>
 
 <template>

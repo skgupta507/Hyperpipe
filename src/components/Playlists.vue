@@ -14,7 +14,10 @@ defineEmits(['playthis']);
     <div class="pl-modal placeholder" :data-placeholder="t('playlist.add')">
       <template v-for="plurl in data.state.urls">
         <div class="pl-item" @click="$emit('playthis', plurl)">
-          <span v-if="data.state.url == plurl.url" class="bars-wrap" :class="player.state.status">
+          <span
+            v-if="data.state.url == plurl.url"
+            class="bars-wrap"
+            :class="player.state.status">
             <div class="bars"></div>
             <div class="bars"></div>
             <div class="bars"></div>
