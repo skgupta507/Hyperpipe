@@ -32,6 +32,10 @@ export const SUPPORTED_LOCALES = [
     code: 'ko',
     name: '한국어',
   },
+  {
+    code: 'zh_Hans',
+    name: '中国人',
+  },
 ];
 
 export const useNav = defineStore('nav', () => {
