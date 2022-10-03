@@ -34,7 +34,7 @@ export const SUPPORTED_LOCALES = [
   },
   {
     code: 'zh_Hans',
-    name: '中国人',
+    name: '中文 (简体)',
   },
 ];
 
