@@ -13,6 +13,10 @@ export const SUPPORTED_LOCALES = [
     name: 'English',
   },
   {
+    code: 'es',
+    name: 'Español',
+  },
+  {
     code: 'fr',
     name: 'Français',
   },
