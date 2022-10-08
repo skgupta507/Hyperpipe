@@ -6,7 +6,7 @@ import SongItem from './SongItem.vue';
 import AlbumItem from './AlbumItem.vue';
 
 import { getJsonPiped, getPipedQuery } from '@/scripts/fetch.js';
-import { useRoute } from '@/scripts/util.js';
+import { useRoute, useWrap } from '@/scripts/util.js';
 import { useCreatePlaylist } from '@/scripts/db.js';
 
 import { useResults, useArtist } from '@/stores/results.js';
@@ -74,7 +74,7 @@ const shuffleAdd = () => {
   },
   getSearch = q => {
     if (q) {
-      const pq = q.split(' ').join('+');
+      const pq = useWrap(q);
 
       history.pushState({}, '', `/search/${pq + getPipedQuery()}`);
 

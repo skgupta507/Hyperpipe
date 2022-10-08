@@ -31,8 +31,10 @@ export const useData = defineStore('data', () => {
 
     state.art = json.thumbnailUrl;
     state.description = json.description;
-    state.title = json.title;
-    state.artist = json.uploader.replace(' - Topic', '');
+    state.title = json.title.replaceAll('&amp;', '&');
+    state.artist = json.uploader
+      .replace(' - Topic', '')
+      .replaceAll('&amp;', '&');
     state.artistUrl = json.uploaderUrl;
     player.state.duration = json.duration;
     player.state.hls = json.hls;

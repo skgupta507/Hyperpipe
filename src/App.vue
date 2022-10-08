@@ -29,7 +29,7 @@ const Genres = defineAsyncComponent(() => import('@/components/Genres.vue')),
   Prefs = defineAsyncComponent(() => import('@/components/Prefs.vue'));
 
 /* Composables */
-import { useStore } from '@/scripts/util.js';
+import { useStore, useUnwrap } from '@/scripts/util.js';
 import { useSetupDB, useUpdatePlaylist } from '@/scripts/db.js';
 
 /* Stores */
@@ -62,8 +62,7 @@ function parseUrl() {
       results.getExplore();
       break;
     case 'search':
-      nav.state.search = loc[2];
-      console.log(nav.state.search);
+      nav.state.search = useUnwrap(loc[2]);
       break;
     case 'watch':
       player.state.status = 'circle';

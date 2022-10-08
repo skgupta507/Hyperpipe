@@ -10,6 +10,14 @@ export function useRoute(l) {
   history.pushState({}, '', l);
 }
 
+export function useWrap(txt) {
+  return encodeURIComponent(txt).replaceAll('%20', '+');
+}
+
+export function useUnwrap(txt) {
+  return decodeURIComponent(txt).replaceAll('+', ' ');
+}
+
 export function useStore() {
   try {
     return window.localStorage;

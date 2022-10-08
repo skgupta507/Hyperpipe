@@ -48,7 +48,7 @@ function set(page) {
         :data-active="nav.state.page == 'explore'"
         @click="set('explore')"></span>
       <span
-        class="nav-ico bi bi-graph-down clickable"
+        class="nav-ico bi bi-graph-up-arrow clickable"
         :data-active="nav.state.page == 'charts'"
         @click="set('charts')"></span>
       <span
