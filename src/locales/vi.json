@@ -24,7 +24,9 @@
     },
     "instances": {
         "version": "Phiên bản",
-        "name": "Tên"
+        "name": "Tên",
+        "cdn": "CDN",
+        "loc": "Các vị trí"
     },
     "playlist": {
         "create": "Tạo một danh sách phát mới",
