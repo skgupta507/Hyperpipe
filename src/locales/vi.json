@@ -1,1 +1,31 @@
-{}
+{
+    "title": {
+        "songs": "Các bài hát",
+        "albums": "Các album",
+        "artists": "Các nhạc sĩ",
+        "similar_artists": "Các nhạc sĩ liên quan",
+        "genres": "Các thể loại",
+        "community": "Cộng đồng",
+        "search": "Tìm kiếm",
+        "singles": "Các đĩa đơn",
+        "login": "Đăng nhập"
+    },
+    "pref": {
+        "auto": "tự động",
+        "codec": "Codec",
+        "volume": "Âm lượng mặc định"
+    },
+    "action": {
+        "cancel": "Hủy",
+        "create": "Tạo"
+    },
+    "instances": {
+        "version": "Phiên bản",
+        "name": "Tên"
+    },
+    "playlist": {
+        "create": "Tạo một danh sách phát mới",
+        "name": "Tên danh sách phát",
+        "add": "Thêm bài hát vào danh sách phát"
+    }
+}
