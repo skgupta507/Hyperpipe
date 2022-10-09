@@ -21,8 +21,16 @@ export const SUPPORTED_LOCALES = [
     name: 'Français',
   },
   {
+    code: 'gl',
+    name: 'Galego',
+  },
+  {
     code: 'it',
     name: 'Italiano',
+  },
+  {
+    code: 'vi',
+    name: 'Tiếng Việt',
   },
   {
     code: 'ar',
