@@ -20,7 +20,8 @@
     "action": {
         "cancel": "Hủy",
         "create": "Tạo",
-        "add": "Thêm"
+        "add": "Thêm",
+        "back": "Quay lại"
     },
     "instances": {
         "version": "Phiên bản",
