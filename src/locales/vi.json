@@ -15,7 +15,9 @@
         "auto": "tự động",
         "codec": "Codec",
         "volume": "Âm lượng mặc định",
-        "player": "Trình phát âm thanh"
+        "player": "Trình phát âm thanh",
+        "best": "cao nhất",
+        "worst": "thấp nhất"
     },
     "action": {
         "cancel": "Hủy",
