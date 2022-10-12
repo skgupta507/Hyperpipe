@@ -216,7 +216,7 @@ onMounted(async () => {
 
         <input
           type="text"
-          placeholder="Playlist name..."
+          :placeholder="t('playlist.name') + '...'"
           class="textbox"
           v-model="text" />
       </template>
@@ -284,7 +284,7 @@ onMounted(async () => {
       <template v-for="i in list">
         <AlbumItem
           :name="i.name"
-          :author="'Songs • ' + i.urls.length"
+          :author="t('title.songs') + ' • ' + i.urls.length"
           :grad="useRand()"
           @open-album="Play(i.name)" />
       </template>
