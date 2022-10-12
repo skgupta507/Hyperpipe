@@ -17,13 +17,15 @@
         "volume": "Âm lượng mặc định",
         "player": "Trình phát âm thanh",
         "best": "cao nhất",
-        "worst": "thấp nhất"
+        "worst": "thấp nhất",
+        "quality": "Chất lượng"
     },
     "action": {
         "cancel": "Hủy",
         "create": "Tạo",
         "add": "Thêm",
-        "back": "Quay lại"
+        "back": "Quay lại",
+        "receive": "Nhận"
     },
     "instances": {
         "version": "Phiên bản",
