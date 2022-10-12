@@ -5,6 +5,10 @@ import en from '@/locales/en.json';
 
 export const SUPPORTED_LOCALES = [
   {
+    code: 'ar',
+    name: 'عربي',
+  },
+  {
     code: 'de',
     name: 'Deutsch',
   },
@@ -29,20 +33,16 @@ export const SUPPORTED_LOCALES = [
     name: 'Italiano',
   },
   {
-    code: 'vi',
-    name: 'Tiếng Việt',
-  },
-  {
-    code: 'ar',
-    name: 'عربي',
-  },
-  {
     code: 'ja',
     name: '日本語',
   },
   {
     code: 'ko',
     name: '한국어',
+  },
+  {
+    code: 'vi',
+    name: 'Tiếng Việt',
   },
   {
     code: 'zh_Hans',
