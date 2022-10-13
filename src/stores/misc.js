@@ -9,6 +9,10 @@ export const SUPPORTED_LOCALES = [
     name: 'عربي',
   },
   {
+    code: 'cs',
+    name: 'čeština',
+  },
+  {
     code: 'de',
     name: 'Deutsch',
   },
