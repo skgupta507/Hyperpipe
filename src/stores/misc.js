@@ -10,7 +10,7 @@ export const SUPPORTED_LOCALES = [
   },
   {
     code: 'cs',
-    name: 'čeština',
+    name: 'Čeština',
   },
   {
     code: 'de',
