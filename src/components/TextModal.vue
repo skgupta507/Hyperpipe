@@ -16,7 +16,7 @@
   max-width: calc(100% - 2rem);
   background: var(--color-background-mute);
   border-radius: 0.5rem;
-  z-index: 99999;
+  z-index: 9999;
   box-shadow: 0.1rem 0.1rem 1rem var(--color-shadow);
   padding: 1rem;
   overflow-y: auto;

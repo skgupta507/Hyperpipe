@@ -50,7 +50,7 @@ watch(show, n => {
   left: 0;
   right: 0;
   background-color: #00000066;
-  z-index: 9999;
+  z-index: 99999;
 }
 .modal-box {
   width: 50vw;
