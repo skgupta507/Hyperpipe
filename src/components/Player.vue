@@ -97,11 +97,10 @@ async function Stream() {
           if (quality == 'best') sel = Math.max(...bandwidths);
           else if (quality == 'worst') sel = Math.min(...bandwidths);
 
-          if (sel) {
+          if (sel)
             window.audioPlayer.selectVariantTrack(
               tracks[bandwidths.indexOf(sel)],
             );
-          }
         }
       })
       .catch(err => {
@@ -151,6 +150,30 @@ onMounted(() => {
     navigator.mediaSession.setActionHandler('pause', () => {
       audio.value.pause();
       player.state.status = 'play';
+    });
+
+    navigator.mediaSession.setActionHandler('previoustrack', () => {
+      if (data.state.urls.length > 2) {
+        const i = data.state.urls.map(s => s.url).indexOf(data.state.url);
+
+        data.getSong(data.state.urls[i - 1].url);
+      }
+    });
+
+    navigator.mediaSession.setActionHandler('nexttrack', () => {
+      if (data.state.urls.length > 2) {
+        const i = data.state.urls.map(s => s.url).indexOf(data.state.url);
+
+        data.getSong(data.state.urls[i + 1].url);
+      }
+    });
+
+    navigator.mediaSession.setActionHandler('seekbackward', () => {
+      audio.value.duration -= 10;
+    });
+
+    navigator.mediaSession.setActionHandler('seekforward', () => {
+      audio.value.duration += 10;
     });
   }
 });

@@ -24,9 +24,11 @@ export async function getJson(url) {
   if (res && res.error) {
     alert(
       res.message
-        .replaceAll('Video', 'Audio')
-        .replaceAll('video', 'audio')
-        .replaceAll('watched', 'heard'),
+        ? res.message
+            .replaceAll('Video', 'Audio')
+            .replaceAll('video', 'audio')
+            .replaceAll('watched', 'heard')
+        : res.error,
     );
     console.error(res.message);
   } else if (res) {

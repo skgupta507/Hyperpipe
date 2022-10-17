@@ -130,22 +130,6 @@ onMounted(() => {
     }
   };
 
-  /* Media Controls */
-  if ('mediaSession' in navigator) {
-    navigator.mediaSession.setActionHandler('previoustrack', () => {
-      if (data.state.urls.length > 2) {
-        const i = data.state.urls.map(s => s.url).indexOf(data.state.url);
-        data.getSong(data.state.urls[i - 1].url);
-      }
-    });
-    navigator.mediaSession.setActionHandler('nexttrack', () => {
-      if (data.state.urls.length > 2) {
-        const i = data.state.urls.map(s => s.url).indexOf(data.state.url);
-        data.getSong(data.state.urls[i + 1].url);
-      }
-    });
-  }
-
   /* Setup IndexedDB for storing custom playlists */
   useSetupDB();
 

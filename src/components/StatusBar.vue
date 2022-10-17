@@ -226,7 +226,9 @@ async function Like() {
 
           <button
             id="btn-lyrics"
-            class="bi bi-file-music clickable"
+            title="Lyrics"
+            aria-label="Lyrics"
+            class="bi bi-chat-square-quote clickable"
             :data-active="player.state.lyrics"
             @click="player.toggle('lyrics')"></button>
 

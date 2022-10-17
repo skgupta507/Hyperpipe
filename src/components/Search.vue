@@ -1,5 +1,12 @@
 <script setup>
-import { ref, reactive, watch, onUpdated } from 'vue';
+import {
+  ref,
+  reactive,
+  watch,
+  onActivated,
+  onUpdated,
+  onDeactivated,
+} from 'vue';
 
 import Btn from './Btn.vue';
 import SongItem from './SongItem.vue';
@@ -20,7 +27,7 @@ const { t } = useI18n(),
   artist = useArtist();
 
 const emit = defineEmits(['play-urls']),
-  filters = ['music_songs', 'music_albums', 'music_artists'],
+  filters = ['music_songs', 'music_albums', 'music_artists', 'music_playlists'],
   filter = ref('music_songs'),
   isSearch = ref(/search/.test(location.pathname)),
   albumMenu = ref(false);
@@ -91,12 +98,40 @@ const shuffleAdd = () => {
       console.log('No Search');
     }
   },
+  loading = ref(false),
+  next = ref(null),
+  getSearchNext = async () => {
+    if (!isSearch.value || loading.value || !next.value) return;
+    if (
+      window.innerHeight + window.scrollY >=
+      document.body.offsetHeight - window.innerHeight
+    ) {
+      loading.value = true;
+
+      const f = filter.value || 'music_songs',
+        json = await getJsonPiped(
+          `/nextpage/search?nextpage=${encodeURIComponent(next.value)}&q=${
+            nav.state.search
+          }&filter=${f}`,
+        ),
+        key = f.split('_')[1];
+
+      next.value = json.nextpage;
+      results.items[key].items.push(...json.items);
+
+      loading.value = false;
+
+      console.log(json, results.items);
+    }
+  },
   getResults = async q => {
     results.resetItems();
 
     const f = filter.value || 'music_songs',
       json = await getJsonPiped(`/search?q=${q}&filter=${f}`),
       key = f.split('_')[1];
+
+    next.value = json.nextpage;
 
     results.setItem(key, json);
     console.log(json, key);
@@ -118,6 +153,14 @@ watch(
 
 onUpdated(() => {
   isSearch.value = /search/.test(location.pathname);
+});
+
+onActivated(() => {
+  window.addEventListener('scroll', getSearchNext);
+});
+
+onDeactivated(() => {
+  window.removeEventListener('scroll', getSearchNext);
 });
 </script>
 
@@ -190,7 +233,7 @@ onUpdated(() => {
 
   <div
     v-if="results.items.songs && results.items.songs.items[0]"
-    class="search-songs">
+    class="search-wrap">
     <h2 v-if="!isSearch">{{ t('title.songs') }}</h2>
     <div class="grid">
       <template v-for="(song, index) in results.items.songs.items">
@@ -236,7 +279,7 @@ onUpdated(() => {
 
   <div
     v-if="results.items.albums && results.items.albums.items[0]"
-    class="search-albums">
+    class="search-wrap">
     <h2 v-if="!isSearch">{{ t('title.albums') }}</h2>
     <div class="grid-3">
       <template v-for="album in results.items.albums.items">
@@ -252,8 +295,22 @@ onUpdated(() => {
   </div>
 
   <div
+    v-if="results.items.playlists && results.items.playlists.items[0]"
+    class="search-wrap">
+    <h2>{{ t('title.playlists') }}</h2>
+    <div class="grid-3">
+      <AlbumItem
+        v-for="pl in results.items.playlists.items"
+        :author="pl.videos + ' Songs • ' + pl.uploaderName"
+        :name="pl.name"
+        :art="pl.thumbnail"
+        @open-album="results.getAlbum(pl.url)" />
+    </div>
+  </div>
+
+  <div
     v-if="results.items.singles && results.items.singles.items[0]"
-    class="search-albums">
+    class="search-wrap">
     <h2>{{ t('title.singles') }}</h2>
     <div class="grid-3">
       <template v-for="single in results.items.singles.items">
@@ -272,7 +329,7 @@ onUpdated(() => {
         results.items.recommendedArtists.items[0]) ||
       (results.items.artists && results.items.artists.items[0])
     "
-    class="search-artists">
+    class="search-wrap">
     <h2 v-if="!isSearch">
       {{
         results.items.artists ? t('title.artists') : t('title.similar_artists')
@@ -296,18 +353,14 @@ onUpdated(() => {
 </template>
 
 <style scoped>
-.search-albums,
-.search-songs,
-.search-artists {
+.search-wrap {
   place-items: start center;
   margin-bottom: 2rem;
 }
-.search-songs h2,
-.search-artists h2,
-.search-albums h2 {
+.search-wrap h2 {
   text-align: center;
 }
-.search-artists {
+.circle {
   text-align: center;
 }
 :deep(.bi) {
@@ -328,16 +381,17 @@ onUpdated(() => {
   padding: 0.5rem;
 }
 .filters {
+  max-width: 100%;
   display: flex;
   width: 100%;
   justify-content: center;
   margin-bottom: 2rem;
+  overflow-x: auto;
 }
 .filter {
-  width: calc(80% / v-bind('filters.length'));
   max-width: 200px;
-  margin: 1rem;
-  padding: 0.5rem;
+  margin: 0 0.25rem;
+  padding: 0.5rem 1rem;
   font-size: 1.25rem;
   border-radius: 0.25rem;
 }
