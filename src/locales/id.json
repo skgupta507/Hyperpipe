@@ -1,65 +1,65 @@
 {
-    "title": {
-        "artists": "Artis",
-        "similar_artists": "Artis Serupa",
-        "login": "Login",
-        "albums": "Album",
-        "remote": "Remote",
-        "songs": "Lagu",
-        "singles": "Singel",
-        "genres": "Genre",
-        "featured": "Unggulan",
-        "community": "Komunitas",
-        "search": "Cari",
-        "spotlight": "Sorotan",
-        "moods": "Suasana",
-        "local": "Lokal"
-    },
-    "playlist": {
-        "select": "Pilih Daftar Putar yang Ingin Ditambahkan",
-        "add": "Tambah Lagu ke Daftar Putar",
-        "sync": "Sinkronisasi Daftar Putar",
-        "local": "Daftar Putar Lokal",
-        "remote": "Daftar Putar Remote",
-        "name": "Judul Daftar Putar",
-        "create": "Buat Daftar Putar Baru"
-    },
-    "pref": {
-        "auto_queue": "Antrekan Lagu Secara Otomatis",
-        "best": "paling tinggi",
-        "theme": "Tema",
-        "player": "Pemutar Audio",
-        "quality": "Kualitas",
-        "codec": "Codec",
-        "worst": "paling rendah",
-        "auto": "otomatis",
-        "volume": "Volume Default"
-    },
-    "info": {
-        "no_info": "Tidak Ada Informasi Tersedia",
-        "search": "Mulai Pencarian",
-        "see_all": "Tampilkan Semua"
-    },
-    "action": {
-        "add": "Tambah",
-        "create": "Buat",
-        "cancel": "Batal",
-        "send": "Kirim",
-        "receive": "Terima",
-        "back": "Kembali"
-    },
-    "instances": {
-        "piped": "Instance Piped",
-        "hyp": "Instance Hyperpipe",
-        "auth": "Instance Otentikasi",
-        "name": "Nama",
-        "loc": "Lokasi",
-        "cdn": "CDN",
-        "version": "Versi",
-        "up_to_date": "Terkini"
-    },
-    "lyrics": {
-        "void": "Tidak Ada Lirik",
-        "load": "Mengambil Lirik"
-    }
+  "title": {
+    "artists": "Artis",
+    "similar_artists": "Artis Serupa",
+    "login": "Login",
+    "albums": "Album",
+    "remote": "Remote",
+    "songs": "Lagu",
+    "singles": "Singel",
+    "genres": "Genre",
+    "featured": "Unggulan",
+    "community": "Komunitas",
+    "search": "Cari",
+    "spotlight": "Sorotan",
+    "moods": "Suasana",
+    "local": "Lokal"
+  },
+  "playlist": {
+    "select": "Pilih Daftar Putar yang Ingin Ditambahkan",
+    "add": "Tambah Lagu ke Daftar Putar",
+    "sync": "Sinkronisasi Daftar Putar",
+    "local": "Daftar Putar Lokal",
+    "remote": "Daftar Putar Remote",
+    "name": "Judul Daftar Putar",
+    "create": "Buat Daftar Putar Baru"
+  },
+  "pref": {
+    "auto_queue": "Antrekan Lagu Secara Otomatis",
+    "best": "paling tinggi",
+    "theme": "Tema",
+    "player": "Pemutar Audio",
+    "quality": "Kualitas",
+    "codec": "Codec",
+    "worst": "paling rendah",
+    "auto": "otomatis",
+    "volume": "Volume Default"
+  },
+  "info": {
+    "no_info": "Tidak Ada Informasi Tersedia",
+    "search": "Mulai Pencarian",
+    "see_all": "Tampilkan Semua"
+  },
+  "action": {
+    "add": "Tambah",
+    "create": "Buat",
+    "cancel": "Batal",
+    "send": "Kirim",
+    "receive": "Terima",
+    "back": "Kembali"
+  },
+  "instances": {
+    "piped": "Instance Piped",
+    "hyp": "Instance Hyperpipe",
+    "auth": "Instance Otentikasi",
+    "name": "Nama",
+    "loc": "Lokasi",
+    "cdn": "CDN",
+    "version": "Versi",
+    "up_to_date": "Terkini"
+  },
+  "lyrics": {
+    "void": "Tidak Ada Lirik",
+    "load": "Mengambil Lirik"
+  }
 }

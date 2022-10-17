@@ -33,6 +33,10 @@ export const SUPPORTED_LOCALES = [
     name: 'Galego',
   },
   {
+    code: 'id',
+    name: 'Bahasa Indonesia',
+  },
+  {
     code: 'it',
     name: 'Italiano',
   },
@@ -43,6 +47,10 @@ export const SUPPORTED_LOCALES = [
   {
     code: 'ko',
     name: '한국어',
+  },
+  {
+    code: 'ru',
+    name: 'Pусский язык',
   },
   {
     code: 'vi',
