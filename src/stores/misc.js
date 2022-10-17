@@ -5,6 +5,14 @@ import en from '@/locales/en.json';
 
 export const SUPPORTED_LOCALES = [
   {
+    code: 'ar',
+    name: 'عربي',
+  },
+  {
+    code: 'cs',
+    name: 'Čeština',
+  },
+  {
     code: 'de',
     name: 'Deutsch',
   },
@@ -21,12 +29,12 @@ export const SUPPORTED_LOCALES = [
     name: 'Français',
   },
   {
-    code: 'it',
-    name: 'Italiano',
+    code: 'gl',
+    name: 'Galego',
   },
   {
-    code: 'ar',
-    name: 'عربي',
+    code: 'it',
+    name: 'Italiano',
   },
   {
     code: 'ja',
@@ -35,6 +43,10 @@ export const SUPPORTED_LOCALES = [
   {
     code: 'ko',
     name: '한국어',
+  },
+  {
+    code: 'vi',
+    name: 'Tiếng Việt',
   },
   {
     code: 'zh_Hans',

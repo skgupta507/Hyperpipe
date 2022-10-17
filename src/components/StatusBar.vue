@@ -91,7 +91,7 @@ async function Like() {
       <Modal
         n="2"
         :display="showme.pl"
-        title="Select Playlist to Add"
+        :title="t('playlist.select')"
         @show="
           e => {
             showme.pl = e;
