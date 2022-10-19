@@ -1,1 +1,66 @@
-{}
+{
+    "title": {
+        "songs": "Mahnılar",
+        "albums": "Albomlar",
+        "singles": "Singles",
+        "similar_artists": "Oxşar Sənətkarlar",
+        "playlists": "Pleylistlər",
+        "moods": "Əhval-ruhiyyə",
+        "genres": "Janrlar",
+        "featured": "Seçilmiş",
+        "spotlight": "Diqqət mərkəzi",
+        "community": "Cəmiyyət",
+        "login": "Daxil ol",
+        "remote": "Uzaqdan",
+        "search": "Axtarış",
+        "artists": "Sənətkarlar",
+        "local": "Yerli"
+    },
+    "action": {
+        "back": "Geri",
+        "add": "Əlavə et",
+        "create": "Yaradın",
+        "receive": "Qəbul edin",
+        "cancel": "Ləğv et",
+        "send": "Göndər"
+    },
+    "playlist": {
+        "local": "Yerli Pleylistlər",
+        "remote": "Uzaq Pleylistlər",
+        "name": "Pleylist adı",
+        "create": "Yeni pleylist yaradın",
+        "sync": "Pleylistləri sinxronlaşdırın",
+        "add": "Mahnıları pleylistə əlavə edin",
+        "select": "Əlavə etmək üçün pleylist seçin"
+    },
+    "pref": {
+        "theme": "Mövzu",
+        "player": "Səs Oynadıcı",
+        "auto": "avtomatik",
+        "best": "ən yaxşı",
+        "worst": "ən pis",
+        "volume": "Defolt Həcm",
+        "codec": "Kodek",
+        "auto_queue": "Mahnıları avtomatik növbələ",
+        "quality": "Keyfiyyət"
+    },
+    "info": {
+        "see_all": "Hamısını gör",
+        "search": "Axtarmağa Başlayın",
+        "no_info": "Məlumat yoxdur"
+    },
+    "instances": {
+        "hyp": "Hyperpipe Nümunəsi",
+        "piped": "Piped Nümunəsi",
+        "name": "Ad",
+        "loc": "Məkanlar",
+        "cdn": "CDN",
+        "up_to_date": "Yenilənib",
+        "version": "Versiya",
+        "auth": "Doğrulayıcı Nümunə"
+    },
+    "lyrics": {
+        "load": "Lirika Göstərilir",
+        "void": "Lirika yoxdur"
+    }
+}
