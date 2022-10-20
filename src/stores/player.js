@@ -116,7 +116,33 @@ export const useData = defineStore('data', () => {
     } else state.urls = [];
   }
 
-  return { state, getSong, playNext };
+  function prevTrack() {
+    const now = state.urls.filter(s => s.url === state.url)[0],
+      i = state.urls.indexOf(now);
+
+    if (state.urls[i - 1]) getSong(state.urls[i - 1].url);
+    else if (player.state.loop == 1) {
+      console.log(state.url, state.urls[state.urls.length - 1]);
+
+      state.url = state.urls[state.urls.length - 1].url;
+      getSong(state.urls[state.urls.length - 1].url);
+    } else state.urls = [];
+  }
+
+  function nextTrack() {
+    const now = state.urls.filter(s => s.url === state.url)[0],
+      i = state.urls.indexOf(now);
+
+    if (state.urls[i + 1]) getSong(state.urls[i + 1].url);
+    else if (player.state.loop == 1) {
+      console.log(state.url, state.urls[0]);
+
+      state.url = state.urls[0].url;
+      getSong(state.urls[0].url);
+    } else state.urls = [];
+  }
+
+  return { state, getSong, playNext, prevTrack, nextTrack };
 });
 
 export const usePlayer = defineStore('player', () => {
@@ -128,6 +154,7 @@ export const usePlayer = defineStore('player', () => {
     streams: [],
     duration: 0,
     time: 0,
+    realTime: 0,
     currentTime: 0,
     playlist: false,
     lyrics: false,
@@ -145,6 +172,7 @@ export const usePlayer = defineStore('player', () => {
 
   function setTime(t) {
     state.time = Math.floor((t / state.duration) * 100);
+    state.realTime = Math.floor(t);
   }
 
   return { state, toggle, setTime };
