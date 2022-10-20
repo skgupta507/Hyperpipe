@@ -64,6 +64,6 @@ watch(
 
 <style scoped>
 .placeholder:empty::before {
-  --ico: '\f3a5';
+  --ico: '\f262';
 }
 </style>

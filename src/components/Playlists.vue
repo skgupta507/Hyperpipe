@@ -43,7 +43,7 @@ defineEmits(['playthis']);
   position: fixed;
   top: 2rem;
   bottom: calc(5rem + 5vh);
-  right: 1rem;
+  left: 1rem;
   width: 30rem;
   max-width: calc(100% - 2rem);
   background: var(--color-background-mute);
