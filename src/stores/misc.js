@@ -9,6 +9,10 @@ export const SUPPORTED_LOCALES = [
     name: 'عربي',
   },
   {
+    code: 'az',
+    name: 'Azərbaycan',
+  },
+  {
     code: 'cs',
     name: 'Čeština',
   },
@@ -50,7 +54,7 @@ export const SUPPORTED_LOCALES = [
   },
   {
     code: 'ru',
-    name: 'Pусский язык',
+    name: 'Pусский ',
   },
   {
     code: 'vi',
