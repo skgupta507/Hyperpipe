@@ -22,6 +22,7 @@ const { t } = useI18n(),
           @change="
             nav.state.search = $event.target.value;
             nav.state.page = 'home';
+            $event.target.blur();
           "
           :value="nav.state.search" />
       </div>
