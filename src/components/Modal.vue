@@ -70,6 +70,7 @@ watch(show, n => {
   padding: 1rem;
   max-height: calc(90vh - 8rem);
   overflow-y: auto;
+  overscroll-behavior: contain;
 }
 .modal-content * {
   width: 100%;
