@@ -52,6 +52,7 @@ defineEmits(['playthis']);
   box-shadow: 0.1rem 0.1rem 1rem var(--color-shadow);
   padding: 1rem;
   overflow-y: auto;
+  overscroll-behavior: contain;
 }
 .placeholder:empty::before {
   --ico: '\f64d';
