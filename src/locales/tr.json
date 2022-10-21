@@ -1,1 +1,34 @@
-{}
+{
+    "title": {
+        "artists": "Sanatçılar",
+        "similar_artists": "Benzer Sanatçılar",
+        "playlists": "Oynatma listeleri",
+        "featured": "Öne çıkan",
+        "community": "Toplum",
+        "login": "Giriş yap",
+        "local": "Yerel",
+        "search": "Arama",
+        "songs": "Şarkılar",
+        "albums": "Albümler"
+    },
+    "action": {
+        "back": "Geri",
+        "add": "Ekle",
+        "create": "Oluştur",
+        "cancel": "İptal",
+        "receive": "Al",
+        "send": "Gönder"
+    },
+    "playlist": {
+        "local": "Yerel Oynatma Listeleri",
+        "name": "Oynatma listesi adı",
+        "add": "Oynatma Listesine Şarkı Ekle",
+        "create": "Yeni bir Oynatma Listesi Oluştur",
+        "sync": "Oynatma listelerini senkronize et",
+        "select": "Eklenecek Oynatma Listesini Seçin"
+    },
+    "pref": {
+        "theme": "Tema",
+        "player": "Ses Oynatıcı"
+    }
+}
