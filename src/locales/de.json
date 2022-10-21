@@ -13,7 +13,8 @@
         "local": "Lokal",
         "search": "Suche",
         "spotlight": "Scheinwerfer",
-        "playlists": "Wiedergabelisten"
+        "playlists": "Wiedergabelisten",
+        "remote": "Ferngesteuerte"
     },
     "action": {
         "back": "Zurück",
