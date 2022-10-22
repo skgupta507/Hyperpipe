@@ -117,7 +117,7 @@ onBeforeMount(() => {
   if (store.locale) setupLocale(store.locale);
 
   /* Set the default tab */
-  if (location.pathname == '/') nav.state.page = store.page;
+  if (location.pathname == '/' && store.page) nav.state.page = store.page;
 });
 
 onMounted(() => {
