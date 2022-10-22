@@ -38,7 +38,7 @@
         "local": "Lokalne liste izvođenja",
         "name": "Naziv liste izvođenja",
         "create": "Kreirajte novu listu izvođenja",
-        "select": "Odaberite listu izvođenja za dodavanje",
+        "select": "Odaberite listu izvođenja da dodate",
         "sync": "Sinkronizujte liste izvođenja",
         "remote": "Vanjske liste izvođenja",
         "add": "Dodajte pjesme u listu izvođenja"
@@ -52,7 +52,8 @@
         "codec": "Kodek",
         "auto": "auto",
         "best": "najbolja",
-        "quality": "Kvaliteta"
+        "quality": "Kvaliteta",
+        "tab": "Zadana Kartica"
     },
     "info": {
         "search": "Započni pretraživanje",
