@@ -33,7 +33,8 @@
         "codec": "Codec",
         "quality": "Kwaliteit",
         "best": "beste",
-        "volume": "Standaard Volume"
+        "volume": "Standaard Volume",
+        "tab": "Standaard Tabblad"
     },
     "lyrics": {
         "void": "Geen songtekst",
