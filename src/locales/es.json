@@ -42,7 +42,8 @@
         "volume": "Volumen predeterminado",
         "auto_queue": "Canciones en la cola de reproducción automáticamente",
         "worst": "La peor",
-        "best": "La mejor"
+        "best": "La mejor",
+        "tab": "Ficha predeterminada"
     },
     "info": {
         "see_all": "Ver todo",
