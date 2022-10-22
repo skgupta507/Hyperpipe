@@ -34,7 +34,8 @@
         "theme": "Thème",
         "player": "Lecteur audio",
         "auto_queue": "Mettre automatiquement les chansons en file d'attente",
-        "codec": "Codec"
+        "codec": "Codec",
+        "tab": "Onglet par défaut"
     },
     "info": {
         "see_all": "Voir tout",
