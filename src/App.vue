@@ -114,9 +114,10 @@ onBeforeMount(() => {
   }
 
   /* Set the default locale if set */
-  if (store.locale) {
-    setupLocale(store.locale);
-  }
+  if (store.locale) setupLocale(store.locale);
+
+  /* Set the default tab */
+  if (location.pathname == '/') nav.state.page = store.page;
 });
 
 onMounted(() => {
@@ -125,9 +126,7 @@ onMounted(() => {
 
   /* Alert User on close if url is present */
   window.onbeforeunload = () => {
-    if (data.state.url) {
-      return 'Are you Sure?';
-    }
+    if (data.state.url) return 'Are you Sure?';
   };
 
   /* Setup IndexedDB for storing custom playlists */

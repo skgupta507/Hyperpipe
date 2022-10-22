@@ -61,7 +61,7 @@ function getStoreBool(key, ele) {
 const verifyApi = computed(() =>
     hypInstances.value
       .map(i => i.api_url.replace('https://', '').replace('http://'))
-      .includes(getStore('api') || PIPED_INSTANCE),
+      .includes(getStore('api') || HYPERPIPE_INSTANCE),
   ),
   verifyPipedApi = computed(() =>
     instances.value
@@ -89,6 +89,7 @@ onMounted(() => {
     <option value="dark">Dark (Default)</option>
     <option value="light">Light</option>
     <option value="blur">Blur</option>
+    <option value="light blur">Blur (Light)</option>
     <option value="dracula">Dracula</option>
     <option value="nord">Nord</option>
   </select>
@@ -101,6 +102,19 @@ onMounted(() => {
     :value="getStore('locale') || 'en'"
     @change="setLang($event.target.value)">
     <option v-for="i in SUPPORTED_LOCALES" :value="i.code">{{ i.name }}</option>
+  </select>
+
+  <h2>{{ t('pref.tab') }}</h2>
+
+  <select
+    id="pref-page"
+    class="input"
+    :value="getStore('page') || 'home'"
+    @change="setStore('page', $event.target.value)">
+    <option value="home">Home</option>
+    <option value="explore">Explore</option>
+    <option value="charts">Charts</option>
+    <option value="library">Library</option>
   </select>
 
   <h2>{{ t('pref.player') }}</h2>
@@ -198,7 +212,14 @@ onMounted(() => {
     </table>
   </div>
 
-  <h2>{{ t('instances.piped') }}</h2>
+  <h2>
+    {{ t('instances.piped') }}
+    <a
+      href="https://github.com/TeamPiped/Piped"
+      target="_blank"
+      rel="noreferrer noopener"
+      class="bi bi-info-circle"></a>
+  </h2>
   <select
     v-if="instances"
     class="input"

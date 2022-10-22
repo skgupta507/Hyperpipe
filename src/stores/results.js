@@ -9,7 +9,8 @@ import { useRoute } from '@/scripts/util.js';
 export const useResults = defineStore('results', () => {
   const items = ref({}),
     search = ref(''),
-    chartsId = ref('');
+    chartsId = ref(''),
+    next = ref('');
 
   function setItem(key, val) {
     items.value[key] = val;
@@ -65,12 +66,16 @@ export const useResults = defineStore('results', () => {
 
     useRoute(e);
     useNav().state.page = 'home';
+
+    if (json.nextpage)
+      next.value = hash + '?nextpage=' + encodeURIComponent(json.nextpage);
   }
 
   return {
     items,
     search,
     chartsId,
+    next,
     setItem,
     resetItems,
     getExplore,

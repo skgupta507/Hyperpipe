@@ -40,7 +40,10 @@ function getFormattedTime(sec) {
   minutes -= hours * 60;
 
   if (hours === 0) return `${minutes}:${String(seconds % 60).padStart(2, '0')}`;
-  else return `${hours}:${String(minutes).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
+  else
+    return `${hours}:${String(minutes).padStart(2, '0')}:${String(
+      seconds % 60,
+    ).padStart(2, '0')}`;
 }
 
 function List() {
@@ -195,11 +198,13 @@ async function Like() {
       <div class="statusbar-control-item center">
         <button
           :style="{
-            visibility: (data.state.urls[data.state.urls.map(s => s.url).indexOf(data.state.url) - 1] ||
+            visibility:
+              data.state.urls[
+                data.state.urls.map(s => s.url).indexOf(data.state.url) - 1
+              ] ||
               (player.state.loop == 1 && data.state.urls.length > 1)
-            )
-            ? 'visible'
-            : 'hidden'
+                ? 'visible'
+                : 'hidden',
           }"
           id="btn-previoustrack"
           aria-label="Play previous track"
@@ -215,11 +220,13 @@ async function Like() {
 
         <button
           :style="{
-            visibility: (data.state.urls[data.state.urls.map(s => s.url).indexOf(data.state.url) + 1] ||
+            visibility:
+              data.state.urls[
+                data.state.urls.map(s => s.url).indexOf(data.state.url) + 1
+              ] ||
               (player.state.loop == 1 && data.state.urls.length > 1)
-            )
-            ? 'visible'
-            : 'hidden'
+                ? 'visible'
+                : 'hidden',
           }"
           id="btn-nexttrack"
           aria-label="Play next track"

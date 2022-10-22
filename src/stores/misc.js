@@ -13,6 +13,10 @@ export const SUPPORTED_LOCALES = [
     name: 'Azərbaycan',
   },
   {
+    code: 'bs',
+    name: 'Bosanski',
+  },
+  {
     code: 'cs',
     name: 'Čeština',
   },
@@ -37,6 +41,10 @@ export const SUPPORTED_LOCALES = [
     name: 'Galego',
   },
   {
+    code: 'hr',
+    name: 'Hrvatski',
+  },
+  {
     code: 'id',
     name: 'Bahasa Indonesia',
   },
@@ -53,8 +61,16 @@ export const SUPPORTED_LOCALES = [
     name: '한국어',
   },
   {
+    code: 'nl',
+    name: 'Nederlands',
+  },
+  {
     code: 'ru',
     name: 'Pусский ',
+  },
+  {
+    code: 'sr',
+    name: 'Српски',
   },
   {
     code: 'tr',

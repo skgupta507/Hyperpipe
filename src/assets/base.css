@@ -32,31 +32,14 @@ body[data-theme='dark'] {
   --color-border-hover: var(--vt-c-divider-dark-1);
 
   --color-shadow: #000;
+  --color-blur: #11111190;
   --color-scrollbar: var(--vt-c-blue);
 
   --color-heading: var(--vt-c-text-dark-1);
   --color-text: var(--vt-c-text-dark-2);
 }
 
-body[data-theme='black'] {
-  --color-background: #000;
-  --color-shadow: var(--vt-c-black);
-}
-
-body[data-theme='blur'] #statusbar,
-body[data-theme='blur'] .txt-modal,
-body[data-theme='blur'] .pl-modal,
-body[data-theme='blur'] .modal-box,
-body[data-theme='blur'] .popup input[type='text'] {
-  background: #11111199;
-  backdrop-filter: blur(10px);
-}
-
-body[data-theme='blur'] .modal {
-  backdrop-filter: blur(5px);
-}
-
-body[data-theme='light'] {
+body[data-theme^='light'] {
   --color-foreground: cornflowerblue;
   --color-background: var(--vt-c-white);
   --color-background-soft: var(--vt-c-white-soft);
@@ -66,6 +49,7 @@ body[data-theme='light'] {
   --color-border-hover: var(--vt-c-divider-light-1);
 
   --color-shadow: #ccc;
+  --color-blur: #eeeeee90;
   --color-scrollbar: var(--color-shadow);
 
   --color-heading: var(--vt-c-text-light-1);
@@ -102,6 +86,19 @@ body[data-theme='dracula'] {
 
   --color-heading: var(--vt-c-text-dark-1);
   --color-text: var(--vt-c-text-dark-2);
+}
+
+body[data-theme*='blur'] #statusbar,
+body[data-theme*='blur'] .txt-modal,
+body[data-theme*='blur'] .pl-modal,
+body[data-theme*='blur'] .modal-box,
+body[data-theme*='blur'] .popup input[type='text'] {
+  background: var(--color-blur);
+  backdrop-filter: blur(10px);
+}
+
+body[data-theme*='blur'] .modal {
+  backdrop-filter: blur(5px);
 }
 
 *,

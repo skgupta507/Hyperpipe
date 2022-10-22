@@ -99,29 +99,47 @@ const shuffleAdd = () => {
     }
   },
   loading = ref(false),
-  next = ref(null),
-  getSearchNext = async () => {
-    if (!isSearch.value || loading.value || !next.value) return;
+  getNextPage = async () => {
+    if (
+      (!isSearch.value && !results.items?.songs?.title) ||
+      loading.value ||
+      !results.next
+    )
+      return;
+
     if (
       window.innerHeight + window.scrollY >=
       document.body.offsetHeight - window.innerHeight
     ) {
       loading.value = true;
 
-      const f = filter.value || 'music_songs',
-        json = await getJsonPiped(
-          `/nextpage/search?nextpage=${encodeURIComponent(next.value)}&q=${
+      let items, key;
+
+      if (isSearch.value) {
+        const f = filter.value || 'music_songs';
+
+        const json = await getJsonPiped(
+          `/nextpage/search?nextpage=${encodeURIComponent(results.next)}&q=${
             nav.state.search
           }&filter=${f}`,
-        ),
-        key = f.split('_')[1];
+        );
 
-      next.value = json.nextpage;
-      results.items[key].items.push(...json.items);
+        key = f.split('_')[1];
+        results.next = json.nextpage;
+
+        items = json.items;
+      } else {
+        const json = await getJsonPiped(`/nextpage/playlists/${results.next}`);
+        key = 'songs';
+
+        items = json.relatedStreams;
+      }
+
+      results.items[key].items.push(...items);
 
       loading.value = false;
 
-      console.log(json, results.items);
+      console.log(items, results.items);
     }
   },
   getResults = async q => {
@@ -131,7 +149,7 @@ const shuffleAdd = () => {
       json = await getJsonPiped(`/search?q=${q}&filter=${f}`),
       key = f.split('_')[1];
 
-    next.value = json.nextpage;
+    results.next = json.nextpage;
 
     results.setItem(key, json);
     console.log(json, key);
@@ -156,11 +174,11 @@ onUpdated(() => {
 });
 
 onActivated(() => {
-  window.addEventListener('scroll', getSearchNext);
+  window.addEventListener('scroll', getNextPage);
 });
 
 onDeactivated(() => {
-  window.removeEventListener('scroll', getSearchNext);
+  window.removeEventListener('scroll', getNextPage);
 });
 </script>
 

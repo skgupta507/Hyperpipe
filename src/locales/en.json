@@ -35,6 +35,7 @@
   },
   "pref": {
     "theme": "Theme",
+    "tab": "Default Tab",
     "player": "Audio Player",
     "auto_queue": "Automatically Queue Songs",
     "codec": "Codec",
