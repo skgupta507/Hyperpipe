@@ -25,7 +25,8 @@
         "worst": "nejhorší",
         "theme": "Motiv",
         "quality": "Kvalita",
-        "best": "nejlepší"
+        "best": "nejlepší",
+        "tab": "Výchozí karta"
     },
     "instances": {
         "name": "Název",
