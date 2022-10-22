@@ -42,7 +42,8 @@
         "volume": "Defolt Həcm",
         "codec": "Kodek",
         "auto_queue": "Mahnıları avtomatik növbələ",
-        "quality": "Keyfiyyət"
+        "quality": "Keyfiyyət",
+        "tab": "Defolt Tab"
     },
     "info": {
         "see_all": "Hamısını gör",
