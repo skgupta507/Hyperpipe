@@ -48,7 +48,8 @@
         "player": "Audio reproduktor",
         "auto_queue": "Automatski stavite pjesme u red",
         "worst": "najgora",
-        "volume": "Zadana glasnoća"
+        "volume": "Zadana glasnoća",
+        "tab": "Zadana Kartica"
     },
     "lyrics": {
         "load": "Dohvaćanje stihova",
@@ -61,6 +62,6 @@
         "name": "Naziv popisa pjesama",
         "add": "Dodajte pjesme u popis",
         "create": "Stvorite novi popis pjesama",
-        "select": "Odaberite Popis pjesama da dodate"
+        "select": "Odaberite popis pjesama da dodate"
     }
 }
