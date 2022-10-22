@@ -8,7 +8,8 @@
         "codec": "Codec",
         "quality": "Qualità",
         "auto": "automatica",
-        "worst": "la peggia"
+        "worst": "la peggia",
+        "tab": "Scheda predefinita"
     },
     "title": {
         "albums": "Album",
