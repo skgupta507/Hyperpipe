@@ -67,8 +67,8 @@ export const useResults = defineStore('results', () => {
     useRoute(e);
     useNav().state.page = 'home';
 
-    if (json.nextpage)
-      next.value = hash + '?nextpage=' + encodeURIComponent(json.nextpage);
+    next.value = hash + '?nextpage=' + encodeURIComponent(json.nextpage);
+
   }
 
   return {
