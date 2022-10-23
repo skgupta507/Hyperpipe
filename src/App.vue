@@ -248,7 +248,6 @@ a:focus {
 a:focus-visible {
   border-radius: 0.25rem;
   outline: 0.2rem solid var(--color-border);
-  outline-offset: 0.2rem;
   transition: none;
 }
 .flex {
