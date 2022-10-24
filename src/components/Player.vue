@@ -169,11 +169,11 @@ onMounted(() => {
     });
 
     navigator.mediaSession.setActionHandler('seekbackward', () => {
-      audio.value.duration -= 10;
+      audio.value.currentTime -= 10;
     });
 
     navigator.mediaSession.setActionHandler('seekforward', () => {
-      audio.value.duration += 10;
+      audio.value.currentTime += 10;
     });
   }
 });
