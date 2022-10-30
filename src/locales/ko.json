@@ -35,6 +35,7 @@
   },
   "pref": {
     "theme": "테마",
+    "tab": "기본 탭",
     "player": "오디오 플레이어",
     "auto_queue": "대기열 자동 편성",
     "codec": "코덱",
