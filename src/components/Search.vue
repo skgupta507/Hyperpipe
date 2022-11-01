@@ -400,11 +400,10 @@ onDeactivated(() => {
 }
 .filters {
   max-width: 100%;
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  margin-bottom: 2rem;
+  width: max-content;
+  margin: 0 auto 2rem;
   overflow-x: auto;
+  white-space: nowrap;
 }
 .filter {
   max-width: 200px;
