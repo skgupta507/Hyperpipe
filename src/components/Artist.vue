@@ -50,6 +50,7 @@ const artist = useArtist(),
 h2 {
   padding: 1rem;
   font-size: 2rem;
+  font-weight: bold;
 }
 p {
   --line: 3;
@@ -59,7 +60,7 @@ p {
   hyphens: auto;
   margin: 1rem;
   font-size: 1rem;
-  line-height: 1.25rem;
+  line-height: 1.5rem;
   overflow: hidden;
 }
 p.more {
