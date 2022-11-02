@@ -33,6 +33,10 @@ export const SUPPORTED_LOCALES = [
     name: 'Español',
   },
   {
+    code: 'fa',
+    name: 'فارسی'
+  },
+  {
     code: 'fr',
     name: 'Français',
   },
