@@ -353,7 +353,7 @@ img {
 .bars-wrap {
   flex-shrink: 0;
   display: flex;
-  grid-column-gap: 0.15rem;
+  column-gap: 0.15rem;
   height: 2.75rem;
   width: 2.75rem;
   transform: rotateZ(180deg) scale(0.65);

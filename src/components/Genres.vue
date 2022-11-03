@@ -114,7 +114,7 @@ onMounted(get);
   display: grid;
   grid-template-columns: calc(100% / 3) calc(100% / 3) calc(100% / 3);
   grid-auto-rows: 1fr;
-  grid-gap: 0.125rem;
+  gap: 0.125rem;
   padding: 1rem 0;
 }
 .btn {
