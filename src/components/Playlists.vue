@@ -61,7 +61,7 @@ defineEmits(['playthis']);
   display: flex;
   align-items: center;
   min-height: 3.55rem;
-  grid-column-gap: 0.4rem;
+  column-gap: 0.4rem;
   padding: 0.4rem;
   margin: 0.125rem;
   border-radius: 0.25rem;
