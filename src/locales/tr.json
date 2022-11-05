@@ -4,12 +4,17 @@
         "similar_artists": "Benzer Sanatçılar",
         "playlists": "Oynatma listeleri",
         "featured": "Öne çıkan",
-        "community": "Toplum",
+        "community": "Topluluk",
         "login": "Giriş yap",
         "local": "Yerel",
         "search": "Arama",
         "songs": "Şarkılar",
-        "albums": "Albümler"
+        "albums": "Albümler",
+        "singles": "Tekliler",
+        "genres": "Türler",
+        "moods": "Ruh hâli",
+        "spotlight": "Spot ışıkları",
+        "remote": "Uzak"
     },
     "action": {
         "back": "Geri",
@@ -21,14 +26,42 @@
     },
     "playlist": {
         "local": "Yerel Oynatma Listeleri",
-        "name": "Oynatma listesi adı",
-        "add": "Oynatma Listesine Şarkı Ekle",
-        "create": "Yeni bir Oynatma Listesi Oluştur",
-        "sync": "Oynatma listelerini senkronize et",
-        "select": "Eklenecek Oynatma Listesini Seçin"
+        "name": "Çalma listesi adı",
+        "add": "Çalma Listesine Şarkı Ekle",
+        "create": "Yeni bir Çalma Listesi Oluştur",
+        "sync": "Çalma listelerini senkronize et",
+        "select": "Eklenecek Çalma Listesini Seçin",
+        "remote": "Uzaktan Çalma Listeleri"
     },
     "pref": {
         "theme": "Tema",
-        "player": "Ses Oynatıcı"
+        "player": "Ses Çalar",
+        "auto_queue": "Şarkıları Otomatik Olarak Sırala",
+        "codec": "Codec",
+        "tab": "Varsayılan Sekme",
+        "quality": "Kalite",
+        "auto": "otomatik",
+        "best": "en iyi",
+        "worst": "en kötü",
+        "volume": "Varsayılan Ses Düzeyi"
+    },
+    "info": {
+        "see_all": "Hepsini Gör",
+        "search": "Aramaya Başla",
+        "no_info": "Bilgi Yok"
+    },
+    "instances": {
+        "hyp": "Hyperpipe Örneği",
+        "piped": "Piped Örneği",
+        "auth": "Kimlik Doğrulama Örneği",
+        "name": "İsim",
+        "loc": "Bölgler",
+        "cdn": "İçerik Teslim Ağı",
+        "up_to_date": "Güncel",
+        "version": "Sürüm"
+    },
+    "lyrics": {
+        "load": "Sözler Getiriliyor",
+        "void": "Sözler Bulunamadı"
     }
 }
