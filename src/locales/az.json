@@ -8,10 +8,10 @@
         "moods": "Əhval-ruhiyyə",
         "genres": "Janrlar",
         "featured": "Seçilmiş",
-        "spotlight": "Diqqət mərkəzi",
+        "spotlight": "Teatr",
         "community": "Cəmiyyət",
         "login": "Daxil ol",
-        "remote": "Uzaqdan",
+        "remote": "Uzaq",
         "search": "Axtarış",
         "artists": "Sənətkarlar",
         "local": "Yerli"
@@ -19,8 +19,8 @@
     "action": {
         "back": "Geri",
         "add": "Əlavə et",
-        "create": "Yaradın",
-        "receive": "Qəbul edin",
+        "create": "Yarat",
+        "receive": "Qəbul et",
         "cancel": "Ləğv et",
         "send": "Göndər"
     },
@@ -28,10 +28,10 @@
         "local": "Yerli Pleylistlər",
         "remote": "Uzaq Pleylistlər",
         "name": "Pleylist adı",
-        "create": "Yeni pleylist yaradın",
-        "sync": "Pleylistləri sinxronlaşdırın",
-        "add": "Mahnıları pleylistə əlavə edin",
-        "select": "Əlavə etmək üçün pleylist seçin"
+        "create": "Yeni pleylist yarat",
+        "sync": "Pleylistləri sinxronlaşdır",
+        "add": "Mahnıları pleylistə əlavə et",
+        "select": "Əlavə etmək üçün pleylist seç"
     },
     "pref": {
         "theme": "Mövzu",
@@ -47,7 +47,7 @@
     },
     "info": {
         "see_all": "Hamısını gör",
-        "search": "Axtarmağa Başlayın",
+        "search": "Axtarmağa Başla",
         "no_info": "Məlumat yoxdur"
     },
     "instances": {
