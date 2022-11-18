@@ -33,7 +33,8 @@
         "version": "Phiên bản",
         "name": "Tên",
         "cdn": "CDN",
-        "loc": "Các vị trí"
+        "loc": "Các vị trí",
+        "up_to_date": "Phiên bản mới nhất"
     },
     "playlist": {
         "create": "Tạo một danh sách phát mới",
