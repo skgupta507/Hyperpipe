@@ -22,8 +22,9 @@ const props = defineProps({
     art: String,
     playlistId: String,
   }),
-  emit = defineEmits(['open-song', 'remove']),
-  show = ref(false);
+  emit = defineEmits(['open-song', 'remove']);
+
+const show = ref(false);
 
 const openSong = el => {
     if (!el.classList.contains('ign')) {

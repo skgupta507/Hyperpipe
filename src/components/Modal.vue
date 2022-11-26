@@ -2,8 +2,9 @@
 import { ref, watch } from 'vue';
 
 const props = defineProps(['display', 'title', 'n']),
-  emit = defineEmits(['show']),
-  show = ref(props.display);
+  emit = defineEmits(['show']);
+
+const show = ref(props.display);
 
 watch(
   () => props.display,
@@ -13,7 +14,7 @@ watch(
   },
 );
 
-watch(show, n => {
+watch(show, () => {
   emit('show', show.value);
 });
 </script>

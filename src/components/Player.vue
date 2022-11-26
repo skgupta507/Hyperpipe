@@ -66,6 +66,22 @@ async function Stream() {
 
           const codecs = useStore().getItem('codec');
 
+          audioPlayer
+            .getNetworkingEngine()
+            .registerRequestFilter((_type, req) => {
+              const headers = req.headers;
+
+              let url = new URL(req.uris[0]);
+
+              if (url.pathname.indexOf('/videoplayback') > -1) {
+                if (headers.Range) {
+                  url.searchParams.set('range', headers.Range.split('=')[1]);
+                  req.headers = {};
+                  req.uris[0] = url.toString();
+                }
+              }
+            });
+
           audioPlayer.configure({
             preferredAudioCodecs: codecs ? codecs.split(':') : ['opus', 'mp4a'],
             manifest: {

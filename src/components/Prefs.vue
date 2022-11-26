@@ -6,9 +6,15 @@ import {
   HYPERPIPE_INSTANCE,
   getJson,
 } from '@/scripts/fetch.js';
-import { useStore } from '@/scripts/util.js';
 
+import { useStore } from '@/scripts/util.js';
 import { SUPPORTED_LOCALES, useI18n } from '@/stores/misc.js';
+
+const date = ref('unknown');
+
+import('@/assets/version.json').then(v => {
+  date.value = v.date;
+});
 
 const { t, setupLocale } = useI18n(),
   instances = ref([]),
@@ -286,6 +292,7 @@ onMounted(() => {
   </div>
 
   <footer>
+    {{ date }}
     <a
       class="bi bi-code-slash"
       target="_blank"

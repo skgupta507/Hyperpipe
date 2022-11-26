@@ -6,19 +6,22 @@ import Modal from './Modal.vue';
 
 import { useRand } from '@/scripts/colors.js';
 import { useStore } from '@/scripts/util.js';
-import {
-  useAuthCreatePlaylist,
-  getAuthPlaylists,
-  getJsonAuth,
-} from '@/scripts/fetch.js';
-import { useI18n } from '@/stores/misc.js';
 
 import {
   useListPlaylists,
   useGetPlaylist,
   useCreatePlaylist,
   useUpdatePlaylist,
-} from '../scripts/db.js';
+} from '@/scripts/db.js';
+
+import {
+  useAuthCreatePlaylist,
+  getAuthPlaylists,
+  getJsonAuth,
+} from '@/scripts/fetch.js';
+
+import { useResults } from '@/stores/results.js';
+import { useI18n, useNav } from '@/stores/misc.js';
 
 const { t } = useI18n(),
   store = useStore(),
@@ -46,13 +49,18 @@ const emit = defineEmits(['play-urls', 'open-playlist']),
 
 const pathname = url => new URL(url).pathname;
 
-const Play = key => {
+const Open = key => {
     console.log(key);
 
     useGetPlaylist(key, res => {
       console.log(res);
       if (res.urls.length > 0) {
-        emit('play-urls', res.urls);
+        useResults().items.songs = {
+          title: 'Local • ' + key,
+          items: res.urls.map(i => ({ ...i, ...{ thumbnail: '/1x1.png' } })),
+        };
+
+        useNav().state.page = 'home';
       } else alert('No songs to play!');
     });
   },
@@ -286,7 +294,7 @@ onMounted(async () => {
           :name="i.name"
           :author="t('title.songs') + ' • ' + i.urls.length"
           :grad="useRand()"
-          @open-album="Play(i.name)" />
+          @open-album="Open(i.name)" />
       </template>
     </div>
 

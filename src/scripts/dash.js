@@ -25,6 +25,7 @@ export function useDash(streams, len) {
       name: 'AdaptationSet',
       attributes: {
         id: i,
+        contentType: 'audio',
         mimeType: mimeTypes[i],
         startWithSAP: '1',
         subsegmentAlignment: 'true',
@@ -108,6 +109,9 @@ export function useDash(streams, len) {
           {
             type: 'element',
             name: 'Period',
+            attributes: {
+              id: 0,
+            },
             elements: sets,
           },
         ],

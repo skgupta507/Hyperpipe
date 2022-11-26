@@ -34,7 +34,7 @@ export const SUPPORTED_LOCALES = [
   },
   {
     code: 'fa',
-    name: 'فارسی'
+    name: 'فارسی',
   },
   {
     code: 'fr',
