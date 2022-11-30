@@ -14,7 +14,8 @@
         "artists": "Umělci",
         "genres": "Žánry",
         "spotlight": "V záři reflektorů",
-        "playlists": "Playlisty"
+        "playlists": "Playlisty",
+        "feeds": "Zdroje"
     },
     "pref": {
         "codec": "Kodek",
@@ -26,7 +27,13 @@
         "theme": "Motiv",
         "quality": "Kvalita",
         "best": "nejlepší",
-        "tab": "Výchozí karta"
+        "tab": "Výchozí karta",
+        "dark": "Tmavý (výchozí)",
+        "light": "Světlý",
+        "blur": "Rozmazaný",
+        "blur_light": "Rozmazaný (světlý)",
+        "dracula": "Drákula",
+        "nord": "Nord"
     },
     "instances": {
         "name": "Název",
