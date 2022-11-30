@@ -14,7 +14,8 @@
         "search": "Suche",
         "spotlight": "Scheinwerfer",
         "playlists": "Wiedergabelisten",
-        "remote": "Ferngesteuerte"
+        "remote": "Ferngesteuerte",
+        "feeds": "Feeds"
     },
     "action": {
         "back": "Zurück",
@@ -43,7 +44,13 @@
         "codec": "Codec",
         "auto_queue": "Lieder automatisch in die Warteschlange stellen",
         "best": "am Besten",
-        "tab": "Standard-Registerkarte"
+        "tab": "Standard-Registerkarte",
+        "dark": "Dunkel (Standard)",
+        "light": "Licht",
+        "blur": "Unschärfe",
+        "blur_light": "Unschärfe (Licht)",
+        "dracula": "Dracula",
+        "nord": "Nord"
     },
     "info": {
         "no_info": "Keine Informationen verfügbar",
