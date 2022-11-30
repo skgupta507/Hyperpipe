@@ -14,7 +14,8 @@
         "moods": "Raspoloženja",
         "genres": "Žanrovi",
         "login": "Prijava",
-        "local": "Lokalni"
+        "local": "Lokalni",
+        "feeds": "Izvori"
     },
     "info": {
         "search": "Započni pretraživanje",
@@ -49,7 +50,13 @@
         "auto_queue": "Automatski stavite pjesme u red",
         "worst": "najgora",
         "volume": "Zadana glasnoća",
-        "tab": "Zadana Kartica"
+        "tab": "Zadana Kartica",
+        "light": "Svjetlo",
+        "blur": "Zamagljeno",
+        "blur_light": "Zamagljeno (Svjetlo)",
+        "dracula": "Drakula",
+        "nord": "Nord",
+        "dark": "Mračno (Zadano)"
     },
     "lyrics": {
         "load": "Dohvaćanje stihova",
