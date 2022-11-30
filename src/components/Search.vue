@@ -103,6 +103,7 @@ const shuffleAdd = () => {
     if (
       (!isSearch.value && !results.items?.songs?.title) ||
       loading.value ||
+      results.next == 'null' ||
       !results.next
     )
       return;

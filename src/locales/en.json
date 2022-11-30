@@ -14,7 +14,8 @@
     "login": "Login",
     "local": "Local",
     "remote": "Remote",
-    "search": "Search"
+    "search": "Search",
+    "feeds": "Feeds"
   },
   "action": {
     "back": "Back",
@@ -35,6 +36,12 @@
   },
   "pref": {
     "theme": "Theme",
+    "dark": "Dark (Default)",
+    "light": "Light",
+    "blur": "Blur",
+    "blur_light": "Blur (Light)",
+    "dracula": "Dracula",
+    "nord": "Nord",
     "tab": "Default Tab",
     "player": "Audio Player",
     "auto_queue": "Automatically Queue Songs",

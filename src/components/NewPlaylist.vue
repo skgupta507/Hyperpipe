@@ -18,6 +18,7 @@ import {
   useAuthCreatePlaylist,
   getAuthPlaylists,
   getJsonAuth,
+  getJsonPiped,
 } from '@/scripts/fetch.js';
 
 import { useResults } from '@/stores/results.js';
@@ -25,7 +26,9 @@ import { useI18n, useNav } from '@/stores/misc.js';
 
 const { t } = useI18n(),
   store = useStore(),
-  auth = ref(!!store.auth);
+  auth = ref(!!store.auth),
+  results = useResults(),
+  nav = useNav();
 
 const emit = defineEmits(['play-urls', 'open-playlist']),
   list = ref([]),
@@ -55,12 +58,13 @@ const Open = key => {
     useGetPlaylist(key, res => {
       console.log(res);
       if (res.urls.length > 0) {
-        useResults().items.songs = {
+        results.resetItems();
+        results.setItem('songs', {
           title: 'Local • ' + key,
           items: res.urls.map(i => ({ ...i, ...{ thumbnail: '/1x1.png' } })),
-        };
+        });
 
-        useNav().state.page = 'home';
+        nav.state.page = 'home';
       } else alert('No songs to play!');
     });
   },
@@ -140,6 +144,23 @@ const Login = async () => {
     }
   };
 
+const getFeeds = async () => {
+  const subs = JSON.parse(store.subs ? store.subs : '[]');
+
+  if (subs.length > 0) {
+    const json = await getJsonPiped(
+      '/feed/unauthenticated?channels=' + subs.join(','),
+    );
+
+    results.resetItems();
+    results.setItem('songs', {
+      title: t('title.feeds'),
+      items: json,
+    });
+
+    nav.state.page = 'home';
+  }
+};
 watch(
   () => show.sync,
   async () => {
@@ -284,6 +305,8 @@ onMounted(async () => {
       <div
         class="npl-box bi bi-arrow-repeat pop"
         @click="show.sync = true"></div>
+
+      <div class="npl-box bi bi-tag pop" @click="getFeeds"></div>
     </div>
 
     <h2 v-if="list.length > 0">{{ t('playlist.local') }}</h2>
@@ -341,6 +364,13 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+.grid {
+  display: grid;
+  width: fit-content;
+  gap: 2rem;
+  grid-auto-rows: 10rem;
+  margin: 0 auto;
+}
 h2 {
   text-align: center;
   margin: 2rem;
@@ -350,7 +380,6 @@ h2 {
 }
 .npl-box {
   --background: var(--color-background-mute);
-  margin: 0 auto 2rem auto;
   border-radius: 0.5rem;
   padding: 2rem 3rem;
   font-size: 4rem;
@@ -403,13 +432,5 @@ button.logout {
   margin: 1rem auto;
   display: block;
   text-align: center;
-}
-@media (min-width: 1024px) {
-  .npl-box:first-child {
-    margin: 0 1rem 0 auto;
-  }
-  .npl-box:last-child {
-    margin: 0 auto 0 1rem;
-  }
 }
 </style>

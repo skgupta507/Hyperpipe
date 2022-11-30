@@ -2,10 +2,24 @@
 import { ref, onUpdated } from 'vue';
 import Btn from './Btn.vue';
 
+import { useStore } from '@/scripts/util.js';
 import { useResults, useArtist } from '@/stores/results.js';
 
 const artist = useArtist(),
-  results = useResults();
+  results = useResults(),
+  store = useStore();
+
+const subs = JSON.parse(store.subs ? store.subs : '[]'),
+  hash = artist.state.hash,
+  isSub = ref(subs.includes(hash));
+
+function addSub() {
+  if (artist.state.title && !isSub.value) {
+    subs.push(hash);
+    store.setItem('subs', JSON.stringify(subs));
+    isSub.value = true;
+  }
+}
 </script>
 
 <template>
@@ -21,7 +35,9 @@ const artist = useArtist(),
           @click="
             results.getAlbum('/playlist?list=' + artist.state.playlistId)
           " />
-        <span class="us-box subs">{{ artist.state.subscriberCount || 0 }}</span>
+        <span class="us-box subs" :data-active="isSub" @click="addSub">{{
+          artist.state.subscriberCount || 0
+        }}</span>
       </div>
     </div>
   </div>
@@ -79,9 +95,18 @@ p.more {
   color: var(--color-foreground);
   box-shadow: 0 0 1rem var(--color-background-mute);
 }
+.subs {
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
 .subs::after {
   content: ' Subscribers';
   font-weight: bold;
+}
+.subs:hover,
+.subs[data-active='true'] {
+  background-color: var(--color-foreground);
+  color: var(--color-background);
+  background-clip: border-box;
 }
 @media (max-width: 400px) {
   .subs::after {

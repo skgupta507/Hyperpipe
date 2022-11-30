@@ -117,6 +117,10 @@ You can reach out to me personally on:
 
 - [Cider](https://github.com/ciderapp/Cider) -> Cross-platform Apple Music experience based on Electron and Vue.js
 
+---
+
+*YouTube Music is a trademark of Google LLC.*
+
 [hypipe]: https://hyperpipe.surge.sh
 [piped]: https://piped.kavin.rocks
 [license]: https://codeberg.org/Hyperpipe/Hyperpipe/src/branch/main/LICENSE.md

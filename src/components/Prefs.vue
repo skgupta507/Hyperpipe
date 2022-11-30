@@ -92,12 +92,12 @@ onMounted(() => {
     class="input"
     :value="getTheme()"
     @change="setTheme($event.target.value)">
-    <option value="dark">Dark (Default)</option>
-    <option value="light">Light</option>
-    <option value="blur">Blur</option>
-    <option value="light blur">Blur (Light)</option>
-    <option value="dracula">Dracula</option>
-    <option value="nord">Nord</option>
+    <option value="dark">{{ t('pref.dark') }}</option>
+    <option value="light">{{ t('pref.light') }}</option>
+    <option value="blur">{{ t('pref.blur') }}</option>
+    <option value="light blur">{{ t('pref.blur_light') }}</option>
+    <option value="dracula">{{ t('pref.dracula') }}</option>
+    <option value="nord">{{ t('pref.nord') }}</option>
   </select>
 
   <h2>Language</h2>

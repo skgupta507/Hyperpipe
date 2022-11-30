@@ -67,7 +67,10 @@ export const useResults = defineStore('results', () => {
     useRoute(e);
     useNav().state.page = 'home';
 
-    next.value = hash + '?nextpage=' + encodeURIComponent(json.nextpage);
+    next.value =
+      json.nextpage || json.nextpage != 'null'
+        ? hash + '?nextpage=' + encodeURIComponent(json.nextpage)
+        : null;
   }
 
   return {
@@ -88,6 +91,7 @@ export const useArtist = defineStore('artist', () => {
     title: null,
     description: null,
     subscriberCount: 0,
+    hash: null,
     thumbnails: [],
   });
 
@@ -99,7 +103,7 @@ export const useArtist = defineStore('artist', () => {
 
   function set(obj) {
     for (let i in obj) {
-      state[i] = obj[i];
+      if (i in state) state[i] = obj[i];
     }
   }
 
@@ -122,6 +126,7 @@ export const useArtist = defineStore('artist', () => {
     console.log(results.items);
 
     json.items = undefined;
+    json.hash = e;
 
     reset();
     set(json);

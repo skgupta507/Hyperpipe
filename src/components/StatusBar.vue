@@ -256,11 +256,7 @@ async function Like() {
         <button
           class="bi bi-three-dots clickable"
           aria-label="More Controls"
-          @click="
-            showme.menu = !showme.menu;
-            player.state.lyrics ? player.toggle('lyrics') : '';
-            player.state.info ? player.toggle('info') : '';
-          "></button>
+          @click="showme.menu = !showme.menu"></button>
         <Transition name="fade">
           <div id="menu" v-if="showme.menu" class="popup">
             <button

@@ -69,6 +69,10 @@ export const SUPPORTED_LOCALES = [
     name: 'Nederlands',
   },
   {
+    code: 'ro',
+    name: 'Română',
+  },
+  {
     code: 'ru',
     name: 'Pусский ',
   },
