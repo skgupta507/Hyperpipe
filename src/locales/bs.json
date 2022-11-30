@@ -22,7 +22,8 @@
         "playlists": "Liste izvođenja",
         "spotlight": "U prednosti",
         "login": "Prijava",
-        "local": "Lokalni"
+        "local": "Lokalni",
+        "feeds": "Izvori"
     },
     "instances": {
         "up_to_date": "Ažurno",
@@ -53,7 +54,13 @@
         "auto": "auto",
         "best": "najbolja",
         "quality": "Kvaliteta",
-        "tab": "Zadana Kartica"
+        "tab": "Zadana Kartica",
+        "dark": "Mračno (Zadano)",
+        "dracula": "Drakula",
+        "nord": "Nord",
+        "blur": "Zamućenje",
+        "blur_light": "Zamućenje (Svjetlo)",
+        "light": "Svjetlo"
     },
     "info": {
         "search": "Započni pretraživanje",
