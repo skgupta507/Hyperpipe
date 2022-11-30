@@ -22,7 +22,8 @@
         "moods": "Stemmingen",
         "search": "Zoeken",
         "remote": "Extern",
-        "genres": "Genres"
+        "genres": "Genres",
+        "feeds": "Feeds"
     },
     "pref": {
         "auto": "auto",
@@ -34,7 +35,13 @@
         "quality": "Kwaliteit",
         "best": "beste",
         "volume": "Standaard Volume",
-        "tab": "Standaard Tabblad"
+        "tab": "Standaard Tabblad",
+        "light": "Licht",
+        "blur": "Waas",
+        "blur_light": "Waas (Licht)",
+        "dracula": "Dracula",
+        "nord": "Nord",
+        "dark": "Donker (standaard)"
     },
     "lyrics": {
         "void": "Geen songtekst",
