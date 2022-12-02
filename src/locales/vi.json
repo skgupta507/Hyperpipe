@@ -20,14 +20,22 @@
         "best": "cao nhất",
         "worst": "thấp nhất",
         "quality": "Chất lượng",
-        "theme": "Giao diện"
+        "theme": "Giao diện",
+        "dark": "Tối (Mặc định)",
+        "light": "Sáng",
+        "blur": "Mờ",
+        "blur_light": "Mờ (Sáng)",
+        "nord": "Nord",
+        "dracula": "Tím",
+        "auto_queue": "Tự động xếp hàng các bài hát"
     },
     "action": {
         "cancel": "Hủy",
         "create": "Tạo",
         "add": "Thêm",
         "back": "Quay lại",
-        "receive": "Nhận"
+        "receive": "Nhận",
+        "send": "Gửi"
     },
     "instances": {
         "version": "Phiên bản",
@@ -39,7 +47,8 @@
     "playlist": {
         "create": "Tạo một danh sách phát mới",
         "name": "Tên danh sách phát",
-        "add": "Thêm bài hát vào danh sách phát"
+        "add": "Thêm bài hát vào danh sách phát",
+        "sync": "Đồng bộ hóa các danh sách phát"
     },
     "info": {
         "search": "Bắt đầu tìm kiếm"
