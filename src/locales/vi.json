@@ -27,7 +27,8 @@
         "blur_light": "Mờ (Sáng)",
         "nord": "Nord",
         "dracula": "Tím",
-        "auto_queue": "Tự động xếp hàng các bài hát"
+        "auto_queue": "Tự động xếp hàng các bài hát",
+        "tab": "Thẻ mặc định"
     },
     "action": {
         "cancel": "Hủy",
