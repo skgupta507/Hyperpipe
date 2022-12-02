@@ -119,7 +119,7 @@ You can reach out to me personally on:
 
 ---
 
-*All content on Hyperpipe is from YouTube Music. Any issues with content should be reported to YouTube Music. YouTube Music is a trademark of Google LLC. Hyperpipe is not affiliated with YouTube Music.*
+*All content on Hyperpipe is from YouTube Music. Any issues with content should be reported to YouTube Music. YouTube and YouTube Music are trademarks of Google LLC. Hyperpipe is not affiliated with YouTube and YouTube Music.*
 
 [hypipe]: https://hyperpipe.surge.sh
 [piped]: https://piped.kavin.rocks
