@@ -53,5 +53,9 @@
     },
     "info": {
         "search": "Bắt đầu tìm kiếm"
+    },
+    "lyrics": {
+        "load": "Tìm lời bài hát",
+        "void": "Không có lời bài hát"
     }
 }
