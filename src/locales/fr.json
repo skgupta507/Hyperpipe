@@ -14,7 +14,8 @@
         "remote": "À distance",
         "community": "Communauté",
         "search": "Recherche",
-        "playlists": "Listes de lecture"
+        "playlists": "Listes de lecture",
+        "feeds": "Flux"
     },
     "playlist": {
         "local": "Listes de lecture locales",
@@ -35,7 +36,13 @@
         "player": "Lecteur audio",
         "auto_queue": "Mettre automatiquement les chansons en file d'attente",
         "codec": "Codec",
-        "tab": "Onglet par défaut"
+        "tab": "Onglet par défaut",
+        "dark": "Sombre (par défaut)",
+        "light": "Clair",
+        "blur": "Flou",
+        "blur_light": "Flou (clair)",
+        "dracula": "Dracula",
+        "nord": "Nord"
     },
     "info": {
         "see_all": "Voir tout",
