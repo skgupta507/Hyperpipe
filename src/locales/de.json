@@ -46,9 +46,9 @@
         "best": "am Besten",
         "tab": "Standard-Registerkarte",
         "dark": "Dunkel (Standard)",
-        "light": "Licht",
+        "light": "Hell",
         "blur": "Unschärfe",
-        "blur_light": "Unschärfe (Licht)",
+        "blur_light": "Unschärfe (hell)",
         "dracula": "Dracula",
         "nord": "Nord"
     },
