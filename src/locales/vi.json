@@ -52,7 +52,8 @@
         "sync": "Đồng bộ hóa các danh sách phát"
     },
     "info": {
-        "search": "Bắt đầu tìm kiếm"
+        "search": "Bắt đầu tìm kiếm",
+        "see_all": "Xem tất cả"
     },
     "lyrics": {
         "load": "Tìm lời bài hát",
