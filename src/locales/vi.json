@@ -49,7 +49,8 @@
         "create": "Tạo một danh sách phát mới",
         "name": "Tên danh sách phát",
         "add": "Thêm bài hát vào danh sách phát",
-        "sync": "Đồng bộ hóa các danh sách phát"
+        "sync": "Đồng bộ hóa các danh sách phát",
+        "select": "Lựa chọn danh sách phát để thêm"
     },
     "info": {
         "search": "Bắt đầu tìm kiếm",
