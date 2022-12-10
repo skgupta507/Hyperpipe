@@ -1,6 +1,4 @@
 <script setup>
-import { reactive } from 'vue';
-
 import SearchBar from '@/components/SearchBar.vue';
 import IcoHyp from '@/assets/icons/IcoHyp.vue';
 

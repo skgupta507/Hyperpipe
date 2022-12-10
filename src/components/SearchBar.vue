@@ -5,6 +5,13 @@ import { useNav, useI18n } from '@/stores/misc.js';
 const { t } = useI18n(),
   show = ref(false),
   nav = useNav();
+
+function search(e) {
+  nav.state.search = e.target.value;
+  nav.state.page = 'home';
+  e.target.blur();
+  console.log(e);
+}
 </script>
 
 <template>
@@ -19,11 +26,8 @@ const { t } = useI18n(),
           type="search"
           aria-label="Search Input"
           :placeholder="t('title.search') + '...'"
-          @change="
-            nav.state.search = $event.target.value;
-            nav.state.page = 'home';
-            $event.target.blur();
-          "
+          @change="search"
+          @keyup.enter="search"
           :value="nav.state.search" />
       </div>
     </Transition>
