@@ -11,7 +11,8 @@
         "login": "Đăng nhập",
         "moods": "Chủ đề",
         "playlists": "Các danh sách phát",
-        "featured": "Nổi bật"
+        "featured": "Nổi bật",
+        "feeds": "Nguồn cấp dữ liệu"
     },
     "pref": {
         "auto": "tự động",
