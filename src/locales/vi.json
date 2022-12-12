@@ -45,7 +45,8 @@
         "name": "Tên",
         "cdn": "CDN",
         "loc": "Các vị trí",
-        "up_to_date": "Phiên bản mới nhất"
+        "up_to_date": "Phiên bản mới nhất",
+        "auth": "Instance xác thực"
     },
     "playlist": {
         "create": "Tạo một danh sách phát mới",
