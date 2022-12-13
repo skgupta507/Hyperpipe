@@ -6,7 +6,7 @@ pipeline:
       - npm run build
     when:
       path:
-        - exclude: [ '*.md', '.gitea/*' ]
+        exclude: [ '*.md', '.gitea/*' ]
       event: ['push', 'pull_request']
 
   docker:
@@ -22,7 +22,7 @@ pipeline:
     when:
       branch: main
       path:
-        - exclude: [ '*.md', '.gitea/*' ]
+        exclude: [ '*.md', '.gitea/*' ]
       event: ['push']
 
   deploy:
@@ -35,5 +35,5 @@ pipeline:
     when:
       branch: main
       path:
-        - exclude: [ '*.md', '.gitea/*' ]
+        exclude: [ '*.md', '.gitea/*' ]
       event: ['push']
