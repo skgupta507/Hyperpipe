@@ -5,7 +5,16 @@ pipeline:
       - npm install
       - npm run build
     when:
-      path: ['src/*', 'public/*', '*.js', '*.html', 'package.json']
+      path:
+        [
+          'src/*',
+          'public/*',
+          '*.js',
+          '*.html',
+          'package.json',
+          '*.yml',
+          'Dockerfile',
+        ]
       event: ['push', 'pull_request']
 
   docker:
