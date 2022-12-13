@@ -4,7 +4,9 @@ WORKDIR /app/
 
 COPY . .
 
-RUN npm install && \
+RUN --mount=type=cache,target=/root/.cache/npm \
+    --mount=type=cache,target=/app/node_modules \
+    npm install --prefer-offline && \
     npm run build
 
 FROM nginx:stable-alpine
