@@ -1,0 +1,36 @@
+pipeline:
+  build:
+    image: node:alpine
+    commands:
+      - npm install
+      - npm run build
+    when:
+      path: ['src/*', 'public/*', '*.js', '*.html', 'package.json']
+      event: ['push', 'pull_request']
+
+  docker:
+    image: woodpeckerci/plugin
+    settings:
+      platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm/v8
+      repo: codeberg.org/${CI_REPO}
+      registry: codeberg.org
+      tags: latest
+      username: ${CI_REPO_OWNER}
+      password:
+        from_secret: cb_token
+    when:
+      branch: main
+      path: ['src/*', 'public/*', '*.js', '*.html', '*.yml', 'Dockerfile']
+      event: ['push']
+
+  deploy:
+    image: node:alpine
+    commands:
+      - npm install surge
+      - cp dist/index.html dist/200.html
+      - npx surge ./dist hyperpipe.surge.sh
+    secrets: [surge_login, surge_token]
+    when:
+      branch: main
+      path: ['src/*', 'public/*', '*.js', '*.html', 'package.json']
+      event: ['push']

@@ -10,7 +10,6 @@ function search(e) {
   nav.state.search = e.target.value;
   nav.state.page = 'home';
   e.target.blur();
-  console.log(e);
 }
 </script>
 
