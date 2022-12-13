@@ -6,15 +6,7 @@ pipeline:
       - npm run build
     when:
       path:
-        [
-          'src/*',
-          'public/*',
-          '*.js',
-          '*.html',
-          'package.json',
-          '*.yml',
-          'Dockerfile',
-        ]
+        - exclude: [ '*.md', '.gitea/*' ]
       event: ['push', 'pull_request']
 
   docker:
@@ -29,7 +21,8 @@ pipeline:
         from_secret: cb_token
     when:
       branch: main
-      path: ['src/*', 'public/*', '*.js', '*.html', '*.yml', 'Dockerfile']
+      path:
+        - exclude: [ '*.md', '.gitea/*' ]
       event: ['push']
 
   deploy:
@@ -41,5 +34,6 @@ pipeline:
     secrets: [surge_login, surge_token]
     when:
       branch: main
-      path: ['src/*', 'public/*', '*.js', '*.html', 'package.json']
+      path:
+        - exclude: [ '*.md', '.gitea/*' ]
       event: ['push']
