@@ -5,9 +5,6 @@ services:
     image: hyperpipe-frontend
     build:
       context: .
-      args:
-        pipedapi: pipedapi.kavin.rocks
-        api: hyperpipeapi.onrender.com
     container_name: hyperpipe-frontend
     restart: unless-stopped
     ports:

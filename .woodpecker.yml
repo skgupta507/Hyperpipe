@@ -5,22 +5,13 @@ pipeline:
       - npm install
       - npm run build
     when:
-      path:
-        [
-          'src/*',
-          'public/*',
-          '*.js',
-          '*.html',
-          'package.json',
-          '*.yml',
-          'Dockerfile',
-        ]
+      path: ['src/*', 'public/*', '*.js', '*.html', 'package.json']
       event: ['push', 'pull_request']
 
   docker:
     image: woodpeckerci/plugin-docker-buildx
     settings:
-      platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm/v8
+      platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm/v8
       repo: codeberg.org/hyperpipe/hyperpipe
       registry: codeberg.org
       tags: latest
