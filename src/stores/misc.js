@@ -92,6 +92,10 @@ export const SUPPORTED_LOCALES = [
     code: 'zh_Hans',
     name: '中文 (简体)',
   },
+  {
+    code: 'pt_br',
+    name: 'Português Brasileiro',
+  },
 ];
 
 export const useNav = defineStore('nav', () => {
