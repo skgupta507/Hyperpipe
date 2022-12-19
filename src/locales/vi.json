@@ -57,7 +57,8 @@
     },
     "info": {
         "search": "Bắt đầu tìm kiếm",
-        "see_all": "Xem tất cả"
+        "see_all": "Xem tất cả",
+        "no_info": "Không có thông tin"
     },
     "lyrics": {
         "load": "Tìm lời bài hát",
