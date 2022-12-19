@@ -14,7 +14,8 @@
         "genres": "Türler",
         "moods": "Ruh hâli",
         "spotlight": "Spot ışıkları",
-        "remote": "Uzak"
+        "remote": "Uzak",
+        "feeds": "Akışlar"
     },
     "action": {
         "back": "Geri",
@@ -38,12 +39,18 @@
         "player": "Ses Çalar",
         "auto_queue": "Şarkıları Otomatik Olarak Sırala",
         "codec": "Codec",
-        "tab": "Varsayılan Sekme",
+        "tab": "Öntanımlı Sekme",
         "quality": "Kalite",
         "auto": "otomatik",
         "best": "en iyi",
         "worst": "en kötü",
-        "volume": "Varsayılan Ses Düzeyi"
+        "volume": "Öntanımlı Ses Düzeyi",
+        "dark": "Koyu (Öntanımlı)",
+        "light": "Açık",
+        "blur": "Bulanıklaştır",
+        "blur_light": "Bulanıklaştır (Açık)",
+        "dracula": "Dracula",
+        "nord": "Nord"
     },
     "info": {
         "see_all": "Hepsini Gör",

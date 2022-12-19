@@ -14,7 +14,8 @@
         "login": "Autentificare",
         "search": "Căutare",
         "local": "Local",
-        "songs": "Melodii"
+        "songs": "Melodii",
+        "feeds": "Fluxuri"
     },
     "action": {
         "back": "Înapoi",
@@ -43,7 +44,13 @@
         "best": "cel mai bun",
         "auto": "auto",
         "worst": "cel mai rău",
-        "volume": "Volum implicit"
+        "volume": "Volum implicit",
+        "blur": "Blur",
+        "dark": "Întunecat (implicit)",
+        "light": "Luminat",
+        "blur_light": "Blur (Lumină)",
+        "dracula": "Dracula",
+        "nord": "Nord"
     },
     "instances": {
         "cdn": "CDN",

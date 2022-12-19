@@ -51,7 +51,9 @@ onMounted(() => {
 <template>
   <template v-if="data.options.length > 0">
     <select :value="id" class="input" @input="id = $event.target.value">
-      <option v-for="i in data.options" :value="i.id">{{ i.title }}</option>
+      <option v-for="i in data.options" :value="i.id" :key="i.id">
+        {{ i.title }}
+      </option>
     </select>
   </template>
 
@@ -60,6 +62,7 @@ onMounted(() => {
     <div class="grid-3 circle">
       <AlbumItem
         v-for="i in data.artists"
+        :key="i.id"
         :name="i.title"
         :author="i.subtitle"
         :art="i.thumbnails[1].url"
@@ -72,6 +75,7 @@ onMounted(() => {
     <div class="grid">
       <SongItem
         v-for="i in data.songs"
+        :key="i.id"
         :title="i.title"
         :author="i.subtitle"
         :channel="'/channel/' + i.subId"

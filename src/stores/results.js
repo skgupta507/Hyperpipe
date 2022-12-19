@@ -68,7 +68,7 @@ export const useResults = defineStore('results', () => {
     useNav().state.page = 'home';
 
     next.value =
-      json.nextpage || json.nextpage != 'null'
+      json.nextpage && json.nextpage != 'null'
         ? hash + '?nextpage=' + encodeURIComponent(json.nextpage)
         : null;
   }

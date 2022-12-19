@@ -47,7 +47,7 @@
     },
     "lyrics": {
         "load": "Načítání textů",
-        "void": "Žádné texty"
+        "void": "Texty nenalezeny"
     },
     "action": {
         "back": "Zpět",

@@ -150,7 +150,7 @@ onMounted(() => {
       v-if="data.state.art"
       class="art"
       loading="lazy"
-      :src="data.state.art" />
+      :src="data.state.art.replaceAll('&amp;', '&')" />
 
     <div class="wrapper">
       <NowPlaying @get-artist="artist.getArtist" />

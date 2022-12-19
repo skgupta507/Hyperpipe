@@ -3,7 +3,7 @@ import { useRand } from '@/scripts/colors.js';
 
 const rand = useRand();
 
-const props = defineProps({
+defineProps({
   name: String,
   author: {
     type: String,

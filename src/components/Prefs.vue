@@ -107,7 +107,9 @@ onMounted(() => {
     class="input"
     :value="getStore('locale') || 'en'"
     @change="setLang($event.target.value)">
-    <option v-for="i in SUPPORTED_LOCALES" :value="i.code">{{ i.name }}</option>
+    <option v-for="i in SUPPORTED_LOCALES" :value="i.code" :key="i.code">
+      {{ i.name }}
+    </option>
   </select>
 
   <h2>{{ t('pref.tab') }}</h2>
@@ -205,7 +207,7 @@ onMounted(() => {
           <th>{{ t('instances.loc') }}</th>
         </tr>
       </thead>
-      <tbody v-for="i in hypInstances">
+      <tbody v-for="i in hypInstances" :key="i.name">
         <tr>
           <td>
             {{ i.name }}
@@ -273,7 +275,7 @@ onMounted(() => {
           <th>{{ t('instances.version') }}</th>
         </tr>
       </thead>
-      <tbody v-for="i in instances">
+      <tbody v-for="i in instances" :key="i.name">
         <tr>
           <td>
             {{ i.name.replace('Official', 'Default') }}

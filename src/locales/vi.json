@@ -10,7 +10,9 @@
         "singles": "Các đĩa đơn",
         "login": "Đăng nhập",
         "moods": "Chủ đề",
-        "playlists": "Các danh sách phát"
+        "playlists": "Các danh sách phát",
+        "featured": "Nổi bật",
+        "feeds": "Nguồn cấp dữ liệu"
     },
     "pref": {
         "auto": "tự động",
@@ -26,8 +28,9 @@
         "blur": "Mờ",
         "blur_light": "Mờ (Sáng)",
         "nord": "Nord",
-        "dracula": "Tím",
-        "auto_queue": "Tự động xếp hàng các bài hát"
+        "dracula": "Dracula",
+        "auto_queue": "Tự động xếp hàng các bài hát",
+        "tab": "Thẻ mặc định"
     },
     "action": {
         "cancel": "Hủy",
@@ -42,15 +45,22 @@
         "name": "Tên",
         "cdn": "CDN",
         "loc": "Các vị trí",
-        "up_to_date": "Phiên bản mới nhất"
+        "up_to_date": "Phiên bản mới nhất",
+        "auth": "Instance xác thực"
     },
     "playlist": {
         "create": "Tạo một danh sách phát mới",
         "name": "Tên danh sách phát",
         "add": "Thêm bài hát vào danh sách phát",
-        "sync": "Đồng bộ hóa các danh sách phát"
+        "sync": "Đồng bộ hóa các danh sách phát",
+        "select": "Lựa chọn danh sách phát để thêm"
     },
     "info": {
-        "search": "Bắt đầu tìm kiếm"
+        "search": "Bắt đầu tìm kiếm",
+        "see_all": "Xem tất cả"
+    },
+    "lyrics": {
+        "load": "Tìm lời bài hát",
+        "void": "Không có lời bài hát"
     }
 }
