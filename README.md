@@ -121,8 +121,10 @@ You can reach out to me personally on:
 
 *Hyperpipe does not host any content. All content on Hyperpipe is from YouTube Music. YouTube and YouTube Music are trademarks of Google LLC. Hyperpipe is not affiliated with YouTube or YouTube Music.*
 
+*Hyperpipe is not affiliated with Piped. Piped is an open-source alternative YouTube frontend made by TeamPiped.*
+
 [hypipe]: https://hyperpipe.surge.sh
-[piped]: https://piped.kavin.rocks
+[piped]: https://github.com/TeamPiped/Piped
 [license]: https://codeberg.org/Hyperpipe/Hyperpipe/src/branch/main/LICENSE.md
 [vue]: https://github.com/vuejs/core/blob/main/LICENSE
 [vite]: https://github.com/vitejs/vite/blob/main/LICENSE
