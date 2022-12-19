@@ -29,7 +29,7 @@ export const useData = defineStore('data', () => {
 
     console.log(json);
 
-    state.art = json.thumbnailUrl;
+    state.art = json.thumbnailUrl.replaceAll('&amp;', '&');
     state.description = json.description;
     state.title = json.title.replaceAll('&amp;', '&');
     state.artist = json.uploader

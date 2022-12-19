@@ -1,12 +1,5 @@
 <script setup>
-import {
-  ref,
-  reactive,
-  watch,
-  onActivated,
-  onUpdated,
-  onDeactivated,
-} from 'vue';
+import { ref, watch, onActivated, onUpdated, onDeactivated } from 'vue';
 
 import Btn from './Btn.vue';
 import SongItem from './SongItem.vue';
@@ -241,11 +234,12 @@ onDeactivated(() => {
     <button
       v-for="f in filters"
       class="filter caps"
+      :key="f"
+      :data-active="f == filter"
       @click="
         filter = f;
         getSearch(nav.state.search);
-      "
-      :data-active="f == filter">
+      ">
       {{ t('title.' + f.split('_')[1]) }}
     </button>
   </div>
@@ -255,35 +249,35 @@ onDeactivated(() => {
     class="search-wrap">
     <h2 v-if="!isSearch">{{ t('title.songs') }}</h2>
     <div class="grid">
-      <template v-for="(song, index) in results.items.songs.items">
-        <SongItem
-          :index="index"
-          :playlistId="song.playlistId"
-          :author="song.uploaderName || song.subtitle"
-          :title="song.title || song.name"
-          :channel="song.uploaderUrl || '/channel/' + song.subId"
-          :play="song.url || '/watch?v=' + song.id"
-          :art="
-            song.thumbnail || song.thumbnails[1]?.url || song.thumbnails[0]?.url
-          "
-          @remove="removeSong"
-          @open-song="
-            $emit('play-urls', [
-              {
-                url: song.url || '/watch?v=' + song.id,
-                title: song.title || song.name,
-                thumbnails: [
-                  {
-                    url:
-                      song.thumbnail ||
-                      song.thumbnails[1]?.url ||
-                      song.thumbnails[0]?.url,
-                  },
-                ],
-              },
-            ])
-          " />
-      </template>
+      <SongItem
+        v-for="(song, index) in results.items.songs.items"
+        :key="song.url || song.id"
+        :index="index"
+        :playlistId="song.playlistId"
+        :author="song.uploaderName || song.subtitle"
+        :title="song.title || song.name"
+        :channel="song.uploaderUrl || '/channel/' + song.subId"
+        :play="song.url || '/watch?v=' + song.id"
+        :art="
+          song.thumbnail || song.thumbnails[1]?.url || song.thumbnails[0]?.url
+        "
+        @remove="removeSong"
+        @open-song="
+          $emit('play-urls', [
+            {
+              url: song.url || '/watch?v=' + song.id,
+              title: song.title || song.name,
+              thumbnails: [
+                {
+                  url:
+                    song.thumbnail ||
+                    song.thumbnails[1]?.url ||
+                    song.thumbnails[0]?.url,
+                },
+              ],
+            },
+          ])
+        " />
     </div>
     <a
       v-if="artist.state.playlistId"
@@ -301,15 +295,15 @@ onDeactivated(() => {
     class="search-wrap">
     <h2 v-if="!isSearch">{{ t('title.albums') }}</h2>
     <div class="grid-3">
-      <template v-for="album in results.items.albums.items">
-        <AlbumItem
-          :author="album.uploaderName || album.subtitle"
-          :name="album.name || album.title"
-          :art="album.thumbnail || album.thumbnails[0].url"
-          @open-album="
-            results.getAlbum(album.url || '/playlist?list=' + album.id)
-          " />
-      </template>
+      <AlbumItem
+        v-for="album in results.items.albums.items"
+        :key="album.url || album.id"
+        :author="album.uploaderName || album.subtitle"
+        :name="album.name || album.title"
+        :art="album.thumbnail || album.thumbnails[0].url"
+        @open-album="
+          results.getAlbum(album.url || '/playlist?list=' + album.id)
+        " />
     </div>
   </div>
 
@@ -320,6 +314,7 @@ onDeactivated(() => {
     <div class="grid-3">
       <AlbumItem
         v-for="pl in results.items.playlists.items"
+        :key="pl.url"
         :author="pl.videos + ' Songs • ' + pl.uploaderName"
         :name="pl.name"
         :art="pl.thumbnail"
@@ -332,13 +327,13 @@ onDeactivated(() => {
     class="search-wrap">
     <h2>{{ t('title.singles') }}</h2>
     <div class="grid-3">
-      <template v-for="single in results.items.singles.items">
-        <AlbumItem
-          :author="single.subtitle"
-          :name="single.title"
-          :art="single.thumbnails[0].url"
-          @open-album="results.getAlbum('/playlist?list=' + single.id)" />
-      </template>
+      <AlbumItem
+        v-for="single in results.items.singles.items"
+        :key="single.id"
+        :author="single.subtitle"
+        :name="single.title"
+        :art="single.thumbnails[0].url"
+        @open-album="results.getAlbum('/playlist?list=' + single.id)" />
     </div>
   </div>
 
@@ -355,18 +350,17 @@ onDeactivated(() => {
       }}
     </h2>
     <div class="grid-3 circle">
-      <template
+      <AlbumItem
         v-for="a in results.items.artists
           ? results.items.artists.items
-          : results.items.recommendedArtists.items">
-        <AlbumItem
-          :author="a.subtitle"
-          :name="a.name || a.title"
-          :art="a.thumbnail || a.thumbnails[0].url"
-          @open-album="
-            artist.getArtist(a.id || a.url.replace('/channel/', ''))
-          " />
-      </template>
+          : results.items.recommendedArtists.items"
+        :key="a.id || a.url"
+        :author="a.subtitle"
+        :name="a.name || a.title"
+        :art="a.thumbnail || a.thumbnails[0].url"
+        @open-album="
+          artist.getArtist(a.id || a.url.replace('/channel/', ''))
+        " />
     </div>
   </div>
 </template>

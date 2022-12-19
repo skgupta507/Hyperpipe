@@ -30,8 +30,9 @@ const { t } = useI18n(),
   results = useResults(),
   nav = useNav();
 
-const emit = defineEmits(['play-urls', 'open-playlist']),
-  list = ref([]),
+defineEmits(['play-urls', 'open-playlist']);
+
+const list = ref([]),
   show = reactive({
     new: false,
     sync: false,
@@ -137,7 +138,7 @@ const Login = async () => {
   },
   createPlaylist = async () => {
     if (text.value) {
-      const res = await useAuthCreatePlaylist(text.value);
+      await useAuthCreatePlaylist(text.value);
 
       getPlaylists();
       show.new = false;
@@ -312,24 +313,24 @@ onMounted(async () => {
     <h2 v-if="list.length > 0">{{ t('playlist.local') }}</h2>
 
     <div class="grid-3">
-      <template v-for="i in list">
-        <AlbumItem
-          :name="i.name"
-          :author="t('title.songs') + ' • ' + i.urls.length"
-          :grad="useRand()"
-          @open-album="Open(i.name)" />
-      </template>
+      <AlbumItem
+        v-for="i in list"
+        :key="i.name"
+        :name="i.name"
+        :author="t('title.songs') + ' • ' + i.urls.length"
+        :grad="useRand()"
+        @open-album="Open(i.name)" />
     </div>
 
     <h2 class="login-h">{{ t('playlist.remote') }}</h2>
 
     <div v-if="auth" class="grid-3">
-      <template v-for="i in user.playlists">
-        <AlbumItem
-          :name="i.name.replace('Playlist - ', '')"
-          :art="pathname(i.thumbnail) != '/' ? i.thumbnail : undefined"
-          @open-album="$emit('open-playlist', '/playlists?list=' + i.id)" />
-      </template>
+      <AlbumItem
+        v-for="i in user.playlists"
+        :key="i.id"
+        :name="i.name.replace('Playlist - ', '')"
+        :art="pathname(i.thumbnail) != '/' ? i.thumbnail : undefined"
+        @open-album="$emit('open-playlist', '/playlists?list=' + i.id)" />
     </div>
     <form v-else class="login" @submit.prevent>
       <input

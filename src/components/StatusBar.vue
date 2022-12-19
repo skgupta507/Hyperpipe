@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, watch } from 'vue';
+import { ref, reactive } from 'vue';
 
 import Modal from './Modal.vue';
 
@@ -19,8 +19,9 @@ const { t } = useI18n(),
   player = usePlayer(),
   store = useStore();
 
-const emit = defineEmits(['save']),
-  showme = reactive({
+defineEmits(['save']);
+
+const showme = reactive({
     menu: false,
     pl: false,
     vol: false,
@@ -112,29 +113,29 @@ async function Like() {
           }
         ">
         <template #content>
-          <template v-for="i in list">
-            <div
-              class="flex item"
-              @click="
-                pl = i.name;
-                plRemote = false;
-              "
-              :data-active="pl == i.name && plRemote == false">
-              <span>{{ i.name }}</span
-              ><span class="ml-auto">{{ i.urls.length || '' }}</span>
-            </div>
-          </template>
-          <template v-for="i in remote">
-            <div
-              class="flex item"
-              @click="
-                pl = i.id;
-                plRemote = true;
-              "
-              :data-active="pl == i.id && plRemote == true">
-              <span>{{ i.name }}</span>
-            </div>
-          </template>
+          <div
+            v-for="i in list"
+            :key="i.name"
+            class="flex item"
+            @click="
+              pl = i.name;
+              plRemote = false;
+            "
+            :data-active="pl == i.name && plRemote == false">
+            <span>{{ i.name }}</span
+            ><span class="ml-auto">{{ i.urls.length || '' }}</span>
+          </div>
+          <div
+            v-for="i in remote"
+            :key="i.id"
+            class="flex item"
+            @click="
+              pl = i.id;
+              plRemote = true;
+            "
+            :data-active="pl == i.id && plRemote == true">
+            <span>{{ i.name }}</span>
+          </div>
         </template>
         <template #buttons>
           <button aria-label="Cancel" @click="showme.pl = false">

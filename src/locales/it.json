@@ -9,7 +9,13 @@
         "quality": "Qualità",
         "auto": "automatica",
         "worst": "la peggia",
-        "tab": "Scheda predefinita"
+        "tab": "Scheda predefinita",
+        "dark": "Scuro (predefinito)",
+        "light": "Chiaro",
+        "blur": "Sfocatura",
+        "blur_light": "Sfocatura (chiaro)",
+        "dracula": "Dracula",
+        "nord": "Nord"
     },
     "title": {
         "albums": "Album",
@@ -25,7 +31,8 @@
         "local": "Locale",
         "search": "Ricerca",
         "featured": "In primo piano",
-        "playlists": "Playlist"
+        "playlists": "Playlist",
+        "feeds": "Flussi"
     },
     "action": {
         "add": "Aggiungi",

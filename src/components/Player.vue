@@ -1,12 +1,5 @@
 <script setup>
-import {
-  ref,
-  watch,
-  onMounted,
-  onUpdated,
-  onBeforeUnmount,
-  onUnmounted,
-} from 'vue';
+import { ref, watch, onMounted, onBeforeUnmount, onUnmounted } from 'vue';
 
 import muxjs from 'mux.js';
 window.muxjs = muxjs;
@@ -64,7 +57,7 @@ async function Stream() {
         if (shaka.Player.isBrowserSupported) {
           const audioPlayer = new shaka.Player(audio.value);
 
-          const codecs = useStore().getItem('codec');
+          const codecs = store.getItem('codec');
 
           audioPlayer
             .getNetworkingEngine()
@@ -94,7 +87,7 @@ async function Stream() {
       });
   }
 
-  const quality = useStore().getItem('quality');
+  const quality = store.getItem('quality');
 
   if (url) {
     window.audioPlayer

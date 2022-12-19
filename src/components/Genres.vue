@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref, onMounted, onUnmounted } from 'vue';
+import { reactive, onMounted } from 'vue';
 
 import { useResults } from '@/stores/results.js';
 
@@ -62,19 +62,21 @@ onMounted(get);
 
     <h2 class="head">{{ data.title }}</h2>
 
-    <template v-for="type in ['featured', 'spotlight', 'community']">
+    <template
+      v-for="type in ['featured', 'spotlight', 'community']"
+      :key="type">
       <h3 class="head">{{ t('title.' + type) }}</h3>
       <div class="grid-3">
-        <template v-for="i in data[type]">
-          <AlbumItem
-            :name="i.title"
-            :author="i.subtitle"
-            :art="i.thumbnails[0].url"
-            @open-album="
-              getAlbum('/playlist?list=' + i.id);
-              nav.state.page = 'home';
-            " />
-        </template>
+        <AlbumItem
+          v-for="i in data[type]"
+          :key="i.id"
+          :name="i.title"
+          :author="i.subtitle"
+          :art="i.thumbnails[0].url"
+          @open-album="
+            getAlbum('/playlist?list=' + i.id);
+            nav.state.page = 'home';
+          " />
       </div>
     </template>
   </template>
@@ -86,6 +88,7 @@ onMounted(get);
       <button
         v-for="i in btns.moods"
         class="btn"
+        :key="i.id"
         :style="`--btn-color: ${i.subtitle};`"
         @click="get(i.id)">
         {{ i.title }}
@@ -98,6 +101,7 @@ onMounted(get);
       <button
         v-for="i in btns.genres"
         class="btn"
+        :key="i.id"
         :style="`--btn-color: ${i.subtitle};`"
         @click="get(i.id)">
         {{ i.title }}

@@ -12,26 +12,28 @@ defineEmits(['playthis']);
 <template>
   <Transition name="fade">
     <div class="pl-modal placeholder" :data-placeholder="t('playlist.add')">
-      <template v-for="plurl in data.state.urls">
-        <div class="pl-item" @click="$emit('playthis', plurl)">
-          <span
-            v-if="data.state.url == plurl.url"
-            class="bars-wrap"
-            :class="player.state.status">
-            <div class="bars"></div>
-            <div class="bars"></div>
-            <div class="bars"></div>
-          </span>
-          <div v-else-if="plurl.thumbnails" class="pl-img">
-            <img
-              :src="plurl.thumbnails[0].url"
-              :height="plurl.thumbnails[0].height"
-              :width="plurl.thumbnails[0].width"
-              loading="lazy" />
-          </div>
-          <span class="pl-main caps">{{ plurl.title }}</span>
+      <div
+        v-for="plurl in data.state.urls"
+        class="pl-item"
+        :key="plurl.url"
+        @click="$emit('playthis', plurl)">
+        <span
+          v-if="data.state.url == plurl.url"
+          class="bars-wrap"
+          :class="player.state.status">
+          <div class="bars"></div>
+          <div class="bars"></div>
+          <div class="bars"></div>
+        </span>
+        <div v-else-if="plurl.thumbnails" class="pl-img">
+          <img
+            :src="plurl.thumbnails[0].url"
+            :height="plurl.thumbnails[0].height"
+            :width="plurl.thumbnails[0].width"
+            loading="lazy" />
         </div>
-      </template>
+        <span class="pl-main caps">{{ plurl.title }}</span>
+      </div>
     </div>
   </Transition>
 </template>

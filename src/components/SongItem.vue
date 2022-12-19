@@ -5,7 +5,7 @@ import { getJsonAuth } from '@/scripts/fetch.js';
 import { useRand } from '@/scripts/colors.js';
 import { useStore } from '@/scripts/util.js';
 
-import { useArtist, useResults } from '@/stores/results.js';
+import { useArtist } from '@/stores/results.js';
 import { useData, usePlayer } from '@/stores/player.js';
 
 const rand = useRand(),
