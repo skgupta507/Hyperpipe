@@ -14,7 +14,8 @@
         "remote": "Uzaq",
         "search": "Axtarış",
         "artists": "Sənətkarlar",
-        "local": "Yerli"
+        "local": "Yerli",
+        "feeds": "Axınlar"
     },
     "action": {
         "back": "Geri",
@@ -34,7 +35,7 @@
         "select": "Əlavə etmək üçün pleylist seç"
     },
     "pref": {
-        "theme": "Mövzu",
+        "theme": "Tema",
         "player": "Səs Oynadıcı",
         "auto": "avtomatik",
         "best": "ən yaxşı",
@@ -43,7 +44,13 @@
         "codec": "Kodek",
         "auto_queue": "Mahnıları avtomatik növbələ",
         "quality": "Keyfiyyət",
-        "tab": "Defolt Tab"
+        "tab": "Defolt Panel",
+        "blur": "Bulanıqlaşdır",
+        "dark": "Qaranlıq (Defolt)",
+        "light": "İşıqlı",
+        "blur_light": "Bulanıq (İşıqlı)",
+        "dracula": "Drakula",
+        "nord": "Nord"
     },
     "info": {
         "see_all": "Hamısını gör",
@@ -56,7 +63,7 @@
         "name": "Ad",
         "loc": "Məkanlar",
         "cdn": "CDN",
-        "up_to_date": "Yenilənib",
+        "up_to_date": "Güncəldir",
         "version": "Versiya",
         "auth": "Doğrulayıcı Nümunə"
     },
