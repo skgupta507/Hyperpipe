@@ -9,6 +9,19 @@ pipeline:
         exclude: ['*.md', '.gitea/*']
       event: ['push', 'pull_request']
 
+  surge:
+    image: node:alpine
+    commands:
+      - npm install surge
+      - cp dist/index.html dist/200.html
+      - npx surge ./dist hyperpipe.surge.sh
+    secrets: [surge_login, surge_token]
+    when:
+      branch: main
+      path:
+        exclude: ['*.md', '.gitea/*']
+      event: ['push']
+
   docker:
     image: woodpeckerci/plugin-docker-buildx
     settings:
@@ -19,19 +32,6 @@ pipeline:
       username: snematoda
       password:
         from_secret: cb_token
-    when:
-      branch: main
-      path:
-        exclude: ['*.md', '.gitea/*']
-      event: ['push']
-
-  deploy:
-    image: node:alpine
-    commands:
-      - npm install surge
-      - cp dist/index.html dist/200.html
-      - npx surge ./dist hyperpipe.surge.sh
-    secrets: [surge_login, surge_token]
     when:
       branch: main
       path:
