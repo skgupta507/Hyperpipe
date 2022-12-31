@@ -13,11 +13,19 @@ const subs = JSON.parse(store.subs ? store.subs : '[]'),
   hash = artist.state.hash,
   isSub = ref(subs.includes(hash));
 
-function addSub() {
-  if (artist.state.title && !isSub.value) {
-    subs.push(hash);
-    store.setItem('subs', JSON.stringify(subs));
-    isSub.value = true;
+function Sub() {
+  if (artist.state.title) {
+    if (isSub.value) {
+      subs.splice(subs.indexOf(hash), 1);
+      store.setItem('subs', JSON.stringify(subs));
+      isSub.value = false;
+    } else {
+      subs.push(hash);
+      store.setItem('subs', JSON.stringify(subs));
+      isSub.value = true;
+    }
+
+    alert(JSON.stringify(subs));
   }
 }
 </script>
@@ -35,7 +43,7 @@ function addSub() {
           @click="
             results.getAlbum('/playlist?list=' + artist.state.playlistId)
           " />
-        <span class="us-box subs" :data-active="isSub" @click="addSub">{{
+        <span class="us-box subs" :data-active="isSub" @click="Sub">{{
           artist.state.subscriberCount || 0
         }}</span>
       </div>

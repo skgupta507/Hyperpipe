@@ -7,7 +7,7 @@ import AlbumItem from './AlbumItem.vue';
 
 import { getJsonPiped, getPipedQuery } from '@/scripts/fetch.js';
 import { useRoute, useWrap } from '@/scripts/util.js';
-import { useCreatePlaylist } from '@/scripts/db.js';
+import { useCreatePlaylist, useRemovePlaylist } from '@/scripts/db.js';
 
 import { useResults, useArtist } from '@/stores/results.js';
 import { useData } from '@/stores/player.js';
@@ -47,6 +47,32 @@ const shuffleAdd = () => {
     console.log(songs, copy);
 
     emit('play-urls', copy);
+  },
+  openSong = (song, nxt = false) => {
+    if (results.items?.songs?.title && !nxt) {
+      data.state.urls = results.items.songs.items.map(i => ({
+        url: i.url || '/watch?v=' + song.id,
+        title: i.title,
+        thumbnails: [{ url: i.thumbnail }],
+      }));
+
+      data.getSong(song.url || '/watch?v=' + song.id);
+    } else {
+      emit('play-urls', [
+        {
+          url: song.url || '/watch?v=' + song.id,
+          title: song.title || song.name,
+          thumbnails: [
+            {
+              url:
+                song.thumbnail ||
+                song.thumbnails[1]?.url ||
+                song.thumbnails[0]?.url,
+            },
+          ],
+        },
+      ]);
+    }
   },
   removeSong = i => {
     console.log(i);
@@ -222,6 +248,15 @@ onDeactivated(() => {
             <button
               class="bi bi-shuffle clickable"
               @click="shuffleAdd"></button>
+
+            <button
+              v-if="results.items?.songs?.title.startsWith('Local • ')"
+              class="bi bi-trash3 clickable"
+              @click="
+                useRemovePlaylist(
+                  results.items?.songs?.title?.replace('Local • ', ''),
+                )
+              "></button>
           </div>
         </Transition>
       </template>
@@ -259,25 +294,14 @@ onDeactivated(() => {
         :channel="song.uploaderUrl || '/channel/' + song.subId"
         :play="song.url || '/watch?v=' + song.id"
         :art="
-          song.thumbnail || song.thumbnails[1]?.url || song.thumbnails[0]?.url
+          song.thumbnail ||
+          song.thumbnails?.[1]?.url ||
+          song.thumbnails?.[0]?.url ||
+          '/1x1.png'
         "
         @remove="removeSong"
-        @open-song="
-          $emit('play-urls', [
-            {
-              url: song.url || '/watch?v=' + song.id,
-              title: song.title || song.name,
-              thumbnails: [
-                {
-                  url:
-                    song.thumbnail ||
-                    song.thumbnails[1]?.url ||
-                    song.thumbnails[0]?.url,
-                },
-              ],
-            },
-          ])
-        " />
+        @open-song="openSong(song)"
+        @nxt-song="openSong(song, true)" />
     </div>
     <a
       v-if="artist.state.playlistId"

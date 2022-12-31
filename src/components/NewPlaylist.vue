@@ -62,7 +62,7 @@ const Open = key => {
         results.resetItems();
         results.setItem('songs', {
           title: 'Local • ' + key,
-          items: res.urls.map(i => ({ ...i, ...{ thumbnail: '/1x1.png' } })),
+          items: res.urls.map(i => ({ ...i, ...{ playlistId: key } })),
         });
 
         nav.state.page = 'home';

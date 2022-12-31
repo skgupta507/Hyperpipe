@@ -4,12 +4,14 @@ import { ref, onMounted } from 'vue';
 import { getJsonAuth } from '@/scripts/fetch.js';
 import { useRand } from '@/scripts/colors.js';
 import { useStore } from '@/scripts/util.js';
+import { useUpdatePlaylist } from '@/scripts/db.js';
 
-import { useArtist } from '@/stores/results.js';
+import { useResults, useArtist } from '@/stores/results.js';
 import { useData, usePlayer } from '@/stores/player.js';
 
 const rand = useRand(),
   data = useData(),
+  results = useResults(),
   player = usePlayer(),
   artist = useArtist();
 
@@ -22,7 +24,7 @@ const props = defineProps({
     art: String,
     playlistId: String,
   }),
-  emit = defineEmits(['open-song', 'remove']);
+  emit = defineEmits(['open-song', 'nxt-song', 'remove']);
 
 const show = ref(false);
 
@@ -49,9 +51,12 @@ const openSong = el => {
       emit('open-song', props.play);
   },
   Remove = () => {
-    const auth = useStore().getItem('auth');
+    const auth = useStore().getItem('auth'),
+      isRemote = results.items?.songs?.title?.startsWith('Playlist - ');
 
-    if (auth && confirm('Are you sure?')) {
+    if (!confirm('Are you sure?')) return;
+
+    if (isRemote && auth) {
       getJsonAuth('/user/playlists/remove', {
         method: 'POST',
         headers: {
@@ -68,7 +73,10 @@ const openSong = el => {
           if (json.message == 'ok') emit('remove', props.index);
         } else alert(json.error);
       });
-    }
+    } else
+      useUpdatePlaylist(props.playlistId, props.index, () =>
+        emit('remove', props.index),
+      );
   },
   Share = async () => {
     if ('share' in navigator) {
@@ -119,11 +127,11 @@ onMounted(() => {
       @mouseleave="show = false">
       <Transition name="fade">
         <div v-if="show" class="popup ign">
-          <!-- TODO: Check if user is admin -->
           <span
             v-if="playlistId"
             class="bi bi-dash-lg clickable ign"
             @click="Remove"></span>
+          <span class="bi bi-broadcast ign" @click="$emit('nxt-song')"></span>
           <span class="bi bi-plus-lg clickable ign" @click="addSong"></span>
           <span class="bi bi-share clickable ign" @click="Share"></span>
         </div>

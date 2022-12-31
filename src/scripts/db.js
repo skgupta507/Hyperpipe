@@ -40,7 +40,8 @@ export function useUpdatePlaylist(key, obj, cb = () => null) {
       const itm = e.target.result;
 
       if (itm) {
-        itm.urls.push(obj);
+        if ('number' == typeof obj) itm.urls.splice(obj, 1);
+        else if ('object' == typeof obj) itm.urls.push(obj);
         store.put(itm);
         cb(true);
       }
@@ -75,6 +76,23 @@ export function useCreatePlaylist(key, obj, cb = () => null) {
       }
     };
   } else alert('No indexedDB Created');
+}
+
+export function useRemovePlaylist(key, cb = () => null) {
+  if (window.db && key) {
+    const store = window.db
+        .transaction(['playlist'], 'readwrite')
+        .objectStore('playlist'),
+      req = store.delete(key);
+
+    req.onerror = e => {
+      console.error('Error removing playlist ', e);
+    };
+
+    req.onsuccess = () => {
+      cb();
+    };
+  }
 }
 
 export function useGetPlaylist(key, cb = () => null) {
