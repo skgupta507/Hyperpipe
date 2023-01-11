@@ -2,7 +2,7 @@
 
 ![](https://codeberg.org/Hyperpipe/Hyperpipe/raw/branch/main/public/android-chrome-192x192.png)
 
-A Privacy Respecting Frontend for YouTube Music inspired and built with the help of [Piped][piped] and YouTube's InnerTube API.
+A Privacy Respecting Frontend for YouTube Music™ inspired and built with the help of [Piped][piped] and YouTube™'s InnerTube API.
 
 ![](https://img.shields.io/badge/youtube-music-red?style=for-the-badge&logo=youtube-music)
 ![Offical instance](https://img.shields.io/website?down_color=red&down_message=offline&label=status&style=for-the-badge&up_color=cornflowerblue&up_message=online&url=https%3A%2F%2Fhyperpipe.surge.sh)
@@ -83,7 +83,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU Affero General Public License for more details.
 
-You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
+You should have received a copy of the GNU Affero General Public License along with this program. If not, see https://www.gnu.org/licenses.
 
 Please refer to [LICENSE][license] for more details.
 
