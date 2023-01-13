@@ -23,7 +23,9 @@
         "create": "Crear",
         "send": "Enviar",
         "receive": "Recibir",
-        "cancel": "Cancelar"
+        "cancel": "Cancelar",
+        "import": "Importar",
+        "export": "Exportar"
     },
     "playlist": {
         "local": "Listas de reproducción locales",
@@ -50,7 +52,11 @@
         "light": "Claro",
         "blur_light": "Desenfoque (Luz)",
         "dracula": "Drácula",
-        "nord": "Nord"
+        "nord": "Nord",
+        "home": "Inicio",
+        "library": "Biblioteca",
+        "charts": "Gráfica",
+        "explore": "Explorar"
     },
     "info": {
         "see_all": "Ver todo",
