@@ -23,7 +23,9 @@
     "create": "Create",
     "cancel": "Cancel",
     "send": "Send",
-    "receive": "Receive"
+    "receive": "Receive",
+    "import": "Import",
+    "export": "Export"
   },
   "playlist": {
     "local": "Local Playlists",
@@ -50,7 +52,11 @@
     "auto": "auto",
     "best": "best",
     "worst": "worst",
-    "volume": "Default Volume"
+    "volume": "Default Volume",
+    "home": "Home",
+    "explore": "Explore",
+    "charts": "Charts",
+    "library": "Library"
   },
   "info": {
     "see_all": "See All",

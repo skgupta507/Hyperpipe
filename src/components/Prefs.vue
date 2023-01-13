@@ -119,10 +119,10 @@ onMounted(() => {
     class="input"
     :value="getStore('page') || 'home'"
     @change="setStore('page', $event.target.value)">
-    <option value="home">Home</option>
-    <option value="explore">Explore</option>
-    <option value="charts">Charts</option>
-    <option value="library">Library</option>
+    <option value="home">{{ t('pref.home') }}</option>
+    <option value="explore">{{ t('pref.explore') }}</option>
+    <option value="charts">{{ t('pref.charts') }}</option>
+    <option value="library">{{ t('pref.library') }}</option>
   </select>
 
   <h2>{{ t('pref.player') }}</h2>
