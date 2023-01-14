@@ -134,7 +134,8 @@ async function Like() {
               plRemote = true;
             "
             :data-active="pl == i.id && plRemote == true">
-            <span>{{ i.name }}</span>
+            <span>{{ i.name }}</span
+            ><span class="ml-auto">{{ i.videos }}</span>
           </div>
         </template>
         <template #buttons>
@@ -424,11 +425,6 @@ input[type='range']::-webkit-slider-thumb {
   background-color: var(--color-foreground);
   -webkit-appearance: none;
   appearance: none;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-input[type='range']:hover::-webkit-slider-thumb,
-#vol input[type='range']::-webkit-slider-thumb {
   opacity: 1;
   height: 1rem;
   width: 1rem;
@@ -447,13 +443,8 @@ input[type='range']::-webkit-slider-runnable-track {
 input[type='range']::-moz-range-thumb {
   -moz-appearance: none;
   appearance: none;
-  opacity: 0;
   border: none;
   outline: none;
-  transition: opacity 0.4s ease;
-}
-input[type='range']:hover::-moz-range-thumb,
-#vol input[type='range']::-moz-range-thumb {
   background-color: var(--color-foreground);
   opacity: 1;
   height: 1rem;

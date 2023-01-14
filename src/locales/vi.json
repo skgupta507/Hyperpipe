@@ -30,7 +30,10 @@
         "nord": "Nord",
         "dracula": "Dracula",
         "auto_queue": "Tự động xếp hàng các bài hát",
-        "tab": "Thẻ mặc định"
+        "tab": "Thẻ mặc định",
+        "library": "Thư viện",
+        "explore": "Khám phá",
+        "home": "Trang chủ"
     },
     "action": {
         "cancel": "Hủy",

@@ -33,7 +33,11 @@
         "blur": "Rozmazání",
         "blur_light": "Rozmazaný (světlý)",
         "dracula": "Drákula",
-        "nord": "Nord"
+        "nord": "Nord",
+        "explore": "Procházet",
+        "charts": "Žebříčky",
+        "home": "Domů",
+        "library": "Knihovna"
     },
     "instances": {
         "name": "Název",
@@ -55,7 +59,9 @@
         "add": "Přidat",
         "cancel": "Zrušit",
         "send": "Poslat",
-        "receive": "Obdržet"
+        "receive": "Obdržet",
+        "import": "Importovat",
+        "export": "Exportovat"
     },
     "playlist": {
         "local": "Místní playlisty",
