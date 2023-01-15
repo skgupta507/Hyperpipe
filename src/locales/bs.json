@@ -62,7 +62,11 @@
         "nord": "Nord",
         "blur": "Zamagljeno",
         "blur_light": "Zamućenje (Svjetlo)",
-        "light": "Svjetlo"
+        "light": "Svjetlo",
+        "home": "Početna",
+        "explore": "Istražite",
+        "charts": "Grafikoni",
+        "library": "Biblioteka"
     },
     "info": {
         "search": "Započni pretraživanje",
