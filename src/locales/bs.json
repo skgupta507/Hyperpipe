@@ -5,7 +5,9 @@
         "send": "Pošalji",
         "receive": "Primi",
         "add": "Dodaj",
-        "create": "Napravi"
+        "create": "Napravi",
+        "import": "Uvezite",
+        "export": "Izvezite"
     },
     "title": {
         "genres": "Žanrovi",
