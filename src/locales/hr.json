@@ -28,7 +28,9 @@
         "receive": "Primi",
         "create": "Stvori",
         "back": "Natrag",
-        "add": "Dodaj"
+        "add": "Dodaj",
+        "import": "Uvezite",
+        "export": "Izvezite"
     },
     "instances": {
         "loc": "Lokacije",
@@ -56,7 +58,11 @@
         "blur_light": "Zamagljeno (Svjetlo)",
         "dracula": "Drakula",
         "nord": "Nord",
-        "dark": "Mračno (Zadano)"
+        "dark": "Mračno (Zadano)",
+        "library": "Knjižnica",
+        "home": "Početna",
+        "charts": "Grafikoni",
+        "explore": "Istražite"
     },
     "lyrics": {
         "load": "Dohvaćanje stihova",
