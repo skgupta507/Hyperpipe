@@ -41,7 +41,9 @@
         "add": "Thêm",
         "back": "Quay lại",
         "receive": "Nhận",
-        "send": "Gửi"
+        "send": "Gửi",
+        "import": "Nhập",
+        "export": "Xuất"
     },
     "instances": {
         "version": "Phiên bản",
