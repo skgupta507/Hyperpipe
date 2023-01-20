@@ -25,7 +25,8 @@
     "send": "Send",
     "receive": "Receive",
     "import": "Import",
-    "export": "Export"
+    "export": "Export",
+    "register_on": "Don't have an account? Register on"
   },
   "playlist": {
     "local": "Local Playlists",
