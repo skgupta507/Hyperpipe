@@ -156,7 +156,7 @@ onMounted(() => {
     <label for="pref-chk-prm">{{ t('pref.prm') }}</label>
   </div>
 
-  <h2>Language</h2>
+  <h2>{{ t('pref.language') }}</h2>
 
   <select
     id="pref-lang"
