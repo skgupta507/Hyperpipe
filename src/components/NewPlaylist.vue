@@ -476,12 +476,12 @@ onMounted(async () => {
       <button @click="Login" class="textbox">{{ t('title.login') }}</button>
 
       <p>
-        Don't have an account? register on
+        {{ t('action.register_on') }}
         <a
           href="https://piped.video/register"
           target="_blank"
           rel="noreferrer noopener"
-          >Piped</a
+          > Piped</a
         >
       </p>
     </form>
