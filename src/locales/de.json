@@ -39,6 +39,7 @@
     "pref": {
         "worst": "am Schlechten",
         "theme": "Farbschema",
+        "language": "Sprache",
         "volume": "Standard-Lautstärke",
         "player": "Audio-Player",
         "quality": "Qualität",

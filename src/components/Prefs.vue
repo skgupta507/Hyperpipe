@@ -100,7 +100,7 @@ onMounted(() => {
     <option value="nord">{{ t('pref.nord') }}</option>
   </select>
 
-  <h2>Language</h2>
+  <h2>{{ t('pref.language') }}</h2>
 
   <select
     id="pref-lang"
