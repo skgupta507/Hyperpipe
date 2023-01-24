@@ -109,9 +109,8 @@ function playList(a) {
 /* Lifestyle hooks */
 onBeforeMount(() => {
   /* Set the default theme if set */
-  if (store.theme) {
-    document.body.setAttribute('data-theme', store.theme);
-  }
+  if (store.theme) document.body.setAttribute('data-theme', store.theme);
+  if (store.compact == 'true') document.body.setAttribute('data-compact', '');
 
   /* Set the default locale if set */
   if (store.locale) setupLocale(store.locale);

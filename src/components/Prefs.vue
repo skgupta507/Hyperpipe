@@ -19,7 +19,8 @@ import('@/assets/version.json').then(v => {
 const { t, setupLocale } = useI18n(),
   instances = ref([]),
   hypInstances = ref([]),
-  next = ref(false);
+  next = ref(false),
+  compact = ref(false);
 
 getJson('https://piped-instances.kavin.rocks').then(i => {
   instances.value = i;
@@ -60,8 +61,14 @@ function setLang(locale) {
   setStore('locale', locale);
 }
 
+function setCodec(codec) {
+  setStore('codec', codec);
+  if (window.audioPlayer)
+    window.audioPlayer.configure('preferredAudioCodecs', codec.split(':'));
+}
+
 function getStoreBool(key, ele) {
-  ele.value = getStore(key) || true;
+  ele.value = getStore(key) || ele.value;
 }
 
 const verifyApi = computed(() =>
@@ -82,6 +89,7 @@ const verifyApi = computed(() =>
 
 onMounted(() => {
   getStoreBool('next', next);
+  getStoreBool('compact', compact);
 });
 </script>
 
@@ -99,6 +107,17 @@ onMounted(() => {
     <option value="dracula">{{ t('pref.dracula') }}</option>
     <option value="nord">{{ t('pref.nord') }}</option>
   </select>
+
+  <div class="left">
+    <input
+      type="checkbox"
+      name="pref-chk-compact"
+      id="pref-chk-compact"
+      class="input"
+      @change="setStore('compact', $event.target.checked)"
+      v-model="compact" />
+    <label for="pref-chk-compact">{{ t('pref.compact') }}</label>
+  </div>
 
   <h2>Language</h2>
 
@@ -145,7 +164,7 @@ onMounted(() => {
       name="pref-codec"
       class="input"
       :value="getStore('codec') || 'opus:mp4a'"
-      @change="setStore('codec', $event.target.value)">
+      @change="setCodec($event.target.value)">
       <option value="opus:mp4a">opus, mp4a</option>
       <option value="mp4a:opus">mp4a, opus</option>
       <option value="opus">opus</option>

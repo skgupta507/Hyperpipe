@@ -14,19 +14,17 @@ const subs = JSON.parse(store.subs ? store.subs : '[]'),
   isSub = ref(subs.includes(hash));
 
 function Sub() {
-  if (artist.state.title) {
-    if (isSub.value) {
-      subs.splice(subs.indexOf(hash), 1);
-      store.setItem('subs', JSON.stringify(subs));
-      isSub.value = false;
-    } else {
-      subs.push(hash);
-      store.setItem('subs', JSON.stringify(subs));
-      isSub.value = true;
-    }
+  if (!artist.state.title) return;
 
-    alert(JSON.stringify(subs));
+  if (isSub.value) {
+    subs.splice(subs.indexOf(hash), 1);
+    isSub.value = false;
+  } else {
+    subs.push(hash);
+    isSub.value = true;
   }
+
+  store.setItem('subs', JSON.stringify(subs));
 }
 </script>
 
