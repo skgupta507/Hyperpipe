@@ -48,5 +48,18 @@ defineEmits(['open-album']);
 }
 .card-text {
   margin-top: 0.5rem;
+  cursor: default;
+}
+
+[data-compact] .card {
+  min-height: 12rem;
+  width: 10rem;
+}
+[data-compact] .card-bg {
+  width: 7rem;
+  height: 7rem;
+}
+[data-compact] .card-text {
+  margin-top: 0.25rem;
 }
 </style>

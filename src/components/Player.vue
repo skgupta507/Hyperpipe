@@ -118,6 +118,11 @@ async function Stream() {
   }
 }
 
+function destroy() {
+  window.audioPlayer.destroy();
+  window.audioPlayer = undefined;
+}
+
 watch(
   () => player.state.play,
   () => {
@@ -150,8 +155,9 @@ onMounted(() => {
   if ('mediaSession' in navigator) {
     navigator.mediaSession.setActionHandler('play', () => {
       player.state.status = 'pause';
+
       audio.value.play().catch(err => {
-        alert(err);
+        console.log(err);
         player.state.status = 'play';
       });
     });
@@ -163,7 +169,7 @@ onMounted(() => {
 
     navigator.mediaSession.setActionHandler('previoustrack', () => {
       if (data.state.urls.length > 2) {
-        const i = data.state.urls.map(s => s.url).indexOf(data.state.url);
+        const i = data.state.urls.findIndex(s => s.url == data.state.url);
 
         data.getSong(data.state.urls[i - 1].url);
       }
@@ -171,7 +177,7 @@ onMounted(() => {
 
     navigator.mediaSession.setActionHandler('nexttrack', () => {
       if (data.state.urls.length > 2) {
-        const i = data.state.urls.map(s => s.url).indexOf(data.state.url);
+        const i = data.state.urls.findIndex(s => s.url == data.state.url);
 
         data.getSong(data.state.urls[i + 1].url);
       }
@@ -188,16 +194,10 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  if (window.audioPlayer) {
-    window.audioPlayer.destroy();
-    window.audioPlayer = undefined;
-  }
+  if (window.audioPlayer) destroy();
 });
 onUnmounted(() => {
-  if (window.audioPlayer) {
-    window.audioPlayer.destroy();
-    window.audioPlayer = undefined;
-  }
+  if (window.audioPlayer) destroy();
 });
 </script>
 

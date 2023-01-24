@@ -175,4 +175,12 @@ span.bi-three-dots-vertical {
 .bi-dash-lg {
   color: indianred;
 }
+
+[data-compact] .card {
+  margin: 0;
+}
+[data-compact] .song-bg {
+  width: 70px;
+  height: 70px;
+}
 </style>
