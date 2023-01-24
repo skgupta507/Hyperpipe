@@ -127,7 +127,7 @@ export const useData = defineStore('data', () => {
   }
 
   function nextTrack() {
-    const now = state.urls.findIndex(s => s.url === state.url);
+    const i = state.urls.findIndex(s => s.url === state.url);
 
     if (state.urls[i + 1]) getSong(state.urls[i + 1].url);
     else if (player.state.loop == 1) {
