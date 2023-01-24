@@ -37,7 +37,8 @@
         "explore": "Procházet",
         "charts": "Žebříčky",
         "home": "Domů",
-        "library": "Knihovna"
+        "library": "Knihovna",
+        "compact": "Kompaktní zobrazení"
     },
     "instances": {
         "name": "Název",
