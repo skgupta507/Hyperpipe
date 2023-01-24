@@ -56,7 +56,8 @@
         "charts": "Grafikler",
         "library": "Kütüphane",
         "explore": "Keşfet",
-        "home": "Ana sayfa"
+        "home": "Ana sayfa",
+        "compact": "Sıkı Görünüm"
     },
     "info": {
         "see_all": "Hepsini Gör",
