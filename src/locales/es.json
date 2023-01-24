@@ -56,7 +56,8 @@
         "home": "Inicio",
         "library": "Biblioteca",
         "charts": "Gráfica",
-        "explore": "Explorar"
+        "explore": "Explorar",
+        "compact": "Vista compacta"
     },
     "info": {
         "see_all": "Ver todo",
