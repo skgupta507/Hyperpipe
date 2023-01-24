@@ -19,7 +19,8 @@
         "library": "Raccolta",
         "home": "Pagina principale",
         "charts": "Grafici",
-        "explore": "Esplora"
+        "explore": "Esplora",
+        "compact": "Vista compatta"
     },
     "title": {
         "albums": "Album",
