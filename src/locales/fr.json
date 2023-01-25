@@ -46,7 +46,8 @@
         "charts": "Graphiques",
         "explore": "Explorer",
         "home": "Accueil",
-        "library": "Bibliothèque"
+        "library": "Bibliothèque",
+        "compact": "Vue compacte"
     },
     "info": {
         "see_all": "Voir tout",

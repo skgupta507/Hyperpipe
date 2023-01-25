@@ -8,18 +8,17 @@ const store = useStore();
 
 export const useData = defineStore('data', () => {
   const state = reactive({
-    title: '',
-    description: '',
-    artist: '',
-    art: '',
-    url: '',
-    artistUrl: '',
-    lyrics: '',
-    src: [],
-    urls: [],
-  });
-
-  const player = usePlayer();
+      title: '',
+      description: '',
+      artist: '',
+      art: '',
+      url: '',
+      artistUrl: '',
+      lyrics: '',
+      src: [],
+      urls: [],
+    }),
+    player = usePlayer();
 
   async function getSong(e) {
     console.log(e);
@@ -48,7 +47,7 @@ export const useData = defineStore('data', () => {
     if (
       store.getItem('next') !== 'false' &&
       (!state.urls ||
-        !state.urls.filter(s => s.url == state.url)[0] ||
+        state.urls.findIndex(s => s.url == state.url) < 0 ||
         state.urls.length == 1)
     ) {
       const json = await getJsonHyp('/next/' + hash);
@@ -98,8 +97,7 @@ export const useData = defineStore('data', () => {
   }
 
   function playNext(u) {
-    const now = state.urls.filter(s => s.url === state.url)[0],
-      i = state.urls.indexOf(now);
+    const i = state.urls.findIndex(s => s.url === state.url);
 
     if (player.state.loop == 2) getSong(state.url);
     else if (
@@ -117,8 +115,7 @@ export const useData = defineStore('data', () => {
   }
 
   function prevTrack() {
-    const now = state.urls.filter(s => s.url === state.url)[0],
-      i = state.urls.indexOf(now);
+    const i = state.urls.findIndex(s => s.url === state.url);
 
     if (state.urls[i - 1]) getSong(state.urls[i - 1].url);
     else if (player.state.loop == 1) {
@@ -130,8 +127,7 @@ export const useData = defineStore('data', () => {
   }
 
   function nextTrack() {
-    const now = state.urls.filter(s => s.url === state.url)[0],
-      i = state.urls.indexOf(now);
+    const i = state.urls.findIndex(s => s.url === state.url);
 
     if (state.urls[i + 1]) getSong(state.urls[i + 1].url);
     else if (player.state.loop == 1) {

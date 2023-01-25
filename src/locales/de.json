@@ -56,7 +56,8 @@
         "library": "Bibliothek",
         "charts": "Diagramme",
         "explore": "Erkunden",
-        "home": "Startseite"
+        "home": "Startseite",
+        "compact": "Kompakte Ansicht"
     },
     "info": {
         "no_info": "Keine Informationen verfügbar",

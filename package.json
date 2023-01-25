@@ -10,20 +10,21 @@
     "check": "prettier --check ."
   },
   "dependencies": {
-    "bootstrap-icons": "^1.10.2",
+    "bootstrap-icons": "^1.10.3",
     "buffer": "^6.0.3",
-    "dompurify": "^2.4.1",
+    "dompurify": "^2.4.3",
     "mux.js": "^6.2.0",
     "peerjs": "^1.4.7",
-    "pinia": "^2.0.28",
-    "shaka-player": "^4.3.1",
+    "pinia": "^2.0.29",
+    "shaka-player": "^4.3.3",
     "stream-browserify": "^3.0.0",
     "vue": "^3.2.38",
     "xml-js": "^1.6.11"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
-    "prettier": "^2.8.1",
-    "vite": "^4.0.0"
+    "prettier": "^2.8.3",
+    "vite": "^4.0.4",
+    "vite-plugin-pwa": "^0.14.1"
   }
 }
