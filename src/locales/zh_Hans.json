@@ -56,7 +56,8 @@
         "home": "主页",
         "explore": "探索",
         "charts": "排行榜",
-        "library": "收藏库"
+        "library": "收藏库",
+        "compact": "紧凑视图"
     },
     "info": {
         "see_all": "显示全部",
