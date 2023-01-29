@@ -62,7 +62,8 @@
         "library": "Knjižnica",
         "home": "Početna",
         "charts": "Grafikoni",
-        "explore": "Istražite"
+        "explore": "Istražite",
+        "compact": "Sažeti prikaz"
     },
     "lyrics": {
         "load": "Dohvaćanje stihova",
