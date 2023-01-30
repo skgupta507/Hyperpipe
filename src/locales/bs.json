@@ -66,7 +66,8 @@
         "home": "Početna",
         "explore": "Istražite",
         "charts": "Grafikoni",
-        "library": "Biblioteka"
+        "library": "Biblioteka",
+        "compact": "Kompaktan prikaz"
     },
     "info": {
         "search": "Započni pretraživanje",
