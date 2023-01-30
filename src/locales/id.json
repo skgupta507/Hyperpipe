@@ -2,9 +2,9 @@
     "title": {
         "artists": "Artis",
         "similar_artists": "Artis Serupa",
-        "login": "Login",
+        "login": "Masuk",
         "albums": "Album",
-        "remote": "Remote",
+        "remote": "Jarak Jauh",
         "songs": "Lagu",
         "singles": "Singel",
         "genres": "Genre",
@@ -22,7 +22,7 @@
         "add": "Tambah Lagu ke Daftar Putar",
         "sync": "Sinkronisasi Daftar Putar",
         "local": "Daftar Putar Lokal",
-        "remote": "Daftar Putar Remote",
+        "remote": "Daftar Putar Jarak Jauh",
         "name": "Judul Daftar Putar",
         "create": "Buat Daftar Putar Baru"
     },
