@@ -54,7 +54,10 @@
         "dracula": "Dracula",
         "nord": "Nord",
         "compact": "Vizualizare compactă",
-        "home": "Acasă"
+        "home": "Acasă",
+        "explore": "Explorează",
+        "charts": "Topuri",
+        "library": "Bibliotecă"
     },
     "instances": {
         "cdn": "CDN",
