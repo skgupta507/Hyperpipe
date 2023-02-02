@@ -47,7 +47,8 @@
         "explore": "Ontdekken",
         "charts": "Grafieken",
         "home": "Start",
-        "library": "Bibliotheek"
+        "library": "Bibliotheek",
+        "compact": "Compacte weergave"
     },
     "lyrics": {
         "void": "Geen songtekst",
