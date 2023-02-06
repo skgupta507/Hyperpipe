@@ -23,7 +23,9 @@
         "create": "Yarat",
         "receive": "Qəbul et",
         "cancel": "Ləğv et",
-        "send": "Göndər"
+        "send": "Göndər",
+        "import": "İdxal Et",
+        "export": "İxrac Et"
     },
     "playlist": {
         "local": "Yerli Pleylistlər",
@@ -50,7 +52,12 @@
         "light": "İşıqlı",
         "blur_light": "Bulanıq (İşıqlı)",
         "dracula": "Drakula",
-        "nord": "Nord"
+        "nord": "Nord",
+        "compact": "Kompakt Görünüş",
+        "charts": "Qrafiklər",
+        "library": "Pleylistlər",
+        "home": "Ana Menu",
+        "explore": "Kəşf Et"
     },
     "info": {
         "see_all": "Hamısını gör",
