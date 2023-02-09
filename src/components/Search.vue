@@ -149,6 +149,7 @@ const shuffleAdd = () => {
 
         items = json.items;
       } else {
+        console.log(results.next);
         const json = await getJsonPiped(`/nextpage/playlists/${results.next}`);
         key = 'songs';
 

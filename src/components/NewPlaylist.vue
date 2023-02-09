@@ -56,8 +56,10 @@ const list = ref([]),
 
 const pathname = url => new URL(url).pathname;
 
-const Open = key => {
+const Open = async key => {
     console.log(key);
+
+    const { imageProxyUrl } = await getJsonPiped('/config');
 
     useGetPlaylist(key, res => {
       console.log(res);
@@ -65,7 +67,16 @@ const Open = key => {
         results.resetItems();
         results.setItem('songs', {
           title: 'Local • ' + key,
-          items: res.urls.map(i => ({ ...i, ...{ playlistId: key } })),
+          items: res.urls.map(i => ({
+            ...i,
+            ...{
+              playlistId: key,
+              thumbnail: `${imageProxyUrl}/vi_webp/${i.url.replace(
+                '/watch?v=',
+                '',
+              )}/maxresdefault.webp?host=i.ytimg.com`,
+            },
+          })),
         });
 
         nav.state.page = 'home';
@@ -87,7 +98,23 @@ const Open = key => {
   },
   Import = async (data = importFile.value) => {
     if (data?.type == 'application/json')
-      data = await data.text().then(txt => JSON.parse(txt).local);
+      data = await data.text().then(json => {
+        json = JSON.parse(json);
+
+        if (json?.subscriptions?.length > 0) {
+          const subs = JSON.parse(store.subs || '[]');
+
+          for (const sub of json.subscriptions) {
+            const id = sub.url.slice(-24);
+
+            if (subs.indexOf(id) < 0) subs.push(id);
+          }
+
+          store.subs = JSON.stringify(subs);
+        }
+
+        return json.local;
+      });
 
     if (!data) {
       alert('No data to import');
@@ -97,11 +124,11 @@ const Open = key => {
     List();
 
     for (let i of data) {
-      const pl = list.value.filter(p => p.name == i.name)[0];
+      const pl = list.value.find(p => p.name == i.name);
 
       if (pl) {
         for (let u of i.urls) {
-          if (!pl.urls.filter(r => r.url === u.url)[0]) {
+          if (pl.urls.findIndex(r => r.url === u.url) < 0) {
             useUpdatePlaylist(i.name, u, () => {
               console.log('Added: ' + u.name);
             });
@@ -123,6 +150,11 @@ const Open = key => {
         {
           format: 'Hyperpipe',
           version: 0,
+          app_version: 0,
+          subscriptions: JSON.parse(store.subs).map(id => ({
+            url: 'https://www.youtube.com/channel/' + id,
+            service_id: 0,
+          })),
           local: list.value,
           playlists: [], // TODO?
         },
@@ -202,12 +234,13 @@ const Login = async () => {
   };
 
 const getFeeds = async () => {
-  const subs = JSON.parse(store.subs ? store.subs : '[]');
+  const subs = store.subs;
 
-  if (subs.length > 0) {
-    const json = await getJsonPiped(
-      '/feed/unauthenticated?channels=' + subs.join(','),
-    );
+  if (subs) {
+    const json = await getJsonPiped('/feed/unauthenticated', {
+      method: 'POST',
+      body: subs,
+    });
 
     results.resetItems();
     results.setItem('songs', {
@@ -382,7 +415,9 @@ onMounted(async () => {
 
       <div class="npl-box bi bi-tag pop" @click="getFeeds"></div>
 
-      <div class="npl-box bi bi-arrow-up pop" @click="show.import = true"></div>
+      <div
+        class="npl-box bi bi-box-arrow-in-down pop"
+        @click="show.import = true"></div>
     </div>
 
     <h2 v-if="list.length > 0">{{ t('playlist.local') }}</h2>

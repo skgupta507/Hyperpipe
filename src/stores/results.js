@@ -18,6 +18,7 @@ export const useResults = defineStore('results', () => {
   }
 
   function resetItems() {
+    next.value = undefined;
     useArtist().reset();
     for (let i in items.value) {
       items.value[i] = undefined;
