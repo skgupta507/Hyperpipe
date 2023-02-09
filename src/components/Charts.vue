@@ -30,9 +30,7 @@ async function getCharts() {
   console.log(json);
 
   if (!id.value)
-    id.value = json.options.all.filter(
-      i => i.title == json.options.default,
-    )[0].id;
+    id.value = json.options.all.find(i => i.title == json.options.default).id;
 
   for (const country of json.options.all) {
     const countryLocaleId = `countries.${country.id}`;

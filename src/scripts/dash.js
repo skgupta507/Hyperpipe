@@ -1,6 +1,4 @@
-import { Buffer } from 'buffer/';
-window.Buffer = Buffer;
-import { json2xml } from 'xml-js';
+import { useXML } from './xml.js';
 
 export function useDash(streams, len) {
   const sets = [],
@@ -119,6 +117,5 @@ export function useDash(streams, len) {
     ],
   };
 
-  console.log(json2xml(gen));
-  return json2xml(gen);
+  return useXML(gen);
 }

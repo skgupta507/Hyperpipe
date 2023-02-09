@@ -6,15 +6,13 @@ export const HYPERPIPE_INSTANCE = 'hyperpipeapi.onrender.com';
 export function getPipedQuery() {
   const papi = new URLSearchParams(location.search).get('pipedapi');
 
-  if (!papi) {
-    return '';
-  }
+  if (!papi) return '';
 
   return '?pipedapi=' + useSanitize(papi);
 }
 
-export async function getJson(url) {
-  const res = await fetch(url)
+export async function getJson(url, opts) {
+  const res = await fetch(url, opts)
     .then(res => res.json())
     .catch(err => {
       console.error(err);
@@ -36,13 +34,13 @@ export async function getJson(url) {
   }
 }
 
-export async function getJsonPiped(path) {
+export async function getJsonPiped(path, opts) {
   const root =
     new URLSearchParams(location.search).get('pipedapi') ||
     useStore().getItem('pipedapi') ||
     PIPED_INSTANCE;
 
-  return await getJson('https://' + root + path);
+  return await getJson('https://' + root + path, opts);
 }
 
 export async function getJsonHyp(path) {
@@ -51,7 +49,7 @@ export async function getJsonHyp(path) {
   return await getJson('https://' + root + path);
 }
 
-export async function getJsonAuth(path, opts) {
+export async function getJsonAuth(path, opts = opts) {
   const root = useStore().getItem('authapi') || PIPED_INSTANCE;
 
   return await fetch('https://' + root + path, opts)

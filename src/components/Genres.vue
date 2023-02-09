@@ -116,7 +116,9 @@ onMounted(get);
 }
 .btn-grid {
   display: grid;
-  grid-template-columns: calc(100% / 3) calc(100% / 3) calc(100% / 3);
+  align-self: center;
+  max-width: 100%;
+  grid-template-columns: repeat(auto-fill, 8rem);
   grid-auto-rows: 1fr;
   gap: 0.125rem;
   padding: 1rem 0;
@@ -142,21 +144,5 @@ onMounted(get);
   margin-top: 1.75rem;
   text-align: center;
   text-transform: capitalize;
-}
-
-@media (min-width: 760px) {
-  .btn-grid {
-    grid-template-columns: calc(100% / 4) calc(100% / 4) calc(100% / 4) calc(
-        100% / 4
-      );
-  }
-}
-
-@media (min-width: 1024px) {
-  .btn-grid {
-    grid-template-columns:
-      calc(100% / 5) calc(100% / 5) calc(100% / 5) calc(100% / 5)
-      calc(100% / 5);
-  }
 }
 </style>
