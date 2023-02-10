@@ -4,7 +4,7 @@
         "albums": "Các album",
         "artists": "Các nhạc sĩ",
         "similar_artists": "Các nhạc sĩ liên quan",
-        "genres": "Các thể loại",
+        "genres": "Thể loại",
         "community": "Cộng đồng",
         "search": "Tìm kiếm",
         "singles": "Các đĩa đơn",
@@ -34,7 +34,8 @@
         "library": "Thư viện",
         "explore": "Khám phá",
         "home": "Trang chủ",
-        "charts": "Xếp hạng"
+        "charts": "Xếp hạng",
+        "compact": "Chế độ xem nhỏ gọn"
     },
     "action": {
         "cancel": "Hủy",
