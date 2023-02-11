@@ -13,6 +13,10 @@ export const SUPPORTED_LOCALES = [
     name: 'Azərbaycan',
   },
   {
+    code: 'bn',
+    name: 'বাংলা',
+  },
+  {
     code: 'bs',
     name: 'Bosanski',
   },
@@ -74,7 +78,7 @@ export const SUPPORTED_LOCALES = [
   },
   {
     code: 'ru',
-    name: 'Pусский ',
+    name: 'Pyccкий',
   },
   {
     code: 'sr',
