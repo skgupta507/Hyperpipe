@@ -40,15 +40,22 @@ const openSong = el => {
       thumbnails: [{ url: props.art }],
     });
 
-    const index = data.state.urls.map(s => s.url).indexOf(data.state.url);
-
-    console.log(data.state.urls);
+    const index = data.state.urls.findIndex(s => s.url == data.state.url);
 
     if (
       (index == data.state.urls.length - 1 && player.state.time > 98) ||
       data.state.urls.length == 1
     )
       emit('open-song', props.play);
+  },
+  appendSong = () => {
+    const index = data.state.urls.findIndex(s => s.url == data.state.url);
+
+    data.state.urls.splice(index + 1, 0, {
+      url: props.play,
+      title: props.title,
+      thumbnails: [{ url: props.art }],
+    });
   },
   Remove = () => {
     const auth = useStore().getItem('auth'),
@@ -131,7 +138,12 @@ onMounted(() => {
             v-if="playlistId"
             class="bi bi-dash-lg clickable ign"
             @click="Remove"></span>
-          <span class="bi bi-broadcast ign" @click="$emit('nxt-song')"></span>
+          <span
+            class="bi bi-chevron-bar-right clickable ign"
+            @click="appendSong"></span>
+          <span
+            class="bi bi-broadcast clickable ign"
+            @click="$emit('nxt-song')"></span>
           <span class="bi bi-plus-lg clickable ign" @click="addSong"></span>
           <span class="bi bi-share clickable ign" @click="Share"></span>
         </div>
