@@ -10,6 +10,7 @@ export const useResults = defineStore('results', () => {
   const items = ref({}),
     search = ref(''),
     chartsId = ref(''),
+    album = ref(''),
     next = ref('');
 
   function setItem(key, val) {
@@ -19,6 +20,8 @@ export const useResults = defineStore('results', () => {
 
   function resetItems() {
     next.value = undefined;
+    album.value = undefined;
+
     useArtist().reset();
     for (let i in items.value) {
       items.value[i] = undefined;
@@ -48,6 +51,8 @@ export const useResults = defineStore('results', () => {
     console.log(json, json.relatedStreams);
 
     resetItems();
+
+    album.value = e;
 
     if (
       /[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}/.test(
@@ -79,6 +84,7 @@ export const useResults = defineStore('results', () => {
     search,
     chartsId,
     next,
+    album,
     setItem,
     resetItems,
     getExplore,

@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue';
 
 import { getJsonAuth } from '@/scripts/fetch.js';
 import { useRand } from '@/scripts/colors.js';
-import { useStore } from '@/scripts/util.js';
+import { useStore, useShare } from '@/scripts/util.js';
 import { useUpdatePlaylist } from '@/scripts/db.js';
 
 import { useResults, useArtist } from '@/stores/results.js';
@@ -85,29 +85,13 @@ const openSong = el => {
         emit('remove', props.index),
       );
   },
-  Share = async () => {
-    if ('share' in navigator) {
-      const data = {
-        title: `Listen to ${props.title} by ${props.author} on Hyperpipe`,
-        url: location.origin + props.play,
-      };
+  Share = () => {
+    const data = {
+      title: `Listen to ${props.title} by ${props.author} on Hyperpipe`,
+      url: location.origin + props.play,
+    };
 
-      try {
-        await navigator.share(data);
-        console.log('Done Sharing!');
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
-      navigator.clipboard.writeText(location.host + props.play).then(
-        () => {
-          alert('Copied to Clipboard');
-        },
-        err => {
-          console.log(err);
-        },
-      );
-    }
+    useShare(data);
   };
 
 onMounted(() => {

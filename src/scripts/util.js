@@ -35,6 +35,23 @@ export function useStore() {
   }
 }
 
+export function useShare(data) {
+  if ('share' in navigator) {
+    navigator.share(data).catch(err => {
+      console.err(err);
+    });
+  } else {
+    navigator.clipboard.writeText(data.url).then(
+      () => {
+        alert('Copied to Clipboard');
+      },
+      err => {
+        alert(err);
+      },
+    );
+  }
+}
+
 export function useMetadata(url, urls, data) {
   if ('mediaSession' in navigator) {
     const now = urls.find(u => u.url === url);

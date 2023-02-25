@@ -127,7 +127,7 @@ You can reach out to me personally on:
 *All content on Hyperpipe is from YouTube Music. YouTube and YouTube Music are trademarks of Google LLC. Hyperpipe is not affiliated with YouTube or YouTube Music.*
 
 [hypipe]: https://hyperpipe.surge.sh
-[piped]: https://piped.kavin.rocks
+[piped]: https://github.com/TeamPiped/Piped
 [license]: https://codeberg.org/Hyperpipe/Hyperpipe/src/branch/main/LICENSE.md
 [vue]: https://github.com/vuejs/core/blob/main/LICENSE
 [vite]: https://github.com/vitejs/vite/blob/main/LICENSE
