@@ -12,7 +12,8 @@
         "moods": "Chủ đề",
         "playlists": "Các danh sách phát",
         "featured": "Nổi bật",
-        "feeds": "Nguồn cấp dữ liệu"
+        "feeds": "Nguồn cấp dữ liệu",
+        "spotlight": "Tiêu điểm"
     },
     "pref": {
         "auto": "tự động",
