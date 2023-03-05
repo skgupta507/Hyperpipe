@@ -49,7 +49,7 @@ export async function getJsonHyp(path) {
   return await getJson('https://' + root + path);
 }
 
-export async function getJsonAuth(path, opts = opts) {
+export async function getJsonAuth(path, opts = {}) {
   const root = useStore().getItem('authapi') || PIPED_INSTANCE;
 
   return await fetch('https://' + root + path, opts)
