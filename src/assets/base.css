@@ -94,10 +94,12 @@ body[data-theme*='blur'] .pl-modal,
 body[data-theme*='blur'] .modal-box,
 body[data-theme*='blur'] .popup input[type='text'] {
   background: var(--color-blur);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
 body[data-theme*='blur'] .modal {
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(5px);
 }
 
@@ -327,14 +329,25 @@ img {
   display: grid;
   grid-template-columns: 1fr;
 }
+@media (max-width: 530px) {
+  [data-compact] .grid-3 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
 @media (min-width: 530px) {
   .grid-3 {
     grid-template-columns: 1fr 1fr;
+  }
+  [data-compact] .grid-3 {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }
 @media (min-width: 780px) {
   .grid-3 {
     grid-template-columns: 1fr 1fr 1fr;
+  }
+  [data-compact] .grid-3 {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 }
 @media (min-width: 930px) {
@@ -346,6 +359,9 @@ img {
 @media (min-width: 1130px) {
   .grid-3 {
     grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+  [data-compact] .grid-3 {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   }
 }
 

@@ -23,7 +23,9 @@
         "create": "Oluştur",
         "cancel": "İptal",
         "receive": "Al",
-        "send": "Gönder"
+        "send": "Gönder",
+        "export": "Dışa aktar",
+        "import": "İçe aktar"
     },
     "playlist": {
         "local": "Yerel Oynatma Listeleri",
@@ -50,7 +52,12 @@
         "blur": "Bulanıklaştır",
         "blur_light": "Bulanıklaştır (Açık)",
         "dracula": "Dracula",
-        "nord": "Nord"
+        "nord": "Nord",
+        "charts": "Grafikler",
+        "library": "Kütüphane",
+        "explore": "Keşfet",
+        "home": "Ana sayfa",
+        "compact": "Sıkı Görünüm"
     },
     "info": {
         "see_all": "Hepsini Gör",

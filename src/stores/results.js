@@ -3,13 +3,14 @@ import { defineStore } from 'pinia';
 
 import { useNav } from '@/stores/misc.js';
 
-import { getJsonPiped, getJsonHyp } from '@/scripts/fetch.js';
+import { getJsonPiped, getJsonHyp, getJsonAuth } from '@/scripts/fetch.js';
 import { useRoute } from '@/scripts/util.js';
 
 export const useResults = defineStore('results', () => {
   const items = ref({}),
     search = ref(''),
     chartsId = ref(''),
+    album = ref(''),
     next = ref('');
 
   function setItem(key, val) {
@@ -18,6 +19,9 @@ export const useResults = defineStore('results', () => {
   }
 
   function resetItems() {
+    next.value = undefined;
+    album.value = undefined;
+
     useArtist().reset();
     for (let i in items.value) {
       items.value[i] = undefined;
@@ -42,22 +46,24 @@ export const useResults = defineStore('results', () => {
     console.log('Album: ', e);
 
     const hash = new URLSearchParams(e.substring(e.indexOf('?'))).get('list'),
-      json = await getJsonPiped('/playlists/' + hash);
+      isAuth =
+        /[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}/.test(
+          hash,
+        ),
+      path = '/playlists/' + hash,
+      json = isAuth ? await getJsonAuth(path) : await getJsonPiped(path);
 
     console.log(json, json.relatedStreams);
 
     resetItems();
 
-    if (
-      /[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}/.test(
-        hash,
-      )
-    ) {
+    album.value = e;
+
+    if (isAuth)
       json.relatedStreams = json.relatedStreams.map(i => {
         i.playlistId = hash;
         return i;
       });
-    }
 
     setItem('songs', {
       items: json.relatedStreams,
@@ -78,6 +84,7 @@ export const useResults = defineStore('results', () => {
     search,
     chartsId,
     next,
+    album,
     setItem,
     resetItems,
     getExplore,

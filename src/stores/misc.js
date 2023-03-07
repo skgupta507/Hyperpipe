@@ -13,6 +13,10 @@ export const SUPPORTED_LOCALES = [
     name: 'Azərbaycan',
   },
   {
+    code: 'bn',
+    name: 'বাংলা',
+  },
+  {
     code: 'bs',
     name: 'Bosanski',
   },
@@ -69,12 +73,20 @@ export const SUPPORTED_LOCALES = [
     name: 'Nederlands',
   },
   {
+    code: 'pt',
+    name: 'Português',
+  },
+  {
+    code: 'pt_br',
+    name: 'Português Brasileiro',
+  },
+  {
     code: 'ro',
     name: 'Română',
   },
   {
     code: 'ru',
-    name: 'Pусский ',
+    name: 'Pyccкий',
   },
   {
     code: 'sr',
@@ -91,10 +103,6 @@ export const SUPPORTED_LOCALES = [
   {
     code: 'zh_Hans',
     name: '中文 (简体)',
-  },
-  {
-    code: 'pt_br',
-    name: 'Português Brasileiro',
   },
 ];
 

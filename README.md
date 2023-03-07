@@ -1,11 +1,15 @@
 # Hyperpipe
 
+<div align="center">
+
 ![](https://codeberg.org/Hyperpipe/Hyperpipe/raw/branch/main/public/android-chrome-192x192.png)
 
 A Privacy Respecting Frontend for YouTube Music inspired and built with the help of [Piped][piped] and YouTube's InnerTube API.
 
 ![](https://img.shields.io/badge/youtube-music-red?style=for-the-badge&logo=youtube-music)
 ![Offical instance](https://img.shields.io/website?down_color=red&down_message=offline&label=status&style=for-the-badge&up_color=cornflowerblue&up_message=online&url=https%3A%2F%2Fhyperpipe.surge.sh)
+
+</div>
 
 ## Disclaimer
 
@@ -103,6 +107,7 @@ You can reach out to me personally on:
 - ViteJS -> [MIT][vite]
 - shaka-player -> [Apache-2.0][shaka]
 - PeerJS -> [MIT][peer]
+- DOMPurify -> [Apache-2.0][purify]
 - Bootstrap Icons -> [MIT][bi]
 - VueJS theme -> [MIT][vuetheme]
 - Dracula theme -> [MIT][dracula]
@@ -119,16 +124,17 @@ You can reach out to me personally on:
 
 ---
 
-*Hyperpipe does not host any content. All content on Hyperpipe is from YouTube Music. YouTube and YouTube Music are trademarks of Google LLC. Hyperpipe is not affiliated with YouTube or YouTube Music.*
+*All content on Hyperpipe is from YouTube Music. YouTube and YouTube Music are trademarks of Google LLC. Hyperpipe is not affiliated with YouTube or YouTube Music.*
 
 [hypipe]: https://hyperpipe.surge.sh
-[piped]: https://piped.kavin.rocks
+[piped]: https://github.com/TeamPiped/Piped
 [license]: https://codeberg.org/Hyperpipe/Hyperpipe/src/branch/main/LICENSE.md
 [vue]: https://github.com/vuejs/core/blob/main/LICENSE
 [vite]: https://github.com/vitejs/vite/blob/main/LICENSE
 [bi]: https://github.com/twbs/icons/blob/main/LICENSE.md
 [peer]: https://github.com/peers/peerjs/blob/master/LICENSE
 [shaka]: https://github.com/shaka-project/shaka-player/blob/main/LICENSE
+[purify]: https://github.com/cure53/DOMPurify/blob/main/LICENSE
 [nord]: https://github.com/arcticicestudio/nord/blob/develop/LICENSE.md
 [vuetheme]: https://github.com/vuejs/theme/blob/main/LICENSE
 [dracula]: https://github.com/dracula/dracula-theme/blob/master/LICENSE

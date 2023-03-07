@@ -36,8 +36,11 @@ const list = ref([]),
   show = reactive({
     new: false,
     sync: false,
+    import: false,
   }),
   text = ref(''),
+  isImport = ref(false),
+  importFile = ref(''),
   sync = reactive({
     type: 'send',
     id: 'Please Wait...',
@@ -53,8 +56,10 @@ const list = ref([]),
 
 const pathname = url => new URL(url).pathname;
 
-const Open = key => {
+const Open = async key => {
     console.log(key);
+
+    const { imageProxyUrl } = await getJsonPiped('/config');
 
     useGetPlaylist(key, res => {
       console.log(res);
@@ -62,7 +67,16 @@ const Open = key => {
         results.resetItems();
         results.setItem('songs', {
           title: 'Local • ' + key,
-          items: res.urls.map(i => ({ ...i, ...{ playlistId: key } })),
+          items: res.urls.map(i => ({
+            ...i,
+            ...{
+              playlistId: key,
+              thumbnail: `${imageProxyUrl}/vi_webp/${i.url.replace(
+                '/watch?v=',
+                '',
+              )}/maxresdefault.webp?host=i.ytimg.com`,
+            },
+          })),
         });
 
         nav.state.page = 'home';
@@ -81,6 +95,80 @@ const Open = key => {
         show.new = false;
       });
     }
+  },
+  Import = async (data = importFile.value) => {
+    if (data?.type == 'application/json')
+      data = await data.text().then(json => {
+        json = JSON.parse(json);
+
+        if (json?.subscriptions?.length > 0) {
+          const subs = JSON.parse(store.subs || '[]');
+
+          for (const sub of json.subscriptions) {
+            const id = sub.url.slice(-24);
+
+            if (subs.indexOf(id) < 0) subs.push(id);
+          }
+
+          store.subs = JSON.stringify(subs);
+        }
+
+        return json.local;
+      });
+
+    if (!data) {
+      alert('No data to import');
+      return;
+    }
+
+    List();
+
+    for (let i of data) {
+      const pl = list.value.find(p => p.name == i.name);
+
+      if (pl) {
+        for (let u of i.urls) {
+          if (pl.urls.findIndex(r => r.url === u.url) < 0) {
+            useUpdatePlaylist(i.name, u, () => {
+              console.log('Added: ' + u.name);
+            });
+          }
+        }
+      } else {
+        useCreatePlaylist(i.name, i.urls);
+      }
+
+      List();
+    }
+
+    show.import = false;
+  },
+  Export = () => {
+    List();
+
+    const base = JSON.stringify(
+        {
+          format: 'Hyperpipe',
+          version: 0,
+          app_version: 0,
+          subscriptions: JSON.parse(store.subs).map(id => ({
+            url: 'https://www.youtube.com/channel/' + id,
+            service_id: 0,
+          })),
+          local: list.value,
+          playlists: [], // TODO?
+        },
+        null,
+        2,
+      ),
+      file = new Blob([base], { type: 'application/json' }),
+      ele = document.createElement('a');
+
+    ele.href = URL.createObjectURL(file);
+    ele.download = 'hyperpipe.json';
+
+    ele.click();
+    ele.remove();
   },
   Send = () => {
     const conn = sync.peer.connect(sync.to);
@@ -146,12 +234,13 @@ const Login = async () => {
   };
 
 const getFeeds = async () => {
-  const subs = JSON.parse(store.subs ? store.subs : '[]');
+  const subs = store.subs;
 
-  if (subs.length > 0) {
-    const json = await getJsonPiped(
-      '/feed/unauthenticated?channels=' + subs.join(','),
-    );
+  if (subs) {
+    const json = await getJsonPiped('/feed/unauthenticated', {
+      method: 'POST',
+      body: subs,
+    });
 
     results.resetItems();
     results.setItem('songs', {
@@ -183,29 +272,9 @@ watch(
           if (sync.type == 'rec') {
             console.log(data);
 
-            List();
+            Import(data);
 
-            for (let i of data) {
-              const pl = list.value.filter(p => p.name == i.name)[0];
-
-              if (pl) {
-                for (let u of i.urls) {
-                  if (!pl.urls.filter(r => r.url === u.url)[0]) {
-                    useUpdatePlaylist(i.name, u, () => {
-                      console.log('Added: ' + u.name);
-                    });
-                  }
-                }
-              } else {
-                useCreatePlaylist(i.name, i.urls);
-              }
-
-              List();
-
-              if (data.indexOf(i) == data.length - 1) {
-                show.sync = false;
-              }
-            }
+            show.sync = false;
           }
         });
       });
@@ -300,6 +369,43 @@ onMounted(async () => {
       </template>
     </Modal>
 
+    <Modal
+      n="2"
+      :display="show.import"
+      :title="t('action.import')"
+      @show="
+        e => {
+          show.import = e;
+        }
+      ">
+      <template #content>
+        <div class="tabs">
+          <button :data-active="isImport" @click="isImport = true">
+            {{ t('action.import') }}
+          </button>
+          <button :data-active="!isImport" @click="isImport = false">
+            {{ t('action.export') }}
+          </button>
+        </div>
+
+        <div v-if="isImport">
+          <input
+            type="file"
+            class="textbox"
+            name="import"
+            accept="application/json"
+            @change="importFile = $event.target.files[0]" />
+        </div>
+      </template>
+
+      <template #buttons>
+        <button @click="show.import = false">{{ t('action.cancel') }}</button>
+        <button @click="isImport ? Import() : Export()">
+          {{ isImport ? t('action.import') : t('action.export') }}
+        </button>
+      </template>
+    </Modal>
+
     <div class="grid">
       <div class="npl-box bi bi-plus-lg pop" @click="show.new = true"></div>
 
@@ -308,6 +414,10 @@ onMounted(async () => {
         @click="show.sync = true"></div>
 
       <div class="npl-box bi bi-tag pop" @click="getFeeds"></div>
+
+      <div
+        class="npl-box bi bi-box-arrow-in-down pop"
+        @click="show.import = true"></div>
     </div>
 
     <h2 v-if="list.length > 0">{{ t('playlist.local') }}</h2>
@@ -329,6 +439,7 @@ onMounted(async () => {
         v-for="i in user.playlists"
         :key="i.id"
         :name="i.name.replace('Playlist - ', '')"
+        :author="t('title.songs') + ' • ' + i.videos"
         :art="pathname(i.thumbnail) != '/' ? i.thumbnail : undefined"
         @open-album="$emit('open-playlist', '/playlists?list=' + i.id)" />
     </div>
@@ -418,6 +529,20 @@ button.logout {
   margin: 1rem auto;
   display: block;
   background: linear-gradient(135deg, indianred, #bf616a);
+}
+input[type='file'] {
+  display: block;
+}
+input[type='file']::file-selector-button {
+  font-weight: bold;
+  appearance: inherit;
+  outline: inherit;
+  border: inherit;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  margin: 0.1rem 0.5rem 0.1rem 0.1rem;
+  color: var(--color-background);
+  background: linear-gradient(135deg, cornflowerblue, #88c0d0);
 }
 .tabs button:first-child {
   border-radius: 0.25rem 0 0 0.25rem;

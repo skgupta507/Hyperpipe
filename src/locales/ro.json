@@ -23,7 +23,9 @@
         "create": "Creați",
         "send": "Trimite",
         "receive": "Primiți",
-        "cancel": "Anulează"
+        "cancel": "Anulează",
+        "import": "Importă",
+        "export": "Exportă"
     },
     "playlist": {
         "local": "Playlisturi locale",
@@ -50,7 +52,12 @@
         "light": "Luminat",
         "blur_light": "Blur (Lumină)",
         "dracula": "Dracula",
-        "nord": "Nord"
+        "nord": "Nord",
+        "compact": "Vizualizare compactă",
+        "home": "Acasă",
+        "explore": "Explorează",
+        "charts": "Topuri",
+        "library": "Bibliotecă"
     },
     "instances": {
         "cdn": "CDN",

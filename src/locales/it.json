@@ -15,7 +15,12 @@
         "blur": "Sfocatura",
         "blur_light": "Sfocatura (chiaro)",
         "dracula": "Dracula",
-        "nord": "Nord"
+        "nord": "Nord",
+        "library": "Raccolta",
+        "home": "Pagina principale",
+        "charts": "Grafici",
+        "explore": "Esplora",
+        "compact": "Vista compatta"
     },
     "title": {
         "albums": "Album",
@@ -40,7 +45,9 @@
         "back": "Indietro",
         "create": "Crea",
         "send": "Invia",
-        "cancel": "Annulla"
+        "cancel": "Annulla",
+        "import": "Importa",
+        "export": "Esporta"
     },
     "info": {
         "see_all": "Vedi tutto",

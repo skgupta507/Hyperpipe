@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue';
 
 import { getJsonAuth } from '@/scripts/fetch.js';
 import { useRand } from '@/scripts/colors.js';
-import { useStore } from '@/scripts/util.js';
+import { useStore, useShare } from '@/scripts/util.js';
 import { useUpdatePlaylist } from '@/scripts/db.js';
 
 import { useResults, useArtist } from '@/stores/results.js';
@@ -40,15 +40,22 @@ const openSong = el => {
       thumbnails: [{ url: props.art }],
     });
 
-    const index = data.state.urls.map(s => s.url).indexOf(data.state.url);
-
-    console.log(data.state.urls);
+    const index = data.state.urls.findIndex(s => s.url == data.state.url);
 
     if (
       (index == data.state.urls.length - 1 && player.state.time > 98) ||
       data.state.urls.length == 1
     )
       emit('open-song', props.play);
+  },
+  appendSong = () => {
+    const index = data.state.urls.findIndex(s => s.url == data.state.url);
+
+    data.state.urls.splice(index + 1, 0, {
+      url: props.play,
+      title: props.title,
+      thumbnails: [{ url: props.art }],
+    });
   },
   Remove = () => {
     const auth = useStore().getItem('auth'),
@@ -78,29 +85,13 @@ const openSong = el => {
         emit('remove', props.index),
       );
   },
-  Share = async () => {
-    if ('share' in navigator) {
-      const data = {
-        title: `Listen to ${props.title} by ${props.author} on Hyperpipe`,
-        url: location.origin + props.play,
-      };
+  Share = () => {
+    const data = {
+      title: `Listen to ${props.title} by ${props.author} on Hyperpipe`,
+      url: location.origin + props.play,
+    };
 
-      try {
-        await navigator.share(data);
-        console.log('Done Sharing!');
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
-      navigator.clipboard.writeText(location.host + props.play).then(
-        () => {
-          alert('Copied to Clipboard');
-        },
-        err => {
-          console.log(err);
-        },
-      );
-    }
+    useShare(data);
   };
 
 onMounted(() => {
@@ -131,7 +122,12 @@ onMounted(() => {
             v-if="playlistId"
             class="bi bi-dash-lg clickable ign"
             @click="Remove"></span>
-          <span class="bi bi-broadcast ign" @click="$emit('nxt-song')"></span>
+          <span
+            class="bi bi-chevron-bar-right clickable ign"
+            @click="appendSong"></span>
+          <span
+            class="bi bi-broadcast clickable ign"
+            @click="$emit('nxt-song')"></span>
           <span class="bi bi-plus-lg clickable ign" @click="addSong"></span>
           <span class="bi bi-share clickable ign" @click="Share"></span>
         </div>
@@ -172,5 +168,13 @@ span.bi-three-dots-vertical {
 }
 .bi-dash-lg {
   color: indianred;
+}
+
+[data-compact] .card {
+  margin: 0;
+}
+[data-compact] .song-bg {
+  width: 70px;
+  height: 70px;
 }
 </style>

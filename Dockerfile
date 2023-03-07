@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM node:lts AS build
+FROM --platform=$BUILDPLATFORM node:lts-alpine AS build
 
 WORKDIR /app/
 
@@ -9,7 +9,7 @@ RUN --mount=type=cache,target=/root/.cache/node \
     npm install --prefer-offline && \
     npm run build
 
-FROM --platform=$BUILDPLATFORM nginx:stable
+FROM --platform=$BUILDPLATFORM nginx:stable-alpine
 
 COPY --from=build /app/dist/ /usr/share/nginx/html/
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf

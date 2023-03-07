@@ -42,7 +42,12 @@
         "blur": "Flou",
         "blur_light": "Flou (clair)",
         "dracula": "Dracula",
-        "nord": "Nord"
+        "nord": "Nord",
+        "charts": "Graphiques",
+        "explore": "Explorer",
+        "home": "Accueil",
+        "library": "Bibliothèque",
+        "compact": "Vue compacte"
     },
     "info": {
         "see_all": "Voir tout",
@@ -55,7 +60,9 @@
         "add": "Ajouter",
         "create": "Créer",
         "cancel": "Annuler",
-        "receive": "Recevoir"
+        "receive": "Recevoir",
+        "import": "Importer",
+        "export": "Exporter"
     },
     "instances": {
         "up_to_date": "À jour",

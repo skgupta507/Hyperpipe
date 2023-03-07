@@ -35,9 +35,26 @@ export function useStore() {
   }
 }
 
+export function useShare(data) {
+  if ('share' in navigator) {
+    navigator.share(data).catch(err => {
+      console.err(err);
+    });
+  } else {
+    navigator.clipboard.writeText(data.url).then(
+      () => {
+        alert('Copied to Clipboard');
+      },
+      err => {
+        alert(err);
+      },
+    );
+  }
+}
+
 export function useMetadata(url, urls, data) {
   if ('mediaSession' in navigator) {
-    const now = urls.filter(u => u.url === url)[0];
+    const now = urls.find(u => u.url === url);
 
     let artwork = [],
       album = undefined;
@@ -51,7 +68,7 @@ export function useMetadata(url, urls, data) {
           src: t.url,
           type: 'image/webp',
         }));
-      } else artwork = [{ src: data.art, type: 'image/webp' }];
+      } else if (data.art) artwork = [{ src: data.art, type: 'image/webp' }];
 
       console.log(album, artwork);
     }

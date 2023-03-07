@@ -3,13 +3,13 @@
         "moods": "Stimmungen",
         "songs": "Lieder",
         "albums": "Alben",
-        "genres": "Genres",
-        "singles": "Singles",
+        "genres": "Kategorien",
+        "singles": "Einzeltitel",
         "artists": "Künstler/innen",
         "similar_artists": "Ähnliche Künstler/innen",
         "featured": "Ausgewählt",
         "community": "Gemeinschaft",
-        "login": "Anmeldung",
+        "login": "Anmelden",
         "local": "Lokal",
         "search": "Suche",
         "spotlight": "Scheinwerfer",
@@ -23,7 +23,9 @@
         "create": "Erstellen",
         "add": "Hinzufügen",
         "cancel": "Abbrechen",
-        "receive": "Empfangen"
+        "receive": "Empfangen",
+        "import": "Importieren",
+        "export": "Exportieren"
     },
     "playlist": {
         "local": "Lokale Wiedergabelisten",
@@ -49,8 +51,13 @@
         "light": "Hell",
         "blur": "Unschärfe",
         "blur_light": "Unschärfe (hell)",
-        "dracula": "Dracula",
-        "nord": "Nord"
+        "dracula": "Drakula",
+        "nord": "Nord",
+        "library": "Bibliothek",
+        "charts": "Diagramme",
+        "explore": "Erkunden",
+        "home": "Startseite",
+        "compact": "Kompakte Ansicht"
     },
     "info": {
         "no_info": "Keine Informationen verfügbar",

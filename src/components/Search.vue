@@ -6,7 +6,7 @@ import SongItem from './SongItem.vue';
 import AlbumItem from './AlbumItem.vue';
 
 import { getJsonPiped, getPipedQuery } from '@/scripts/fetch.js';
-import { useRoute, useWrap } from '@/scripts/util.js';
+import { useRoute, useWrap, useShare } from '@/scripts/util.js';
 import { useCreatePlaylist, useRemovePlaylist } from '@/scripts/db.js';
 
 import { useResults, useArtist } from '@/stores/results.js';
@@ -77,9 +77,18 @@ const shuffleAdd = () => {
   removeSong = i => {
     console.log(i);
 
-    try {
-      results.items.songs.items.splice(i, 1);
-    } catch {}
+    results.items.songs.items.splice(i, 1);
+  },
+  shareAlbum = () => {
+    const data = {
+      title: `View ${results.items?.songs?.title} on Hyperpipe`,
+      url:
+        location.origin +
+        (results.album.startsWith('/') ? '' : '/') +
+        results.album,
+    };
+
+    useShare(data);
   },
   saveAlbum = () => {
     const urls = results.items?.songs?.items?.map(item => ({
@@ -149,6 +158,7 @@ const shuffleAdd = () => {
 
         items = json.items;
       } else {
+        console.log(results.next);
         const json = await getJsonPiped(`/nextpage/playlists/${results.next}`);
         key = 'songs';
 
@@ -232,6 +242,8 @@ onDeactivated(() => {
             <button
               class="bi bi-bookmark-plus clickable"
               @click="saveAlbum"></button>
+
+            <button class="bi bi-share clickable" @click="shareAlbum"></button>
 
             <button
               class="bi bi-plus-lg clickable"

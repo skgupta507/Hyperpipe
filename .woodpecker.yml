@@ -5,8 +5,6 @@ pipeline:
       - npm install
       - npm run build
     when:
-      path:
-        exclude: ['*.md', '.gitea/*']
       event: ['push', 'pull_request']
 
   surge:
@@ -18,8 +16,6 @@ pipeline:
     secrets: [surge_login, surge_token]
     when:
       branch: main
-      path:
-        exclude: ['*.md', '.gitea/*']
       event: ['push']
 
   docker:
@@ -29,11 +25,10 @@ pipeline:
       repo: codeberg.org/hyperpipe/hyperpipe
       registry: codeberg.org
       tags: latest
-      username: snematoda
+      username:
+        from_secret: cb_user
       password:
         from_secret: cb_token
     when:
       branch: main
-      path:
-        exclude: ['*.md', '.gitea/*']
       event: ['push']

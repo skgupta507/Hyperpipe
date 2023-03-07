@@ -5,7 +5,9 @@
         "cancel": "Annuleren",
         "receive": "Ontvangen",
         "back": "Terug",
-        "create": "Creëren"
+        "create": "Creëren",
+        "import": "Importeren",
+        "export": "Exporteren"
     },
     "title": {
         "community": "Gemeenschap",
@@ -41,7 +43,12 @@
         "blur_light": "Waas (Licht)",
         "dracula": "Dracula",
         "nord": "Nord",
-        "dark": "Donker (standaard)"
+        "dark": "Donker (standaard)",
+        "explore": "Ontdekken",
+        "charts": "Grafieken",
+        "home": "Start",
+        "library": "Bibliotheek",
+        "compact": "Compacte weergave"
     },
     "lyrics": {
         "void": "Geen songtekst",

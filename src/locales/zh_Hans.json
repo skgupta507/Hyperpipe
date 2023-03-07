@@ -32,7 +32,9 @@
         "back": "返回",
         "cancel": "取消",
         "receive": "接收",
-        "send": "发送"
+        "send": "发送",
+        "import": "导入",
+        "export": "导出"
     },
     "pref": {
         "player": "音频播放器",
@@ -50,7 +52,12 @@
         "light": "亮色",
         "blur_light": "模糊（亮色）",
         "dracula": "Dracula",
-        "nord": "Nord"
+        "nord": "Nord",
+        "home": "主页",
+        "explore": "探索",
+        "charts": "排行榜",
+        "library": "收藏库",
+        "compact": "紧凑视图"
     },
     "info": {
         "see_all": "显示全部",
