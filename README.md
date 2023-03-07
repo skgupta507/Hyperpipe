@@ -53,9 +53,25 @@ npm run build
 
 Please see [hyperpipe.codeberg.page](https://hyperpipe.codeberg.page)
 
-## Extensions
+## Automatically Redirect Links
 
-- [Libredirect](https://codeberg.org/LibRedirect/libredirect) -> For Redirecting YouTube Music links to Hyperpipe.
+### LibRedirect
+
+Use [LibRedirect](https://github.com/libredirect/libredirect) to automatically redirect YouTube Music links to Hyperpipe.
+
+### Redirector
+
+You can use the [Redirector](https://github.com/einaregilsson/Redirector) extension to redirect **_ALL_** YouTube Music links to Hyperpipe (including unsupported routes) with the configuration below (_Note:_ You can replace `hyperpipe.surge.sh` with any instance URL):
+
+- Description: YouTube Music to Hyperpipe
+- Example URL: https://music.youtube.com/channel/UCI8EcEjCSH1joG5uytf9ZvA
+- Include pattern: `https://music.youtube.com/*`
+- Redirect to: `https://hyperpipe.surge.sh/$1`
+- Pattern type: Wildcard Expression
+- Pattern Description: Redirects all YouTube Music URLs to Hyperpipe
+- Advanced options:
+  - Apply to:
+    - [x] Main window (address bar)
 
 ## Translation
 
