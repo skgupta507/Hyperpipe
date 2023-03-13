@@ -61,7 +61,7 @@ Use [LibRedirect](https://github.com/libredirect/libredirect) to automatically r
 
 ### Redirector
 
-You can use the [Redirector](https://github.com/einaregilsson/Redirector) extension to redirect **_ALL_** YouTube Music links to Hyperpipe (including unsupported routes) with the configuration below (_Note:_ You can replace `hyperpipe.surge.sh` with any instance URL):
+You can use the [Redirector](https://github.com/einaregilsson/Redirector) extension to redirect **_MOST_** YouTube Music links to Hyperpipe (including unsupported routes) with the configuration below (_Note:_ You can replace `hyperpipe.surge.sh` with any instance URL):
 
 - Description: YouTube Music to Hyperpipe
 - Example URL: https://music.youtube.com/channel/UCI8EcEjCSH1joG5uytf9ZvA
