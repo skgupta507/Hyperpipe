@@ -56,7 +56,8 @@
         "library": "ライブラリ",
         "blur": "透かし",
         "blur_light": "透かし (ライト)",
-        "light": "ライト"
+        "light": "ライト",
+        "compact": "小型表示"
     },
     "info": {
         "see_all": "すべて表示",
