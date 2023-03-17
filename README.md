@@ -53,7 +53,7 @@ npm run build
 
 Please see [hyperpipe.codeberg.page](https://hyperpipe.codeberg.page)
 
-## Automatically Redirect Links
+## Automatic Redirection
 
 ### LibRedirect
 
