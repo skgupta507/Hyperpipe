@@ -29,14 +29,12 @@ const data = reactive({
 function get(id) {
   if (props.id || typeof id == 'string') {
     getJsonHyp('/genres/' + (props.id || id)).then(res => {
-
       for (let i of todo) data[i] = res[i];
 
       useRoute('/explore/' + (props.id || id));
     });
   } else {
     getJsonHyp('/genres').then(res => {
-
       for (let i of todo) data[i] = undefined;
       for (let i of ['moods', 'genres']) btns[i] = res[i];
 
@@ -57,7 +55,9 @@ onMounted(get);
     <template
       v-for="type in ['featured', 'spotlight', 'community']"
       :key="type">
-      <h3 class="head" v-if="data[type].length > 0">{{ t('title.' + type) }}</h3>
+      <h3 class="head" v-if="data[type].length > 0">
+        {{ t('title.' + type) }}
+      </h3>
       <div class="grid-3">
         <AlbumItem
           v-for="i in data[type]"
