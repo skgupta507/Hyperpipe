@@ -21,7 +21,6 @@ export const useData = defineStore('data', () => {
     player = usePlayer();
 
   async function getSong(e) {
-
     const hash = new URLSearchParams(e.substring(e.indexOf('?'))).get('v'),
       json = await getJsonPiped('/streams/' + hash);
 
