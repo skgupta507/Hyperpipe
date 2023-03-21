@@ -21,12 +21,9 @@ export const useData = defineStore('data', () => {
     player = usePlayer();
 
   async function getSong(e) {
-    console.log(e);
 
     const hash = new URLSearchParams(e.substring(e.indexOf('?'))).get('v'),
       json = await getJsonPiped('/streams/' + hash);
-
-    console.log(json);
 
     state.art = json.thumbnailUrl.replaceAll('&amp;', '&');
     state.description = json.description;
@@ -58,8 +55,6 @@ export const useData = defineStore('data', () => {
         ? '/watch?v=' + json.songs[0].id
         : '/watch?v=' + hash;
 
-      console.log(json);
-
       state.urls =
         json.songs.length > 0
           ? json.songs.map(i => ({
@@ -76,8 +71,6 @@ export const useData = defineStore('data', () => {
         artist: state.artist,
         art: state.art,
       });
-
-      console.log(state.urls);
     } else {
       if (state.urls.length == 0) {
         state.urls = [
@@ -107,8 +100,6 @@ export const useData = defineStore('data', () => {
     )
       getSong(state.urls[i + 1].url);
     else if (player.state.loop == 1) {
-      console.log(state.url, state.urls[0]);
-
       state.url = state.urls[0].url;
       getSong(state.urls[0].url);
     } else state.urls = [];
@@ -119,8 +110,6 @@ export const useData = defineStore('data', () => {
 
     if (state.urls[i - 1]) getSong(state.urls[i - 1].url);
     else if (player.state.loop == 1) {
-      console.log(state.url, state.urls[state.urls.length - 1]);
-
       state.url = state.urls[state.urls.length - 1].url;
       getSong(state.urls[state.urls.length - 1].url);
     } else state.urls = [];
@@ -131,8 +120,6 @@ export const useData = defineStore('data', () => {
 
     if (state.urls[i + 1]) getSong(state.urls[i + 1].url);
     else if (player.state.loop == 1) {
-      console.log(state.url, state.urls[0]);
-
       state.url = state.urls[0].url;
       getSong(state.urls[0].url);
     } else state.urls = [];
@@ -159,11 +146,7 @@ export const usePlayer = defineStore('player', () => {
   });
 
   function toggle(i) {
-    console.log(i, state[i]);
-    if (typeof state[i] == 'boolean') {
-      state[i] = !state[i];
-    }
-    console.log(i, state[i]);
+    if (typeof state[i] == 'boolean') state[i] = !state[i];
   }
 
   function setTime(t) {
