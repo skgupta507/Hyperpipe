@@ -11,10 +11,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       workbox: {
-        globPatterns: [
-          '**/*.{js,css,html,png,svg,woff2}',
-          'manifest.webmanifest',
-        ],
+        globPatterns: ['**/*.{css,html,png,svg}', 'manifest.webmanifest'],
       },
       manifest: {
         name: 'Hyperpipe',
@@ -48,7 +45,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      stream: 'stream-browserify',
     },
   },
   build: {

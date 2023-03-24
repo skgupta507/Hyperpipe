@@ -53,8 +53,6 @@ function parseUrl() {
   const loc = location.pathname.split('/'),
     base = loc[1].replace(location.search, '');
 
-  console.log(loc, base);
-
   path.value = location.pathname;
 
   switch (base) {
@@ -67,15 +65,12 @@ function parseUrl() {
     case 'watch':
       player.state.status = 'circle';
       data.getSong(loc[1] + location.search);
-      console.log(loc[1]);
       break;
     case 'playlist':
       results.getAlbum(loc[1] + location.search);
-      console.log(loc[1]);
       break;
     case 'channel':
       artist.getArtist(loc[2]);
-      console.log(loc[2]);
       break;
     case 'explore':
       genreid.value = loc[2];

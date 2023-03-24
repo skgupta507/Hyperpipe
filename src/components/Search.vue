@@ -44,8 +44,6 @@ const shuffleAdd = () => {
       delete songs[nos];
     }
 
-    console.log(songs, copy);
-
     emit('play-urls', copy);
   },
   openSong = (song, nxt = false) => {
@@ -75,8 +73,6 @@ const shuffleAdd = () => {
     }
   },
   removeSong = i => {
-    console.log(i);
-
     results.items.songs.items.splice(i, 1);
   },
   shareAlbum = () => {
@@ -158,7 +154,6 @@ const shuffleAdd = () => {
 
         items = json.items;
       } else {
-        console.log(results.next);
         const json = await getJsonPiped(`/nextpage/playlists/${results.next}`);
         key = 'songs';
 
@@ -168,8 +163,6 @@ const shuffleAdd = () => {
       results.items[key].items.push(...items);
 
       loading.value = false;
-
-      console.log(items, results.items);
     }
   },
   getResults = async q => {
@@ -182,7 +175,6 @@ const shuffleAdd = () => {
     results.next = json.nextpage;
 
     results.setItem(key, json);
-    console.log(json, key);
   };
 
 watch(
@@ -190,8 +182,6 @@ watch(
   n => {
     if (n) {
       n = n.replace(location.search || '', '');
-
-      console.log(n);
 
       artist.reset();
       getSearch(n);
@@ -341,6 +331,12 @@ onDeactivated(() => {
           results.getAlbum(album.url || '/playlist?list=' + album.id)
         " />
     </div>
+    <a
+      v-if="results.items.albums.more?.params"
+      @click.prevent="artist.getArtistNext('albums', results.items.albums.more)"
+      class="more"
+      >{{ t('info.see_all') }}</a
+    >
   </div>
 
   <div
@@ -371,6 +367,14 @@ onDeactivated(() => {
         :art="single.thumbnails[0].url"
         @open-album="results.getAlbum('/playlist?list=' + single.id)" />
     </div>
+    <a
+      v-if="results.items.singles.more?.params"
+      @click.prevent="
+        artist.getArtistNext('singles', results.items.singles.more)
+      "
+      class="more"
+      >{{ t('info.see_all') }}</a
+    >
   </div>
 
   <div
