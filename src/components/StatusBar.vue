@@ -134,7 +134,7 @@ async function Like() {
               plRemote = true;
             "
             :data-active="pl == i.id && plRemote == true">
-            <span>{{ i.name }}</span
+            <span>{{ i.name.replace('Playlist -', '') }}</span
             ><span class="ml-auto">{{ i.videos }}</span>
           </div>
         </template>
@@ -463,6 +463,7 @@ input[type='range']::-moz-range-track {
 /* Playlist addition */
 .ml-auto {
   margin-left: auto;
+  width: min-content;
 }
 .item {
   background: var(--color-background);
@@ -479,6 +480,11 @@ input[type='range']::-moz-range-track {
 .item[data-active='true'] {
   color: var(--color-background);
   background: linear-gradient(135deg, cornflowerblue, #88c0d0);
+}
+.item::before {
+  content: '\F4E1';
+  font-family: bootstrap-icons;
+  font-size: 1.25rem;
 }
 
 @media (max-width: 500px) {
