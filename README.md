@@ -91,7 +91,7 @@ You can use the [Redirector](https://github.com/einaregilsson/Redirector) extens
 
 Hyperpipe
 
-Copyright (C) 2022  Shiny Nematoda
+Copyright (C) 2022-23  Shiny Nematoda
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as

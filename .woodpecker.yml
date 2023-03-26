@@ -3,16 +3,16 @@ pipeline:
     image: node:alpine
     commands:
       - npm install
-      - npm run build
+      - npm run build && npm audit fix
     when:
       event: ['push', 'pull_request']
 
   surge:
     image: node:alpine
     commands:
-      - npm install surge
+      - npm install surge && npm audit fix
       - cp dist/index.html dist/200.html
-      - npx surge ./dist hyperpipe.surge.sh
+      - npx surge ./dist --domain https://hyperpipe.surge.sh
     secrets: [surge_login, surge_token]
     when:
       branch: main
