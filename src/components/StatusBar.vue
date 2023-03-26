@@ -461,7 +461,7 @@ input[type='range']::-moz-range-track {
 }
 
 /* Playlist addition */
-.remote .ml-auto {
+.ml-auto {
   margin-left: auto;
   width: min-content;
 }
@@ -481,7 +481,7 @@ input[type='range']::-moz-range-track {
   color: var(--color-background);
   background: linear-gradient(135deg, cornflowerblue, #88c0d0);
 }
-.item::before {
+.remote .item::before {
   content: '\F4E1';
   font-family: bootstrap-icons;
   font-size: 1.25rem;
