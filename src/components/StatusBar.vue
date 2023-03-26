@@ -128,7 +128,7 @@ async function Like() {
           <div
             v-for="i in remote"
             :key="i.id"
-            class="flex item"
+            class="flex item remote"
             @click="
               pl = i.id;
               plRemote = true;
@@ -461,7 +461,7 @@ input[type='range']::-moz-range-track {
 }
 
 /* Playlist addition */
-.ml-auto {
+.remote .ml-auto {
   margin-left: auto;
   width: min-content;
 }
