@@ -50,7 +50,6 @@ function getFormattedTime(sec) {
 function List() {
   showme.pl = true;
   useListPlaylists(res => {
-    console.log(res);
     list.value = res;
     showme.menu = false;
   });
@@ -71,9 +70,7 @@ function Save() {
           title: data.state.title,
         },
         e => {
-          if (e === true) {
-            console.log('Added Song');
-          }
+          if (e === true) console.log('Added Song');
         },
       );
     }
@@ -481,7 +478,7 @@ input[type='range']::-moz-range-track {
   color: var(--color-background);
   background: linear-gradient(135deg, cornflowerblue, #88c0d0);
 }
-.remote .item::before {
+.remote.item::before {
   content: '\F4E1';
   font-family: bootstrap-icons;
   font-size: 1.25rem;
