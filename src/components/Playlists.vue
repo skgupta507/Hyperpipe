@@ -19,7 +19,7 @@ function isHandle(el) {
 }
 
 function handleClick(e) {
-  if (!isHandle(e.target)) $emit('playthis', plurl)
+  if (!isHandle(e.target)) emit('playthis', plurl)
 }
 
 function setCanDrag(e) {
