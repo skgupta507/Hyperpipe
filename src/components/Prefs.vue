@@ -22,10 +22,12 @@ const { t, setupLocale } = useI18n(),
   next = ref(false),
   compact = ref(false);
 
-getJson('https://piped-instances.kavin.rocks').then(i => {
-  instances.value = i;
-  console.log(i);
-});
+getJson('https://piped-instances.kavin.rocks')
+  .then(i => i || getJson('https://instances.tokhmi.xyz'))
+  .then(i => {
+    instances.value = i;
+    console.log(i);
+  });
 
 getJson('https://raw.codeberg.page/Hyperpipe/pages/api/backend.json').then(
   i => {
@@ -43,7 +45,6 @@ function getStore(key) {
 }
 
 function setStore(key, value) {
-  console.log(key, value);
   useStore().setItem(key, value);
 }
 
@@ -67,13 +68,13 @@ function setCodec(codec) {
     window.audioPlayer.configure('preferredAudioCodecs', codec.split(':'));
 }
 
-function getStoreBool(key, ele) {
-  ele.value = getStore(key) || ele.value;
+function getStoreBool(key, ele, def) {
+  ele.value = getStore(key) || def;
 }
 
 const verifyApi = computed(() =>
     hypInstances.value
-      .map(i => i.api_url.replace('https://', '').replace('http://'))
+      .map(i => i.api_url.replace('https://', '').replace('http://', ''))
       .includes(getStore('api') || HYPERPIPE_INSTANCE),
   ),
   verifyPipedApi = computed(() =>
@@ -88,8 +89,8 @@ const verifyApi = computed(() =>
   );
 
 onMounted(() => {
-  getStoreBool('next', next);
-  getStoreBool('compact', compact);
+  getStoreBool('next', next, true);
+  getStoreBool('compact', compact, false);
 });
 </script>
 

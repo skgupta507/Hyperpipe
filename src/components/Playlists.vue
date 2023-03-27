@@ -1,22 +1,59 @@
 <script setup>
+import { ref } from 'vue'
+
 import { useData, usePlayer } from '@/stores/player.js';
 import { useI18n } from '@/stores/misc.js';
+
+const emit = defineEmits(['playthis']);
 
 const { t } = useI18n(),
   player = usePlayer(),
   data = useData();
 
-defineEmits(['playthis']);
+const canDrag = ref(false);
+
+let to = undefined;
+
+function isHandle(el) {
+  return el.classList.contains('pl-handle')
+}
+
+function handleClick(e) {
+  if (!isHandle(e.target)) $emit('playthis', plurl)
+}
+
+function setCanDrag(e) {
+  if (isHandle(e.target)) canDrag.value = true
+  else canDrag.value = false
+}
+
+function drag(i, e) {
+  const el = document.querySelector(`.pl-item:nth-child(${i + 1})`),
+  bounds = el.getBoundingClientRect(),
+  diff = e.clientY - bounds.top,
+  min = bounds.height / 2;
+
+  if (diff > min) to = i + 1
+  else if (-diff > min) to = i - 1
+}
+
+function drop(i) {
+  if (to) data.state.urls.splice(to, 0, data.state.urls.splice(i, 1)[0])
+}
 </script>
 
 <template>
   <Transition name="fade">
     <div class="pl-modal placeholder" :data-placeholder="t('playlist.add')">
       <div
-        v-for="plurl in data.state.urls"
+        v-for="(plurl, i) in data.state.urls"
         class="pl-item"
+        :draggable="canDrag"
         :key="plurl.url"
-        @click="$emit('playthis', plurl)">
+        @click="handleClick"
+        @pointerdown="setCanDrag"
+        @dragover.prevent="drag(i, $event)"
+        @dragend="drop(i)">
         <span
           v-if="data.state.url == plurl.url"
           class="bars-wrap"
@@ -33,6 +70,8 @@ defineEmits(['playthis']);
             loading="lazy" />
         </div>
         <span class="pl-main caps">{{ plurl.title }}</span>
+        <span
+          class="bi bi-grip-horizontal pl-handle clickable"></span>
       </div>
     </div>
   </Transition>
@@ -96,5 +135,10 @@ defineEmits(['playthis']);
 }
 .pl-img[data-active='false'] {
   display: none;
+}
+.pl-handle {
+  cursor: pointer;
+  margin-left: auto;
+  margin-right:.75rem;
 }
 </style>
