@@ -17,7 +17,7 @@ function isHandle(el) {
   return el.classList.contains('pl-handle')
 }
 
-function handleClick(e) {
+function handleClick(plurl, e) {
   if (!isHandle(e.target)) emit('playthis', plurl)
 }
 
@@ -39,7 +39,7 @@ onMounted(() => {
         v-for="plurl in data.state.urls"
         class="pl-item"
         :key="plurl.url"
-        @click="handleClick">
+        @click="handleClick(plurl, $event)">
         <span
           v-if="data.state.url == plurl.url"
           class="bars-wrap"
