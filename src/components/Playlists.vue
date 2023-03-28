@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import Sortable from 'sortablejs';
 
 import { useData, usePlayer } from '@/stores/player.js';
 import { useI18n } from '@/stores/misc.js';
@@ -10,9 +11,7 @@ const { t } = useI18n(),
   player = usePlayer(),
   data = useData();
 
-const canDrag = ref(false);
-
-let to = undefined;
+const pl = ref(null);
 
 function isHandle(el) {
   return el.classList.contains('pl-handle')
@@ -22,38 +21,25 @@ function handleClick(e) {
   if (!isHandle(e.target)) emit('playthis', plurl)
 }
 
-function setCanDrag(e) {
-  if (isHandle(e.target)) canDrag.value = true
-  else canDrag.value = false
-}
-
-function drag(i, e) {
-  const el = document.querySelector(`.pl-item:nth-child(${i + 1})`),
-  bounds = el.getBoundingClientRect(),
-  diff = e.clientY - bounds.top,
-  min = bounds.height / 2;
-
-  if (diff > min) to = i + 1
-  else if (-diff > min) to = i - 1
-}
-
-function drop(i) {
-  if (to) data.state.urls.splice(to, 0, data.state.urls.splice(i, 1)[0])
-}
+onMounted(() => {
+  new Sortable(pl.value, {
+    handle: '.pl-handle',
+    animation: 150,
+    onEnd: e => {
+      data.state.urls.splice(e.newIndex, 0, data.state.urls.splice(e.oldIndex, 1)[0])
+    }
+  })
+})
 </script>
 
 <template>
   <Transition name="fade">
-    <div class="pl-modal placeholder" :data-placeholder="t('playlist.add')">
+    <div id="pl" ref="pl" class="pl-modal placeholder" :data-placeholder="t('playlist.add')">
       <div
-        v-for="(plurl, i) in data.state.urls"
+        v-for="plurl in data.state.urls"
         class="pl-item"
-        :draggable="canDrag"
         :key="plurl.url"
-        @click="handleClick"
-        @pointerdown="setCanDrag"
-        @dragover.prevent="drag(i, $event)"
-        @dragend="drop(i)">
+        @click="handleClick">
         <span
           v-if="data.state.url == plurl.url"
           class="bars-wrap"
@@ -137,7 +123,7 @@ function drop(i) {
   display: none;
 }
 .pl-handle {
-  cursor: pointer;
+  cursor: grab;
   margin-left: auto;
   margin-right:.75rem;
 }
