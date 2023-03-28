@@ -119,8 +119,10 @@ async function Stream() {
 }
 
 function destroy() {
-  window.audioPlayer.destroy();
-  window.audioPlayer = undefined;
+  if (window.audioPlayer) {
+    window.audioPlayer.destroy();
+    window.audioPlayer = undefined;
+  }
 }
 
 watch(
@@ -194,10 +196,10 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  if (window.audioPlayer) destroy();
+  destroy();
 });
 onUnmounted(() => {
-  if (window.audioPlayer) destroy();
+  destroy();
 });
 </script>
 

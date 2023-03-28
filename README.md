@@ -61,7 +61,7 @@ Use [LibRedirect](https://github.com/libredirect/libredirect) to automatically r
 
 ### Redirector
 
-You can use the [Redirector](https://github.com/einaregilsson/Redirector) extension to redirect **_MOST_** YouTube Music links to Hyperpipe (including unsupported routes) with the configuration below (_Note:_ You can replace `hyperpipe.surge.sh` with any instance URL):
+You can use the [Redirector](https://github.com/einaregilsson/Redirector) extension to redirect **_MOST_** YouTube Music links to Hyperpipe with the configuration below (_Note:_ replace `hyperpipe.surge.sh` with any instance URL):
 
 - Description: YouTube Music to Hyperpipe
 - Example URL: https://music.youtube.com/channel/channel-id
@@ -124,6 +124,7 @@ You can reach out to me personally on:
 - shaka-player -> [Apache-2.0][shaka]
 - PeerJS -> [MIT][peer]
 - DOMPurify -> [Apache-2.0][purify]
+- SortableJS -> [MIT][sortable]
 - Bootstrap Icons -> [MIT][bi]
 - VueJS theme -> [MIT][vuetheme]
 - Dracula theme -> [MIT][dracula]
@@ -151,6 +152,7 @@ You can reach out to me personally on:
 [peer]: https://github.com/peers/peerjs/blob/master/LICENSE
 [shaka]: https://github.com/shaka-project/shaka-player/blob/main/LICENSE
 [purify]: https://github.com/cure53/DOMPurify/blob/main/LICENSE
+[sortable]: https://github.com/SortableJS/Sortable/blob/master/LICENSE
 [nord]: https://github.com/arcticicestudio/nord/blob/develop/LICENSE.md
 [vuetheme]: https://github.com/vuejs/theme/blob/main/LICENSE
 [dracula]: https://github.com/dracula/dracula-theme/blob/master/LICENSE

@@ -463,7 +463,7 @@ onMounted(async () => {
       <p>
         Don't have an account? register on
         <a
-          href="https://piped.kavin.rocks/register"
+          href="https://piped.video/register"
           target="_blank"
           rel="noreferrer noopener"
           >Piped</a
