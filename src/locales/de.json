@@ -4,7 +4,7 @@
         "songs": "Lieder",
         "albums": "Alben",
         "genres": "Kategorien",
-        "singles": "Einzeltitel",
+        "singles": "Singles",
         "artists": "Künstler/innen",
         "similar_artists": "Ähnliche Künstler/innen",
         "featured": "Ausgewählt",
@@ -12,9 +12,9 @@
         "login": "Anmelden",
         "local": "Lokal",
         "search": "Suche",
-        "spotlight": "Scheinwerfer",
+        "spotlight": "Spotlight",
         "playlists": "Wiedergabelisten",
-        "remote": "Ferngesteuerte",
+        "remote": "Remote",
         "feeds": "Feeds"
     },
     "action": {
@@ -31,7 +31,7 @@
     "playlist": {
         "local": "Lokale Wiedergabelisten",
         "name": "Name der Wiedergabeliste",
-        "remote": "Ferngesteuerte Wiedergabelisten",
+        "remote": "Remote-Wiedergabelisten",
         "add": "Lieder zur Wiedergabeliste hinzufügen",
         "create": "Eine neue Wiedergabeliste erstellen",
         "sync": "Wiedergabelisten synchronisieren",
@@ -41,7 +41,7 @@
         "subscribers": "Abonnenten"
     },
     "pref": {
-        "worst": "am Schlechten",
+        "worst": "schlechteste",
         "theme": "Farbschema",
         "language": "Sprache",
         "volume": "Standard-Lautstärke",
@@ -50,7 +50,7 @@
         "auto": "automatisch",
         "codec": "Codec",
         "auto_queue": "Lieder automatisch in die Warteschlange stellen",
-        "best": "am Besten",
+        "best": "beste",
         "tab": "Standard-Registerkarte",
         "dark": "Dunkel (Standard)",
         "light": "Hell",
@@ -59,7 +59,7 @@
         "dracula": "Drakula",
         "nord": "Nord",
         "library": "Bibliothek",
-        "charts": "Diagramme",
+        "charts": "Charts",
         "explore": "Erkunden",
         "home": "Startseite",
         "compact": "Kompakte Ansicht"
