@@ -8,9 +8,8 @@ export function useDash(streams, len) {
   streams.forEach(stream => {
     const i = mimeTypes.indexOf(stream.mimeType);
 
-    if (i > -1) {
-      mimes[i].push(stream);
-    } else {
+    if (i > -1) mimes[i].push(stream);
+    else {
       mimeTypes.push(stream.mimeType);
       mimes.push([]);
       mimes[mimeTypes.length - 1].push(stream);

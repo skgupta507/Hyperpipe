@@ -29,9 +29,7 @@ export async function getJson(url, opts) {
         : res.error,
     );
     console.error(res.message);
-  } else if (res) {
-    return JSON.parse(useSanitize(JSON.stringify(res)));
-  }
+  } else if (res) return JSON.parse(useSanitize(JSON.stringify(res)));
 }
 
 export async function getJsonPiped(path, opts) {
@@ -59,10 +57,14 @@ export async function getJsonAuth(path, opts = {}) {
     });
 }
 
-export async function useAuthCreatePlaylist(name) {
-  const auth = useStore().getItem('auth');
+function useAuthToken() {
+  return useStore().getItem('auth');
+}
 
-  if (auth && name) {
+export async function useAuthCreatePlaylist(name) {
+  const auth = useAuthToken();
+
+  if (auth && name)
     return await getJsonAuth('/user/playlists/create', {
       method: 'POST',
       body: JSON.stringify({
@@ -73,11 +75,10 @@ export async function useAuthCreatePlaylist(name) {
         'Content-Type': 'application/json',
       },
     });
-  }
 }
 
 export async function getAuthPlaylists() {
-  const auth = useStore().getItem('auth');
+  const auth = useAuthToken();
 
   if (auth) {
     const res = await getJsonAuth('/user/playlists', {
@@ -91,9 +92,9 @@ export async function getAuthPlaylists() {
 }
 
 export async function useAuthAddToPlaylist(id, path) {
-  const auth = useStore().getItem('auth');
+  const auth = useAuthToken();
 
-  if (auth && id && path) {
+  if (auth && id && path)
     return getJsonAuth('/user/playlists/add', {
       method: 'POST',
       headers: {
@@ -104,5 +105,16 @@ export async function useAuthAddToPlaylist(id, path) {
         videoId: new URL('https://example.com' + path).searchParams.get('v'),
       }),
     });
-  }
+}
+
+export async function useAuthLogout() {
+  const auth = useAuthToken();
+
+  if (auth)
+    return await getJsonAuth('/logout', {
+      method: 'POST',
+      headers: {
+        Authorization: store.auth,
+      },
+    });
 }
