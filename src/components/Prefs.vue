@@ -5,6 +5,7 @@ import {
   PIPED_INSTANCE,
   HYPERPIPE_INSTANCE,
   getJson,
+  useAuthLogout,
 } from '@/scripts/fetch.js';
 
 import { useStore } from '@/scripts/util.js';
@@ -17,6 +18,7 @@ import('@/assets/version.json').then(v => {
 });
 
 const { t, setupLocale } = useI18n(),
+  store = useStore(),
   instances = ref([]),
   hypInstances = ref([]),
   next = ref(false),
@@ -41,11 +43,11 @@ function getBool(val) {
 }
 
 function getStore(key) {
-  return useStore().getItem(key);
+  return store.getItem(key);
 }
 
 function setStore(key, value) {
-  useStore().setItem(key, value);
+  store.setItem(key, value);
 }
 
 function getTheme() {
@@ -70,6 +72,19 @@ function setCodec(codec) {
 
 function getStoreBool(key, ele, def) {
   ele.value = getStore(key) || def;
+}
+
+async function setAuth(key) {
+  if (getStore('authapi')) {
+    if (!confirm('This requires a logout. Confirm logout?')) return;
+
+    const res = await useAuthLogout();
+
+    if (res?.error) if (!confirm(`Got Error: ${res.error}. Continue?`)) return;
+  }
+
+  store.removeItem('auth');
+  setStore('authapi', key);
 }
 
 const verifyApi = computed(() =>
@@ -271,7 +286,7 @@ onMounted(() => {
     v-if="instances"
     class="input"
     :value="getStore('authapi') || PIPED_INSTANCE"
-    @change="setStore('authapi', $event.target.value)">
+    @change="setAuth($event.target.value)">
     <option
       v-for="i in instances"
       :key="i.name"

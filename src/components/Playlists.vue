@@ -1,6 +1,6 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import Sortable from 'sortablejs';
+import { ref, onMounted } from 'vue';
+import Sortable from 'sortablejs/modular/sortable.core.esm.js';
 
 import { useData, usePlayer } from '@/stores/player.js';
 import { useI18n } from '@/stores/misc.js';
@@ -13,12 +13,8 @@ const { t } = useI18n(),
 
 const pl = ref(null);
 
-function isHandle(el) {
-  return el.classList.contains('pl-handle')
-}
-
 function handleClick(plurl, e) {
-  if (!isHandle(e.target)) emit('playthis', plurl)
+  if (!e.target.classList.contains('pl-handle')) emit('playthis', plurl);
 }
 
 onMounted(() => {
@@ -26,15 +22,23 @@ onMounted(() => {
     handle: '.pl-handle',
     animation: 150,
     onEnd: e => {
-      data.state.urls.splice(e.newIndex, 0, data.state.urls.splice(e.oldIndex, 1)[0])
-    }
-  })
-})
+      data.state.urls.splice(
+        e.newIndex,
+        0,
+        data.state.urls.splice(e.oldIndex, 1)[0],
+      );
+    },
+  });
+});
 </script>
 
 <template>
   <Transition name="fade">
-    <div id="pl" ref="pl" class="pl-modal placeholder" :data-placeholder="t('playlist.add')">
+    <div
+      id="pl"
+      ref="pl"
+      class="pl-modal placeholder"
+      :data-placeholder="t('playlist.add')">
       <div
         v-for="plurl in data.state.urls"
         class="pl-item"
@@ -56,8 +60,7 @@ onMounted(() => {
             loading="lazy" />
         </div>
         <span class="pl-main caps">{{ plurl.title }}</span>
-        <span
-          class="bi bi-grip-horizontal pl-handle clickable"></span>
+        <span class="bi bi-grip-horizontal pl-handle clickable"></span>
       </div>
     </div>
   </Transition>
@@ -125,6 +128,6 @@ onMounted(() => {
 .pl-handle {
   cursor: grab;
   margin-left: auto;
-  margin-right:.75rem;
+  margin-right: 0.75rem;
 }
 </style>

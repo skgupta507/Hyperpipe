@@ -15,6 +15,7 @@ import {
 } from '@/scripts/db.js';
 
 import {
+  useAuthLogout,
   useAuthCreatePlaylist,
   getAuthPlaylists,
   getJsonAuth,
@@ -134,9 +135,7 @@ const Open = async key => {
             });
           }
         }
-      } else {
-        useCreatePlaylist(i.name, i.urls);
-      }
+      } else useCreatePlaylist(i.name, i.urls);
 
       List();
     }
@@ -206,12 +205,7 @@ const Login = async () => {
     }
   },
   Logout = async () => {
-    const res = await getJsonAuth('/logout', {
-      method: 'POST',
-      headers: {
-        Authorization: store.auth,
-      },
-    });
+    const res = await useAuthLogout();
 
     if (!res.error) {
       store.removeItem('auth');
