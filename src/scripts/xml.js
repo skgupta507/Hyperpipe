@@ -53,7 +53,7 @@ export function useXML(json) {
   base += '<?xml';
   base += useAttr(json.declaration.attributes);
   base += '?>';
-    
+
   base += useElems(json.elements);
 
   return base;

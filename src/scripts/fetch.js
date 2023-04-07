@@ -108,13 +108,19 @@ export async function useAuthAddToPlaylist(id, path) {
 }
 
 export async function useAuthLogout() {
-  const auth = useAuthToken();
+  const auth = useAuthToken(),
+    ctrl = new AbortController(),
+    id = setTimeout(() => ctrl.abort(), 1000);
 
   if (auth)
     return await getJsonAuth('/logout', {
       method: 'POST',
+      signal: ctrl.signal,
       headers: {
-        Authorization: store.auth,
+        Authorization: auth,
       },
+    }).then(res => {
+      clearTimeout(id);
+      return res;
     });
 }

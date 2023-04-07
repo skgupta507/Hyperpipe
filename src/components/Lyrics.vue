@@ -27,11 +27,11 @@ function get() {
   if (data.state.lyrics && data.state.urls === data.state.url) {
     set(data.state.lyrics);
   } else if (data.state.url) {
-    getJsonHyp('/next/' + data.state.url.replace('/watch?v=', '')).then(
-      ({ lyricsId }) => {
-        if (lyricsId) set(lyricsId);
-      },
-    );
+    getJsonHyp(
+      '/next/' + data.state.url.replace('/watch?v=', '') + '?queue=avoid',
+    ).then(({ lyricsId }) => {
+      if (lyricsId) set(lyricsId);
+    });
   }
 }
 

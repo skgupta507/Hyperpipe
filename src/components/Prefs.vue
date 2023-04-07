@@ -80,7 +80,9 @@ async function setAuth(key) {
 
     const res = await useAuthLogout();
 
-    if (res?.error) if (!confirm(`Got Error: ${res.error}. Continue?`)) return;
+    if (!res && res?.error)
+      if (!confirm(`Got Error ${res ? ': ' + res.error : ''}. Continue?`))
+        return;
   }
 
   store.removeItem('auth');
