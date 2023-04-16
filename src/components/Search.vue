@@ -5,8 +5,12 @@ import Btn from './Btn.vue';
 import SongItem from './SongItem.vue';
 import AlbumItem from './AlbumItem.vue';
 
-import { getJsonPiped, getPipedQuery } from '@/scripts/fetch.js';
-import { useRoute, useWrap, useShare } from '@/scripts/util.js';
+import {
+  getJsonPiped,
+  getPipedQuery,
+  useAuthRemovePlaylist,
+} from '@/scripts/fetch.js';
+import { useVerifyAuth, useRoute, useWrap, useShare } from '@/scripts/util.js';
 import { useCreatePlaylist, useRemovePlaylist } from '@/scripts/db.js';
 
 import { useResults, useArtist } from '@/stores/results.js';
@@ -102,6 +106,20 @@ const shuffleAdd = () => {
         alert('Saved!');
       });
     }
+  },
+  removePlaylist = async id => {
+    if (!id && !prompt('Confirm?')) return;
+
+    if (useVerifyAuth(id)) {
+      const { message } = await useAuthRemovePlaylist(id);
+      if (message != 'ok') {
+        alert(message);
+        return;
+      }
+    } else useRemovePlaylist(id);
+
+    useRoute('/library');
+    nav.state.page = 'library';
   },
   getSearch = q => {
     if (q) {
@@ -252,12 +270,10 @@ onDeactivated(() => {
               @click="shuffleAdd"></button>
 
             <button
-              v-if="results.items?.songs?.title.startsWith('Local • ')"
+              v-if="results.items?.songs?.items?.[0]?.playlistId"
               class="bi bi-trash3 clickable"
               @click="
-                useRemovePlaylist(
-                  results.items?.songs?.title?.replace('Local • ', ''),
-                )
+                removePlaylist(results.items?.songs?.items?.[0]?.playlistId)
               "></button>
           </div>
         </Transition>

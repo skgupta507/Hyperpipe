@@ -138,6 +138,7 @@ onMounted(get);
   font-size: 1rem;
   font-weight: bold;
   letter-spacing: 0.125rem;
+  line-break: anywhere;
   background-color: var(--color-background-mute);
   color: var(--btn-color);
   transition: background-color 0.1s ease;
@@ -152,5 +153,10 @@ onMounted(get);
   margin-top: 1.75rem;
   text-align: center;
   text-transform: capitalize;
+}
+@media (max-width: 600px) {
+  .btn-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 </style>

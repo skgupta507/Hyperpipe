@@ -6,6 +6,12 @@ export function useSanitize(txt) {
   });
 }
 
+export function useVerifyAuth(hash) {
+  return /[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}/.test(
+    hash,
+  );
+}
+
 export function useRoute(l) {
   history.pushState({}, '', l);
 }

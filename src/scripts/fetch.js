@@ -107,6 +107,22 @@ export async function useAuthAddToPlaylist(id, path) {
     });
 }
 
+export async function useAuthRemovePlaylist(id) {
+  const auth = useAuthToken();
+
+  if (auth && id) {
+    return getJsonAuth('/user/playlists/delete', {
+      method: 'POST',
+      headers: {
+        Authorization: auth,
+      },
+      body: JSON.stringify({
+        playlistId: id,
+      }),
+    });
+  }
+}
+
 export async function useAuthLogout() {
   const auth = useAuthToken(),
     ctrl = new AbortController(),

@@ -308,7 +308,7 @@ async function Like() {
   border-top: 0.25rem solid var(--color-foreground);
   background: var(--color-background);
   min-height: 15vh;
-  z-index: 2;
+  z-index: 999;
 }
 
 .statusbar-progress-container,
