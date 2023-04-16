@@ -473,7 +473,7 @@ onMounted(async () => {
 .grid {
   display: grid;
   width: fit-content;
-  gap: 2rem;
+  gap: 1rem;
   grid-auto-rows: 10rem;
   margin: 0 auto;
 }
@@ -552,5 +552,10 @@ input[type='file']::file-selector-button {
   margin: 1rem auto;
   display: block;
   text-align: center;
+}
+@media (min-width: 400px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 </style>

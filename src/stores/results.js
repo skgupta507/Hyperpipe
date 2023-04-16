@@ -4,7 +4,7 @@ import { defineStore } from 'pinia';
 import { useNav } from '@/stores/misc.js';
 
 import { getJsonPiped, getJsonHyp, getJsonAuth } from '@/scripts/fetch.js';
-import { useRoute } from '@/scripts/util.js';
+import { useVerifyAuth, useRoute } from '@/scripts/util.js';
 
 export const useResults = defineStore('results', () => {
   const items = ref({}),
@@ -39,10 +39,7 @@ export const useResults = defineStore('results', () => {
 
   async function getAlbum(e) {
     const hash = new URLSearchParams(e.substring(e.indexOf('?'))).get('list'),
-      isAuth =
-        /[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}/.test(
-          hash,
-        ),
+      isAuth = useVerifyAuth(hash),
       path = '/playlists/' + hash,
       json = isAuth ? await getJsonAuth(path) : await getJsonPiped(path);
 
