@@ -236,7 +236,7 @@ async function Like() {
         <button
           id="vol-btn"
           aria-label="Volume Buttons"
-          @click="showme.vol = !showme.vol"
+          @click="showme.vol = !showme.vol; showme.menu = false"
           class="popup-wrap bi bi-volume-up clickable">
           <Transition name="fade">
             <div v-if="showme.vol" id="vol" class="popup">
@@ -255,7 +255,7 @@ async function Like() {
         <button
           class="bi bi-three-dots clickable"
           aria-label="More Controls"
-          @click="showme.menu = !showme.menu"></button>
+          @click="showme.menu = !showme.menu; showme.vol = false"></button>
         <Transition name="fade">
           <div id="menu" v-if="showme.menu" class="popup">
             <button
