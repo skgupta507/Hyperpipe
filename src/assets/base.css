@@ -92,7 +92,8 @@ body[data-theme*='blur'] #statusbar,
 body[data-theme*='blur'] .txt-modal,
 body[data-theme*='blur'] .pl-modal,
 body[data-theme*='blur'] .modal-box,
-body[data-theme*='blur'] .popup input[type='text'] {
+body[data-theme*='blur'] .popup input[type='text'],
+body[data-theme*='blur'] .us-box {
   background: var(--color-blur);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);

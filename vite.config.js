@@ -11,7 +11,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       workbox: {
-        globPatterns: ['**/*.{css,html,png,svg}', 'manifest.webmanifest'],
+        globPatterns: ['**/*.{css,html,png,svg}', 'manifest.webmanifest', '**/index*.js', '**/shaka*.js'],
       },
       manifest: {
         name: 'Hyperpipe',
