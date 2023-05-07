@@ -19,9 +19,9 @@ pipeline:
       event: ['push']
 
   docker:
-    image: woodpeckerci/plugin-docker-buildx
+    image: woodpeckerci/plugin-docker-buildx:2
     settings:
-      platforms: 'linux/amd64,linux/arm64/v8'
+      platforms: linux/amd64,linux/arm64
       repo: codeberg.org/hyperpipe/hyperpipe
       registry: codeberg.org
       tags: latest
