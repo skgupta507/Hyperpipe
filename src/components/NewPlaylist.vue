@@ -435,7 +435,7 @@ onMounted(async () => {
         :name="i.name.replace('Playlist - ', '')"
         :author="t('title.songs') + ' • ' + i.videos"
         :art="pathname(i.thumbnail) != '/' ? i.thumbnail : undefined"
-        @open-album="$emit('open-playlist', '/playlists?list=' + i.id)" />
+        @open-album="$emit('open-playlist', '/playlist?list=' + i.id)" />
     </div>
     <form v-else class="login" @submit.prevent>
       <input
