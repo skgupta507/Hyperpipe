@@ -11,18 +11,18 @@
   },
   "dependencies": {
     "bootstrap-icons": "^1.10.5",
-    "dompurify": "^3.0.2",
+    "dompurify": "^3.0.3",
     "mux.js": "^6.3.0",
     "peerjs": "^1.4.7",
-    "pinia": "^2.0.35",
+    "pinia": "^2.0.36",
     "shaka-player": "^4.3.6",
     "sortablejs": "^1.15.0",
     "vue": "^3.2.38"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.2.1",
+    "@vitejs/plugin-vue": "^4.2.3",
     "prettier": "^2.8.8",
-    "vite": "^4.3.3",
+    "vite": "^4.3.6",
     "vite-plugin-pwa": "^0.14.7"
   }
 }
