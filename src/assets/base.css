@@ -310,11 +310,15 @@ img {
   transform: translateX(var(--translate)) translateY(var(--translate));
   box-shadow: var(--shadow);
 }
+.prm .pop,
+.prm .pop-2 {
+  transform: none;
+  box-shadow: none;
+}
 
 .popup-wrap {
   position: relative;
 }
-
 .popup {
   position: absolute;
   display: flex;
