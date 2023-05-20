@@ -179,4 +179,9 @@ span.bi-three-dots-vertical {
   width: 70px;
   height: 70px;
 }
+
+.prm .card {
+  margin: 0;
+  padding: 0.5rem;
+}
 </style>

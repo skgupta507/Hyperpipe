@@ -107,6 +107,9 @@ onBeforeMount(() => {
   if (store.theme) document.body.setAttribute('data-theme', store.theme);
   if (store.compact == 'true') document.body.setAttribute('data-compact', '');
 
+  /* Prefers Reduced Motion */
+  if (store.prm == 'true') document.body.classList.add('prm');
+
   /* Set the default locale if set */
   if (store.locale) setupLocale(store.locale);
 

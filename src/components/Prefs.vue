@@ -22,7 +22,8 @@ const { t, setupLocale } = useI18n(),
   instances = ref([]),
   hypInstances = ref([]),
   next = ref(false),
-  compact = ref(false);
+  compact = ref(false),
+  prm = ref(false);
 
 getJson('https://piped-instances.kavin.rocks')
   .then(i => i || getJson('https://instances.tokhmi.xyz'))
@@ -70,6 +71,12 @@ function setCodec(codec) {
     window.audioPlayer.configure('preferredAudioCodecs', codec.split(':'));
 }
 
+function setPRM(prm) {
+  setStore('prm', prm);
+  if (prm) document.body.classList.add('prm');
+  else document.body.classList.remove('prm');
+}
+
 function getStoreBool(key, ele, def) {
   ele.value = getStore(key) || def;
 }
@@ -108,6 +115,7 @@ const verifyApi = computed(() =>
 onMounted(() => {
   getStoreBool('next', next, true);
   getStoreBool('compact', compact, false);
+  getStoreBool('prm', prm, false);
 });
 </script>
 
@@ -135,6 +143,17 @@ onMounted(() => {
       @change="setStore('compact', $event.target.checked)"
       v-model="compact" />
     <label for="pref-chk-compact">{{ t('pref.compact') }}</label>
+  </div>
+
+  <div class="left">
+    <input
+      type="checkbox"
+      name="pref-chk-prm"
+      id="pref-chk-prm"
+      class="input"
+      @change="setPRM($event.target.checked)"
+      v-model="prm" />
+    <label for="pref-chk-prm">{{ t('pref.prm') }}</label>
   </div>
 
   <h2>{{ t('pref.language') }}</h2>

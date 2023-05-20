@@ -60,6 +60,7 @@ export const useResults = defineStore('results', () => {
 
     useRoute(e);
     useNav().state.page = 'home';
+    document.body.scrollIntoView();
 
     next.value =
       json.nextpage && json.nextpage != 'null'
@@ -123,6 +124,7 @@ export const useArtist = defineStore('artist', () => {
 
     useRoute('/channel/' + e);
     useNav().state.page = 'home';
+    document.body.scrollIntoView();
   }
 
   async function getArtistNext(i, { id, params, click, visit }) {

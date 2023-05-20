@@ -4,7 +4,7 @@ import { ref, reactive, watch, onMounted } from 'vue';
 import AlbumItem from './AlbumItem.vue';
 import Modal from './Modal.vue';
 
-import { useRand } from '@/scripts/colors.js';
+import { useRand, parseThumb } from '@/scripts/colors.js';
 import { useStore } from '@/scripts/util.js';
 
 import {
@@ -53,14 +53,19 @@ const list = ref([]),
     password: undefined,
     playlists: [],
     create: false,
-  });
+  }),
+  proxy = ref('');
 
 const pathname = url => new URL(url).pathname;
 
-const Open = async key => {
+const setProxy = async () => {
+    const { imageProxyUrl } = await getJsonPiped('/config');
+    proxy.value = imageProxyUrl;
+  },
+  Open = async key => {
     console.log(key);
 
-    const { imageProxyUrl } = await getJsonPiped('/config');
+    if (!proxy.value) await setProxy();
 
     useGetPlaylist(key, res => {
       console.log(res);
@@ -72,10 +77,7 @@ const Open = async key => {
             ...i,
             ...{
               playlistId: key,
-              thumbnail: `${imageProxyUrl}/vi_webp/${i.url.replace(
-                '/watch?v=',
-                '',
-              )}/maxresdefault.webp?host=i.ytimg.com`,
+              thumbnail: parseThumb(i.url, proxy.value),
             },
           })),
         });
@@ -84,16 +86,18 @@ const Open = async key => {
       } else alert('No songs to play!');
     });
   },
-  List = () => {
+  List = async () => {
+    if (!proxy.value) await setProxy();
+
     useListPlaylists(res => {
       list.value = res;
     });
   },
   Create = () => {
     if (text.value) {
-      useCreatePlaylist(text.value, [], () => {
-        List();
+      useCreatePlaylist(text.value, [], async () => {
         show.new = false;
+        await List();
       });
     }
   },
@@ -122,7 +126,7 @@ const Open = async key => {
       return;
     }
 
-    List();
+    await List();
 
     for (let i of data) {
       const pl = list.value.find(p => p.name == i.name);
@@ -137,13 +141,13 @@ const Open = async key => {
         }
       } else useCreatePlaylist(i.name, i.urls);
 
-      List();
+      await List();
     }
 
     show.import = false;
   },
-  Export = () => {
-    List();
+  Export = async () => {
+    await List();
 
     const base = JSON.stringify(
         {
@@ -174,8 +178,8 @@ const Open = async key => {
 
     console.log(conn);
 
-    conn.on('open', () => {
-      List();
+    conn.on('open', async () => {
+      await List();
       conn.send(list.value);
     });
 
@@ -281,7 +285,7 @@ watch(
 watch(auth, getPlaylists);
 
 onMounted(async () => {
-  List();
+  await List();
   await getPlaylists();
 });
 </script>
@@ -422,6 +426,7 @@ onMounted(async () => {
         :key="i.name"
         :name="i.name"
         :author="t('title.songs') + ' • ' + i.urls.length"
+        :art="parseThumb(i.urls[0]?.url, proxy)"
         :grad="useRand()"
         @open-album="Open(i.name)" />
     </div>
