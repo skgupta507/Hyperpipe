@@ -138,6 +138,16 @@ watch(
       player.state.status = 'play';
       audio.value.pause();
     }
+
+    const state = ['Playing', 'Paused'];
+
+    if (
+      document.title.startsWith(state[0] + ':') ||
+      document.title.startsWith(state[1] + ':')
+    )
+      document.title = audio.value.paused
+        ? document.title.replace(state[0], state[1])
+        : document.title.replace(state[1], state[0]);
   },
 );
 
