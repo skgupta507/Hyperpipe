@@ -57,7 +57,8 @@
         "library": "Biblioteca",
         "charts": "Gráfica",
         "explore": "Explorar",
-        "compact": "Vista compacta"
+        "compact": "Vista compacta",
+        "prm": "Prefiere el movimiento reducido"
     },
     "info": {
         "see_all": "Ver todo",
