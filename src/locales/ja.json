@@ -57,7 +57,8 @@
         "blur": "透かし",
         "blur_light": "透かし (ライト)",
         "light": "ライト",
-        "compact": "小型表示"
+        "compact": "小型表示",
+        "prm": "動く表示を減らす"
     },
     "info": {
         "see_all": "すべて表示",
