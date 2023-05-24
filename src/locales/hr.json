@@ -52,7 +52,7 @@
         "auto_queue": "Automatski stavite pjesme u red",
         "worst": "najgora",
         "volume": "Zadana glasnoća",
-        "tab": "Zadana Kartica",
+        "tab": "Zadana kartica",
         "light": "Svjetlo",
         "blur": "Zamagljeno",
         "blur_light": "Zamagljeno (Svjetlo)",
@@ -63,7 +63,8 @@
         "home": "Početna",
         "charts": "Grafikoni",
         "explore": "Istražite",
-        "compact": "Sažeti prikaz"
+        "compact": "Sažeti prikaz",
+        "prm": "Preferira smanjeno kretanje"
     },
     "lyrics": {
         "load": "Dohvaćanje stihova",
