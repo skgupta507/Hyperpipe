@@ -108,7 +108,13 @@ const shuffleAdd = () => {
     }
   },
   removePlaylist = async id => {
-    if (!id && !prompt('Confirm?')) return;
+    const consent = confirm('Confirm?');
+
+    console.log(id, consent);
+
+    if (!id || !consent) return;
+
+    console.log(id, consent);
 
     if (useVerifyAuth(id)) {
       const { message } = await useAuthRemovePlaylist(id);

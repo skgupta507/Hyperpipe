@@ -87,3 +87,24 @@ export function useMetadata(url, urls, data) {
     });
   }
 }
+
+export async function useManifest(res) {
+  let url, mime;
+
+  if (window.MediaSource !== undefined && res.streams.length > 0) {
+    const { useDash } = await import('./dash.js');
+
+    const dash = useDash(res.streams, res.duration);
+
+    url = 'data:application/dash+xml;charset=utf-8;base64,' + btoa(dash);
+    mime = 'application/dash+xml';
+  } else if (res.hls) {
+    url = res.hls;
+    mime = 'application/x-mpegURL';
+  } else if (res.streams.length > 0) {
+    url = res.streams[0].url;
+    mime = res.streams[0].mimeType;
+  }
+
+  return { url, mime };
+}

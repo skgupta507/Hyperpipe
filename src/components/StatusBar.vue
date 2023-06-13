@@ -19,8 +19,6 @@ const { t } = useI18n(),
   player = usePlayer(),
   store = useStore();
 
-defineEmits(['save']);
-
 const showme = reactive({
     menu: false,
     pl: false,
@@ -495,7 +493,7 @@ input[type='range']::-moz-range-track {
     min-width: initial;
   }
   #menu {
-    left: initial;
+    left: auto;
     right: -0.5rem;
   }
 }

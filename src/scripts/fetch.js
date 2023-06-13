@@ -1,4 +1,5 @@
 import { useStore, useSanitize } from './util.js';
+import { useAlert } from '@/stores/misc.js';
 
 export const PIPED_INSTANCE = 'pipedapi.kavin.rocks';
 export const HYPERPIPE_INSTANCE = 'hyperpipeapi.onrender.com';
@@ -12,15 +13,16 @@ export function getPipedQuery() {
 }
 
 export async function getJson(url, opts) {
-  const res = await fetch(url, opts)
-    .then(res => res.json())
-    .catch(err => {
-      console.error(err);
-      alert(err);
-    });
+  const errs = useAlert(),
+    res = await fetch(url, opts)
+      .then(res => res.json())
+      .catch(err => {
+        console.error(err);
+        errs.add(err);
+      });
 
   if (res && res.error) {
-    alert(
+    errs.add(
       res.message
         ? res.message
             .replaceAll('Video', 'Audio')
@@ -28,6 +30,7 @@ export async function getJson(url, opts) {
             .replaceAll('watched', 'heard')
         : res.error,
     );
+
     console.error(res.message);
   } else if (res) return JSON.parse(useSanitize(JSON.stringify(res)));
 }
@@ -53,7 +56,7 @@ export async function getJsonAuth(path, opts = {}) {
   return await fetch('https://' + root + path, opts)
     .then(res => res.json())
     .catch(err => {
-      alert(err);
+      useAlert.add(err);
     });
 }
 
