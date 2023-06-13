@@ -2,7 +2,6 @@
 /* Imports */
 import {
   ref,
-  watch,
   reactive,
   defineAsyncComponent,
   onBeforeMount,
@@ -35,7 +34,7 @@ import { useSetupDB, useUpdatePlaylist } from '@/scripts/db.js';
 /* Stores */
 import { useData, usePlayer } from '@/stores/player.js';
 import { useResults, useArtist } from '@/stores/results.js';
-import { useNav, useI18n } from '@/stores/misc.js';
+import { useNav, useI18n, useAlert } from '@/stores/misc.js';
 
 const { t, setupLocale } = useI18n(),
   store = useStore(),
@@ -43,7 +42,8 @@ const { t, setupLocale } = useI18n(),
   player = usePlayer(),
   results = useResults(),
   artist = useArtist(),
-  nav = useNav();
+  nav = useNav(),
+  errs = useAlert();
 
 const genreid = ref(''),
   path = ref(location.pathname);
@@ -187,6 +187,12 @@ onMounted(() => {
     <Info v-if="player.state.info" :text="data.state.description" />
   </Transition>
 
+  <Transition name="fade">
+    <div v-if="errs.msg" class="alert">
+      {{ errs.msg }}
+    </div>
+  </Transition>
+
   <StatusBar />
 
   <Player />
@@ -258,6 +264,19 @@ a:focus-visible {
 }
 .flex .bi {
   line-height: 0;
+}
+.alert {
+  position: fixed;
+  font-weight: bold;
+  letter-spacing: 0.1rem;
+  max-width: 20rem;
+  right: 1rem;
+  bottom: 10rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, indianred, #bf616a);
+  color: var(--color-background);
+  border-radius: 0.25rem;
+  box-shadow: 0.3rem 0.3rem 0.4rem indianred;
 }
 
 @media (hover: hover) {

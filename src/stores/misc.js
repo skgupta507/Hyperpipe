@@ -142,3 +142,19 @@ export const useI18n = defineStore('i18n', () => {
 
   return { locale, map, t, setupLocale };
 });
+
+export const useAlert = defineStore('alert', () => {
+  const msg = ref('');
+
+  function add(m) {
+    if (!m) return;
+
+    msg.value = m;
+
+    setTimeout(() => {
+      if (msg.value == m) msg.value = '';
+    }, 3000);
+  }
+
+  return { msg, add };
+});

@@ -12,7 +12,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       workbox: {
         globPatterns: [
-          '**/*.{css,html,png,svg}',
+          '**/*.{css,html,png,svg,woff,woff2}',
           'manifest.webmanifest',
           '**/index*.js',
           '**/shaka*.js',
