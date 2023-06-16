@@ -97,6 +97,10 @@ export const SUPPORTED_LOCALES = [
     name: 'Türkçe',
   },
   {
+    code: 'uk',
+    name: 'Yкраїнська',
+  },
+  {
     code: 'vi',
     name: 'Tiếng Việt',
   },
