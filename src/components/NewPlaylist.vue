@@ -75,16 +75,31 @@ const setProxy = async () => {
           title: 'Local • ' + key,
           items: res.urls.map(i => ({
             ...i,
-            ...{
-              playlistId: key,
-              thumbnail: parseThumb(i.url, proxy.value),
-            },
+            playlistId: key,
+            thumbnail: parseThumb(i.url, proxy.value),
           })),
         });
 
         nav.state.page = 'home';
       } else alert('No songs to play!');
     });
+  },
+  OpenOffline = async () => {
+    if (window.offline) {
+      const songs = await window.offline.list();
+      console.log();
+      results.resetItems();
+      results.setItem('songs', {
+        title: 'Hyp • Offline',
+        items: songs.map(i => ({
+          ...i.appMetadata,
+          offlineUri: i.offlineUri,
+          thumbnail: parseThumb(i.appMetadata.url, proxy.value),
+          duration: i.duration
+        })),
+      });
+      nav.state.page = 'home';
+    }
   },
   List = async () => {
     if (!proxy.value) await setProxy();
@@ -421,6 +436,7 @@ onMounted(async () => {
     <h2 v-if="list.length > 0">{{ t('playlist.local') }}</h2>
 
     <div class="grid-3">
+      <AlbumItem name="Offline" :grad="useRand()" @open-album="OpenOffline()" />
       <AlbumItem
         v-for="i in list"
         :key="i.name"

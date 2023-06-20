@@ -93,12 +93,12 @@ function parseUrl() {
 
 function playThis(t) {
   const i = data.state.urls.indexOf(t);
-  data.getSong(data.state.urls[i].url);
+  data.play(data.state.urls[i]);
 }
 
 function playList(a) {
   data.state.urls = a;
-  data.getSong(data.state.urls[0].url);
+  data.play(data.state.urls[0]);
 }
 
 /* Lifestyle hooks */
