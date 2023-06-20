@@ -39,6 +39,15 @@ export const useData = defineStore('data', () => {
     await getNext(hash);
   }
 
+  async function play(song) {
+    if (song.offlineUri) {
+      state.art = song.thumbnail;
+      player.state.duration = song.duration
+      for (let i of ['title', 'artist', 'artistUrl', 'url']) state[i] = song[i];
+      window.audioPlayer.load(song.offlineUri);
+    } else await getSong(song.url);
+  }
+
   async function getNext(hash) {
     if (
       store.getItem('next') !== 'false' &&
@@ -97,34 +106,34 @@ export const useData = defineStore('data', () => {
       state.urls.length != 0 &&
       state.urls[i + 1]
     )
-      getSong(state.urls[i + 1].url);
+      play(state.urls[i + 1]);
     else if (player.state.loop == 1) {
       state.url = state.urls[0].url;
-      getSong(state.urls[0].url);
+      play(state.urls[0]);
     } else state.urls = [];
   }
 
   function prevTrack() {
     const i = state.urls.findIndex(s => s.url === state.url);
 
-    if (state.urls[i - 1]) getSong(state.urls[i - 1].url);
+    if (state.urls[i - 1]) play(state.urls[i - 1]);
     else if (player.state.loop == 1) {
       state.url = state.urls[state.urls.length - 1].url;
-      getSong(state.urls[state.urls.length - 1].url);
+      play(state.urls[state.urls.length - 1]);
     } else state.urls = [];
   }
 
   function nextTrack() {
     const i = state.urls.findIndex(s => s.url === state.url);
 
-    if (state.urls[i + 1]) getSong(state.urls[i + 1].url);
+    if (state.urls[i + 1]) play(state.urls[i + 1]);
     else if (player.state.loop == 1) {
       state.url = state.urls[0].url;
-      getSong(state.urls[0].url);
+      play(state.urls[0]);
     } else state.urls = [];
   }
 
-  return { state, getSong, playNext, prevTrack, nextTrack };
+  return { state, getSong, play, playNext, prevTrack, nextTrack };
 });
 
 export const usePlayer = defineStore('player', () => {

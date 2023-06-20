@@ -60,6 +60,18 @@ async function Stream() {
               }
             });
 
+            window.offline = new shaka.offline.Storage(audioPlayer);
+            window.offline.configure({
+              offline: {
+                progressCallback: (data, prog) => console.log(data, prog),
+                trackSelectionCallback: tracks => [
+                  tracks
+                    .sort((a, b) => a.bandwidth - b.bandwidth)
+                    .find(i => i.type == 'variant'),
+                ],
+              },
+            });
+
           audioPlayer.configure({
             preferredAudioCodecs: codecs ? codecs.split(':') : ['opus', 'mp4a'],
             manifest: {
@@ -171,7 +183,7 @@ onMounted(() => {
       if (data.state.urls.length > 2) {
         const i = data.state.urls.findIndex(s => s.url == data.state.url);
 
-        data.getSong(data.state.urls[i - 1].url);
+        data.play(data.state.urls[i - 1]);
       }
     });
 
@@ -179,7 +191,7 @@ onMounted(() => {
       if (data.state.urls.length > 2) {
         const i = data.state.urls.findIndex(s => s.url == data.state.url);
 
-        data.getSong(data.state.urls[i + 1].url);
+        data.play(data.state.urls[i + 1]);
       }
     });
 

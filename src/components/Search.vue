@@ -34,6 +34,9 @@ const shuffleAdd = () => {
         url: i.url,
         title: i.title,
         thumbnails: [{ url: i.thumbnail }],
+        thumbnail: i.thumbnail,
+        offlineUri: i.offlineUri,
+        duration: i.duration
       })),
       copy = [];
 
@@ -56,9 +59,13 @@ const shuffleAdd = () => {
         url: i.url || '/watch?v=' + song.id,
         title: i.title,
         thumbnails: [{ url: i.thumbnail }],
+        thumbnail: i.thumbnail,
+        offlineUri: i.offlineUri,
+        duration: i.duration
       }));
 
-      data.getSong(song.url || '/watch?v=' + song.id);
+      song.url = song.url || '/watch?v=' + song.id;
+      data.play(song);
     } else {
       emit('play-urls', [
         {
@@ -245,6 +252,9 @@ onDeactivated(() => {
             url: item.url,
             title: item.title,
             thumbnails: [{ url: item.thumbnail }],
+            thumbnail: item.thumbnail,
+            offlineUri: item.offlineUri,
+            duration: item.duration
           })),
         )
       " />
@@ -313,9 +323,11 @@ onDeactivated(() => {
         :key="song.url || song.id"
         :index="index"
         :playlistId="song.playlistId"
-        :author="song.uploaderName || song.subtitle"
+        :author="song.uploaderName || song.artist || song.subtitle"
         :title="song.title || song.name"
-        :channel="song.uploaderUrl || '/channel/' + song.subId"
+        :channel="
+          song.uploaderUrl || song.artistUrl || '/channel/' + song.subId
+        "
         :play="song.url || '/watch?v=' + song.id"
         :art="
           song.thumbnail ||

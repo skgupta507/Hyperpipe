@@ -75,6 +75,17 @@ function Save() {
   }
 }
 
+async function Offline() {
+  if (window.offline && data.state.url) {
+    window.offline.store(window.audioPlayer.getAssetUri(), {
+      title: data.state.title,
+      url: data.state.url,
+      artist: data.state.artist,
+      artistUrl: data.state.artistUrl,
+    });
+  } else console.error('no offline storage found');
+}
+
 async function Like() {
   liking.value = true;
 
@@ -278,6 +289,12 @@ async function Like() {
               :data-active="data.state.url == liked"
               :data-loading="liking"
               @click="Like"></button>
+
+            <button
+              id="dl-btn"
+              title="Save for Offline Playback"
+              class="bi bi-download clickable"
+              @click="Offline"></button>
 
             <button
               id="addToPlaylist"
