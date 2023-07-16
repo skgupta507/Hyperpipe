@@ -1,10 +1,7 @@
 <script setup>
 import { ref, reactive } from 'vue';
 
-import Modal from './Modal.vue';
-
 import { useStore } from '@/scripts/util.js';
-import { useListPlaylists, useUpdatePlaylist } from '@/scripts/db.js';
 import {
   getAuthPlaylists,
   useAuthCreatePlaylist,
@@ -21,13 +18,8 @@ const { t } = useI18n(),
 
 const showme = reactive({
     menu: false,
-    pl: false,
     vol: false,
   }),
-  pl = ref(''),
-  list = ref([]),
-  remote = ref([]),
-  plRemote = ref(false),
   liked = ref(undefined),
   liking = ref(false);
 
@@ -43,36 +35,6 @@ function getFormattedTime(sec) {
     return `${hours}:${String(minutes).padStart(2, '0')}:${String(
       seconds % 60,
     ).padStart(2, '0')}`;
-}
-
-function List() {
-  showme.pl = true;
-  useListPlaylists(res => {
-    list.value = res;
-    showme.menu = false;
-  });
-  getAuthPlaylists().then(res => {
-    remote.value = res;
-  });
-}
-
-function Save() {
-  if (pl.value) {
-    if (plRemote.value == true && store.auth) {
-      useAuthAddToPlaylist(pl.value, data.state.url);
-    } else if (plRemote.value == false) {
-      useUpdatePlaylist(
-        pl.value,
-        {
-          url: data.state.url,
-          title: data.state.title,
-        },
-        e => {
-          if (e === true) console.log('Added Song');
-        },
-      );
-    }
-  }
 }
 
 async function Offline() {
@@ -107,61 +69,6 @@ async function Like() {
 }
 </script>
 <template>
-  <Teleport to="body">
-    <Transition name="fade">
-      <Modal
-        n="2"
-        :display="showme.pl"
-        :title="t('playlist.select')"
-        @show="
-          e => {
-            showme.pl = e;
-          }
-        ">
-        <template #content>
-          <div
-            v-for="i in list"
-            :key="i.name"
-            class="flex item"
-            @click="
-              pl = i.name;
-              plRemote = false;
-            "
-            :data-active="pl == i.name && plRemote == false">
-            <span>{{ i.name }}</span
-            ><span class="ml-auto">{{ i.urls.length || '' }}</span>
-          </div>
-          <div
-            v-for="i in remote"
-            :key="i.id"
-            class="flex item remote"
-            @click="
-              pl = i.id;
-              plRemote = true;
-            "
-            :data-active="pl == i.id && plRemote == true">
-            <span>{{ i.name.replace('Playlist -', '') }}</span
-            ><span class="ml-auto">{{ i.videos }}</span>
-          </div>
-        </template>
-        <template #buttons>
-          <button aria-label="Cancel" @click="showme.pl = false">
-            {{ t('action.cancel') }}
-          </button>
-
-          <button
-            aria-label="Add Song"
-            @click="
-              Save();
-              showme.pl = false;
-            ">
-            {{ t('action.add') }}
-          </button>
-        </template>
-      </Modal>
-    </Transition>
-  </Teleport>
-
   <div id="statusbar" class="flex">
     <div class="flex statusbar-progress-container">
       <span>{{ getFormattedTime(player.state.realTime) }}</span>
@@ -301,7 +208,10 @@ async function Like() {
               title="Add Current Song to a Playlist"
               aria-label="Add Current Song to a Playlist"
               class="bi bi-collection clickable"
-              @click="List"></button>
+              @click="
+                player.toggle('add');
+                showme.menu = false;
+              "></button>
 
             <button
               id="btn-lyrics"
@@ -479,31 +389,6 @@ input[type='range']::-moz-range-track {
 }
 
 /* Playlist addition */
-.ml-auto {
-  margin-left: auto;
-  width: min-content;
-}
-.item {
-  background: var(--color-background);
-  border-radius: 0.5rem;
-  margin: 0.5rem 0;
-  transition: background-color 0.1s ease;
-}
-.item:hover {
-  background: var(--color-background-mute);
-}
-.item:active {
-  background: var(--color-border);
-}
-.item[data-active='true'] {
-  color: var(--color-background);
-  background: linear-gradient(135deg, cornflowerblue, #88c0d0);
-}
-.remote.item::before {
-  content: '\F4E1';
-  font-family: bootstrap-icons;
-  font-size: 1.25rem;
-}
 
 @media (max-width: 500px) {
   .statusbar-progress-container {

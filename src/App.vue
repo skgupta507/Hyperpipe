@@ -17,6 +17,7 @@ import Search from '@/components/Search.vue';
 import Playlists from '@/components/Playlists.vue';
 import Lyrics from '@/components/Lyrics.vue';
 import Info from '@/components/Info.vue';
+import AddToPlaylist from '@/components/AddToPlaylist.vue';
 import Artist from '@/components/Artist.vue';
 
 /* Async Components */
@@ -192,6 +193,8 @@ onMounted(() => {
       {{ errs.msg }}
     </div>
   </Transition>
+
+  <AddToPlaylist />
 
   <StatusBar />
 

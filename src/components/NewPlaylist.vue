@@ -95,7 +95,7 @@ const setProxy = async () => {
           ...i.appMetadata,
           offlineUri: i.offlineUri,
           thumbnail: parseThumb(i.appMetadata.url, proxy.value),
-          duration: i.duration
+          duration: i.duration,
         })),
       });
       nav.state.page = 'home';

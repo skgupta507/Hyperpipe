@@ -60,17 +60,17 @@ async function Stream() {
               }
             });
 
-            window.offline = new shaka.offline.Storage(audioPlayer);
-            window.offline.configure({
-              offline: {
-                progressCallback: (data, prog) => console.log(data, prog),
-                trackSelectionCallback: tracks => [
-                  tracks
-                    .sort((a, b) => a.bandwidth - b.bandwidth)
-                    .find(i => i.type == 'variant'),
-                ],
-              },
-            });
+          window.offline = new shaka.offline.Storage(audioPlayer);
+          window.offline.configure({
+            offline: {
+              progressCallback: (data, prog) => console.log(data, prog),
+              trackSelectionCallback: tracks => [
+                tracks
+                  .sort((a, b) => a.bandwidth - b.bandwidth)
+                  .find(i => i.type == 'variant'),
+              ],
+            },
+          });
 
           audioPlayer.configure({
             preferredAudioCodecs: codecs ? codecs.split(':') : ['opus', 'mp4a'],
