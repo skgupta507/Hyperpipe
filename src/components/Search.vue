@@ -36,7 +36,7 @@ const shuffleAdd = () => {
         thumbnails: [{ url: i.thumbnail }],
         thumbnail: i.thumbnail,
         offlineUri: i.offlineUri,
-        duration: i.duration
+        duration: i.duration,
       })),
       copy = [];
 
@@ -61,7 +61,7 @@ const shuffleAdd = () => {
         thumbnails: [{ url: i.thumbnail }],
         thumbnail: i.thumbnail,
         offlineUri: i.offlineUri,
-        duration: i.duration
+        duration: i.duration,
       }));
 
       song.url = song.url || '/watch?v=' + song.id;
@@ -254,7 +254,7 @@ onDeactivated(() => {
             thumbnails: [{ url: item.thumbnail }],
             thumbnail: item.thumbnail,
             offlineUri: item.offlineUri,
-            duration: item.duration
+            duration: item.duration,
           })),
         )
       " />

@@ -6,23 +6,23 @@
     "host": "vite --host",
     "build": "vite build",
     "preview": "vite preview --port 5050",
-    "pretty": "prettier --write .",
-    "check": "prettier --check ."
+    "format": "prettier --write .",
+    "lint": "prettier --check ."
   },
   "dependencies": {
     "bootstrap-icons": "^1.10.5",
-    "dompurify": "^3.0.3",
+    "dompurify": "^3.0.5",
     "mux.js": "^6.3.0",
     "peerjs": "^1.4.7",
     "pinia": "^2.1.4",
-    "shaka-player": "^4.3.6",
+    "shaka-player": "^4.3.7",
     "sortablejs": "^1.15.0",
     "vue": "^3.2.38"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
-    "prettier": "^2.8.8",
-    "vite": "^4.3.9",
+    "prettier": "^3.0.0",
+    "vite": "^4.4.4",
     "vite-plugin-pwa": "^0.16.4"
   }
 }

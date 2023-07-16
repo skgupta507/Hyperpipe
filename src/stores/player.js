@@ -42,7 +42,7 @@ export const useData = defineStore('data', () => {
   async function play(song) {
     if (song.offlineUri) {
       state.art = song.thumbnail;
-      player.state.duration = song.duration
+      player.state.duration = song.duration;
       for (let i of ['title', 'artist', 'artistUrl', 'url']) state[i] = song[i];
       window.audioPlayer.load(song.offlineUri);
     } else await getSong(song.url);
@@ -150,6 +150,7 @@ export const usePlayer = defineStore('player', () => {
     playlist: false,
     lyrics: false,
     info: false,
+    add: false,
     vol: store.vol ? store.vol / 100 : 1,
   });
 
