@@ -25,7 +25,8 @@
     "send": "Send",
     "receive": "Receive",
     "import": "Import",
-    "export": "Export"
+    "export": "Export",
+    "register_on": "Don't have an account? Register on"
   },
   "playlist": {
     "local": "Local Playlists",
@@ -44,6 +45,7 @@
     "blur_light": "Blur (Light)",
     "dracula": "Dracula",
     "nord": "Nord",
+    "language": "Language",
     "tab": "Default Tab",
     "player": "Audio Player",
     "auto_queue": "Automatically Queue Songs",

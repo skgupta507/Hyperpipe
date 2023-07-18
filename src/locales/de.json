@@ -25,7 +25,8 @@
         "cancel": "Abbrechen",
         "receive": "Empfangen",
         "import": "Importieren",
-        "export": "Exportieren"
+        "export": "Exportieren",
+        "register_on": "Noch kein Konto? Registriere dich bei"
     },
     "playlist": {
         "local": "Lokale Wiedergabelisten",
@@ -39,6 +40,7 @@
     "pref": {
         "worst": "am Schlechten",
         "theme": "Farbschema",
+        "language": "Sprache",
         "volume": "Standard-Lautstärke",
         "player": "Audio-Player",
         "quality": "Qualität",
