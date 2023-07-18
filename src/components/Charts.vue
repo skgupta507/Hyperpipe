@@ -4,6 +4,7 @@ import { ref, reactive, watch, onMounted } from 'vue';
 import AlbumItem from '@/components/AlbumItem.vue';
 import SongItem from '@/components/SongItem.vue';
 
+import { translateCountryNames } from '@/scripts/countries.js';
 import { getJsonHyp } from '@/scripts/fetch.js';
 
 import { useResults, useArtist } from '@/stores/results.js';
@@ -31,6 +32,9 @@ async function getCharts() {
 
   if (!id.value)
     id.value = json.options.all.find(i => i.title == json.options.default).id;
+
+  translateCountryNames(json.options.all);
+  console.log(json.options.all)
 
   data.options = json.options.all;
   data.songs = json.trending;
