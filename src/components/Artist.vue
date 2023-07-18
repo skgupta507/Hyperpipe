@@ -3,6 +3,7 @@ import { onMounted, onUpdated, ref } from 'vue';
 import Btn from './Btn.vue';
 
 import { useStore } from '@/scripts/util.js';
+
 import { useResults, useArtist } from '@/stores/results.js';
 import { useI18n } from '@/stores/misc.js';
 
