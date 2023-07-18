@@ -76,7 +76,8 @@
     "loc": "Locations",
     "cdn": "CDN",
     "up_to_date": "Up to Date",
-    "version": "Version"
+    "version": "Version",
+    "default": "Default"
   },
   "lyrics": {
     "load": "Fetching Lyrics",
