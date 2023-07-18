@@ -84,6 +84,10 @@
     "load": "Fetching Lyrics",
     "void": "No Lyrics"
   },
+  "statusBar": {
+    "currentPlaylist": "Current Playlist", 
+    "loop": "Loop"
+  },
   "countries": {
     "AE": "United Arab Emirates",
     "AR": "Argentina",
