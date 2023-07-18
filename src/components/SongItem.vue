@@ -8,12 +8,14 @@ import { useUpdatePlaylist } from '@/scripts/db.js';
 
 import { useResults, useArtist } from '@/stores/results.js';
 import { useData, usePlayer } from '@/stores/player.js';
+import { useI18n } from '@/stores/misc.js';
 
 const rand = useRand(),
   data = useData(),
   results = useResults(),
   player = usePlayer(),
-  artist = useArtist();
+  artist = useArtist(),
+  { t } = useI18n();
 
 const props = defineProps({
     index: Number,

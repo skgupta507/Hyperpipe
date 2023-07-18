@@ -1,4 +1,5 @@
 import DOMPurify from 'dompurify';
+import { useI18n } from '@/stores/misc.js';
 
 export function useSanitize(txt) {
   return DOMPurify.sanitize(txt, {
@@ -47,9 +48,10 @@ export function useShare(data) {
       console.err(err);
     });
   } else {
+    const { t } = useI18n()
     navigator.clipboard.writeText(data.url).then(
       () => {
-        alert('Copied to Clipboard');
+        alert(t('info.copied_to_clipboard'));
       },
       err => {
         alert(err);
