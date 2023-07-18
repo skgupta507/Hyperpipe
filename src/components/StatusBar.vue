@@ -91,16 +91,16 @@ async function Like() {
       <div class="statusbar-control-item left">
         <button
           id="list-btn"
-          title="Current Playlist"
-          aria-label="Current Playlist"
+          :title="t('statusBar.currentPlaylist')"
+          :aria-label="t('statusBar.currentPlaylist')"
           class="bi bi-music-note-list clickable"
           :data-active="player.state.playlist"
           @click="player.toggle('playlist')"></button>
 
         <button
           id="loop-btn"
-          title="Loop"
-          aria-label="Loop"
+          :title="t('statusBar.loop')"
+          :aria-label="t('statusBar.loop')"
           class="bi clickable"
           :class="player.state.loop < 2 ? 'bi-repeat' : 'bi-repeat-1'"
           :data-active="player.state.loop > 0"
