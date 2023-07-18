@@ -287,7 +287,7 @@ async function Like() {
 
             <button
               id="btn-lyrics"
-              title="Lyrics"
+              :title="t('lyrics.lyrics')"
               aria-label="Lyrics"
               class="bi bi-chat-square-quote clickable"
               :data-active="player.state.lyrics"
