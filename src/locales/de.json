@@ -86,7 +86,8 @@
     },
     "lyrics": {
         "load": "Abrufen von Liedtexten",
-        "void": "Keine Liedtexte"
+        "void": "Keine Liedtexte",
+        "lyrics": "Liedtexte"
     },
     "statusBar": {
         "currentPlaylist": "Aktuelle Wiedergabeliste", 

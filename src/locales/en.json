@@ -86,7 +86,8 @@
   },
   "lyrics": {
     "load": "Fetching Lyrics",
-    "void": "No Lyrics"
+    "void": "No Lyrics",
+    "lyrics": "Lyrics"
   },
   "statusBar": {
     "currentPlaylist": "Current Playlist", 
