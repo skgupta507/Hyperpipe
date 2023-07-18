@@ -281,14 +281,14 @@ async function Like() {
             <button
               id="addToPlaylist"
               :title="t('statusBar.add_current_to_playlist')"
-              aria-label="Add Current Song to a Playlist"
+              :aria-label="t('statusBar.add_current_to_playlist')"
               class="bi bi-collection clickable"
               @click="List"></button>
 
             <button
               id="btn-lyrics"
               :title="t('lyrics.lyrics')"
-              aria-label="Lyrics"
+              :aria-label="t('lyrics.lyrics')"
               class="bi bi-chat-square-quote clickable"
               :data-active="player.state.lyrics"
               @click="player.toggle('lyrics')"></button>
