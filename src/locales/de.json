@@ -88,8 +88,12 @@
         "void": "Keine Liedtexte"
     },
     "statusBar": {
-      "currentPlaylist": "Aktuelle Wiedergabeliste", 
-      "loop": "Schleife"
+        "currentPlaylist": "Aktuelle Wiedergabeliste", 
+        "loop": "Schleife"
+    },
+    "general": {
+        "username": "Benutzername",
+        "password": "Passwort"
     },
     "countries": {
         "AE": "Vereinigte Arabische Emirate",
