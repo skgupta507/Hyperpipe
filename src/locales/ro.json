@@ -1,7 +1,7 @@
 {
     "title": {
         "singles": "Singuri",
-        "playlists": "Playlisturi",
+        "playlists": "Playlist-uri",
         "moods": "Stări",
         "remote": "La distanță",
         "albums": "Albume",
@@ -19,8 +19,8 @@
     },
     "action": {
         "back": "Înapoi",
-        "add": "Adăugați",
-        "create": "Creați",
+        "add": "Adaugă",
+        "create": "Creează",
         "send": "Trimite",
         "receive": "Primiți",
         "cancel": "Anulează",
@@ -28,12 +28,12 @@
         "export": "Exportă"
     },
     "playlist": {
-        "local": "Playlisturi locale",
+        "local": "Playlist-uri locale",
         "add": "Adăugați melodii la Playlist",
-        "create": "Creați o nouă Playlist",
-        "sync": "Sincronizați Playlisturi",
-        "select": "Selectați Playlist pentru a adăuga",
-        "remote": "Playlisturi la distanță",
+        "create": "Creează o nouă Playlist",
+        "sync": "Sincronizează Playlist-uri",
+        "select": "Selectează Playlist pentru a adăuga",
+        "remote": "Playlist-uri la distanță",
         "name": "Numele playlistului"
     },
     "pref": {
@@ -47,17 +47,18 @@
         "auto": "auto",
         "worst": "cel mai rău",
         "volume": "Volum implicit",
-        "blur": "Blur",
+        "blur": "Ceață",
         "dark": "Întunecat (implicit)",
-        "light": "Luminat",
-        "blur_light": "Blur (Lumină)",
+        "light": "Luminos",
+        "blur_light": "Ceață (Luminată)",
         "dracula": "Dracula",
         "nord": "Nord",
         "compact": "Vizualizare compactă",
         "home": "Acasă",
         "explore": "Explorează",
         "charts": "Topuri",
-        "library": "Bibliotecă"
+        "library": "Bibliotecă",
+        "prm": "Preferă mișcarea redusă"
     },
     "instances": {
         "cdn": "CDN",

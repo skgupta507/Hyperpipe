@@ -10,3 +10,11 @@ export function useRand() {
   const i = Math.floor(Math.random() * c.length);
   return c[i];
 }
+
+export const parseThumb = (url, proxy) =>
+  url && proxy
+    ? `${proxy}/vi_webp/${url.replace(
+        '/watch?v=',
+        '',
+      )}/maxresdefault.webp?host=i.ytimg.com`
+    : '/1x1.png';

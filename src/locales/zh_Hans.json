@@ -57,7 +57,8 @@
         "explore": "探索",
         "charts": "排行榜",
         "library": "收藏库",
-        "compact": "紧凑视图"
+        "compact": "紧凑视图",
+        "prm": "偏好减少动态效果"
     },
     "info": {
         "see_all": "显示全部",

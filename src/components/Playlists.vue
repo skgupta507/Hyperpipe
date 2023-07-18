@@ -1,22 +1,49 @@
 <script setup>
+import { ref, onMounted } from 'vue';
+import Sortable from 'sortablejs/modular/sortable.core.esm.js';
+
 import { useData, usePlayer } from '@/stores/player.js';
 import { useI18n } from '@/stores/misc.js';
+
+const emit = defineEmits(['playthis']);
 
 const { t } = useI18n(),
   player = usePlayer(),
   data = useData();
 
-defineEmits(['playthis']);
+const pl = ref(null);
+
+function handleClick(plurl, e) {
+  if (!e.target.classList.contains('pl-handle')) emit('playthis', plurl);
+}
+
+onMounted(() => {
+  new Sortable(pl.value, {
+    handle: '.pl-handle',
+    animation: 150,
+    onEnd: e => {
+      data.state.urls.splice(
+        e.newIndex,
+        0,
+        data.state.urls.splice(e.oldIndex, 1)[0],
+      );
+    },
+  });
+});
 </script>
 
 <template>
   <Transition name="fade">
-    <div class="pl-modal placeholder" :data-placeholder="t('playlist.add')">
+    <div
+      id="pl"
+      ref="pl"
+      class="pl-modal placeholder"
+      :data-placeholder="t('playlist.add')">
       <div
         v-for="plurl in data.state.urls"
         class="pl-item"
         :key="plurl.url"
-        @click="$emit('playthis', plurl)">
+        @click="handleClick(plurl, $event)">
         <span
           v-if="data.state.url == plurl.url"
           class="bars-wrap"
@@ -33,6 +60,7 @@ defineEmits(['playthis']);
             loading="lazy" />
         </div>
         <span class="pl-main caps">{{ plurl.title }}</span>
+        <span class="bi bi-grip-horizontal pl-handle clickable"></span>
       </div>
     </div>
   </Transition>
@@ -96,5 +124,10 @@ defineEmits(['playthis']);
 }
 .pl-img[data-active='false'] {
   display: none;
+}
+.pl-handle {
+  cursor: grab;
+  margin-left: auto;
+  margin-right: 0.75rem;
 }
 </style>

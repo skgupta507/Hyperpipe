@@ -36,7 +36,8 @@
         "explore": "Khám phá",
         "home": "Trang chủ",
         "charts": "Xếp hạng",
-        "compact": "Chế độ xem nhỏ gọn"
+        "compact": "Chế độ xem nhỏ gọn",
+        "prm": "Tắt hiệu ứng chuyển động"
     },
     "action": {
         "cancel": "Hủy",

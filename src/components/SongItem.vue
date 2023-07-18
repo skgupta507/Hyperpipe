@@ -105,9 +105,9 @@ onMounted(() => {
     <span class="flex content">
       <h4>{{ title }}</h4>
       <a
+        class="ign"
         :href="channel"
-        @click.prevent="artist.getArtist(channel.replace('/channel/', ''))"
-        class="ign">
+        @click.prevent="artist.getArtist(channel.replace('/channel/', ''))">
         <i class="ign">{{ author ? author.replaceAll(' - Topic', '') : '' }}</i>
       </a>
     </span>
@@ -176,5 +176,10 @@ span.bi-three-dots-vertical {
 [data-compact] .song-bg {
   width: 70px;
   height: 70px;
+}
+
+.prm .card {
+  margin: 0;
+  padding: 0.5rem;
 }
 </style>

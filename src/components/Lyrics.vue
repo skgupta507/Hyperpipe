@@ -13,25 +13,25 @@ const { t } = useI18n(),
   source = ref(''),
   status = ref(false);
 
+function set(id) {
+  getJsonHyp('/lyrics/' + id).then(res => {
+    text.value = res.text;
+    source.value = res.source;
+    status.value = true;
+  });
+}
+
 function get() {
   status.value = false;
-
-  const set = id => {
-    getJsonHyp('/browse/' + id).then(res => {
-      text.value = res.text;
-      source.value = res.source;
-      status.value = true;
-    });
-  };
 
   if (data.state.lyrics && data.state.urls === data.state.url) {
     set(data.state.lyrics);
   } else if (data.state.url) {
-    getJsonHyp('/next/' + data.state.url.replace('/watch?v=', '')).then(
-      next => {
-        if (next.lyricsId) set(next.lyricsId);
-      },
-    );
+    getJsonHyp(
+      '/next/' + data.state.url.replace('/watch?v=', '') + '?queue=avoid',
+    ).then(({ lyricsId }) => {
+      if (lyricsId) set(lyricsId);
+    });
   }
 }
 

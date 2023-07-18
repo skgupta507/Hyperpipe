@@ -47,7 +47,8 @@
         "explore": "Explorer",
         "home": "Accueil",
         "library": "Bibliothèque",
-        "compact": "Vue compacte"
+        "compact": "Vue compacte",
+        "prm": "Préfère les mouvements réduits"
     },
     "info": {
         "see_all": "Voir tout",

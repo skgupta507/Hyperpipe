@@ -53,9 +53,25 @@ npm run build
 
 Please see [hyperpipe.codeberg.page](https://hyperpipe.codeberg.page)
 
-## Extensions
+## Automatic Redirection
 
-- [Libredirect](https://codeberg.org/LibRedirect/libredirect) -> For Redirecting YouTube Music links to Hyperpipe.
+### LibRedirect
+
+Use [LibRedirect](https://github.com/libredirect/libredirect) to automatically redirect YouTube Music links to Hyperpipe.
+
+### Redirector
+
+You can use the [Redirector](https://github.com/einaregilsson/Redirector) extension to redirect **_MOST_** YouTube Music links to Hyperpipe with the configuration below (_Note:_ replace `hyperpipe.surge.sh` with any instance URL):
+
+- Description: YouTube Music to Hyperpipe
+- Example URL: https://music.youtube.com/channel/channel-id
+- Include pattern: `https://music.youtube.com/*`
+- Redirect to: `https://hyperpipe.surge.sh/$1`
+- Pattern type: Wildcard Expression
+- Pattern Description: Redirects all YouTube Music URLs to Hyperpipe
+- Advanced options:
+  - Apply to:
+    - [x] Main window (address bar)
 
 ## Translation
 
@@ -75,7 +91,7 @@ Please see [hyperpipe.codeberg.page](https://hyperpipe.codeberg.page)
 
 Hyperpipe
 
-Copyright (C) 2022  Shiny Nematoda
+Copyright (C) 2022-23  Shiny Nematoda
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -108,6 +124,7 @@ You can reach out to me personally on:
 - shaka-player -> [Apache-2.0][shaka]
 - PeerJS -> [MIT][peer]
 - DOMPurify -> [Apache-2.0][purify]
+- SortableJS -> [MIT][sortable]
 - Bootstrap Icons -> [MIT][bi]
 - VueJS theme -> [MIT][vuetheme]
 - Dracula theme -> [MIT][dracula]
@@ -135,6 +152,7 @@ You can reach out to me personally on:
 [peer]: https://github.com/peers/peerjs/blob/master/LICENSE
 [shaka]: https://github.com/shaka-project/shaka-player/blob/main/LICENSE
 [purify]: https://github.com/cure53/DOMPurify/blob/main/LICENSE
+[sortable]: https://github.com/SortableJS/Sortable/blob/master/LICENSE
 [nord]: https://github.com/arcticicestudio/nord/blob/develop/LICENSE.md
 [vuetheme]: https://github.com/vuejs/theme/blob/main/LICENSE
 [dracula]: https://github.com/dracula/dracula-theme/blob/master/LICENSE

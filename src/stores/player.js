@@ -21,12 +21,8 @@ export const useData = defineStore('data', () => {
     player = usePlayer();
 
   async function getSong(e) {
-    console.log(e);
-
     const hash = new URLSearchParams(e.substring(e.indexOf('?'))).get('v'),
       json = await getJsonPiped('/streams/' + hash);
-
-    console.log(json);
 
     state.art = json.thumbnailUrl.replaceAll('&amp;', '&');
     state.description = json.description;
@@ -41,6 +37,15 @@ export const useData = defineStore('data', () => {
     state.url = e;
 
     await getNext(hash);
+  }
+
+  async function play(song) {
+    if (song.offlineUri) {
+      state.art = song.thumbnail;
+      player.state.duration = song.duration;
+      for (let i of ['title', 'artist', 'artistUrl', 'url']) state[i] = song[i];
+      window.audioPlayer.load(song.offlineUri);
+    } else await getSong(song.url);
   }
 
   async function getNext(hash) {
@@ -58,8 +63,6 @@ export const useData = defineStore('data', () => {
         ? '/watch?v=' + json.songs[0].id
         : '/watch?v=' + hash;
 
-      console.log(json);
-
       state.urls =
         json.songs.length > 0
           ? json.songs.map(i => ({
@@ -76,8 +79,6 @@ export const useData = defineStore('data', () => {
         artist: state.artist,
         art: state.art,
       });
-
-      console.log(state.urls);
     } else {
       if (state.urls.length == 0) {
         state.urls = [
@@ -105,40 +106,34 @@ export const useData = defineStore('data', () => {
       state.urls.length != 0 &&
       state.urls[i + 1]
     )
-      getSong(state.urls[i + 1].url);
+      play(state.urls[i + 1]);
     else if (player.state.loop == 1) {
-      console.log(state.url, state.urls[0]);
-
       state.url = state.urls[0].url;
-      getSong(state.urls[0].url);
+      play(state.urls[0]);
     } else state.urls = [];
   }
 
   function prevTrack() {
     const i = state.urls.findIndex(s => s.url === state.url);
 
-    if (state.urls[i - 1]) getSong(state.urls[i - 1].url);
+    if (state.urls[i - 1]) play(state.urls[i - 1]);
     else if (player.state.loop == 1) {
-      console.log(state.url, state.urls[state.urls.length - 1]);
-
       state.url = state.urls[state.urls.length - 1].url;
-      getSong(state.urls[state.urls.length - 1].url);
+      play(state.urls[state.urls.length - 1]);
     } else state.urls = [];
   }
 
   function nextTrack() {
     const i = state.urls.findIndex(s => s.url === state.url);
 
-    if (state.urls[i + 1]) getSong(state.urls[i + 1].url);
+    if (state.urls[i + 1]) play(state.urls[i + 1]);
     else if (player.state.loop == 1) {
-      console.log(state.url, state.urls[0]);
-
       state.url = state.urls[0].url;
-      getSong(state.urls[0].url);
+      play(state.urls[0]);
     } else state.urls = [];
   }
 
-  return { state, getSong, playNext, prevTrack, nextTrack };
+  return { state, getSong, play, playNext, prevTrack, nextTrack };
 });
 
 export const usePlayer = defineStore('player', () => {
@@ -155,15 +150,12 @@ export const usePlayer = defineStore('player', () => {
     playlist: false,
     lyrics: false,
     info: false,
+    add: false,
     vol: store.vol ? store.vol / 100 : 1,
   });
 
   function toggle(i) {
-    console.log(i, state[i]);
-    if (typeof state[i] == 'boolean') {
-      state[i] = !state[i];
-    }
-    console.log(i, state[i]);
+    if (typeof state[i] == 'boolean') state[i] = !state[i];
   }
 
   function setTime(t) {

@@ -38,7 +38,8 @@
         "charts": "Žebříčky",
         "home": "Domů",
         "library": "Knihovna",
-        "compact": "Kompaktní zobrazení"
+        "compact": "Kompaktní zobrazení",
+        "prm": "Upřednostňovat omezený pohyb"
     },
     "instances": {
         "name": "Název",

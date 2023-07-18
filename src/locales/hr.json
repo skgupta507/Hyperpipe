@@ -7,19 +7,19 @@
         "community": "Zajednica",
         "songs": "Pjesme",
         "singles": "Singlovi",
-        "artists": "Umjetnici",
-        "spotlight": "U prednosti",
-        "remote": "Vanjski",
-        "similar_artists": "Slični umjetnici",
-        "moods": "Raspoloženja",
+        "artists": "Izvođači",
+        "spotlight": "U centru pažnje",
+        "remote": "Eksterni",
+        "similar_artists": "Slični izvođaći",
+        "moods": "Ugođaji",
         "genres": "Žanrovi",
         "login": "Prijava",
         "local": "Lokalni",
-        "feeds": "Izvori"
+        "feeds": "Feedovi"
     },
     "info": {
         "search": "Započni pretraživanje",
-        "no_info": "Nema dostupnih informacija",
+        "no_info": "Nema informacija",
         "see_all": "Pokaži sve"
     },
     "action": {
@@ -29,8 +29,8 @@
         "create": "Stvori",
         "back": "Natrag",
         "add": "Dodaj",
-        "import": "Uvezite",
-        "export": "Izvezite"
+        "import": "Uvezi",
+        "export": "Izvezi"
     },
     "instances": {
         "loc": "Lokacije",
@@ -39,43 +39,44 @@
         "hyp": "Hiperpipe instanca",
         "piped": "Piped instanca",
         "cdn": "CDN",
-        "up_to_date": "Ažuriran",
+        "up_to_date": "Aktualna",
         "version": "Verzija"
     },
     "pref": {
         "codec": "Kodek",
         "quality": "Kvaliteta",
-        "auto": "auto",
+        "auto": "automatski",
         "best": "najbolja",
         "theme": "Tema",
         "player": "Audio reproduktor",
-        "auto_queue": "Automatski stavite pjesme u red",
-        "worst": "najgora",
+        "auto_queue": "Automatski postavi pjesme u red",
+        "worst": "najlošija",
         "volume": "Zadana glasnoća",
-        "tab": "Zadana Kartica",
-        "light": "Svjetlo",
-        "blur": "Zamagljeno",
-        "blur_light": "Zamagljeno (Svjetlo)",
+        "tab": "Zadana kartica",
+        "light": "Svijetla",
+        "blur": "Zamućena",
+        "blur_light": "Zamućena (svijetla)",
         "dracula": "Drakula",
         "nord": "Nord",
-        "dark": "Mračno (Zadano)",
-        "library": "Knjižnica",
-        "home": "Početna",
+        "dark": "Tamna (zadano)",
+        "library": "Fonoteka",
+        "home": "Početna stranica",
         "charts": "Grafikoni",
-        "explore": "Istražite",
-        "compact": "Sažeti prikaz"
+        "explore": "Istraži",
+        "compact": "Kompaktni prikaz",
+        "prm": "Preferira smanjeno kretanje"
     },
     "lyrics": {
         "load": "Dohvaćanje stihova",
         "void": "Nema stihova"
     },
     "playlist": {
-        "remote": "Vanjski popisi pjesama",
-        "sync": "Sinkronizacija popisa pjesama",
+        "remote": "Eksterni popisi pjesama",
+        "sync": "Sinkroniziraj popisa pjesama",
         "local": "Lokalni popisi pjesama",
-        "name": "Naziv popisa pjesama",
-        "add": "Dodajte pjesme u popis",
-        "create": "Stvorite novi popis pjesama",
-        "select": "Odaberite popis pjesama da dodate"
+        "name": "Ime popisa pjesama",
+        "add": "Dodaj pjesme u popis",
+        "create": "Stvori novi popis pjesama",
+        "select": "Odaberi popis pjesama za dodavanje"
     }
 }

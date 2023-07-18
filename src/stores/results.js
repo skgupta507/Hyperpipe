@@ -4,7 +4,7 @@ import { defineStore } from 'pinia';
 import { useNav } from '@/stores/misc.js';
 
 import { getJsonPiped, getJsonHyp, getJsonAuth } from '@/scripts/fetch.js';
-import { useRoute } from '@/scripts/util.js';
+import { useVerifyAuth, useRoute } from '@/scripts/util.js';
 
 export const useResults = defineStore('results', () => {
   const items = ref({}),
@@ -15,7 +15,6 @@ export const useResults = defineStore('results', () => {
 
   function setItem(key, val) {
     items.value[key] = val;
-    console.log(items.value);
   }
 
   function resetItems() {
@@ -23,37 +22,26 @@ export const useResults = defineStore('results', () => {
     album.value = undefined;
 
     useArtist().reset();
-    for (let i in items.value) {
-      items.value[i] = undefined;
-    }
+
+    for (let i in items.value) items.value[i] = undefined;
   }
 
   async function getExplore() {
     const json = await getJsonHyp('/explore');
 
-    console.log(json);
     resetItems();
 
     chartsId.value = json.chartsId;
-
-    console.log(chartsId.value, json.chartsId);
 
     setItem('songs', { items: json.trending });
     setItem('albums', { items: json.albums_and_singles });
   }
 
   async function getAlbum(e) {
-    console.log('Album: ', e);
-
     const hash = new URLSearchParams(e.substring(e.indexOf('?'))).get('list'),
-      isAuth =
-        /[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}/.test(
-          hash,
-        ),
+      isAuth = useVerifyAuth(hash),
       path = '/playlists/' + hash,
       json = isAuth ? await getJsonAuth(path) : await getJsonPiped(path);
-
-    console.log(json, json.relatedStreams);
 
     resetItems();
 
@@ -72,6 +60,7 @@ export const useResults = defineStore('results', () => {
 
     useRoute(e);
     useNav().state.page = 'home';
+    document.body.scrollIntoView();
 
     next.value =
       json.nextpage && json.nextpage != 'null'
@@ -102,10 +91,10 @@ export const useArtist = defineStore('artist', () => {
     thumbnails: [],
   });
 
+  const results = useResults();
+
   function reset() {
-    for (let i in state) {
-      state[i] = undefined;
-    }
+    for (let i in state) state[i] = undefined;
   }
 
   function set(obj) {
@@ -115,22 +104,17 @@ export const useArtist = defineStore('artist', () => {
   }
 
   async function getArtist(e) {
-    console.log(e);
-
     e = e.replace('/channel/', '');
 
-    const json = await getJsonHyp('/channel/' + e),
-      results = useResults();
-
-    console.log(json);
+    const json = await getJsonHyp('/channel/' + e);
 
     results.resetItems();
 
-    for (let i in json.items) {
-      results.setItem(i, { items: json.items[i] });
-    }
-
-    console.log(results.items);
+    for (let i in json.items)
+      results.setItem(i, {
+        items: json.items[i],
+        more: json.more[i] ? { ...json.more[i], ...{ id: e } } : null,
+      });
 
     json.items = undefined;
     json.hash = e;
@@ -140,7 +124,23 @@ export const useArtist = defineStore('artist', () => {
 
     useRoute('/channel/' + e);
     useNav().state.page = 'home';
+    document.body.scrollIntoView();
   }
 
-  return { state, set, reset, getArtist };
+  async function getArtistNext(i, { id, params, click, visit }) {
+    if (!id || !params || !click || !visit) return;
+
+    const json = await getJsonHyp(
+      `/next/channel/${id}/${params}?ct=${click}&v=${visit}`,
+    );
+
+    results.resetItems();
+    reset();
+
+    results.setItem(i, {
+      items: json.items,
+    });
+  }
+
+  return { state, set, reset, getArtist, getArtistNext };
 });

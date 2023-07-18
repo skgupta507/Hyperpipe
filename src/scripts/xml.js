@@ -56,7 +56,5 @@ export function useXML(json) {
 
   base += useElems(json.elements);
 
-  console.log(base);
-
   return base;
 }

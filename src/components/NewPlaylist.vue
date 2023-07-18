@@ -4,7 +4,7 @@ import { ref, reactive, watch, onMounted } from 'vue';
 import AlbumItem from './AlbumItem.vue';
 import Modal from './Modal.vue';
 
-import { useRand } from '@/scripts/colors.js';
+import { useRand, parseThumb } from '@/scripts/colors.js';
 import { useStore } from '@/scripts/util.js';
 
 import {
@@ -15,6 +15,7 @@ import {
 } from '@/scripts/db.js';
 
 import {
+  useAuthLogout,
   useAuthCreatePlaylist,
   getAuthPlaylists,
   getJsonAuth,
@@ -52,14 +53,19 @@ const list = ref([]),
     password: undefined,
     playlists: [],
     create: false,
-  });
+  }),
+  proxy = ref('');
 
 const pathname = url => new URL(url).pathname;
 
-const Open = async key => {
+const setProxy = async () => {
+    const { imageProxyUrl } = await getJsonPiped('/config');
+    proxy.value = imageProxyUrl;
+  },
+  Open = async key => {
     console.log(key);
 
-    const { imageProxyUrl } = await getJsonPiped('/config');
+    if (!proxy.value) await setProxy();
 
     useGetPlaylist(key, res => {
       console.log(res);
@@ -69,13 +75,8 @@ const Open = async key => {
           title: 'Local • ' + key,
           items: res.urls.map(i => ({
             ...i,
-            ...{
-              playlistId: key,
-              thumbnail: `${imageProxyUrl}/vi_webp/${i.url.replace(
-                '/watch?v=',
-                '',
-              )}/maxresdefault.webp?host=i.ytimg.com`,
-            },
+            playlistId: key,
+            thumbnail: parseThumb(i.url, proxy.value),
           })),
         });
 
@@ -83,16 +84,35 @@ const Open = async key => {
       } else alert('No songs to play!');
     });
   },
-  List = () => {
+  OpenOffline = async () => {
+    if (window.offline) {
+      const songs = await window.offline.list();
+      console.log();
+      results.resetItems();
+      results.setItem('songs', {
+        title: 'Hyp • Offline',
+        items: songs.map(i => ({
+          ...i.appMetadata,
+          offlineUri: i.offlineUri,
+          thumbnail: parseThumb(i.appMetadata.url, proxy.value),
+          duration: i.duration,
+        })),
+      });
+      nav.state.page = 'home';
+    }
+  },
+  List = async () => {
+    if (!proxy.value) await setProxy();
+
     useListPlaylists(res => {
       list.value = res;
     });
   },
   Create = () => {
     if (text.value) {
-      useCreatePlaylist(text.value, [], () => {
-        List();
+      useCreatePlaylist(text.value, [], async () => {
         show.new = false;
+        await List();
       });
     }
   },
@@ -121,7 +141,7 @@ const Open = async key => {
       return;
     }
 
-    List();
+    await List();
 
     for (let i of data) {
       const pl = list.value.find(p => p.name == i.name);
@@ -134,17 +154,15 @@ const Open = async key => {
             });
           }
         }
-      } else {
-        useCreatePlaylist(i.name, i.urls);
-      }
+      } else useCreatePlaylist(i.name, i.urls);
 
-      List();
+      await List();
     }
 
     show.import = false;
   },
-  Export = () => {
-    List();
+  Export = async () => {
+    await List();
 
     const base = JSON.stringify(
         {
@@ -175,8 +193,8 @@ const Open = async key => {
 
     console.log(conn);
 
-    conn.on('open', () => {
-      List();
+    conn.on('open', async () => {
+      await List();
       conn.send(list.value);
     });
 
@@ -206,12 +224,7 @@ const Login = async () => {
     }
   },
   Logout = async () => {
-    const res = await getJsonAuth('/logout', {
-      method: 'POST',
-      headers: {
-        Authorization: store.auth,
-      },
-    });
+    const res = await useAuthLogout();
 
     if (!res.error) {
       store.removeItem('auth');
@@ -287,7 +300,7 @@ watch(
 watch(auth, getPlaylists);
 
 onMounted(async () => {
-  List();
+  await List();
   await getPlaylists();
 });
 </script>
@@ -423,11 +436,13 @@ onMounted(async () => {
     <h2 v-if="list.length > 0">{{ t('playlist.local') }}</h2>
 
     <div class="grid-3">
+      <AlbumItem name="Offline" :grad="useRand()" @open-album="OpenOffline()" />
       <AlbumItem
         v-for="i in list"
         :key="i.name"
         :name="i.name"
         :author="t('title.songs') + ' • ' + i.urls.length"
+        :art="parseThumb(i.urls[0]?.url, proxy)"
         :grad="useRand()"
         @open-album="Open(i.name)" />
     </div>
@@ -441,7 +456,7 @@ onMounted(async () => {
         :name="i.name.replace('Playlist - ', '')"
         :author="t('title.songs') + ' • ' + i.videos"
         :art="pathname(i.thumbnail) != '/' ? i.thumbnail : undefined"
-        @open-album="$emit('open-playlist', '/playlists?list=' + i.id)" />
+        @open-album="$emit('open-playlist', '/playlist?list=' + i.id)" />
     </div>
     <form v-else class="login" @submit.prevent>
       <input
@@ -463,7 +478,7 @@ onMounted(async () => {
       <p>
         Don't have an account? register on
         <a
-          href="https://piped.kavin.rocks/register"
+          href="https://piped.video/register"
           target="_blank"
           rel="noreferrer noopener"
           >Piped</a
@@ -479,7 +494,7 @@ onMounted(async () => {
 .grid {
   display: grid;
   width: fit-content;
-  gap: 2rem;
+  gap: 1rem;
   grid-auto-rows: 10rem;
   margin: 0 auto;
 }
@@ -558,5 +573,10 @@ input[type='file']::file-selector-button {
   margin: 1rem auto;
   display: block;
   text-align: center;
+}
+@media (min-width: 400px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 </style>

@@ -1,5 +1,6 @@
 <script setup>
 import { ref, watch, onMounted, onBeforeUnmount, onUnmounted } from 'vue';
+import { useManifest } from '@/scripts/util.js';
 
 import muxjs from 'mux.js';
 window.muxjs = muxjs;
@@ -31,22 +32,7 @@ async function Stream() {
   const res = player.state,
     shaka = import('shaka-player/dist/shaka-player.compiled.js');
 
-  let url, mime;
-
-  if (window.MediaSource !== undefined && res.streams.length > 0) {
-    const { useDash } = await import('../scripts/dash.js');
-
-    const dash = useDash(res.streams, res.duration);
-
-    url = 'data:application/dash+xml;charset=utf-8;base64,' + btoa(dash);
-    mime = 'application/dash+xml';
-  } else if (res.hls) {
-    url = res.hls;
-    mime = 'application/x-mpegURL';
-  } else if (res.streams.length > 0) {
-    url = res.streams[0].url;
-    mime = res.streams[0].mimeType;
-  }
+  const { url, mime } = await useManifest(res);
 
   if (!window.audioPlayer) {
     shaka
@@ -54,10 +40,9 @@ async function Stream() {
       .then(shaka => {
         shaka.polyfill.installAll();
 
-        if (shaka.Player.isBrowserSupported) {
-          const audioPlayer = new shaka.Player(audio.value);
-
-          const codecs = store.getItem('codec');
+        if (shaka.Player.isBrowserSupported()) {
+          const audioPlayer = new shaka.Player(audio.value),
+            codecs = store.getItem('codec');
 
           audioPlayer
             .getNetworkingEngine()
@@ -74,6 +59,18 @@ async function Stream() {
                 }
               }
             });
+
+          window.offline = new shaka.offline.Storage(audioPlayer);
+          window.offline.configure({
+            offline: {
+              progressCallback: (data, prog) => console.log(data, prog),
+              trackSelectionCallback: tracks => [
+                tracks
+                  .sort((a, b) => a.bandwidth - b.bandwidth)
+                  .find(i => i.type == 'variant'),
+              ],
+            },
+          });
 
           audioPlayer.configure({
             preferredAudioCodecs: codecs ? codecs.split(':') : ['opus', 'mp4a'],
@@ -119,9 +116,13 @@ async function Stream() {
 }
 
 function destroy() {
-  window.audioPlayer.destroy();
-  window.audioPlayer = undefined;
+  if (window.audioPlayer) {
+    window.audioPlayer.destroy();
+    window.audioPlayer = undefined;
+  }
 }
+
+const titleState = ['Playing', 'Paused'];
 
 watch(
   () => player.state.play,
@@ -136,6 +137,14 @@ watch(
       player.state.status = 'play';
       audio.value.pause();
     }
+
+    if (
+      document.title.startsWith(titleState[0] + ':') ||
+      document.title.startsWith(titleState[1] + ':')
+    )
+      document.title = audio.value.paused
+        ? document.title.replace(titleState[0], titleState[1])
+        : document.title.replace(titleState[1], titleState[0]);
   },
 );
 
@@ -155,23 +164,26 @@ onMounted(() => {
   if ('mediaSession' in navigator) {
     navigator.mediaSession.setActionHandler('play', () => {
       player.state.status = 'pause';
+      document.title = document.title.replace(titleState[1], titleState[0]);
 
       audio.value.play().catch(err => {
         console.log(err);
         player.state.status = 'play';
+        document.title = document.title.replace(titleState[0], titleState[1]);
       });
     });
 
     navigator.mediaSession.setActionHandler('pause', () => {
       audio.value.pause();
       player.state.status = 'play';
+      document.title = document.title.replace(titleState[0], titleState[1]);
     });
 
     navigator.mediaSession.setActionHandler('previoustrack', () => {
       if (data.state.urls.length > 2) {
         const i = data.state.urls.findIndex(s => s.url == data.state.url);
 
-        data.getSong(data.state.urls[i - 1].url);
+        data.play(data.state.urls[i - 1]);
       }
     });
 
@@ -179,7 +191,7 @@ onMounted(() => {
       if (data.state.urls.length > 2) {
         const i = data.state.urls.findIndex(s => s.url == data.state.url);
 
-        data.getSong(data.state.urls[i + 1].url);
+        data.play(data.state.urls[i + 1]);
       }
     });
 
@@ -194,10 +206,10 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  if (window.audioPlayer) destroy();
+  destroy();
 });
 onUnmounted(() => {
-  if (window.audioPlayer) destroy();
+  destroy();
 });
 </script>
 

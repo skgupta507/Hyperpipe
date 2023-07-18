@@ -5,8 +5,12 @@ import Btn from './Btn.vue';
 import SongItem from './SongItem.vue';
 import AlbumItem from './AlbumItem.vue';
 
-import { getJsonPiped, getPipedQuery } from '@/scripts/fetch.js';
-import { useRoute, useWrap, useShare } from '@/scripts/util.js';
+import {
+  getJsonPiped,
+  getPipedQuery,
+  useAuthRemovePlaylist,
+} from '@/scripts/fetch.js';
+import { useVerifyAuth, useRoute, useWrap, useShare } from '@/scripts/util.js';
 import { useCreatePlaylist, useRemovePlaylist } from '@/scripts/db.js';
 
 import { useResults, useArtist } from '@/stores/results.js';
@@ -30,6 +34,9 @@ const shuffleAdd = () => {
         url: i.url,
         title: i.title,
         thumbnails: [{ url: i.thumbnail }],
+        thumbnail: i.thumbnail,
+        offlineUri: i.offlineUri,
+        duration: i.duration,
       })),
       copy = [];
 
@@ -44,8 +51,6 @@ const shuffleAdd = () => {
       delete songs[nos];
     }
 
-    console.log(songs, copy);
-
     emit('play-urls', copy);
   },
   openSong = (song, nxt = false) => {
@@ -54,9 +59,13 @@ const shuffleAdd = () => {
         url: i.url || '/watch?v=' + song.id,
         title: i.title,
         thumbnails: [{ url: i.thumbnail }],
+        thumbnail: i.thumbnail,
+        offlineUri: i.offlineUri,
+        duration: i.duration,
       }));
 
-      data.getSong(song.url || '/watch?v=' + song.id);
+      song.url = song.url || '/watch?v=' + song.id;
+      data.play(song);
     } else {
       emit('play-urls', [
         {
@@ -75,8 +84,6 @@ const shuffleAdd = () => {
     }
   },
   removeSong = i => {
-    console.log(i);
-
     results.items.songs.items.splice(i, 1);
   },
   shareAlbum = () => {
@@ -106,6 +113,26 @@ const shuffleAdd = () => {
         alert('Saved!');
       });
     }
+  },
+  removePlaylist = async id => {
+    const consent = confirm('Confirm?');
+
+    console.log(id, consent);
+
+    if (!id || !consent) return;
+
+    console.log(id, consent);
+
+    if (useVerifyAuth(id)) {
+      const { message } = await useAuthRemovePlaylist(id);
+      if (message != 'ok') {
+        alert(message);
+        return;
+      }
+    } else useRemovePlaylist(id);
+
+    useRoute('/library');
+    nav.state.page = 'library';
   },
   getSearch = q => {
     if (q) {
@@ -158,7 +185,6 @@ const shuffleAdd = () => {
 
         items = json.items;
       } else {
-        console.log(results.next);
         const json = await getJsonPiped(`/nextpage/playlists/${results.next}`);
         key = 'songs';
 
@@ -168,8 +194,6 @@ const shuffleAdd = () => {
       results.items[key].items.push(...items);
 
       loading.value = false;
-
-      console.log(items, results.items);
     }
   },
   getResults = async q => {
@@ -182,7 +206,6 @@ const shuffleAdd = () => {
     results.next = json.nextpage;
 
     results.setItem(key, json);
-    console.log(json, key);
   };
 
 watch(
@@ -190,8 +213,6 @@ watch(
   n => {
     if (n) {
       n = n.replace(location.search || '', '');
-
-      console.log(n);
 
       artist.reset();
       getSearch(n);
@@ -231,6 +252,9 @@ onDeactivated(() => {
             url: item.url,
             title: item.title,
             thumbnails: [{ url: item.thumbnail }],
+            thumbnail: item.thumbnail,
+            offlineUri: item.offlineUri,
+            duration: item.duration,
           })),
         )
       " />
@@ -262,12 +286,10 @@ onDeactivated(() => {
               @click="shuffleAdd"></button>
 
             <button
-              v-if="results.items?.songs?.title.startsWith('Local • ')"
+              v-if="results.items?.songs?.items?.[0]?.playlistId"
               class="bi bi-trash3 clickable"
               @click="
-                useRemovePlaylist(
-                  results.items?.songs?.title?.replace('Local • ', ''),
-                )
+                removePlaylist(results.items?.songs?.items?.[0]?.playlistId)
               "></button>
           </div>
         </Transition>
@@ -301,9 +323,11 @@ onDeactivated(() => {
         :key="song.url || song.id"
         :index="index"
         :playlistId="song.playlistId"
-        :author="song.uploaderName || song.subtitle"
+        :author="song.uploaderName || song.artist || song.subtitle"
         :title="song.title || song.name"
-        :channel="song.uploaderUrl || '/channel/' + song.subId"
+        :channel="
+          song.uploaderUrl || song.artistUrl || '/channel/' + song.subId
+        "
         :play="song.url || '/watch?v=' + song.id"
         :art="
           song.thumbnail ||
@@ -341,6 +365,12 @@ onDeactivated(() => {
           results.getAlbum(album.url || '/playlist?list=' + album.id)
         " />
     </div>
+    <a
+      v-if="results.items.albums.more?.params"
+      @click.prevent="artist.getArtistNext('albums', results.items.albums.more)"
+      class="more"
+      >{{ t('info.see_all') }}</a
+    >
   </div>
 
   <div
@@ -371,6 +401,14 @@ onDeactivated(() => {
         :art="single.thumbnails[0].url"
         @open-album="results.getAlbum('/playlist?list=' + single.id)" />
     </div>
+    <a
+      v-if="results.items.singles.more?.params"
+      @click.prevent="
+        artist.getArtistNext('singles', results.items.singles.more)
+      "
+      class="more"
+      >{{ t('info.see_all') }}</a
+    >
   </div>
 
   <div

@@ -12,8 +12,11 @@ export default defineConfig({
       registerType: 'autoUpdate',
       workbox: {
         globPatterns: [
-          '**/*.{js,css,html,png,svg,woff2}',
+          '**/*.{css,html,png,svg,woff,woff2}',
           'manifest.webmanifest',
+          '**/index*.js',
+          '**/shaka*.js',
+          '**/[A-Z]*.js',
         ],
       },
       manifest: {
@@ -48,7 +51,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      stream: 'stream-browserify',
     },
   },
   build: {

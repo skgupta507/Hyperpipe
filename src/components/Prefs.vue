@@ -5,6 +5,7 @@ import {
   PIPED_INSTANCE,
   HYPERPIPE_INSTANCE,
   getJson,
+  useAuthLogout,
 } from '@/scripts/fetch.js';
 
 import { useStore } from '@/scripts/util.js';
@@ -17,15 +18,19 @@ import('@/assets/version.json').then(v => {
 });
 
 const { t, setupLocale } = useI18n(),
+  store = useStore(),
   instances = ref([]),
   hypInstances = ref([]),
   next = ref(false),
-  compact = ref(false);
+  compact = ref(false),
+  prm = ref(false);
 
-getJson('https://piped-instances.kavin.rocks').then(i => {
-  instances.value = i;
-  console.log(i);
-});
+getJson('https://piped-instances.kavin.rocks')
+  .then(i => i || getJson('https://instances.tokhmi.xyz'))
+  .then(i => {
+    instances.value = i;
+    console.log(i);
+  });
 
 getJson('https://raw.codeberg.page/Hyperpipe/pages/api/backend.json').then(
   i => {
@@ -39,12 +44,11 @@ function getBool(val) {
 }
 
 function getStore(key) {
-  return useStore().getItem(key);
+  return store.getItem(key);
 }
 
 function setStore(key, value) {
-  console.log(key, value);
-  useStore().setItem(key, value);
+  store.setItem(key, value);
 }
 
 function getTheme() {
@@ -67,13 +71,34 @@ function setCodec(codec) {
     window.audioPlayer.configure('preferredAudioCodecs', codec.split(':'));
 }
 
-function getStoreBool(key, ele) {
-  ele.value = getStore(key) || ele.value;
+function setPRM(prm) {
+  setStore('prm', prm);
+  if (prm) document.body.classList.add('prm');
+  else document.body.classList.remove('prm');
+}
+
+function getStoreBool(key, ele, def) {
+  ele.value = getStore(key) || def;
+}
+
+async function setAuth(key) {
+  if (getStore('authapi')) {
+    if (!confirm('This requires a logout. Confirm logout?')) return;
+
+    const res = await useAuthLogout();
+
+    if (!res && res?.error)
+      if (!confirm(`Got Error ${res ? ': ' + res.error : ''}. Continue?`))
+        return;
+  }
+
+  store.removeItem('auth');
+  setStore('authapi', key);
 }
 
 const verifyApi = computed(() =>
     hypInstances.value
-      .map(i => i.api_url.replace('https://', '').replace('http://'))
+      .map(i => i.api_url.replace('https://', '').replace('http://', ''))
       .includes(getStore('api') || HYPERPIPE_INSTANCE),
   ),
   verifyPipedApi = computed(() =>
@@ -88,8 +113,9 @@ const verifyApi = computed(() =>
   );
 
 onMounted(() => {
-  getStoreBool('next', next);
-  getStoreBool('compact', compact);
+  getStoreBool('next', next, true);
+  getStoreBool('compact', compact, false);
+  getStoreBool('prm', prm, false);
 });
 </script>
 
@@ -117,6 +143,17 @@ onMounted(() => {
       @change="setStore('compact', $event.target.checked)"
       v-model="compact" />
     <label for="pref-chk-compact">{{ t('pref.compact') }}</label>
+  </div>
+
+  <div class="left">
+    <input
+      type="checkbox"
+      name="pref-chk-prm"
+      id="pref-chk-prm"
+      class="input"
+      @change="setPRM($event.target.checked)"
+      v-model="prm" />
+    <label for="pref-chk-prm">{{ t('pref.prm') }}</label>
   </div>
 
   <h2>Language</h2>
@@ -270,7 +307,7 @@ onMounted(() => {
     v-if="instances"
     class="input"
     :value="getStore('authapi') || PIPED_INSTANCE"
-    @change="setStore('authapi', $event.target.value)">
+    @change="setAuth($event.target.value)">
     <option
       v-for="i in instances"
       :key="i.name"

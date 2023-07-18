@@ -1,4 +1,5 @@
 import { useStore, useSanitize } from './util.js';
+import { useAlert } from '@/stores/misc.js';
 
 export const PIPED_INSTANCE = 'pipedapi.kavin.rocks';
 export const HYPERPIPE_INSTANCE = 'hyperpipeapi.onrender.com';
@@ -12,15 +13,16 @@ export function getPipedQuery() {
 }
 
 export async function getJson(url, opts) {
-  const res = await fetch(url, opts)
-    .then(res => res.json())
-    .catch(err => {
-      console.error(err);
-      alert(err);
-    });
+  const errs = useAlert(),
+    res = await fetch(url, opts)
+      .then(res => res.json())
+      .catch(err => {
+        console.error(err);
+        errs.add(err);
+      });
 
   if (res && res.error) {
-    alert(
+    errs.add(
       res.message
         ? res.message
             .replaceAll('Video', 'Audio')
@@ -28,10 +30,9 @@ export async function getJson(url, opts) {
             .replaceAll('watched', 'heard')
         : res.error,
     );
+
     console.error(res.message);
-  } else if (res) {
-    return JSON.parse(useSanitize(JSON.stringify(res)));
-  }
+  } else if (res) return JSON.parse(useSanitize(JSON.stringify(res)));
 }
 
 export async function getJsonPiped(path, opts) {
@@ -55,14 +56,18 @@ export async function getJsonAuth(path, opts = {}) {
   return await fetch('https://' + root + path, opts)
     .then(res => res.json())
     .catch(err => {
-      alert(err);
+      useAlert.add(err);
     });
 }
 
-export async function useAuthCreatePlaylist(name) {
-  const auth = useStore().getItem('auth');
+function useAuthToken() {
+  return useStore().getItem('auth');
+}
 
-  if (auth && name) {
+export async function useAuthCreatePlaylist(name) {
+  const auth = useAuthToken();
+
+  if (auth && name)
     return await getJsonAuth('/user/playlists/create', {
       method: 'POST',
       body: JSON.stringify({
@@ -73,11 +78,10 @@ export async function useAuthCreatePlaylist(name) {
         'Content-Type': 'application/json',
       },
     });
-  }
 }
 
 export async function getAuthPlaylists() {
-  const auth = useStore().getItem('auth');
+  const auth = useAuthToken();
 
   if (auth) {
     const res = await getJsonAuth('/user/playlists', {
@@ -91,9 +95,9 @@ export async function getAuthPlaylists() {
 }
 
 export async function useAuthAddToPlaylist(id, path) {
-  const auth = useStore().getItem('auth');
+  const auth = useAuthToken();
 
-  if (auth && id && path) {
+  if (auth && id && path)
     return getJsonAuth('/user/playlists/add', {
       method: 'POST',
       headers: {
@@ -104,5 +108,38 @@ export async function useAuthAddToPlaylist(id, path) {
         videoId: new URL('https://example.com' + path).searchParams.get('v'),
       }),
     });
+}
+
+export async function useAuthRemovePlaylist(id) {
+  const auth = useAuthToken();
+
+  if (auth && id) {
+    return getJsonAuth('/user/playlists/delete', {
+      method: 'POST',
+      headers: {
+        Authorization: auth,
+      },
+      body: JSON.stringify({
+        playlistId: id,
+      }),
+    });
   }
+}
+
+export async function useAuthLogout() {
+  const auth = useAuthToken(),
+    ctrl = new AbortController(),
+    id = setTimeout(() => ctrl.abort(), 1000);
+
+  if (auth)
+    return await getJsonAuth('/logout', {
+      method: 'POST',
+      signal: ctrl.signal,
+      headers: {
+        Authorization: auth,
+      },
+    }).then(res => {
+      clearTimeout(id);
+      return res;
+    });
 }

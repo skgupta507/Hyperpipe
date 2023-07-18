@@ -1,10 +1,7 @@
 <script setup>
 import { ref, reactive } from 'vue';
 
-import Modal from './Modal.vue';
-
 import { useStore } from '@/scripts/util.js';
-import { useListPlaylists, useUpdatePlaylist } from '@/scripts/db.js';
 import {
   getAuthPlaylists,
   useAuthCreatePlaylist,
@@ -19,17 +16,10 @@ const { t } = useI18n(),
   player = usePlayer(),
   store = useStore();
 
-defineEmits(['save']);
-
 const showme = reactive({
     menu: false,
-    pl: false,
     vol: false,
   }),
-  pl = ref(''),
-  list = ref([]),
-  remote = ref([]),
-  plRemote = ref(false),
   liked = ref(undefined),
   liking = ref(false);
 
@@ -47,37 +37,15 @@ function getFormattedTime(sec) {
     ).padStart(2, '0')}`;
 }
 
-function List() {
-  showme.pl = true;
-  useListPlaylists(res => {
-    console.log(res);
-    list.value = res;
-    showme.menu = false;
-  });
-  getAuthPlaylists().then(res => {
-    remote.value = res;
-  });
-}
-
-function Save() {
-  if (pl.value) {
-    if (plRemote.value == true && store.auth) {
-      useAuthAddToPlaylist(pl.value, data.state.url);
-    } else if (plRemote.value == false) {
-      useUpdatePlaylist(
-        pl.value,
-        {
-          url: data.state.url,
-          title: data.state.title,
-        },
-        e => {
-          if (e === true) {
-            console.log('Added Song');
-          }
-        },
-      );
-    }
-  }
+async function Offline() {
+  if (window.offline && data.state.url) {
+    window.offline.store(window.audioPlayer.getAssetUri(), {
+      title: data.state.title,
+      url: data.state.url,
+      artist: data.state.artist,
+      artistUrl: data.state.artistUrl,
+    });
+  } else console.error('no offline storage found');
 }
 
 async function Like() {
@@ -101,61 +69,6 @@ async function Like() {
 }
 </script>
 <template>
-  <Teleport to="body">
-    <Transition name="fade">
-      <Modal
-        n="2"
-        :display="showme.pl"
-        :title="t('playlist.select')"
-        @show="
-          e => {
-            showme.pl = e;
-          }
-        ">
-        <template #content>
-          <div
-            v-for="i in list"
-            :key="i.name"
-            class="flex item"
-            @click="
-              pl = i.name;
-              plRemote = false;
-            "
-            :data-active="pl == i.name && plRemote == false">
-            <span>{{ i.name }}</span
-            ><span class="ml-auto">{{ i.urls.length || '' }}</span>
-          </div>
-          <div
-            v-for="i in remote"
-            :key="i.id"
-            class="flex item"
-            @click="
-              pl = i.id;
-              plRemote = true;
-            "
-            :data-active="pl == i.id && plRemote == true">
-            <span>{{ i.name }}</span
-            ><span class="ml-auto">{{ i.videos }}</span>
-          </div>
-        </template>
-        <template #buttons>
-          <button aria-label="Cancel" @click="showme.pl = false">
-            {{ t('action.cancel') }}
-          </button>
-
-          <button
-            aria-label="Add Song"
-            @click="
-              Save();
-              showme.pl = false;
-            ">
-            {{ t('action.add') }}
-          </button>
-        </template>
-      </Modal>
-    </Transition>
-  </Teleport>
-
   <div id="statusbar" class="flex">
     <div class="flex statusbar-progress-container">
       <span>{{ getFormattedTime(player.state.realTime) }}</span>
@@ -239,7 +152,10 @@ async function Like() {
         <button
           id="vol-btn"
           aria-label="Volume Buttons"
-          @click="showme.vol = !showme.vol"
+          @click="
+            showme.vol = !showme.vol;
+            showme.menu = false;
+          "
           class="popup-wrap bi bi-volume-up clickable">
           <Transition name="fade">
             <div v-if="showme.vol" id="vol" class="popup">
@@ -258,7 +174,10 @@ async function Like() {
         <button
           class="bi bi-three-dots clickable"
           aria-label="More Controls"
-          @click="showme.menu = !showme.menu"></button>
+          @click="
+            showme.menu = !showme.menu;
+            showme.vol = false;
+          "></button>
         <Transition name="fade">
           <div id="menu" v-if="showme.menu" class="popup">
             <button
@@ -279,11 +198,20 @@ async function Like() {
               @click="Like"></button>
 
             <button
+              id="dl-btn"
+              title="Save for Offline Playback"
+              class="bi bi-download clickable"
+              @click="Offline"></button>
+
+            <button
               id="addToPlaylist"
               title="Add Current Song to a Playlist"
               aria-label="Add Current Song to a Playlist"
               class="bi bi-collection clickable"
-              @click="List"></button>
+              @click="
+                player.toggle('add');
+                showme.menu = false;
+              "></button>
 
             <button
               id="btn-lyrics"
@@ -311,7 +239,7 @@ async function Like() {
   border-top: 0.25rem solid var(--color-foreground);
   background: var(--color-background);
   min-height: 15vh;
-  z-index: 2;
+  z-index: 999;
 }
 
 .statusbar-progress-container,
@@ -461,32 +389,13 @@ input[type='range']::-moz-range-track {
 }
 
 /* Playlist addition */
-.ml-auto {
-  margin-left: auto;
-}
-.item {
-  background: var(--color-background);
-  border-radius: 0.5rem;
-  margin: 0.5rem 0;
-  transition: background-color 0.1s ease;
-}
-.item:hover {
-  background: var(--color-background-mute);
-}
-.item:active {
-  background: var(--color-border);
-}
-.item[data-active='true'] {
-  color: var(--color-background);
-  background: linear-gradient(135deg, cornflowerblue, #88c0d0);
-}
 
 @media (max-width: 500px) {
   .statusbar-progress-container {
     min-width: initial;
   }
   #menu {
-    left: initial;
+    left: auto;
     right: -0.5rem;
   }
 }
