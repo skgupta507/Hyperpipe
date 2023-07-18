@@ -3,11 +3,14 @@ import { ref } from 'vue';
 import Btn from './Btn.vue';
 
 import { useStore } from '@/scripts/util.js';
+
 import { useResults, useArtist } from '@/stores/results.js';
+import { useI18n } from '@/stores/misc.js';
 
 const artist = useArtist(),
   results = useResults(),
-  store = useStore();
+  store = useStore(),
+  { t } = useI18n();
 
 const subs = JSON.parse(store.subs ? store.subs : '[]'),
   hash = artist.state.hash,
@@ -43,9 +46,9 @@ function Sub() {
           @click="
             results.getAlbum('/playlist?list=' + artist.state.playlistId)
           " />
-        <span class="us-box subs" :data-active="isSub" @click="Sub">{{
-          artist.state.subscriberCount || 0
-        }}</span>
+        <span class="us-box subs" :data-active="isSub" @click="Sub">
+          {{ artist.state.subscriberCount || 0 }} {{ t('artist.subscribers') }}
+        </span>
       </div>
     </div>
   </div>
@@ -105,10 +108,6 @@ p.more {
 }
 .subs {
   transition: background-color 0.4s ease, color 0.4s ease;
-}
-.subs::after {
-  content: ' Subscribers';
-  font-weight: bold;
 }
 .subs:hover,
 .subs[data-active='true'] {

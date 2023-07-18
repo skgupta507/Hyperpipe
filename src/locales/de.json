@@ -37,6 +37,9 @@
         "sync": "Wiedergabelisten synchronisieren",
         "select": "Hinzufügende Wiedergabeliste auswählen"
     },
+    "artist": {
+        "subscribers": "Abonnenten"
+    },
     "pref": {
         "worst": "am Schlechten",
         "theme": "Farbschema",
