@@ -412,14 +412,14 @@ onMounted(async () => {
       <input
         class="textbox"
         type="text"
-        placeholder="username"
+        :placeholder="t('general.username')"
         autocomplete="username"
         @change="user.username = $event.target.value"
         required />
       <input
         class="textbox"
         type="password"
-        placeholder="password"
+        :placeholder="t('general.password')"
         autocomplete="password"
         @change="user.password = $event.target.value"
         required />

@@ -88,6 +88,10 @@
     "currentPlaylist": "Current Playlist", 
     "loop": "Loop"
   },
+  "general": {
+    "username": "username",
+    "password": "password"
+  },
   "countries": {
     "AE": "United Arab Emirates",
     "AR": "Argentina",
