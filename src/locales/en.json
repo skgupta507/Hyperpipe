@@ -67,7 +67,8 @@
     "see_all": "See All",
     "search": "Start Searching",
     "no_info": "No Information Available",
-    "saved": "Saved!"
+    "saved": "Saved!",
+    "copied_to_clipboard": "Copied to Clipboard"
   },
   "instances": {
     "hyp": "Hyperpipe Instance",

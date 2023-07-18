@@ -67,7 +67,8 @@
         "no_info": "Keine Informationen verfügbar",
         "see_all": "Alle sehen",
         "search": "Suche starten",
-        "saved": "Gespeichert!"
+        "saved": "Gespeichert!",
+        "copied_to_clipboard": "In die Zwischenablage kopiert"
     },
     "instances": {
         "up_to_date": "Aktuell",
