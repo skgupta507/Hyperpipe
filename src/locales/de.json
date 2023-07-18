@@ -12,7 +12,7 @@
         "login": "Anmelden",
         "local": "Lokal",
         "search": "Suche",
-        "spotlight": "Spotlight",
+        "spotlight": "Rampenlicht",
         "playlists": "Wiedergabelisten",
         "remote": "Remote",
         "feeds": "Feeds"
@@ -62,7 +62,8 @@
         "charts": "Charts",
         "explore": "Erkunden",
         "home": "Startseite",
-        "compact": "Kompakte Ansicht"
+        "compact": "Kompakte Ansicht",
+        "prm": "Bevorzugt reduzierte Animationen"
     },
     "info": {
         "no_info": "Keine Informationen verfügbar",
