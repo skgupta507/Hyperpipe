@@ -4,6 +4,16 @@ about: "Is there something missing that you want to see in Hyperpipe? Suggest a 
 labels:
   - "Kind: Enhancement"
 ---
-## Enhancement description
+#### A. The Shortcoming
+
+A clear and concise description of what the problem/inconvenience is.
+
+#### B. Describe the solution/feature you'd like
+
+A clear and concise description of what you want to happen and how the new solution/feature solves the problem/inconvenience.
+
+#### C. Describe alternatives you've considered
+
+A clear and concise description of any alternative solutions/features you've considered.
 
 
