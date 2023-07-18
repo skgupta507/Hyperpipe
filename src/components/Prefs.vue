@@ -247,7 +247,7 @@ onMounted(() => {
       v-for="i in hypInstances"
       :key="i.name"
       :value="i.api_url.replace('https://', '').replace('http://', '')">
-      {{ i.name }}
+      {{ i.name.replace('Official', t('instances.default')) }}
     </option>
 
     <option v-if="!verifyApi">
@@ -266,7 +266,7 @@ onMounted(() => {
       <tbody v-for="i in hypInstances" :key="i.name">
         <tr>
           <td>
-            {{ i.name }}
+            {{ i.name.replace('Official', t('instances.default')) }}
           </td>
           <td>
             {{ i.locations.replaceAll(',', '') }}
@@ -293,7 +293,7 @@ onMounted(() => {
       v-for="i in instances"
       :key="i.name"
       :value="i.api_url.replace('https://', '')">
-      {{ i.name.replace('Official', 'Default') }}
+      {{ i.name.replace('Official', t('instances.default')) }}
     </option>
 
     <option v-if="!verifyPipedApi">
@@ -312,7 +312,7 @@ onMounted(() => {
       v-for="i in instances"
       :key="i.name"
       :value="i.api_url.replace('https://', '')">
-      {{ i.name.replace('Official', 'Default') }}
+      {{ i.name.replace('Official', t('instances.default')) }}
     </option>
 
     <option v-if="!verifyAuthApi">
@@ -334,7 +334,7 @@ onMounted(() => {
       <tbody v-for="i in instances" :key="i.name">
         <tr>
           <td>
-            {{ i.name.replace('Official', 'Default') }}
+            {{ i.name.replace('Official', t('instances.default')) }}
           </td>
           <td>
             {{ i.locations.replaceAll(',', '') }}

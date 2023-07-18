@@ -79,7 +79,8 @@
         "auth": "Authentifizierungsinstanz",
         "loc": "Standorte",
         "cdn": "CDN",
-        "name": "Name"
+        "name": "Name",
+        "default": "Standard"
     },
     "lyrics": {
         "load": "Abrufen von Liedtexten",
