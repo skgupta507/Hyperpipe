@@ -69,7 +69,8 @@
     "info": {
         "no_info": "Keine Informationen verfügbar",
         "see_all": "Alle sehen",
-        "search": "Suche starten"
+        "search": "Suche starten",
+        "saved": "Gespeichert!"
     },
     "instances": {
         "up_to_date": "Aktuell",

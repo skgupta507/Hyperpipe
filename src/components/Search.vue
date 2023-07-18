@@ -110,7 +110,7 @@ const shuffleAdd = () => {
         title += ' - ' + results.items.songs.items[0].uploaderName;
 
       useCreatePlaylist(title, urls, () => {
-        alert('Saved!');
+        alert(t('info.saved'));
       });
     }
   },

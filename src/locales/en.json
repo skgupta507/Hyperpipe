@@ -69,7 +69,8 @@
   "info": {
     "see_all": "See All",
     "search": "Start Searching",
-    "no_info": "No Information Available"
+    "no_info": "No Information Available",
+    "saved": "Saved!"
   },
   "instances": {
     "hyp": "Hyperpipe Instance",
