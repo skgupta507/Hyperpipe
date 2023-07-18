@@ -205,7 +205,7 @@ async function Like() {
 
             <button
               id="addToPlaylist"
-              title="Add Current Song to a Playlist"
+              :title="t('statusBar.add_current_to_playlist')"
               aria-label="Add Current Song to a Playlist"
               class="bi bi-collection clickable"
               @click="
