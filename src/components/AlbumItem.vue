@@ -24,7 +24,7 @@ defineEmits(['open-album']);
     <img class="card-bg bg-img pop-2" :src="art" loading="lazy" alt />
 
     <div class="card-text">
-      <h4>{{ name }}</h4>
+      <h4>{{ name.replace('subscribers', t('artist.subs')) }}</h4>
       <i>{{ author }}</i>
     </div>
   </div>
