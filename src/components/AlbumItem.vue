@@ -3,7 +3,7 @@ import { useRand } from '@/scripts/colors.js';
 import { useI18n } from '@/stores/misc.js';
 
 const rand = useRand(),
-{ t } = useI18n();
+  { t } = useI18n();
 
 defineProps({
   name: String,

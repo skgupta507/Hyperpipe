@@ -48,7 +48,7 @@ export function useShare(data) {
       console.err(err);
     });
   } else {
-    const { t } = useI18n()
+    const { t } = useI18n();
     navigator.clipboard.writeText(data.url).then(
       () => {
         alert(t('info.copied_to_clipboard'));

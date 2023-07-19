@@ -480,8 +480,8 @@ onMounted(async () => {
         <a
           href="https://piped.video/register"
           target="_blank"
-          rel="noreferrer noopener"
-          > Piped</a
+          rel="noreferrer noopener">
+          Piped</a
         >
       </p>
     </form>

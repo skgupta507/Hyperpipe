@@ -44,7 +44,12 @@ function Sub() {
           @click="
             results.getAlbum('/playlist?list=' + artist.state.playlistId)
           " />
-        <span class="us-box subs" :data-active="isSub" :data-subs-l="t('artist.subscribers')" :data-subs="t('artist.subs')" @click="Sub">
+        <span
+          class="us-box subs"
+          :data-active="isSub"
+          :data-subs-l="t('artist.subscribers')"
+          :data-subs="t('artist.subs')"
+          @click="Sub">
           {{ artist.state.subscriberCount || 0 }}
         </span>
       </div>
@@ -105,7 +110,9 @@ p.more {
   box-shadow: 0 0 1rem var(--color-background-mute);
 }
 .subs {
-  transition: background-color 0.4s ease, color 0.4s ease;
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
 .subs::after {
   content: ' ' attr(data-subs-l);

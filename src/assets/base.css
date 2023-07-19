@@ -117,10 +117,22 @@ body {
   min-height: 100vh;
   color: var(--color-text);
   background: var(--color-background);
-  transition: color 0.5s, background-color 0.5s;
+  transition:
+    color 0.5s,
+    background-color 0.5s;
   line-height: 1.6;
-  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
     sans-serif;
   font-size: 15px;
   text-rendering: optimizeLegibility;
@@ -249,7 +261,9 @@ input[type='search']::-webkit-search-cancel-button:hover {
 }
 .bi.clickable::before {
   border-radius: 50%;
-  transition: background-color 0.1s ease, box-shadow 0.1s ease;
+  transition:
+    background-color 0.1s ease,
+    box-shadow 0.1s ease;
 }
 
 .bi.clickable:active::before {
@@ -286,7 +300,10 @@ img {
 
 .pop,
 .pop-2 {
-  transition: background-color 0.4s ease, box-shadow 0.4s ease, color 0.3s ease,
+  transition:
+    background-color 0.4s ease,
+    box-shadow 0.4s ease,
+    color 0.3s ease,
     transform 0.4s ease;
 }
 .pop {
