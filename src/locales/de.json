@@ -38,7 +38,8 @@
         "select": "Hinzufügende Wiedergabeliste auswählen"
     },
     "artist": {
-        "subscribers": "Abonnenten"
+        "subscribers": "Abonnenten",
+        "subs": "Abos"
     },
     "pref": {
         "worst": "schlechteste",

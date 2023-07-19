@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, onUpdated, ref } from 'vue';
 import Btn from './Btn.vue';
 
 import { useStore } from '@/scripts/util.js';
@@ -10,7 +10,8 @@ import { useI18n } from '@/stores/misc.js';
 const artist = useArtist(),
   results = useResults(),
   store = useStore(),
-  { t } = useI18n();
+  { t } = useI18n(),
+  windowWidth = window.innerWidth;
 
 const subs = JSON.parse(store.subs ? store.subs : '[]'),
   hash = artist.state.hash,
@@ -45,7 +46,12 @@ function Sub() {
             results.getAlbum('/playlist?list=' + artist.state.playlistId)
           " />
         <span class="us-box subs" :data-active="isSub" @click="Sub">
-          {{ artist.state.subscriberCount || 0 }} {{ t('artist.subscribers') }}
+          <template v-if="windowWidth > 400">
+            {{ artist.state.subscriberCount || 0 }} {{ t('artist.subscribers') }}
+          </template>
+          <template v-else>
+            {{ artist.state.subscriberCount || 0 }} {{ t('artist.subs') }}
+          </template>
         </span>
       </div>
     </div>
@@ -112,10 +118,5 @@ p.more {
   background-color: var(--color-foreground);
   color: var(--color-background);
   background-clip: border-box;
-}
-@media (max-width: 400px) {
-  .subs::after {
-    content: ' Subs';
-  }
 }
 </style>
