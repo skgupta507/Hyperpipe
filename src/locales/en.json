@@ -36,6 +36,10 @@
     "sync": "Sync playlists",
     "select": "Select Playlist to Add"
   },
+  "artist": {
+    "subscribers": "Subscribers",
+    "subs": "Subs"
+  },
   "pref": {
     "theme": "Theme",
     "dark": "Dark (Default)",
