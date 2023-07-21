@@ -37,7 +37,8 @@
         "home": "Trang chủ",
         "charts": "Xếp hạng",
         "compact": "Chế độ xem nhỏ gọn",
-        "prm": "Tắt hiệu ứng chuyển động"
+        "prm": "Tắt hiệu ứng chuyển động",
+        "language": "Ngôn ngữ"
     },
     "action": {
         "cancel": "Hủy",
@@ -47,7 +48,8 @@
         "receive": "Nhận",
         "send": "Gửi",
         "import": "Nhập",
-        "export": "Xuất"
+        "export": "Xuất",
+        "register_on": "Không có tài khoản? Đăng ký trên"
     },
     "instances": {
         "version": "Phiên bản",
@@ -55,7 +57,8 @@
         "cdn": "CDN",
         "loc": "Các vị trí",
         "up_to_date": "Phiên bản mới nhất",
-        "auth": "Instance xác thực"
+        "auth": "Instance xác thực",
+        "default": "Mặc định"
     },
     "playlist": {
         "create": "Tạo một danh sách phát mới",
@@ -67,10 +70,14 @@
     "info": {
         "search": "Bắt đầu tìm kiếm",
         "see_all": "Xem tất cả",
-        "no_info": "Không có thông tin"
+        "no_info": "Không có thông tin",
+        "saved": "Đã lưu!"
     },
     "lyrics": {
         "load": "Tìm lời bài hát",
         "void": "Không có lời bài hát"
+    },
+    "artist": {
+        "subscribers": "người đăng ký"
     }
 }
