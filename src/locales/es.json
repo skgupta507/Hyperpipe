@@ -25,7 +25,8 @@
         "receive": "Recibir",
         "cancel": "Cancelar",
         "import": "Importar",
-        "export": "Exportar"
+        "export": "Exportar",
+        "register_on": "¿No tienes una cuenta? Registraste en"
     },
     "playlist": {
         "local": "Listas de reproducción locales",
@@ -58,12 +59,15 @@
         "charts": "Gráfica",
         "explore": "Explorar",
         "compact": "Vista compacta",
-        "prm": "Prefiere el movimiento reducido"
+        "prm": "Prefiere el movimiento reducido",
+        "language": "Idioma"
     },
     "info": {
         "see_all": "Ver todo",
         "search": "Empezar a buscar",
-        "no_info": "No hay información disponible"
+        "no_info": "No hay información disponible",
+        "saved": "¡Guardado!",
+        "copied_to_clipboard": "Copiado al portapapeles"
     },
     "instances": {
         "piped": "Instancia de Piped",
@@ -73,10 +77,89 @@
         "hyp": "Instancia de Hyperpipe",
         "auth": "Instancia de autenticación",
         "name": "Nombre",
-        "loc": "Ubicaciones"
+        "loc": "Ubicaciones",
+        "default": "Por defecto"
     },
     "lyrics": {
         "load": "Buscando letras",
-        "void": "Sin letra"
+        "void": "Sin letra",
+        "lyrics": "Letras"
+    },
+    "artist": {
+        "subs": "Subs",
+        "subscribers": "Suscriptores"
+    },
+    "countries": {
+        "AR": "Argentina",
+        "AT": "Austria",
+        "BO": "Bolivia",
+        "BR": "Brazil",
+        "CH": "Suiza",
+        "CL": "Chile",
+        "CO": "Colombia",
+        "CZ": "República Checa",
+        "DE": "Alemania",
+        "DK": "Dinamarca",
+        "DO": "República Dominicana",
+        "EE": "Estonia",
+        "ES": "España",
+        "FI": "Finlandia",
+        "FR": "Francia",
+        "GB": "Reino Unido",
+        "HU": "Hungría",
+        "IE": "Irlanda",
+        "IL": "Israel",
+        "IN": "India",
+        "IS": "Islandia",
+        "IT": "Italia",
+        "JP": "Japón",
+        "KE": "Kenia",
+        "KR": "Corea del Sur",
+        "LU": "Luxemburgo",
+        "NI": "Nicaragua",
+        "NL": "Países Bajos",
+        "NZ": "Nueva Zelanda",
+        "PA": "Panamá",
+        "PE": "Perú",
+        "PL": "Polonia",
+        "PT": "Portugal",
+        "PY": "Paraguay",
+        "RO": "Rumanía",
+        "RS": "Serbia",
+        "SA": "Arabia Saudí",
+        "SE": "Suecia",
+        "SV": "El Salvador",
+        "UA": "Ucrania",
+        "UG": "Uganda",
+        "US": "Estados Unidos",
+        "UY": "Uruguay",
+        "ZW": "Zimbabue",
+        "ZZ": "Global",
+        "BE": "Bélgica",
+        "AU": "Australia",
+        "AE": "Emiratos Árabes Unidos",
+        "CA": "Canada",
+        "CR": "Costa Rica",
+        "EC": "Ecuador",
+        "EG": "Egipto",
+        "GT": "Guatemala",
+        "HN": "Honduras",
+        "ID": "Indonesia",
+        "MX": "México",
+        "NG": "Nigeria",
+        "NO": "Noruega",
+        "RU": "Rusia",
+        "TR": "Turco",
+        "TZ": "Tanzania",
+        "ZA": "Sudáfrica"
+    },
+    "statusBar": {
+        "currentPlaylist": "Lista de reproducción actual",
+        "add_current_to_playlist": "Añadir la canción actual a una lista de reproducción",
+        "loop": "En Bucle"
+    },
+    "general": {
+        "username": "nombre de usuario",
+        "password": "contraseña"
     }
 }
