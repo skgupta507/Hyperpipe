@@ -25,7 +25,8 @@
         "receive": "Primiți",
         "cancel": "Anulează",
         "import": "Importă",
-        "export": "Exportă"
+        "export": "Exportă",
+        "register_on": "Nu ai un cont? Înregistrează-te pe"
     },
     "playlist": {
         "local": "Playlist-uri locale",
@@ -58,7 +59,8 @@
         "explore": "Explorează",
         "charts": "Topuri",
         "library": "Bibliotecă",
-        "prm": "Preferă mișcarea redusă"
+        "prm": "Preferă mișcarea redusă",
+        "language": "Limbă"
     },
     "instances": {
         "cdn": "CDN",
@@ -68,15 +70,96 @@
         "piped": "Instanță Piped",
         "name": "Nume",
         "loc": "Locații",
-        "version": "Versiune"
+        "version": "Versiune",
+        "default": "Implicit"
     },
     "info": {
         "search": "Începeți căutarea",
         "see_all": "Vezi toate",
-        "no_info": "Nu există informații disponibile"
+        "no_info": "Nu există informații disponibile",
+        "saved": "Salvat!",
+        "copied_to_clipboard": "Copiat în Clipboard"
     },
     "lyrics": {
         "void": "Fără versuri",
-        "load": "Preluarea Versuri"
+        "load": "Preluarea Versuri",
+        "lyrics": "Versuri"
+    },
+    "artist": {
+        "subscribers": "de abonați",
+        "subs": "Subs"
+    },
+    "statusBar": {
+        "currentPlaylist": "Playlist curentă",
+        "loop": "Buclă",
+        "add_current_to_playlist": "Adăugați melodia curentă la un Playlist"
+    },
+    "general": {
+        "username": "nume de utilizator",
+        "password": "parolă"
+    },
+    "countries": {
+        "AE": "Emiratele Arabe Unite",
+        "AR": "Argentina",
+        "AT": "Austria",
+        "AU": "Australia",
+        "BE": "Belgia",
+        "BO": "Bolivia",
+        "BR": "Brazilia",
+        "CA": "Canada",
+        "CH": "Elveţia",
+        "CL": "Chile",
+        "CO": "Columbia",
+        "CR": "Costa Rica",
+        "CZ": "Cehia",
+        "DE": "Germania",
+        "DK": "Danemarca",
+        "GB": "Regatul Unit",
+        "GT": "Guatemala",
+        "HN": "Honduras",
+        "HU": "Ungaria",
+        "ID": "Indonezia",
+        "IE": "Irlanda",
+        "IL": "Israel",
+        "IN": "India",
+        "IS": "Islanda",
+        "IT": "Italia",
+        "JP": "Japonia",
+        "KE": "Kenya",
+        "KR": "Coreea de Sud",
+        "LU": "Luxemburg",
+        "PE": "Peru",
+        "PL": "Polonia",
+        "PT": "Portugalia",
+        "PY": "Paraguay",
+        "SA": "Arabia Saudită",
+        "SE": "Suedia",
+        "SV": "El Salvador",
+        "TR": "Turcia",
+        "TZ": "Tanzania",
+        "UA": "Ucraina",
+        "UG": "Uganda",
+        "US": "Statele Unite",
+        "UY": "Uruguay",
+        "ZA": "Africa de Sud",
+        "ZW": "Zimbabwe",
+        "ZZ": "Global",
+        "NG": "Nigeria",
+        "DO": "Republica Dominicană",
+        "ES": "Spania",
+        "RU": "Rusia",
+        "EC": "Ecuador",
+        "RO": "România",
+        "EE": "Estonia",
+        "EG": "Egipt",
+        "FI": "Finlanda",
+        "FR": "Franţa",
+        "NI": "Nicaragua",
+        "PA": "Panama",
+        "NZ": "Noua Zeelandă",
+        "MX": "Mexic",
+        "NO": "Norvegia",
+        "NL": "Olanda",
+        "RS": "Serbia"
     }
 }
