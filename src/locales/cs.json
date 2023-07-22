@@ -30,7 +30,7 @@
         "tab": "Výchozí karta",
         "dark": "Tmavý (výchozí)",
         "light": "Světlý",
-        "blur": "Rozmazání",
+        "blur": "Rozmazaný",
         "blur_light": "Rozmazaný (světlý)",
         "dracula": "Drákula",
         "nord": "Nord",
@@ -155,7 +155,7 @@
         "ZZ": "Globální"
     },
     "artist": {
-        "subscribers": "Odběratelé",
+        "subscribers": "odběratelů",
         "subs": "Odběry"
     },
     "general": {
