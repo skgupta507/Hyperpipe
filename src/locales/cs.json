@@ -39,7 +39,8 @@
         "home": "Domů",
         "library": "Knihovna",
         "compact": "Kompaktní zobrazení",
-        "prm": "Upřednostňovat omezený pohyb"
+        "prm": "Upřednostňovat omezený pohyb",
+        "language": "Jazyk"
     },
     "instances": {
         "name": "Název",
@@ -49,11 +50,13 @@
         "version": "Verze",
         "hyp": "Instance Hyperpipe",
         "piped": "Instance Piped",
-        "auth": "Autentifikační instance"
+        "auth": "Autentifikační instance",
+        "default": "Výchozí"
     },
     "lyrics": {
         "load": "Načítání textů",
-        "void": "Texty nenalezeny"
+        "void": "Texty nenalezeny",
+        "lyrics": "Texty"
     },
     "action": {
         "back": "Zpět",
@@ -63,7 +66,8 @@
         "send": "Poslat",
         "receive": "Obdržet",
         "import": "Importovat",
-        "export": "Exportovat"
+        "export": "Exportovat",
+        "register_on": "Nemáte účet? Zaregistrujte se na"
     },
     "playlist": {
         "local": "Místní playlisty",
@@ -77,6 +81,85 @@
     "info": {
         "see_all": "Zobrazit vše",
         "search": "Začít hledat",
-        "no_info": "Nejsou dostupné žádné informace"
+        "no_info": "Nejsou dostupné žádné informace",
+        "saved": "Uloženo!",
+        "copied_to_clipboard": "Zkopírováno do schránky"
+    },
+    "statusBar": {
+        "currentPlaylist": "Aktuální playlist",
+        "loop": "Smyčka",
+        "add_current_to_playlist": "Přidat aktuální skladbu do playlistu"
+    },
+    "countries": {
+        "BR": "Brazílie",
+        "CA": "Kanada",
+        "CH": "Švýcarsko",
+        "CL": "Chile",
+        "DE": "Německo",
+        "DK": "Dánsko",
+        "DO": "Dominikánská republika",
+        "EE": "Estonsko",
+        "EG": "Egypt",
+        "ES": "Španělsko",
+        "FI": "Finsko",
+        "FR": "Francie",
+        "GB": "Spojené království",
+        "NL": "Nizozemsko",
+        "NO": "Norsko",
+        "NZ": "Nový Zéland",
+        "PA": "Panama",
+        "RO": "Rumunsko",
+        "SE": "Švédsko",
+        "SV": "Salvador",
+        "TR": "Turecko",
+        "UA": "Ukrajina",
+        "UG": "Uganda",
+        "UY": "Uruguay",
+        "PY": "Paraguay",
+        "AE": "Spojené arabské emiráty",
+        "AU": "Austrálie",
+        "BO": "Bolívie",
+        "CO": "Kolumbie",
+        "AR": "Argentina",
+        "AT": "Rakousko",
+        "CZ": "Česko",
+        "BE": "Belgie",
+        "CR": "Kostarika",
+        "ID": "Indonésie",
+        "EC": "Ekvádor",
+        "HN": "Honduras",
+        "IE": "Irsko",
+        "GT": "Guatemala",
+        "HU": "Maďarsko",
+        "IL": "Izrael",
+        "IN": "Indie",
+        "IS": "Island",
+        "KE": "Keňa",
+        "KR": "Jižní Korea",
+        "MX": "Mexiko",
+        "IT": "Itálie",
+        "JP": "Japonsko",
+        "LU": "Lucembursko",
+        "PL": "Polsko",
+        "RS": "Srbsko",
+        "NG": "Nigérie",
+        "NI": "Nikaragua",
+        "PE": "Peru",
+        "PT": "Portugalsko",
+        "TZ": "Tanzanie",
+        "US": "Spojené státy americké",
+        "RU": "Rusko",
+        "SA": "Saúdská Arábie",
+        "ZW": "Zimbabwe",
+        "ZA": "Jihoafrická republika",
+        "ZZ": "Globální"
+    },
+    "artist": {
+        "subscribers": "Odběratelé",
+        "subs": "Odběry"
+    },
+    "general": {
+        "username": "uživatelské jméno",
+        "password": "heslo"
     }
 }
