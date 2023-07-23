@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onUpdated, ref } from 'vue';
+import { ref } from 'vue';
 import Btn from './Btn.vue';
 
 import { useStore } from '@/scripts/util.js';

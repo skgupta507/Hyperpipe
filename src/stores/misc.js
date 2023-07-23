@@ -136,12 +136,13 @@ export const useI18n = defineStore('i18n', () => {
   }
 
   function setupLocale(code) {
-    import(`@/locales/${code}.json`)
-      .then(mod => mod.default)
-      .then(mod => {
-        map.value[code] = mod;
-        locale.value = code;
-      });
+    if (SUPPORTED_LOCALES.some(i => i.code == code))
+      import(`@/locales/${code}.json`)
+        .then(mod => mod.default)
+        .then(mod => {
+          map.value[code] = mod;
+          locale.value = code;
+        });
   }
 
   return { locale, map, t, setupLocale };
