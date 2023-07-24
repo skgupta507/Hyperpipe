@@ -48,12 +48,15 @@
         "explore": "Jelajahi",
         "charts": "Bagan",
         "library": "Pustaka",
-        "prm": "Lebih Suka Sedikit Gerakan"
+        "prm": "Lebih Suka Sedikit Gerakan",
+        "language": "Bahasa"
     },
     "info": {
         "no_info": "Tidak Ada Informasi Tersedia",
         "search": "Mulai Pencarian",
-        "see_all": "Tampilkan Semua"
+        "see_all": "Tampilkan Semua",
+        "saved": "Disimpan!",
+        "copied_to_clipboard": "Disalin ke Papan Klip"
     },
     "action": {
         "add": "Tambah",
@@ -63,7 +66,8 @@
         "receive": "Terima",
         "back": "Kembali",
         "import": "Impor",
-        "export": "Ekspor"
+        "export": "Ekspor",
+        "register_on": "Belum punya akun? Daftarkan di"
     },
     "instances": {
         "piped": "Instance Piped",
@@ -73,10 +77,28 @@
         "loc": "Lokasi",
         "cdn": "CDN",
         "version": "Versi",
-        "up_to_date": "Terkini"
+        "up_to_date": "Terkini",
+        "default": "Bawaan"
     },
     "lyrics": {
         "void": "Tidak Ada Lirik",
-        "load": "Mengambil Lirik"
+        "load": "Mengambil Lirik",
+        "lyrics": "Lirik"
+    },
+    "artist": {
+        "subscribers": "Pelanggan",
+        "subs": "Sub"
+    },
+    "statusBar": {
+        "currentPlaylist": "Daftar Putar Saat Ini",
+        "loop": "Ulangi",
+        "add_current_to_playlist": "Tambahkan Lagu Saat Ini ke Daftar Putar"
+    },
+    "general": {
+        "username": "nama pengguna",
+        "password": "kata sandi"
+    },
+    "countries": {
+        "ZZ": "Global"
     }
 }
