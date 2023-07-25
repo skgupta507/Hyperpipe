@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, onMounted, onActivated } from 'vue';
+import { ref, watch, computed, onMounted } from 'vue';
 
 import Modal from './Modal.vue';
 
@@ -15,32 +15,43 @@ const { t } = useI18n(),
   player = usePlayer(),
   store = useStore();
 
+const props = defineProps({
+    show: Boolean,
+    song: String,
+    title: String,
+  }),
+  emit = defineEmits(['show']);
+
 const pl = ref(''),
   list = ref([]),
   remote = ref([]),
   plRemote = ref(false);
 
+const url = () => props.song || data.state.url,
+  title = () => props.title || data.state.title,
+  show = {
+    get is() {
+      return props.song ? true : player.state.add;
+    },
+    set is(e) {
+      props.song ? emit('show', e) : (player.state.add = e);
+    },
+  };
+
 function Save() {
   if (pl.value) {
     if (plRemote.value == true && store.auth) {
-      useAuthAddToPlaylist(pl.value, data.state.url);
+      useAuthAddToPlaylist(pl.value, url());
     } else if (plRemote.value == false) {
-      useUpdatePlaylist(
-        pl.value,
-        {
-          url: data.state.url,
-          title: data.state.title,
-        },
-        e => {
-          if (e === true) console.log('Added Song');
-        },
-      );
+      useUpdatePlaylist(pl.value, { url: url(), title: title() }, e => {
+        if (e === true) console.log('Added Song');
+      });
     }
   }
 }
 
 function List() {
-  player.state.add = true;
+  show.is = true;
   useListPlaylists(res => {
     list.value = res;
   });
@@ -50,9 +61,13 @@ function List() {
 }
 
 watch(
-  () => player.state.add,
-  e => e == true && List(),
+  () => (props.song ? false : player.state.add),
+  e => e === true && List(),
 );
+
+onMounted(() => {
+  props.song && List();
+});
 </script>
 
 <template>
@@ -60,11 +75,11 @@ watch(
     <Transition name="fade">
       <Modal
         n="2"
-        :display="player.state.add"
+        :display="show.is"
         :title="t('playlist.select')"
         @show="
           e => {
-            player.state.add = e;
+            show.is = e;
           }
         ">
         <template #content>
@@ -94,7 +109,7 @@ watch(
           </div>
         </template>
         <template #buttons>
-          <button aria-label="Cancel" @click="player.state.add = false">
+          <button aria-label="Cancel" @click="show.is = false">
             {{ t('action.cancel') }}
           </button>
 
@@ -102,7 +117,7 @@ watch(
             aria-label="Add Song"
             @click="
               Save();
-              player.state.add = false;
+              show.is = false;
             ">
             {{ t('action.add') }}
           </button>

@@ -1,6 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
+import AddToPlaylist from '@/components/AddToPlaylist.vue';
+
 import { getJsonAuth } from '@/scripts/fetch.js';
 import { useRand } from '@/scripts/colors.js';
 import { useStore, useShare } from '@/scripts/util.js';
@@ -28,12 +30,11 @@ const props = defineProps({
   }),
   emit = defineEmits(['open-song', 'nxt-song', 'remove']);
 
-const show = ref(false);
+const show = ref(false),
+  showPl = ref(false);
 
 const openSong = el => {
-    if (!el.classList.contains('ign')) {
-      emit('open-song', props.play);
-    }
+    if (!el.classList.contains('ign')) emit('open-song', props.play);
   },
   addSong = () => {
     data.state.urls.push({
@@ -101,6 +102,12 @@ onMounted(() => {
 });
 </script>
 <template>
+  <AddToPlaylist
+    v-if="showPl"
+    :song="play"
+    :title="title"
+    @show="e => (showPl = e)" />
+
   <div class="song card flex pop" @click="openSong($event.target)">
     <img class="pop-2 bg-img song-bg" loading="lazy" :src="art" alt />
 
@@ -127,6 +134,9 @@ onMounted(() => {
           <span
             class="bi bi-chevron-bar-right clickable ign"
             @click="appendSong"></span>
+          <span
+            class="bi bi-collection clickable ign"
+            @click="showPl = true"></span>
           <span
             class="bi bi-broadcast clickable ign"
             @click="$emit('nxt-song')"></span>

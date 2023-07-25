@@ -7,7 +7,7 @@
 A Privacy Respecting Frontend for YouTube Music inspired and built with the help of [Piped][piped] and YouTube's InnerTube API.
 
 ![](https://img.shields.io/badge/youtube-music-red?style=for-the-badge&logo=youtube-music)
-![Offical instance](https://img.shields.io/website?down_color=red&down_message=offline&label=status&style=for-the-badge&up_color=cornflowerblue&up_message=online&url=https%3A%2F%2Fhyperpipe.surge.sh)
+![Offical instance](https://img.shields.io/website?down_color=red&down_message=offline&label=status&style=for-the-badge&up_color=cornflowerblue&up_message=online&url=https%3A%2F%2Fhyperpipe.surge.sh%2f1x1.png)
 
 </div>
 

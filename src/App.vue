@@ -112,7 +112,9 @@ onBeforeMount(() => {
   if (store.prm == 'true') document.body.classList.add('prm');
 
   /* Set the default locale if set */
-  const loc = store.locale || (navigator.language.startsWith('en') ? null : navigator.language)
+  const loc =
+    store.locale ||
+    (navigator.language.startsWith('en') ? null : navigator.language);
   if (loc) setupLocale(loc);
 
   /* Set the default tab */

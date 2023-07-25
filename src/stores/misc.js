@@ -121,9 +121,7 @@ export const useNav = defineStore('nav', () => {
 
 export const useI18n = defineStore('i18n', () => {
   const locale = ref('en'),
-    map = ref({
-      en: en,
-    });
+    map = ref({ en });
 
   function t(path) {
     const msgs = map.value[locale.value],
