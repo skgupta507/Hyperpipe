@@ -78,6 +78,26 @@
         "void": "Không có lời bài hát"
     },
     "artist": {
-        "subscribers": "người đăng ký"
+        "subscribers": "người đăng ký",
+        "subs": "người đăng ký"
+    },
+    "general": {
+        "password": "mật khẩu"
+    },
+    "countries": {
+        "DE": "Đức",
+        "EG": "Ai Cập",
+        "ES": "Tây Ban Nha",
+        "FR": "Pháp",
+        "GB": "Vương quốc Anh",
+        "FI": "Phần Lan",
+        "JP": "Nhật Bản",
+        "IT": "Nước Ý",
+        "IN": "Ấn Độ",
+        "MX": "Mexico",
+        "KR": "Hàn Quốc",
+        "US": "Hoa Kỳ",
+        "TR": "Thổ Nhĩ Kỳ",
+        "ZZ": "Quốc tế"
     }
 }
