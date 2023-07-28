@@ -51,10 +51,10 @@ async function Offline() {
 async function Like() {
   liking.value = true;
 
-  remote.value = await getAuthPlaylists();
+  const remote = await getAuthPlaylists();
 
-  let fav = remote.value.find(i => i.name == 'Playlist - Favorites');
-
+  let fav = remote.find(i => i.name == 'Playlist - Favorites'); 
+  
   if (!fav) {
     const { playlistId } = await useAuthCreatePlaylist('Favorites');
 
