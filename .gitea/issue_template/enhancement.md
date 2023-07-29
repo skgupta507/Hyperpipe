@@ -1,6 +1,6 @@
 ---
 name: "Suggest an Enhancement"
-about: "Share you thoughts on improvements for Hyperpipe"
+about: "Share your thoughts on improvements for Hyperpipe"
 labels:
   - "Kind/Enhancement"
 ---
