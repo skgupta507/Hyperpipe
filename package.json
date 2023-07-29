@@ -14,7 +14,7 @@
     "dompurify": "^3.0.5",
     "mux.js": "^6.3.0",
     "peerjs": "^1.4.7",
-    "pinia": "^2.1.4",
+    "pinia": "^2.1.6",
     "shaka-player": "^4.3.8",
     "sortablejs": "^1.15.0",
     "vue": "^3.2.38"

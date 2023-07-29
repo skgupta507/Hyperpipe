@@ -33,27 +33,24 @@ async function getCharts() {
     id.value = json.options.all.find(i => i.title == json.options.default).id;
 
   for (const country of json.options.all) {
-    const countryLocaleId = `countries.${country.id}`;
+    const locId = `countries.${country.id}`,
+      cc = t(locId);
 
-    if (t(countryLocaleId) !== countryLocaleId) {
-      country.title = t(countryLocaleId);
-    }
+    if (cc !== locId) country.title = cc;
   }
 
-  data.options = json.options.all.sort((a, b) => {
-    return a.title.localeCompare(b.title);
-  });
+  data.options = [];
+  for (const _ of Array(2)) data.options.push(json.options.all.shift());
+  data.options.push(
+    ...json.options.all.sort((a, b) => a.title.localeCompare(b.title)),
+  );
+
   data.songs = json.trending;
   data.artists = json.artists;
 }
 
-watch(id, () => {
-  getCharts();
-});
-
-onMounted(() => {
-  getCharts();
-});
+watch(id, getCharts);
+onMounted(getCharts);
 </script>
 
 <template>

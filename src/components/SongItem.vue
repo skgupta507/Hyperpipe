@@ -108,7 +108,11 @@ onMounted(() => {
     :title="title"
     @show="e => (showPl = e)" />
 
-  <div class="song card flex pop" @click="openSong($event.target)">
+  <div
+    class="song card flex pop"
+    tabindex="0"
+    @click="openSong($event.target)"
+    @keydown.enter="openSong($event.target)">
     <img class="pop-2 bg-img song-bg" loading="lazy" :src="art" alt />
 
     <span class="flex content">

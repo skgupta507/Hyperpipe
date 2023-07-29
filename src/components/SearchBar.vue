@@ -15,10 +15,10 @@ function search(e) {
 
 <template>
   <button
-    aria-label="Search Button"
     class="bi bi-search popup-wrap"
     @mouseenter="show = true"
-    @mouseleave="show = false">
+    @mouseleave="show = false"
+    @keydown.enter="show = !show">
     <Transition name="fade">
       <div v-show="show" class="popup">
         <input
@@ -26,7 +26,7 @@ function search(e) {
           aria-label="Search Input"
           :placeholder="t('title.search') + '...'"
           @change="search"
-          @keyup.enter="search"
+          @keydown.enter="search"
           :value="nav.state.search" />
       </div>
     </Transition>
