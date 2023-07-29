@@ -22,7 +22,11 @@ defineEmits(['open-album']);
 </script>
 
 <template>
-  <div class="album card pop" @click="$emit('open-album')">
+  <div
+    class="album card pop"
+    tabindex="0"
+    @click="$emit('open-album')"
+    @keydown.enter="$emit('open-album')">
     <img class="card-bg bg-img pop-2" :src="art" loading="lazy" alt="" />
 
     <div class="card-text">

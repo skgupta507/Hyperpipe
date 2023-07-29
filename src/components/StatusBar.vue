@@ -53,8 +53,8 @@ async function Like() {
 
   const remote = await getAuthPlaylists();
 
-  let fav = remote.find(i => i.name == 'Playlist - Favorites'); 
-  
+  let fav = remote.find(i => i.name == 'Playlist - Favorites');
+
   if (!fav) {
     const { playlistId } = await useAuthCreatePlaylist('Favorites');
 

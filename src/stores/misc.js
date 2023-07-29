@@ -140,6 +140,7 @@ export const useI18n = defineStore('i18n', () => {
         .then(mod => {
           map.value[code] = mod;
           locale.value = code;
+          localStorage.locale ??= code;
         });
   }
 
