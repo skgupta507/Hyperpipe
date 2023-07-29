@@ -26,7 +26,7 @@
         "receive": "受信",
         "import": "インポート",
         "export": "エクスポート",
-        "register_on": "アカウントがなければこちらで登録"
+        "register_on": "アカウントがなければここから登録"
     },
     "playlist": {
         "local": "端末内の再生リスト",
