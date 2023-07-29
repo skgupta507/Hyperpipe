@@ -75,7 +75,8 @@
     },
     "lyrics": {
         "load": "Tìm lời bài hát",
-        "void": "Không có lời bài hát"
+        "void": "Không có lời bài hát",
+        "lyrics": "Lời bài hát"
     },
     "artist": {
         "subscribers": "người đăng ký",
@@ -98,6 +99,22 @@
         "KR": "Hàn Quốc",
         "US": "Hoa Kỳ",
         "TR": "Thổ Nhĩ Kỳ",
-        "ZZ": "Quốc tế"
+        "ZZ": "Quốc tế",
+        "BR": "Brazil",
+        "CA": "Canada",
+        "CH": "Thụy Sĩ",
+        "CL": "Chile",
+        "DK": "Đan Mạch",
+        "ID": "Indonesia",
+        "IE": "Ireland",
+        "IL": "Israel",
+        "RU": "Nga",
+        "PL": "Ba Lan",
+        "PT": "Bồ Đào Nha",
+        "SE": "Thụy Điển"
+    },
+    "statusBar": {
+        "currentPlaylist": "Danh sách phát hiện tại",
+        "loop": "Lặp lại"
     }
 }
