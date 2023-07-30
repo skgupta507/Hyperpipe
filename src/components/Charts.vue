@@ -62,19 +62,6 @@ onMounted(getCharts);
     </select>
   </template>
 
-  <template v-if="data.artists.length > 0">
-    <h2 class="center">{{ t('title.artists') }}</h2>
-    <div class="grid-3 circle">
-      <AlbumItem
-        v-for="i in data.artists"
-        :key="i.id"
-        :name="i.title"
-        :author="i.subtitle"
-        :art="i.thumbnails[1].url"
-        @open-album="getArtist(i.id)" />
-    </div>
-  </template>
-
   <template v-if="data.songs.length > 0">
     <h2 class="center">{{ t('title.songs') }}</h2>
     <div class="grid">
@@ -100,4 +87,23 @@ onMounted(getCharts);
         " />
     </div>
   </template>
+
+  <template v-if="data.artists.length > 0">
+    <h2 class="center">{{ t('title.artists') }}</h2>
+    <div class="grid-3 circle">
+      <AlbumItem
+        v-for="i in data.artists"
+        :key="i.id"
+        :name="i.title"
+        :author="i.subtitle"
+        :art="i.thumbnails[1].url"
+        @open-album="getArtist(i.id)" />
+    </div>
+  </template>
 </template>
+
+<style scoped>
+.center {
+  margin-top: 2rem;
+}
+</style>

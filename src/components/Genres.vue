@@ -138,7 +138,7 @@ onMounted(get);
   font-size: 1rem;
   font-weight: bold;
   letter-spacing: 0.125rem;
-  line-break: anywhere;
+  overflow-wrap: break-word;
   background-color: var(--color-background-mute);
   color: var(--btn-color);
   transition: background-color 0.1s ease;
