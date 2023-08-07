@@ -71,7 +71,8 @@
         "search": "Bắt đầu tìm kiếm",
         "see_all": "Xem tất cả",
         "no_info": "Không có thông tin",
-        "saved": "Đã lưu!"
+        "saved": "Đã lưu!",
+        "copied_to_clipboard": "Đã sao chép vào bộ nhớ đệm"
     },
     "lyrics": {
         "load": "Tìm lời bài hát",
@@ -111,10 +112,16 @@
         "RU": "Nga",
         "PL": "Ba Lan",
         "PT": "Bồ Đào Nha",
-        "SE": "Thụy Điển"
+        "SE": "Thụy Điển",
+        "CO": "Colombia",
+        "IS": "Iceland",
+        "NL": "Hà Lan",
+        "RO": "Romania",
+        "ZW": "Zimbabwe"
     },
     "statusBar": {
         "currentPlaylist": "Danh sách phát hiện tại",
-        "loop": "Lặp lại"
+        "loop": "Lặp lại",
+        "add_current_to_playlist": "Lưu bài hát hiện tại vào một danh sách phát"
     }
 }
