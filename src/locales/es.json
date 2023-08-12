@@ -15,7 +15,8 @@
         "remote": "Remoto",
         "search": "Búsqueda",
         "playlists": "Listas de reproducción",
-        "feeds": "Fuentes"
+        "feeds": "Fuentes",
+        "offline": "Sin conexión"
     },
     "action": {
         "back": "Atrás",
