@@ -66,7 +66,7 @@ onMounted(get);
           :author="i.subtitle"
           :art="i.thumbnails[0].url"
           @open-album="
-            getAlbum('/playlist?list=' + i.id);
+            getAlbum('?list=' + i.id);
             nav.state.page = 'home';
           " />
       </div>
@@ -82,7 +82,7 @@ onMounted(get);
           :author="i.subtitle"
           :art="i.thumbnails[0].url"
           @open-album="
-            getAlbum('/playlist?list=' + i.id);
+            getAlbum('?list=' + i.id);
             nav.state.page = 'home';
           " />
       </div>

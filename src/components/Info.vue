@@ -3,7 +3,7 @@ import { useI18n } from '@/stores/misc.js';
 
 import TextModal from './TextModal.vue';
 
-defineProps(['text']);
+defineProps({ text: String });
 
 const { t } = useI18n(),
   parse = d => new DOMParser().parseFromString(d, 'text/html').body.innerText;

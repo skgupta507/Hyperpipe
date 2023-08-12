@@ -23,9 +23,7 @@ import Artist from '@/components/Artist.vue';
 /* Async Components */
 const Genres = defineAsyncComponent(() => import('@/components/Genres.vue')),
   Charts = defineAsyncComponent(() => import('@/components/Charts.vue')),
-  NewPlaylist = defineAsyncComponent(() =>
-    import('@/components/NewPlaylist.vue'),
-  ),
+  Library = defineAsyncComponent(() => import('@/components/Library.vue')),
   Prefs = defineAsyncComponent(() => import('@/components/Prefs.vue'));
 
 /* Composables */
@@ -76,6 +74,9 @@ function parseUrl() {
     case 'explore':
       genreid.value = loc[2];
       nav.state.page = 'explore';
+      break;
+    case 'browse':
+      if (loc[2].startsWith('MPRE')) results.getAlbum('?list=' + loc[2]);
       break;
     case 'charts':
       nav.state.page = 'charts';
@@ -171,7 +172,7 @@ onMounted(() => {
       <Charts v-if="nav.state.page == 'charts'" @play-urls="playList" />
     </KeepAlive>
 
-    <NewPlaylist
+    <Library
       v-if="nav.state.page == 'library'"
       @play-urls="playList"
       @open-playlist="results.getAlbum" />

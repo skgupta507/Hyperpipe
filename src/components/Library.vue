@@ -436,7 +436,10 @@ onMounted(async () => {
     <h2 v-if="list.length > 0">{{ t('playlist.local') }}</h2>
 
     <div class="grid-3">
-      <AlbumItem name="Offline" :grad="useRand()" @open-album="OpenOffline()" />
+      <AlbumItem
+        :name="t('title.offline')"
+        :grad="useRand()"
+        @open-album="OpenOffline()" />
       <AlbumItem
         v-for="i in list"
         :key="i.name"
@@ -456,7 +459,7 @@ onMounted(async () => {
         :name="i.name.replace('Playlist - ', '')"
         :author="t('title.songs') + ' • ' + i.videos"
         :art="pathname(i.thumbnail) != '/' ? i.thumbnail : undefined"
-        @open-album="$emit('open-playlist', '/playlist?list=' + i.id)" />
+        @open-album="$emit('open-playlist', '?list=' + i.id)" />
     </div>
     <form v-else class="login" @submit.prevent>
       <input

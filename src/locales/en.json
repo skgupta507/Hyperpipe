@@ -15,7 +15,8 @@
     "local": "Local",
     "remote": "Remote",
     "search": "Search",
-    "feeds": "Feeds"
+    "feeds": "Feeds",
+    "offline": "Offline"
   },
   "action": {
     "back": "Back",

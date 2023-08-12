@@ -21,9 +21,7 @@ function audioCanPlay() {
     player.state.status = 'play';
   });
 
-  if (location.pathname != '/playlist') {
-    useRoute(data.state.url);
-  }
+  if (location.pathname != '/playlist') useRoute(data.state.url);
 
   document.title = `Playing: ${data.state.title} by ${data.state.artist}`;
 }

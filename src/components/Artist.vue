@@ -40,10 +40,7 @@ function Sub() {
         {{ artist.state.description }}
       </p>
       <div class="us-playwrap">
-        <Btn
-          @click="
-            results.getAlbum('/playlist?list=' + artist.state.playlistId)
-          " />
+        <Btn @click="results.getAlbum('?list=' + artist.state.playlistId)" />
         <span
           class="us-box subs"
           :data-active="isSub"

@@ -341,9 +341,7 @@ onDeactivated(() => {
     </div>
     <a
       v-if="artist.state.playlistId"
-      @click.prevent="
-        results.getAlbum('/playlist?list=' + artist.state.playlistId)
-      "
+      @click.prevent="results.getAlbum('?list=' + artist.state.playlistId)"
       class="more"
       :href="'/playlist?list=' + artist.state.playlistId"
       >{{ t('info.see_all') }}</a
@@ -361,9 +359,7 @@ onDeactivated(() => {
         :author="album.uploaderName || album.subtitle"
         :name="album.name || album.title"
         :art="album.thumbnail || album.thumbnails[0].url"
-        @open-album="
-          results.getAlbum(album.url || '/playlist?list=' + album.id)
-        " />
+        @open-album="results.getAlbum(album.url || '?list=' + album.id)" />
     </div>
     <a
       v-if="results.items.albums.more?.params"
@@ -399,7 +395,7 @@ onDeactivated(() => {
         :author="single.subtitle"
         :name="single.title"
         :art="single.thumbnails[0].url"
-        @open-album="results.getAlbum('/playlist?list=' + single.id)" />
+        @open-album="results.getAlbum('?list=' + single.id)" />
     </div>
     <a
       v-if="results.items.singles.more?.params"
@@ -429,7 +425,7 @@ onDeactivated(() => {
           ? results.items.artists.items
           : results.items.recommendedArtists.items"
         :key="a.id || a.url"
-        :author="a.subtitle"
+        :author="a.subtitle.replace('subscribers', t('artist.subscribers'))"
         :name="a.name || a.title"
         :art="a.thumbnail || a.thumbnails[0].url"
         @open-album="

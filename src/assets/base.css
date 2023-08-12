@@ -347,7 +347,8 @@ img {
   box-shadow: 0 0 0.5rem var(--color-border);
 }
 
-.grid, .grid-3 {
+.grid,
+.grid-3 {
   --col: 1;
   grid-template-columns: repeat(var(--col), 1fr);
 }

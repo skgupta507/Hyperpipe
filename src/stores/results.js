@@ -40,7 +40,11 @@ export const useResults = defineStore('results', () => {
   async function getAlbum(e) {
     const hash = new URLSearchParams(e.substring(e.indexOf('?'))).get('list'),
       isAuth = useVerifyAuth(hash),
-      path = '/playlists/' + hash,
+      path =
+        '/playlists/' +
+        (hash.startsWith('MPRE')
+          ? (await getJsonHyp('/album/' + hash))?.id
+          : hash),
       json = isAuth ? await getJsonAuth(path) : await getJsonPiped(path);
 
     resetItems();
@@ -58,7 +62,7 @@ export const useResults = defineStore('results', () => {
       title: json.name,
     });
 
-    useRoute(e);
+    useRoute('/playlist?list=' + hash);
     useNav().state.page = 'home';
     document.body.scrollIntoView();
 
