@@ -24,7 +24,8 @@
         "albums": "专辑",
         "login": "登录",
         "playlists": "播放列表",
-        "feeds": "订阅源"
+        "feeds": "订阅源",
+        "offline": "离线"
     },
     "action": {
         "add": "添加",
