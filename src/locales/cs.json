@@ -15,7 +15,8 @@
         "genres": "Žánry",
         "spotlight": "V záři reflektorů",
         "playlists": "Playlisty",
-        "feeds": "Zdroje"
+        "feeds": "Zdroje",
+        "offline": "Offline"
     },
     "pref": {
         "codec": "Kodek",
