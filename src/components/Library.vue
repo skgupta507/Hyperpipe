@@ -90,7 +90,7 @@ const setProxy = async () => {
       console.log();
       results.resetItems();
       results.setItem('songs', {
-        title: 'Hyp • Offline',
+        title: 'Hyp • ' + t('title.offline'),
         items: songs.map(i => ({
           ...i.appMetadata,
           offlineUri: i.offlineUri,
@@ -169,7 +169,7 @@ const setProxy = async () => {
           format: 'Hyperpipe',
           version: 0,
           app_version: 0,
-          subscriptions: JSON.parse(store.subs).map(id => ({
+          subscriptions: JSON.parse( store.subs || '[]' ).map(id => ({
             url: 'https://www.youtube.com/channel/' + id,
             service_id: 0,
           })),
