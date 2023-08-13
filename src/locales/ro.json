@@ -15,7 +15,8 @@
         "search": "Căutare",
         "local": "Local",
         "songs": "Melodii",
-        "feeds": "Fluxuri"
+        "feeds": "Fluxuri",
+        "offline": "Offline"
     },
     "action": {
         "back": "Înapoi",
