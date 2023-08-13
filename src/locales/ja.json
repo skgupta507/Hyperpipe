@@ -15,7 +15,8 @@
         "local": "端末内",
         "remote": "Piped",
         "search": "検索",
-        "feeds": "フィード"
+        "feeds": "フィード",
+        "offline": "オフライン"
     },
     "action": {
         "back": "戻る",
@@ -30,7 +31,7 @@
     },
     "playlist": {
         "local": "端末内の再生リスト",
-        "remote": "Piped の再生リスト",
+        "remote": "Piped 上の再生リスト",
         "name": "再生リスト名",
         "add": "再生リストに曲を追加",
         "create": "新しい再生リストを作成",
