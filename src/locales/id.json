@@ -15,7 +15,8 @@
         "moods": "Suasana",
         "local": "Lokal",
         "playlists": "Daftar Putar",
-        "feeds": "Umpan"
+        "feeds": "Umpan",
+        "offline": "Luring"
     },
     "playlist": {
         "select": "Pilih Daftar Putar yang Ingin Ditambahkan",
