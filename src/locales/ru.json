@@ -15,7 +15,8 @@
         "albums": "Альбомы",
         "spotlight": "Быстрый поиск",
         "playlists": "Плейлисты",
-        "feeds": "Фиды"
+        "feeds": "Фиды",
+        "offline": "Оффлайн"
     },
     "action": {
         "back": "Назад",
