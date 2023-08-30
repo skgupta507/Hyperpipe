@@ -50,7 +50,8 @@
         "charts": "Bagan",
         "library": "Pustaka",
         "prm": "Lebih Suka Sedikit Gerakan",
-        "language": "Bahasa"
+        "language": "Bahasa",
+        "cc": "Tentukan negara secara otomatis untuk chart"
     },
     "info": {
         "no_info": "Tidak Ada Informasi Tersedia",
