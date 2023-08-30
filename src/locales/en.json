@@ -53,6 +53,7 @@
     "compact": "Compact View",
     "prm": "Prefers Reduced Motion",
     "language": "Language",
+    "cc": "Auto Infer country for charts",
     "tab": "Default Tab",
     "player": "Audio Player",
     "auto_queue": "Automatically Queue Songs",
