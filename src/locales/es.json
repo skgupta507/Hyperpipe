@@ -61,7 +61,8 @@
         "explore": "Explorar",
         "compact": "Vista compacta",
         "prm": "Prefiere el movimiento reducido",
-        "language": "Idioma"
+        "language": "Idioma",
+        "cc": "Inferir automáticamente el país de los gráficos"
     },
     "info": {
         "see_all": "Ver todo",
