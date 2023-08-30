@@ -1,12 +1,12 @@
 <script setup>
 import { ref, watch, onMounted, onBeforeUnmount, onUnmounted } from 'vue';
-import { useManifest } from '@/scripts/util.js';
 
 import muxjs from 'mux.js';
 window.muxjs = muxjs;
 
-import { useStore, useRoute } from '@/scripts/util.js';
+import { useStore, useRoute, useManifest } from '@/scripts/util.js';
 import { useData, usePlayer } from '@/stores/player.js';
+import { useAlert } from '@/stores/misc';
 
 const player = usePlayer(),
   data = useData(),
@@ -108,7 +108,8 @@ async function Stream() {
         }
       })
       .catch(err => {
-        console.error('Code: ' + err.code, err);
+        console.error(err);
+        useAlert.add('error: ' + e.code)
       });
   }
 }

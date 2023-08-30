@@ -157,6 +157,9 @@ onMounted(() => {
   margin: 1rem 0;
   justify-content: initial;
 }
+.song h4 {
+  overflow-wrap: anywhere;
+}
 span.content {
   padding: 1rem;
   flex-direction: column;

@@ -4,6 +4,7 @@ import { ref, reactive, watch, onMounted } from 'vue';
 import AlbumItem from '@/components/AlbumItem.vue';
 import SongItem from '@/components/SongItem.vue';
 
+import { useStore } from '@/scripts/util.js';
 import { getJsonHyp } from '@/scripts/fetch.js';
 
 import { useResults, useArtist } from '@/stores/results.js';
@@ -13,6 +14,7 @@ defineEmits(['play-urls']);
 
 const { getArtist } = useArtist(),
   results = useResults(),
+  store = useStore(),
   { t } = useI18n();
 
 const id = ref(''),
@@ -30,7 +32,7 @@ async function getCharts() {
   console.log(json);
 
   if (!id.value)
-    id.value = json.options.all.find(i => i.title == json.options.default).id;
+    id.value = json.options.all.find(i => store.cc ? i.id == store.cc : i.title == json.options.default).id;
 
   for (const country of json.options.all) {
     const locId = `countries.${country.id}`,

@@ -15,6 +15,7 @@ export const SUPPORTED_LOCALES = [
   {
     code: 'bn',
     name: 'বাংলা',
+    cc: 'IN',
   },
   {
     code: 'bs',
@@ -27,6 +28,7 @@ export const SUPPORTED_LOCALES = [
   {
     code: 'de',
     name: 'Deutsch',
+    cc: 'DE',
   },
   {
     code: 'en',
@@ -43,6 +45,7 @@ export const SUPPORTED_LOCALES = [
   {
     code: 'fr',
     name: 'Français',
+    cc: 'FR',
   },
   {
     code: 'gl',
@@ -55,50 +58,62 @@ export const SUPPORTED_LOCALES = [
   {
     code: 'id',
     name: 'Bahasa Indonesia',
+    cc: 'ID',
   },
   {
     code: 'it',
     name: 'Italiano',
+    cc: 'IT',
   },
   {
     code: 'ja',
     name: '日本語',
+    cc: 'JP',
   },
   {
     code: 'ko',
     name: '한국어',
+    cc: 'KR',
   },
   {
     code: 'nl',
     name: 'Nederlands',
+    cc: 'NL'
   },
   {
     code: 'pt',
     name: 'Português',
+    cc: 'PT',
   },
   {
     code: 'pt_br',
     name: 'Português Brasileiro',
+    cc: 'BR',
   },
   {
     code: 'ro',
     name: 'Română',
+    cc: 'RO',
   },
   {
     code: 'ru',
     name: 'Pyccкий',
+    cc: 'RU',
   },
   {
     code: 'sr',
     name: 'Српски',
+    cc: 'RS',
   },
   {
     code: 'tr',
     name: 'Türkçe',
+    cc: 'TR',
   },
   {
     code: 'uk',
     name: 'Yкраїнська',
+    cc: 'UA',
   },
   {
     code: 'vi',
@@ -107,6 +122,7 @@ export const SUPPORTED_LOCALES = [
   {
     code: 'zh_Hans',
     name: '中文 (简体)',
+    cc: 'CN',
   },
   {
     code: 'zh_Hant',
@@ -145,6 +161,11 @@ export const useI18n = defineStore('i18n', () => {
           map.value[code] = mod;
           locale.value = code;
           localStorage.locale ??= code;
+          if (localStorage.to_cc == 'true') {
+            const cc = SUPPORTED_LOCALES.find(i => i.code == code).cc
+            if (cc) localStorage.cc = cc
+            else localStorage.cc = ''
+          } else localStorage.cc = ''
         });
   }
 

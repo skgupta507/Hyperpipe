@@ -23,7 +23,8 @@ const { t, setupLocale } = useI18n(),
   hypInstances = ref([]),
   next = ref(false),
   compact = ref(false),
-  prm = ref(false);
+  prm = ref(false),
+  cc = ref(false);
 
 getJson('https://piped-instances.kavin.rocks')
   .then(i => i || getJson('https://instances.tokhmi.xyz'))
@@ -116,6 +117,7 @@ onMounted(() => {
   getStoreBool('next', next, true);
   getStoreBool('compact', compact, false);
   getStoreBool('prm', prm, false);
+  getStoreBool('cc', cc, false);
 });
 </script>
 
@@ -167,6 +169,17 @@ onMounted(() => {
       {{ i.name }}
     </option>
   </select>
+
+  <div class="left">
+    <input
+      type="checkbox"
+      name="pref-chk-cc"
+      id="pref-chk-cc"
+      class="input"
+      @change="setStore('to_cc', $event.target.checked)"
+      v-model="cc" />
+    <label for="pref-chk-cc">{{ t('pref.cc') }}</label>
+  </div>
 
   <h2>{{ t('pref.tab') }}</h2>
 
