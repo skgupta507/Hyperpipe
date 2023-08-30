@@ -425,7 +425,7 @@ onDeactivated(() => {
           ? results.items.artists.items
           : results.items.recommendedArtists.items"
         :key="a.id || a.url"
-        :author="a.subtitle.replace('subscribers', t('artist.subscribers'))"
+        :author="a.subtitle?.replace('subscribers', t('artist.subscribers'))"
         :name="a.name || a.title"
         :art="a.thumbnail || a.thumbnails[0].url"
         @open-album="
