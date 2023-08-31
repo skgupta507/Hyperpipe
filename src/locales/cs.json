@@ -41,7 +41,8 @@
         "library": "Knihovna",
         "compact": "Kompaktní zobrazení",
         "prm": "Upřednostňovat omezený pohyb",
-        "language": "Jazyk"
+        "language": "Jazyk",
+        "cc": "Automatické odvození země pro grafy"
     },
     "instances": {
         "name": "Název",
