@@ -61,7 +61,8 @@
         "library": "收藏库",
         "compact": "紧凑视图",
         "prm": "偏好减少动态效果",
-        "language": "语言"
+        "language": "语言",
+        "cc": "自动选择排行榜对应的地区"
     },
     "info": {
         "see_all": "显示全部",
