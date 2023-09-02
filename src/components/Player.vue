@@ -75,6 +75,9 @@ async function Stream() {
             manifest: {
               disableVideo: true,
             },
+            streaming: {
+              segmentPrefetchLimit: 2,
+            },
           });
 
           window.audioPlayer = audioPlayer;
@@ -109,7 +112,7 @@ async function Stream() {
       })
       .catch(err => {
         console.error(err);
-        useAlert.add('error: ' + e.code)
+        useAlert.add('error: ' + e.code);
       });
   }
 }

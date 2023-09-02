@@ -1,6 +1,10 @@
 import DOMPurify from 'dompurify';
 import { useI18n } from '@/stores/misc.js';
 
+export const AMP = /&amp;/g;
+export const PL_EXP =
+  /[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}/;
+
 export function useSanitize(txt) {
   return DOMPurify.sanitize(txt, {
     ALLOWED_TAGS: ['br'],
@@ -8,9 +12,7 @@ export function useSanitize(txt) {
 }
 
 export function useVerifyAuth(hash) {
-  return /[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}/.test(
-    hash,
-  );
+  return PL_EXP.test(hash);
 }
 
 export function useRoute(l) {
@@ -45,7 +47,7 @@ export function useStore() {
 export function useShare(data) {
   if ('share' in navigator) {
     navigator.share(data).catch(err => {
-      console.err(err);
+      console.error(err);
     });
   } else {
     const { t } = useI18n();
@@ -77,8 +79,6 @@ export function useMetadata(url, urls, data) {
           type: 'image/webp',
         }));
       } else if (data.art) artwork = [{ src: data.art, type: 'image/webp' }];
-
-      console.log(album, artwork);
     }
 
     navigator.mediaSession.metadata = new MediaMetadata({
@@ -90,22 +90,22 @@ export function useMetadata(url, urls, data) {
   }
 }
 
-export async function useManifest(res) {
+export async function useManifest({ streams, duration, hls }) {
   let url, mime;
 
-  if (window.MediaSource !== undefined && res.streams.length > 0) {
+  if (window.MediaSource !== undefined && streams.length > 0) {
     const { useDash } = await import('./dash.js');
 
-    const dash = useDash(res.streams, res.duration);
+    const dash = useDash(streams, duration);
 
     url = 'data:application/dash+xml;charset=utf-8;base64,' + btoa(dash);
     mime = 'application/dash+xml';
-  } else if (res.hls) {
-    url = res.hls;
+  } else if (hls) {
+    url = hls;
     mime = 'application/x-mpegURL';
-  } else if (res.streams.length > 0) {
-    url = res.streams[0].url;
-    mime = res.streams[0].mimeType;
+  } else if (streams.length > 0) {
+    url = streams[0].url;
+    mime = streams[0].mimeType;
   }
 
   return { url, mime };

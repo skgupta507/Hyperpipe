@@ -12,64 +12,53 @@ export function useDash(streams, len) {
     else {
       mimeTypes.push(stream.mimeType);
       mimes.push([]);
-      mimes[mimeTypes.length - 1].push(stream);
+      mimes.at(-1).push(stream);
     }
   });
 
   for (let i in mimeTypes) {
     const set = {
-      type: 'element',
       name: 'AdaptationSet',
-      attributes: {
+      attr: {
         id: i,
         contentType: 'audio',
         mimeType: mimeTypes[i],
         startWithSAP: '1',
         subsegmentAlignment: 'true',
       },
-      elements: [],
+      child: [],
     };
 
     mimes[i].forEach(format => {
       const audio = {
-        type: 'element',
         name: 'Representation',
-        attributes: {
+        attr: {
           id: format.itag,
           codecs: format.codec,
           bandwidth: format.bitrate,
         },
-        elements: [
+        child: [
           {
-            type: 'element',
             name: 'AudioChannelConfiguration',
-            attributes: {
+            attr: {
               schemeIdUri:
                 'urn:mpeg:dash:23003:3:audio_channel_configuration:2011',
               value: '2',
             },
           },
           {
-            type: 'element',
             name: 'BaseURL',
-            elements: [
-              {
-                type: 'text',
-                text: format.url,
-              },
-            ],
+            child: [format.url],
           },
           {
-            type: 'element',
             name: 'SegmentBase',
-            attributes: {
+            attr: {
               indexRange: `${format.indexStart}-${format.indexEnd}`,
             },
-            elements: [
+            child: [
               {
-                type: 'element',
                 name: 'Initialization',
-                attributes: {
+                attr: {
                   range: `${format.initStart}-${format.initEnd}`,
                 },
               },
@@ -78,43 +67,31 @@ export function useDash(streams, len) {
         ],
       };
 
-      set.elements.push(audio);
+      set.child.push(audio);
     });
 
     sets.push(set);
   }
 
-  const gen = {
-    declaration: {
-      attributes: {
-        version: '1.0',
-        encoding: 'utf-8',
+  const gen = [
+    {
+      name: 'MPD',
+      attr: {
+        xmlns: 'urn:mpeg:dash:schema:mpd:2011',
+        profiles: 'urn:mpeg:dash:profile:full:2011',
+        minBufferTime: 'PT1.5S',
+        type: 'static',
+        mediaPresentationDuration: `PT${len}S`,
       },
-    },
-    elements: [
-      {
-        type: 'element',
-        name: 'MPD',
-        attributes: {
-          xmlns: 'urn:mpeg:dash:schema:mpd:2011',
-          profiles: 'urn:mpeg:dash:profile:full:2011',
-          minBufferTime: 'PT1.5S',
-          type: 'static',
-          mediaPresentationDuration: `PT${len}S`,
+      child: [
+        {
+          name: 'Period',
+          attr: { id: 0 },
+          child: sets,
         },
-        elements: [
-          {
-            type: 'element',
-            name: 'Period',
-            attributes: {
-              id: 0,
-            },
-            elements: sets,
-          },
-        ],
-      },
-    ],
-  };
+      ],
+    },
+  ];
 
   return useXML(gen);
 }

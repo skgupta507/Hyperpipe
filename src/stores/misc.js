@@ -78,7 +78,7 @@ export const SUPPORTED_LOCALES = [
   {
     code: 'nl',
     name: 'Nederlands',
-    cc: 'NL'
+    cc: 'NL',
   },
   {
     code: 'pt',
@@ -162,10 +162,10 @@ export const useI18n = defineStore('i18n', () => {
           locale.value = code;
           localStorage.locale ??= code;
           if (localStorage.to_cc == 'true') {
-            const cc = SUPPORTED_LOCALES.find(i => i.code == code).cc
-            if (cc) localStorage.cc = cc
-            else localStorage.cc = ''
-          } else localStorage.cc = ''
+            const cc = SUPPORTED_LOCALES.find(i => i.code == code).cc;
+            if (cc) localStorage.cc = cc;
+            else localStorage.cc = '';
+          } else localStorage.cc = '';
         });
   }
 
@@ -182,7 +182,7 @@ export const useAlert = defineStore('alert', () => {
 
     setTimeout(() => {
       if (msg.value == m) msg.value = '';
-    }, 3000);
+    }, 4000);
   }
 
   return { msg, add };

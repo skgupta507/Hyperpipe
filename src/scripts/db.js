@@ -14,9 +14,7 @@ export function useSetupDB() {
     };
 
     req.onerror = e => {
-      console.log('Please let me use indexedDB!!');
-      console.log(e);
-      alert(e.target.error.message);
+      console.error(e);
     };
 
     req.onsuccess = e => {
@@ -33,7 +31,7 @@ export function useUpdatePlaylist(key, obj, cb = () => null) {
       req = store.get(key);
 
     req.onerror = e => {
-      console.log('Error!!', e);
+      console.error(e);
     };
 
     req.onsuccess = e => {
@@ -71,7 +69,7 @@ export function useCreatePlaylist(key, obj, cb = () => null) {
 
         cb(res);
       } else {
-        console.log(e.target.result);
+        console.error(e.target.result);
         alert(`Error: Playlist with name ${key} exists`);
       }
     };
@@ -101,7 +99,7 @@ export function useGetPlaylist(key, cb = () => null) {
       req = store.get(key);
 
     req.onerror = e => {
-      console.log('Error!!', e);
+      console.error(e);
     };
 
     req.onsuccess = e => {

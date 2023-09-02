@@ -56,7 +56,7 @@ export async function getJsonAuth(path, opts = {}) {
   return await fetch('https://' + root + path, opts)
     .then(res => res.json())
     .catch(err => {
-      useAlert.add(err);
+      useAlert().add(err);
     });
 }
 

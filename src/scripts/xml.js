@@ -3,8 +3,7 @@ function useAttr(json) {
 
   for (const attr in json) {
     if (json[attr] != null) {
-      attrs += ' ';
-      attrs += attr;
+      attrs += ' ' + attr;
       attrs += '="';
       attrs += ('' + json[attr]).replace(/"/g, '&quote;');
       attrs += '"';
@@ -18,22 +17,18 @@ function useElems(json) {
   let elems = '';
 
   json.forEach(elem => {
-    switch (elem.type) {
-      case 'element':
-        elems += '<';
-        elems += elem.name;
-        elems += useAttr(elem.attributes);
+    switch (typeof elem) {
+      case 'object':
+        elems += '<' + elem.name + useAttr(elem.attr);
 
-        if (elem?.elements?.length > 0) {
+        if (elem?.child?.length > 0) {
           elems += '>';
-          elems += useElems(elem.elements);
-          elems += '</';
-          elems += elem.name;
-          elems += '>';
+          elems += useElems(elem.child);
+          elems += '</' + elem.name + '>';
         } else elems += '/>';
         break;
-      case 'text':
-        elems += ('' + elem.text)
+      case 'string':
+        elems += ('' + elem)
           .replace(/&amp;/g, '&')
           .replace(/&/g, '&amp;')
           .replace(/>/g, '&gt;')
@@ -48,13 +43,8 @@ function useElems(json) {
 export function useXML(json) {
   json = JSON.parse(JSON.stringify(json));
 
-  let base = '';
+  let xml = '<?xml version="1.0" encoding="utf-8" ?>';
+  xml += useElems(json);
 
-  base += '<?xml';
-  base += useAttr(json.declaration.attributes);
-  base += '?>';
-
-  base += useElems(json.elements);
-
-  return base;
+  return xml;
 }

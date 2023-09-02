@@ -2,7 +2,7 @@ import { reactive } from 'vue';
 import { defineStore } from 'pinia';
 
 import { getJsonPiped, getJsonHyp } from '@/scripts/fetch.js';
-import { useStore, useMetadata } from '@/scripts/util.js';
+import { useStore, useMetadata, AMP } from '@/scripts/util.js';
 
 const store = useStore();
 
@@ -24,12 +24,10 @@ export const useData = defineStore('data', () => {
     const hash = new URLSearchParams(e.substring(e.indexOf('?'))).get('v'),
       json = await getJsonPiped('/streams/' + hash);
 
-    state.art = json.thumbnailUrl.replaceAll('&amp;', '&');
+    state.art = json.thumbnailUrl.replace(AMP, '&');
     state.description = json.description;
-    state.title = json.title.replaceAll('&amp;', '&');
-    state.artist = json.uploader
-      .replace(' - Topic', '')
-      .replaceAll('&amp;', '&');
+    state.title = json.title.replace(AMP, '&');
+    state.artist = json.uploader.replace(' - Topic', '').replace(AMP, '&');
     state.artistUrl = json.uploaderUrl;
     player.state.duration = json.duration;
     player.state.hls = json.hls;

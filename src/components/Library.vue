@@ -169,7 +169,7 @@ const setProxy = async () => {
           format: 'Hyperpipe',
           version: 0,
           app_version: 0,
-          subscriptions: JSON.parse( store.subs || '[]' ).map(id => ({
+          subscriptions: JSON.parse(store.subs || '[]').map(id => ({
             url: 'https://www.youtube.com/channel/' + id,
             service_id: 0,
           })),

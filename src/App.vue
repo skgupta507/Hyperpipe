@@ -152,7 +152,7 @@ onMounted(() => {
       v-if="data.state.art"
       class="art"
       loading="lazy"
-      :src="data.state.art.replaceAll('&amp;', '&')" />
+      :src="data.state.art" />
 
     <div class="wrapper">
       <NowPlaying @get-artist="artist.getArtist" />
@@ -207,6 +207,7 @@ onMounted(() => {
 
 <style>
 @import './assets/base.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
 
 #app {
   max-width: 1280px;
