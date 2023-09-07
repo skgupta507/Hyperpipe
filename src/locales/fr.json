@@ -15,7 +15,8 @@
         "community": "Communauté",
         "search": "Recherche",
         "playlists": "Listes de lecture",
-        "feeds": "Flux"
+        "feeds": "Flux",
+        "offline": "Hors ligne"
     },
     "playlist": {
         "local": "Listes de lecture locales",
@@ -48,12 +49,16 @@
         "home": "Accueil",
         "library": "Bibliothèque",
         "compact": "Vue compacte",
-        "prm": "Préfère les mouvements réduits"
+        "prm": "Préfère les mouvements réduits",
+        "language": "Langue",
+        "cc": "Détermination automatique du pays pour les diagrammes"
     },
     "info": {
         "see_all": "Voir tout",
         "search": "Commencer la recherche",
-        "no_info": "Aucune information disponible"
+        "no_info": "Aucune information disponible",
+        "saved": "Sauvegardé!",
+        "copied_to_clipboard": "Copié dans le presse-papiers"
     },
     "action": {
         "send": "Envoyer",
@@ -63,7 +68,8 @@
         "cancel": "Annuler",
         "receive": "Recevoir",
         "import": "Importer",
-        "export": "Exporter"
+        "export": "Exporter",
+        "register_on": "Vous n'avez pas de compte? S'inscrire sur"
     },
     "instances": {
         "up_to_date": "À jour",
@@ -73,10 +79,88 @@
         "auth": "Instance d'authentification",
         "name": "Nom",
         "loc": "Emplacements",
-        "cdn": "CDN"
+        "cdn": "CDN",
+        "default": "Défaut"
     },
     "lyrics": {
         "load": "Récupération des paroles",
-        "void": "Aucune parole"
+        "void": "Aucune parole",
+        "lyrics": "Paroles"
+    },
+    "countries": {
+        "DE": "Allemagne",
+        "DK": "Danemark",
+        "NI": "Nicaragua",
+        "CO": "Colombie",
+        "ES": "Espagne",
+        "LU": "Luxembourg",
+        "PY": "Paraguay",
+        "RO": "Roumanie",
+        "RS": "Serbie",
+        "IE": "Irlande",
+        "CA": "Canada",
+        "HU": "Hongrie",
+        "FR": "France",
+        "CH": "Suisse",
+        "PL": "Pologne",
+        "GT": "Guatemala",
+        "MX": "Mexique",
+        "ZA": "Afrique du Sud",
+        "PA": "Panama",
+        "KE": "Kenya",
+        "BR": "Brésil",
+        "EE": "Estonie",
+        "KR": "Corée du Sud",
+        "AR": "Argentine",
+        "ZW": "Zimbabwe",
+        "NG": "Nigéria",
+        "CL": "Chili",
+        "PE": "Pérou",
+        "SE": "Suède",
+        "IL": "Israël",
+        "GB": "Royaume-Uni",
+        "BO": "Bolivie",
+        "JP": "Japon",
+        "UA": "Ukraine",
+        "EC": "Équateur",
+        "TZ": "Tanzanie",
+        "PT": "Portugal",
+        "NO": "Norvège",
+        "UY": "Uruguay",
+        "CR": "Costa Rica",
+        "SA": "Arabie Saoudite",
+        "IN": "Inde",
+        "NL": "Pays-Bas",
+        "FI": "Finlande",
+        "AE": "Émirats Arabes Unis",
+        "HN": "Honduras",
+        "EG": "Égypte",
+        "NZ": "Nouvelle-Zélande",
+        "DO": "République Dominicaine",
+        "BE": "Belgique",
+        "ID": "Indonésie",
+        "SV": "El Salvador",
+        "TR": "Turquie",
+        "RU": "Russie",
+        "UG": "Ouganda",
+        "AU": "Australie",
+        "US": "États-Unis",
+        "IT": "Italie",
+        "CZ": "Tchéquie",
+        "IS": "Islande",
+        "ZZ": "Mondial",
+        "AT": "Autriche"
+    },
+    "statusBar": {
+        "loop": "Répéter",
+        "currentPlaylist": "Liste de lecture actuelle"
+    },
+    "general": {
+        "password": "mot de passe",
+        "username": "nom d'utilisateur"
+    },
+    "artist": {
+        "subs": "Abonnement",
+        "subscribers": "Abonnés"
     }
 }
