@@ -76,6 +76,11 @@ export const SUPPORTED_LOCALES = [
     cc: 'KR',
   },
   {
+    code: 'ml',
+    name: 'മലയാളം',
+    cc: 'IN',
+  },
+  {
     code: 'nl',
     name: 'Nederlands',
     cc: 'NL',
