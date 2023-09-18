@@ -153,7 +153,8 @@
     },
     "statusBar": {
         "loop": "Répéter",
-        "currentPlaylist": "Liste de lecture actuelle"
+        "currentPlaylist": "Liste de lecture actuelle",
+        "add_current_to_playlist": "Ajouter la chanson en cours à une liste de lecture"
     },
     "general": {
         "password": "mot de passe",
