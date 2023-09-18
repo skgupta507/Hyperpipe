@@ -57,7 +57,7 @@
         "see_all": "Voir tout",
         "search": "Commencer la recherche",
         "no_info": "Aucune information disponible",
-        "saved": "Sauvegardé!",
+        "saved": "Sauvegardé !",
         "copied_to_clipboard": "Copié dans le presse-papiers"
     },
     "action": {
@@ -161,7 +161,7 @@
         "username": "nom d'utilisateur"
     },
     "artist": {
-        "subs": "Abonnement",
+        "subs": "Abos",
         "subscribers": "Abonnés"
     }
 }
