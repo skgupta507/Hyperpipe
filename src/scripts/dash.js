@@ -12,7 +12,7 @@ export function useDash(streams, len) {
     else {
       mimeTypes.push(stream.mimeType);
       mimes.push([]);
-      mimes.at(-1).push(stream);
+      mimes[mimeTypes.length - 1].push(stream);
     }
   });
 

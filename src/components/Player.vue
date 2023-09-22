@@ -10,7 +10,8 @@ import { useAlert } from '@/stores/misc';
 
 const player = usePlayer(),
   data = useData(),
-  store = useStore();
+  store = useStore(),
+  a = useAlert();
 
 const audio = ref(null);
 
@@ -61,7 +62,7 @@ async function Stream() {
           window.offline = new shaka.offline.Storage(audioPlayer);
           window.offline.configure({
             offline: {
-              progressCallback: (data, prog) => console.log(data, prog),
+              progressCallback: ({ appMetadata: { title, artist } }, prog) => a.add(`${title} by ${artist}: ${Math.floor(prog*100)}%`),
               trackSelectionCallback: tracks => [
                 tracks
                   .sort((a, b) => a.bandwidth - b.bandwidth)
@@ -112,7 +113,7 @@ async function Stream() {
       })
       .catch(err => {
         console.error(err);
-        useAlert.add('error: ' + e.code);
+        a.add('Error: ' + err.code);
       });
   }
 }

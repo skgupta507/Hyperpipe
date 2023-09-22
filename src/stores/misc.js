@@ -139,9 +139,12 @@ export const useNav = defineStore('nav', () => {
   const state = reactive({
     search: '',
     page: 'home',
+    show: false,
   });
 
-  return { state };
+  const show = () => state.show = !state.show
+
+  return { state, show };
 });
 
 export const useI18n = defineStore('i18n', () => {

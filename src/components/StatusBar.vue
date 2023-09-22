@@ -9,12 +9,13 @@ import {
 } from '@/scripts/fetch.js';
 
 import { useData, usePlayer } from '@/stores/player.js';
-import { useI18n } from '@/stores/misc.js';
+import { useI18n, useAlert } from '@/stores/misc.js';
 
 const { t } = useI18n(),
   data = useData(),
   player = usePlayer(),
-  store = useStore();
+  store = useStore(),
+  a = useAlert();
 
 const showme = reactive({
     menu: false,
@@ -44,8 +45,11 @@ async function Offline() {
       url: data.state.url,
       artist: data.state.artist,
       artistUrl: data.state.artistUrl,
+    }).promise.catch(e => {
+      console.error(e)
+      a.add('Error: ' + e.code)
     });
-  } else console.error('no offline storage found');
+  } else a.add('offline storage not found');
 }
 
 async function Like() {

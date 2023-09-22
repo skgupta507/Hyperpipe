@@ -43,7 +43,7 @@ function useElems(json) {
 export function useXML(json) {
   json = JSON.parse(JSON.stringify(json));
 
-  let xml = '<?xml version="1.0" encoding="utf-8" ?>';
+  let xml = '<?xml version="1.0" encoding="utf-8"?>';
   xml += useElems(json);
 
   return xml;

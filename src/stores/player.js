@@ -95,7 +95,7 @@ export const useData = defineStore('data', () => {
     }
   }
 
-  function playNext(u) {
+  function playNext() {
     const i = state.urls.findIndex(s => s.url === state.url);
 
     if (player.state.loop == 2) getSong(state.url);
