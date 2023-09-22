@@ -62,7 +62,8 @@ async function Stream() {
           window.offline = new shaka.offline.Storage(audioPlayer);
           window.offline.configure({
             offline: {
-              progressCallback: ({ appMetadata: { title, artist } }, prog) => a.add(`${title} by ${artist}: ${Math.floor(prog*100)}%`),
+              progressCallback: ({ appMetadata: { title, artist } }, prog) =>
+                a.add(`${title} by ${artist}: ${Math.floor(prog * 100)}%`),
               trackSelectionCallback: tracks => [
                 tracks
                   .sort((a, b) => a.bandwidth - b.bandwidth)

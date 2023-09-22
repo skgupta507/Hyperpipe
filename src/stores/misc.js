@@ -142,7 +142,7 @@ export const useNav = defineStore('nav', () => {
     show: false,
   });
 
-  const show = () => state.show = !state.show
+  const show = () => (state.show = !state.show);
 
   return { state, show };
 });

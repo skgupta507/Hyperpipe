@@ -40,15 +40,17 @@ function getFormattedTime(sec) {
 
 async function Offline() {
   if (window.offline && data.state.url) {
-    window.offline.store(window.audioPlayer.getAssetUri(), {
-      title: data.state.title,
-      url: data.state.url,
-      artist: data.state.artist,
-      artistUrl: data.state.artistUrl,
-    }).promise.catch(e => {
-      console.error(e)
-      a.add('Error: ' + e.code)
-    });
+    window.offline
+      .store(window.audioPlayer.getAssetUri(), {
+        title: data.state.title,
+        url: data.state.url,
+        artist: data.state.artist,
+        artistUrl: data.state.artistUrl,
+      })
+      .promise.catch(e => {
+        console.error(e);
+        a.add('Error: ' + e.code);
+      });
   } else a.add('offline storage not found');
 }
 

@@ -16,9 +16,9 @@ function search(e) {
 watch(
   () => nav.state.show,
   e => {
-    if (e === true) setTimeout(() => searchEl.value.focus(), 0)
-  }
-)
+    if (e === true) setTimeout(() => searchEl.value.focus(), 0);
+  },
+);
 </script>
 
 <template>

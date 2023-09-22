@@ -95,27 +95,23 @@ function parseUrl() {
 
 function setupKeys() {
   window.addEventListener('keydown', e => {
-    if (
-      !e.shiftKey ||
-      e.repeat ||
-      'string' == typeof e.target.value
-    ) return
-    
+    if (!e.shiftKey || e.repeat || 'string' == typeof e.target.value) return;
+
     switch (e.code) {
       case 'Space':
-        player.toggle('play')
+        player.toggle('play');
         break;
       case 'Slash':
-        nav.show()
+        nav.show();
         break;
       case 'KeyN':
-        data.nextTrack()
+        data.nextTrack();
         break;
       case 'KeyP':
-        data.prevTrack()
+        data.prevTrack();
         break;
     }
-  })
+  });
 }
 
 function playThis(t) {
