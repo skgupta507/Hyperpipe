@@ -137,7 +137,7 @@ You can reach out to me personally on:
 
 - [Beatbump](https://github.com/snuffyDev/Beatbump) -> Alternative YouTube Music frontend built with Svelte/SvelteKit
 
-- [Cider](https://github.com/ciderapp/Cider) -> Cross-platform Apple Music experience based on Electron and Vue.js
+- [MellowMusic](https://github.com/you-apps/MellowMusic) -> Music player app using Piped API to fetch music
 
 ---
 

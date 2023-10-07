@@ -93,9 +93,10 @@ function parseUrl() {
   }
 }
 
+/* Keybindings */
 function setupKeys() {
   window.addEventListener('keydown', e => {
-    if (!e.shiftKey || e.repeat || 'string' == typeof e.target.value) return;
+    if (!e.ctrlKey || e.repeat || 'string' == typeof e.target.value) return;
 
     switch (e.code) {
       case 'Space':
