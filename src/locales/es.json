@@ -16,7 +16,8 @@
         "search": "Búsqueda",
         "playlists": "Listas de reproducción",
         "feeds": "Fuentes",
-        "offline": "Sin conexión"
+        "offline": "Sin conexión",
+        "logout": "Cerrar la sesión"
     },
     "action": {
         "back": "Atrás",
