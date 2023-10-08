@@ -15,12 +15,16 @@
         "genres": "Žanrovi",
         "login": "Prijava",
         "local": "Lokalni",
-        "feeds": "Feedovi"
+        "feeds": "Feedovi",
+        "offline": "Offline",
+        "logout": "Odjava"
     },
     "info": {
         "search": "Započni pretraživanje",
         "no_info": "Nema informacija",
-        "see_all": "Pokaži sve"
+        "see_all": "Pokaži sve",
+        "saved": "Spremljeno!",
+        "copied_to_clipboard": "Kopirano u međuspremnik"
     },
     "action": {
         "cancel": "Otkaži",
@@ -30,7 +34,8 @@
         "back": "Natrag",
         "add": "Dodaj",
         "import": "Uvezi",
-        "export": "Izvezi"
+        "export": "Izvezi",
+        "register_on": "Nemaš račun? Registriraj se na"
     },
     "instances": {
         "loc": "Lokacije",
@@ -40,7 +45,8 @@
         "piped": "Piped instanca",
         "cdn": "CDN",
         "up_to_date": "Aktualna",
-        "version": "Verzija"
+        "version": "Verzija",
+        "default": "Zadano"
     },
     "pref": {
         "codec": "Kodek",
@@ -64,7 +70,8 @@
         "charts": "Grafikoni",
         "explore": "Istraži",
         "compact": "Kompaktni prikaz",
-        "prm": "Preferira smanjeno kretanje"
+        "prm": "Preferira smanjeno kretanje",
+        "language": "Jezik"
     },
     "lyrics": {
         "load": "Dohvaćanje stihova",
@@ -78,5 +85,9 @@
         "add": "Dodaj pjesme u popis",
         "create": "Stvori novi popis pjesama",
         "select": "Odaberi popis pjesama za dodavanje"
+    },
+    "artist": {
+        "subs": "Pretplate",
+        "subscribers": "Pretplatnici"
     }
 }
