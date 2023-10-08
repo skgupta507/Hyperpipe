@@ -87,7 +87,6 @@ const setProxy = async () => {
   OpenOffline = async () => {
     if (window.offline) {
       const songs = await window.offline.list();
-      console.log();
       results.resetItems();
       results.setItem('songs', {
         title: 'Hyp • ' + t('title.offline'),
@@ -439,7 +438,7 @@ onMounted(async () => {
       <AlbumItem
         :name="t('title.offline')"
         :grad="useRand()"
-        @open-album="OpenOffline()" />
+        @open-album="OpenOffline" />
       <AlbumItem
         v-for="i in list"
         :key="i.name"
@@ -489,7 +488,7 @@ onMounted(async () => {
       </p>
     </form>
 
-    <button v-if="auth" @click="Logout" class="logout textbox">Logout</button>
+    <button v-if="auth" @click="Logout" class="logout textbox">{{ t('title.logout') }}</button>
   </div>
 </template>
 

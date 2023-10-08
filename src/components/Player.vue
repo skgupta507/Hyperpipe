@@ -124,6 +124,10 @@ function destroy() {
     window.audioPlayer.destroy();
     window.audioPlayer = undefined;
   }
+  if (window.offline) {
+    window.offline.destroy();
+    window.offline = undefined;
+  }
 }
 
 const titleState = ['Playing', 'Paused'];

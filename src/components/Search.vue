@@ -1,5 +1,12 @@
 <script setup>
-import { ref, watch, onActivated, onUpdated, onDeactivated } from 'vue';
+import {
+  ref,
+  watch,
+  computed,
+  onActivated,
+  onUpdated,
+  onDeactivated,
+} from 'vue';
 
 import Btn from './Btn.vue';
 import SongItem from './SongItem.vue';
@@ -28,6 +35,10 @@ const emit = defineEmits(['play-urls']),
   filter = ref('music_songs'),
   isSearch = ref(/search/.test(location.pathname)),
   albumMenu = ref(false);
+
+const plId = computed(
+  (x = results.items?.songs?.items?.[0]) => x?.playlistId || !!x?.offlineUri,
+);
 
 const shuffleAdd = () => {
     const songs = results.items.songs.items.map(i => ({
@@ -114,22 +125,25 @@ const shuffleAdd = () => {
       });
     }
   },
-  removePlaylist = async id => {
+  removePlaylist = async () => {
     const consent = confirm('Confirm?');
 
-    console.log(id, consent);
+    if (!plId.value || !consent) return;
 
-    if (!id || !consent) return;
-
-    console.log(id, consent);
-
-    if (useVerifyAuth(id)) {
-      const { message } = await useAuthRemovePlaylist(id);
+    if (plId.value === true)
+      window.offline &&
+        Promise.all(
+          (await window.offline.list()).map(i =>
+            window.offline.remove(i.offlineUri),
+          ),
+        );
+    else if (useVerifyAuth(plId.value)) {
+      const { message } = await useAuthRemovePlaylist(plId.value);
       if (message != 'ok') {
         alert(message);
         return;
       }
-    } else useRemovePlaylist(id);
+    } else useRemovePlaylist(plId.value);
 
     useRoute('/library');
     nav.state.page = 'library';
@@ -286,11 +300,9 @@ onDeactivated(() => {
               @click="shuffleAdd"></button>
 
             <button
-              v-if="results.items?.songs?.items?.[0]?.playlistId"
+              v-if="plId"
               class="bi bi-trash3 clickable"
-              @click="
-                removePlaylist(results.items?.songs?.items?.[0]?.playlistId)
-              "></button>
+              @click="removePlaylist"></button>
           </div>
         </Transition>
       </template>
@@ -323,6 +335,7 @@ onDeactivated(() => {
         :key="song.url || song.id"
         :index="index"
         :playlistId="song.playlistId"
+        :offlineUri="song.offlineUri"
         :author="song.uploaderName || song.artist || song.subtitle"
         :title="song.title || song.name"
         :channel="

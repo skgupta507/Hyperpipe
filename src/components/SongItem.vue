@@ -27,6 +27,7 @@ const props = defineProps({
     play: String,
     art: String,
     playlistId: String,
+    offlineUri: String,
   }),
   emit = defineEmits(['open-song', 'nxt-song', 'remove']);
 
@@ -60,6 +61,7 @@ const openSong = el => {
       thumbnails: [{ url: props.art }],
     });
   },
+  rm = () => emit('remove', props.index),
   Remove = () => {
     const auth = useStore().getItem('auth'),
       isRemote = results.items?.songs?.title?.startsWith('Playlist - ');
@@ -80,13 +82,12 @@ const openSong = el => {
         console.log(json);
 
         if (!json.error) {
-          if (json.message == 'ok') emit('remove', props.index);
+          if (json.message == 'ok') rm();
         } else alert(json.error);
       });
-    } else
-      useUpdatePlaylist(props.playlistId, props.index, () =>
-        emit('remove', props.index),
-      );
+    } else if (props.offlineUri)
+      window.offline && window.offline.remove(props.offlineUri).then(rm);
+    else useUpdatePlaylist(props.playlistId, props.index, () => rm());
   },
   Share = () => {
     const data = {
@@ -132,7 +133,7 @@ onMounted(() => {
       <Transition name="fade">
         <div v-if="show" class="popup ign">
           <span
-            v-if="playlistId"
+            v-if="playlistId || offlineUri"
             class="bi bi-dash-lg clickable ign"
             @click="Remove"></span>
           <span
