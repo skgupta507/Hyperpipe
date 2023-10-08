@@ -16,7 +16,8 @@
         "local": "Lokal",
         "playlists": "Daftar Putar",
         "feeds": "Umpan",
-        "offline": "Luring"
+        "offline": "Luring",
+        "logout": "Keluar"
     },
     "playlist": {
         "select": "Pilih Daftar Putar yang Ingin Ditambahkan",
