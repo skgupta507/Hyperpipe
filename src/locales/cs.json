@@ -16,7 +16,8 @@
         "spotlight": "V záři reflektorů",
         "playlists": "Playlisty",
         "feeds": "Zdroje",
-        "offline": "Offline"
+        "offline": "Offline",
+        "logout": "Odhlásit se"
     },
     "pref": {
         "codec": "Kodek",
