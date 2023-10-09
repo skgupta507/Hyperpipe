@@ -16,7 +16,8 @@
         "remote": "Piped",
         "search": "検索",
         "feeds": "フィード",
-        "offline": "オフライン"
+        "offline": "オフライン",
+        "logout": "ログアウト"
     },
     "action": {
         "back": "戻る",
@@ -54,14 +55,15 @@
         "nord": "Nord",
         "home": "ホーム",
         "explore": "探索",
-        "charts": "チャート",
+        "charts": "ランキング",
         "library": "ライブラリ",
         "blur": "透かし",
         "blur_light": "透かし (ライト)",
         "light": "ライト",
         "compact": "小型表示",
         "prm": "動く表示を減らす",
-        "language": "言語"
+        "language": "言語",
+        "cc": "ランキングの対象国を推測"
     },
     "info": {
         "see_all": "すべて表示",
