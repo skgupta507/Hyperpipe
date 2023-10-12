@@ -25,7 +25,8 @@
         "login": "登录",
         "playlists": "播放列表",
         "feeds": "订阅源",
-        "offline": "离线"
+        "offline": "离线",
+        "logout": "登出"
     },
     "action": {
         "add": "添加",
