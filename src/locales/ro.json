@@ -16,7 +16,8 @@
         "local": "Local",
         "songs": "Melodii",
         "feeds": "Fluxuri",
-        "offline": "Offline"
+        "offline": "Offline",
+        "logout": "Deloghează-te"
     },
     "action": {
         "back": "Înapoi",
@@ -61,7 +62,8 @@
         "charts": "Topuri",
         "library": "Bibliotecă",
         "prm": "Preferă mișcarea redusă",
-        "language": "Limbă"
+        "language": "Limbă",
+        "cc": "Auto inferire a țării pentru topuri"
     },
     "instances": {
         "cdn": "CDN",
