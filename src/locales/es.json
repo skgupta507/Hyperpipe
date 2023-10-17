@@ -63,7 +63,8 @@
         "compact": "Vista compacta",
         "prm": "Prefiere el movimiento reducido",
         "language": "Idioma",
-        "cc": "Inferir automáticamente el país de los gráficos"
+        "cc": "Inferir automáticamente el país de los gráficos",
+        "black": "Oscuro"
     },
     "info": {
         "see_all": "Ver todo",
