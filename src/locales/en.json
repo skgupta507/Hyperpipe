@@ -47,6 +47,7 @@
     "theme": "Theme",
     "dark": "Dark (Default)",
     "light": "Light",
+    "black": "Black",
     "blur": "Blur",
     "blur_light": "Blur (Light)",
     "dracula": "Dracula",
@@ -93,8 +94,8 @@
     "lyrics": "Lyrics"
   },
   "statusBar": {
-    "currentPlaylist": "Current Playlist", 
-    "loop": "Loop", 
+    "currentPlaylist": "Current Playlist",
+    "loop": "Loop",
     "add_current_to_playlist": "Add Current Song to a Playlist"
   },
   "general": {

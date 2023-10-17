@@ -22,7 +22,8 @@
 }
 
 :root,
-body[data-theme='dark'] {
+body[data-theme='dark'],
+body[date-theme='black'] {
   --color-foreground: var(--vt-c-blue);
   --color-background: var(--vt-c-black);
   --color-background-soft: var(--vt-c-black-soft);
@@ -37,6 +38,11 @@ body[data-theme='dark'] {
 
   --color-heading: var(--vt-c-text-dark-1);
   --color-text: var(--vt-c-text-dark-2);
+}
+
+body[data-theme='black'] {
+  --color-background: #000;
+  --color-background-mute: #181818;
 }
 
 body[data-theme^='light'] {
