@@ -43,7 +43,8 @@
         "compact": "Kompaktní zobrazení",
         "prm": "Upřednostňovat omezený pohyb",
         "language": "Jazyk",
-        "cc": "Automatické odvození země pro grafy"
+        "cc": "Automatické odvození země pro grafy",
+        "black": "Černý"
     },
     "instances": {
         "name": "Název",
