@@ -17,7 +17,8 @@
     "remote": "Remote",
     "search": "Search",
     "feeds": "Feeds",
-    "offline": "Offline"
+    "offline": "Offline",
+    "restore_prefs": "Restore preferences"
   },
   "action": {
     "back": "Back",
@@ -93,8 +94,8 @@
     "lyrics": "Lyrics"
   },
   "statusBar": {
-    "currentPlaylist": "Current Playlist", 
-    "loop": "Loop", 
+    "currentPlaylist": "Current Playlist",
+    "loop": "Loop",
     "add_current_to_playlist": "Add Current Song to a Playlist"
   },
   "general": {
