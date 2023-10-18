@@ -131,10 +131,13 @@ onMounted(() => {
     <option value="dark">{{ t('pref.dark') }}</option>
     <option value="light">{{ t('pref.light') }}</option>
     <option value="black">{{ t('pref.black') }}</option>
-    <option value="blur">{{ t('pref.blur') }}</option>
-    <option value="light blur">{{ t('pref.blur_light') }}</option>
     <option value="dracula">{{ t('pref.dracula') }}</option>
     <option value="nord">{{ t('pref.nord') }}</option>
+    <option value="dark blur">{{ t('pref.blur') }}</option>
+    <option value="light blur">{{ t('pref.blur_light') }}</option>
+    <option value="black blur">{{ t('pref.blur_black') }}</option>
+    <option value="dracula blur">{{ t('pref.blur_dracula') }}</option>
+    <option value="nord blur">{{ t('pref.blur_nord') }}</option>
   </select>
 
   <div class="left">
