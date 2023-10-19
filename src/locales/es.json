@@ -17,7 +17,8 @@
         "playlists": "Listas de reproducción",
         "feeds": "Fuentes",
         "offline": "Sin conexión",
-        "logout": "Cerrar la sesión"
+        "logout": "Cerrar la sesión",
+        "restore_prefs": "Restablecer las preferencias"
     },
     "action": {
         "back": "Atrás",
@@ -51,9 +52,9 @@
         "best": "La mejor",
         "tab": "Ficha predeterminada",
         "dark": "Oscuro (Por defecto)",
-        "blur": "Desenfocar",
+        "blur": "Negro (Desenfoque)",
         "light": "Claro",
-        "blur_light": "Desenfoque (Luz)",
+        "blur_light": "Claro (Desenfoque)",
         "dracula": "Drácula",
         "nord": "Nord",
         "home": "Inicio",
@@ -64,7 +65,10 @@
         "prm": "Prefiere el movimiento reducido",
         "language": "Idioma",
         "cc": "Inferir automáticamente el país de los gráficos",
-        "black": "Oscuro"
+        "black": "Oscuro",
+        "blur_nord": "Nord (Desenfoque)",
+        "blur_dracula": "Drácula (desenfoque)",
+        "blur_black": "Oscuro (Difuminado)"
     },
     "info": {
         "see_all": "Ver todo",
