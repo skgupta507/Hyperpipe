@@ -22,8 +22,8 @@
 }
 
 :root,
-body[data-theme='dark'],
-body[date-theme='black'] {
+body[data-theme^='dark'],
+body[date-theme^='black'] {
   --color-foreground: var(--vt-c-blue);
   --color-background: var(--vt-c-black);
   --color-background-soft: var(--vt-c-black-soft);
@@ -40,7 +40,7 @@ body[date-theme='black'] {
   --color-text: var(--vt-c-text-dark-2);
 }
 
-body[data-theme='black'] {
+body[data-theme^='black'] {
   --color-background: #000;
   --color-background-mute: #181818;
 }
@@ -62,7 +62,7 @@ body[data-theme^='light'] {
   --color-text: var(--vt-c-text-light-1);
 }
 
-body[data-theme='nord'] {
+body[data-theme^='nord'] {
   --color-foreground: #88c0d0;
   --color-background: #2e3440;
   --color-background-soft: #3b4252;
@@ -78,7 +78,7 @@ body[data-theme='nord'] {
   --color-text: #d8dee9;
 }
 
-body[data-theme='dracula'] {
+body[data-theme^='dracula'] {
   --color-foreground: #bd93f9;
   --color-background: #282a36;
   --color-background-soft: #44475a;
