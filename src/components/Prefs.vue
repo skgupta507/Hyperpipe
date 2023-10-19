@@ -24,7 +24,8 @@ const { t, setupLocale } = useI18n(),
   next = ref(false),
   compact = ref(false),
   prm = ref(false),
-  cc = ref(false);
+  cc = ref(false),
+  restoreUrl = ref('');
 
 getJson('https://piped-instances.kavin.rocks')
   .then(i => i || getJson('https://instances.tokhmi.xyz'))
@@ -39,6 +40,16 @@ getJson('https://raw.codeberg.page/Hyperpipe/pages/api/backend.json').then(
     console.log(i);
   },
 );
+
+const getRestoreUrl = () => {
+  const params = new URLSearchParams();
+  Object.keys(window.localStorage).forEach(key => {
+    params.set(key, window.localStorage.getItem(key));
+  });
+  restoreUrl.value = window.location.origin + '/restore/?' + params;
+};
+
+getRestoreUrl();
 
 function getBool(val) {
   return 'bi ' + (val ? 'bi-check2' : 'bi-x-lg');
@@ -365,6 +376,9 @@ onMounted(() => {
       </tbody>
     </table>
   </div>
+
+  <h2>{{ t('title.restore_prefs') }}</h2>
+  <a :href="restoreUrl">{{ restoreUrl }}</a>
 
   <footer>
     {{ date }}

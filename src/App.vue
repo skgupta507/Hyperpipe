@@ -24,7 +24,10 @@ import Artist from '@/components/Artist.vue';
 const Genres = defineAsyncComponent(() => import('@/components/Genres.vue')),
   Charts = defineAsyncComponent(() => import('@/components/Charts.vue')),
   Library = defineAsyncComponent(() => import('@/components/Library.vue')),
-  Prefs = defineAsyncComponent(() => import('@/components/Prefs.vue'));
+  Prefs = defineAsyncComponent(() => import('@/components/Prefs.vue')),
+  RestorePrefs = defineAsyncComponent(() =>
+    import('@/components/RestorePrefs.vue'),
+  );
 
 /* Composables */
 import { useStore, useUnwrap } from '@/scripts/util.js';
@@ -86,6 +89,9 @@ function parseUrl() {
       break;
     case 'prefs':
       nav.state.page = 'prefs';
+      break;
+    case 'restore':
+      nav.state.page = 'restore';
       break;
     default:
       console.log(loc);
@@ -201,6 +207,8 @@ onMounted(() => {
       @open-playlist="results.getAlbum" />
 
     <Prefs v-if="nav.state.page == 'prefs'" />
+
+    <RestorePrefs v-if="nav.state.page == 'restore'" />
   </main>
 
   <Transition name="fade">

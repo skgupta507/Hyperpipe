@@ -17,7 +17,8 @@
     "remote": "Remote",
     "search": "Search",
     "feeds": "Feeds",
-    "offline": "Offline"
+    "offline": "Offline",
+    "restore_prefs": "Restore preferences"
   },
   "action": {
     "back": "Back",
