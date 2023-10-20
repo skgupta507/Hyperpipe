@@ -17,7 +17,8 @@
         "playlists": "Playlisty",
         "feeds": "Zdroje",
         "offline": "Offline",
-        "logout": "Odhlásit se"
+        "logout": "Odhlásit se",
+        "restore_prefs": "Obnovit nastavení"
     },
     "pref": {
         "codec": "Kodek",
@@ -32,8 +33,8 @@
         "tab": "Výchozí karta",
         "dark": "Tmavý (výchozí)",
         "light": "Světlý",
-        "blur": "Rozmazaný",
-        "blur_light": "Rozmazaný (světlý)",
+        "blur": "Tmavý (rozmazaný)",
+        "blur_light": "Světlý (rozmazaný)",
         "dracula": "Drákula",
         "nord": "Nord",
         "explore": "Procházet",
@@ -44,7 +45,10 @@
         "prm": "Upřednostňovat omezený pohyb",
         "language": "Jazyk",
         "cc": "Automatické odvození země pro grafy",
-        "black": "Černý"
+        "black": "Černý",
+        "blur_nord": "Nord (rozmazaný)",
+        "blur_dracula": "Drákula (rozmazaný)",
+        "blur_black": "Černý (rozmazaný)"
     },
     "instances": {
         "name": "Název",
