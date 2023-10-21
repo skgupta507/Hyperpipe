@@ -17,7 +17,8 @@
         "playlists": "Daftar Putar",
         "feeds": "Umpan",
         "offline": "Luring",
-        "logout": "Keluar"
+        "logout": "Keluar",
+        "restore_prefs": "Kembalikan pengaturan"
     },
     "playlist": {
         "select": "Pilih Daftar Putar yang Ingin Ditambahkan",
@@ -40,11 +41,11 @@
         "volume": "Volume Default",
         "light": "Terang",
         "nord": "Nord",
-        "blur_light": "Buram (Terang)",
+        "blur_light": "Terang (Buram)",
         "dracula": "Drakula",
         "compact": "Tampilan Kompak",
         "dark": "Gelap (Bawaan)",
-        "blur": "Buram",
+        "blur": "Gelap (Buram)",
         "tab": "Tab Bawaan",
         "home": "Beranda",
         "explore": "Jelajahi",
@@ -52,7 +53,11 @@
         "library": "Pustaka",
         "prm": "Lebih Suka Sedikit Gerakan",
         "language": "Bahasa",
-        "cc": "Tentukan negara secara otomatis untuk chart"
+        "cc": "Tentukan negara secara otomatis untuk chart",
+        "blur_nord": "Nord (Buram)",
+        "blur_dracula": "Drakula (Buram)",
+        "black": "Hitam",
+        "blur_black": "Hitam (Buram)"
     },
     "info": {
         "no_info": "Tidak Ada Informasi Tersedia",
