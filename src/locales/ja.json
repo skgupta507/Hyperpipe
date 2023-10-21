@@ -17,7 +17,8 @@
         "search": "検索",
         "feeds": "フィード",
         "offline": "オフライン",
-        "logout": "ログアウト"
+        "logout": "ログアウト",
+        "restore_prefs": "設定用URLから復元"
     },
     "action": {
         "back": "戻る",
@@ -28,7 +29,7 @@
         "receive": "受信",
         "import": "インポート",
         "export": "エクスポート",
-        "register_on": "アカウントがなければここから登録"
+        "register_on": "アカウントがなければ登録 →"
     },
     "playlist": {
         "local": "端末内の再生リスト",
@@ -57,14 +58,17 @@
         "explore": "探索",
         "charts": "ランキング",
         "library": "ライブラリ",
-        "blur": "透かし",
-        "blur_light": "透かし (ライト)",
+        "blur": "ダーク (透かし)",
+        "blur_light": "ライト (透かし)",
         "light": "ライト",
         "compact": "小型表示",
         "prm": "動く表示を減らす",
         "language": "言語",
         "cc": "ランキングの対象国を推測",
-        "black": "黒"
+        "black": "黒",
+        "blur_nord": "Nord (透かし)",
+        "blur_dracula": "DraculDracula",
+        "blur_black": "黒 (透かし)"
     },
     "info": {
         "see_all": "すべて表示",
