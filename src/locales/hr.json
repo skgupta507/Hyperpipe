@@ -17,7 +17,8 @@
         "local": "Lokalni",
         "feeds": "Feedovi",
         "offline": "Offline",
-        "logout": "Odjava"
+        "logout": "Odjava",
+        "restore_prefs": "Obnovi postavke"
     },
     "info": {
         "search": "Započni pretraživanje",
@@ -60,8 +61,8 @@
         "volume": "Zadana glasnoća",
         "tab": "Zadana kartica",
         "light": "Svijetla",
-        "blur": "Zamućena",
-        "blur_light": "Zamućena (svijetla)",
+        "blur": "Tamna (zamućeno)",
+        "blur_light": "Svijetla (zamućeno)",
         "dracula": "Drakula",
         "nord": "Nord",
         "dark": "Tamna (zadano)",
@@ -72,7 +73,11 @@
         "compact": "Kompaktni prikaz",
         "prm": "Preferira reduciranu brzinu kretanja",
         "language": "Jezik",
-        "cc": "Automatski pogađaj zemlju za popis pjesama"
+        "cc": "Automatski pogađaj zemlju za popis pjesama",
+        "blur_nord": "Nord (zamućeno)",
+        "blur_dracula": "Drakula (zamućeno)",
+        "black": "Crna",
+        "blur_black": "Crna (zamućeno)"
     },
     "lyrics": {
         "load": "Dohvaćanje tekstova",
