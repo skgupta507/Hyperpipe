@@ -9,7 +9,7 @@ RUN --mount=type=cache,target=/root/.cache/node \
     npm install --prefer-offline && \
     npm run build
 
-FROM --platform=$BUILDPLATFORM nginx:stable-alpine
+FROM --platform=$TARGETPLATFORM nginx:stable-alpine
 
 COPY --from=build /app/dist/ /usr/share/nginx/html/
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
