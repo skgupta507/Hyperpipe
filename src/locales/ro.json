@@ -17,7 +17,8 @@
         "songs": "Melodii",
         "feeds": "Fluxuri",
         "offline": "Offline",
-        "logout": "Deloghează-te"
+        "logout": "Deloghează-te",
+        "restore_prefs": "Restaurați preferințele"
     },
     "action": {
         "back": "Înapoi",
@@ -50,10 +51,10 @@
         "auto": "auto",
         "worst": "cel mai rău",
         "volume": "Volum implicit",
-        "blur": "Ceață",
+        "blur": "Întunecat (Ceață)",
         "dark": "Întunecat (implicit)",
         "light": "Luminos",
-        "blur_light": "Ceață (Luminată)",
+        "blur_light": "Luminată (Ceață)",
         "dracula": "Dracula",
         "nord": "Nord",
         "compact": "Vizualizare compactă",
@@ -63,7 +64,11 @@
         "library": "Bibliotecă",
         "prm": "Preferă mișcarea redusă",
         "language": "Limbă",
-        "cc": "Auto inferire a țării pentru topuri"
+        "cc": "Auto inferire a țării pentru topuri",
+        "blur_nord": "Nord (Ceață)",
+        "blur_dracula": "Dracula (Ceață)",
+        "black": "Negru",
+        "blur_black": "Negru (Ceață)"
     },
     "instances": {
         "cdn": "CDN",
