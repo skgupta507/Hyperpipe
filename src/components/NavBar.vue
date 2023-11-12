@@ -66,7 +66,7 @@ function set(page) {
         @click="set('library')"
         @keydown.enter="set('library')"></span>
       <span
-        role="button"
+        role="menuitem"
         tabindex="0"
         class="nav-ico bi bi-gear clickable"
         :data-active="nav.state.page == 'prefs'"
@@ -103,6 +103,9 @@ h1.bi svg {
 .wrap {
   text-align: center;
   margin-left: auto;
+}
+[role='menuitem'] {
+  cursor: pointer;
 }
 .nav-ico {
   margin: 0 0.5rem;

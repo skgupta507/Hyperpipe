@@ -157,6 +157,7 @@ onMounted(() => {
 .card {
   margin: 1rem 0;
   justify-content: initial;
+  cursor: pointer;
 }
 .song h4 {
   overflow-wrap: anywhere;

@@ -14,15 +14,15 @@
     "dompurify": "^3.0.6",
     "mux.js": "^6.3.0",
     "peerjs": "^1.5.1",
-    "pinia": "^2.1.6",
+    "pinia": "^2.1.7",
     "shaka-player": "^4.5.0",
     "sortablejs": "^1.15.0",
     "vue": "^3.2.38"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.4.0",
+    "@vitejs/plugin-vue": "^4.4.1",
     "prettier": "^3.0.3",
-    "vite": "^4.4.11",
-    "vite-plugin-pwa": "^0.16.5"
+    "vite": "^4.5.0",
+    "vite-plugin-pwa": "^0.16.7"
   }
 }

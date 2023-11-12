@@ -46,10 +46,9 @@ const getRestoreUrl = () => {
   Object.keys(window.localStorage).forEach(key => {
     params.set(key, window.localStorage.getItem(key));
   });
-  restoreUrl.value = window.location.origin + '/restore/?' + params;
+  params.size == 0 ||
+    (restoreUrl.value = window.location.origin + '/restore/?' + params);
 };
-
-getRestoreUrl();
 
 function getBool(val) {
   return 'bi ' + (val ? 'bi-check2' : 'bi-x-lg');
@@ -61,6 +60,7 @@ function getStore(key) {
 
 function setStore(key, value) {
   store.setItem(key, value);
+  getRestoreUrl();
 }
 
 function getTheme() {
@@ -125,6 +125,7 @@ const verifyApi = computed(() =>
   );
 
 onMounted(() => {
+  getRestoreUrl();
   getStoreBool('next', next, true);
   getStoreBool('compact', compact, false);
   getStoreBool('prm', prm, false);
@@ -377,8 +378,10 @@ onMounted(() => {
     </table>
   </div>
 
-  <h2>{{ t('title.restore_prefs') }}</h2>
-  <a :href="restoreUrl">{{ restoreUrl }}</a>
+  <template v-if="restoreUrl">
+    <h2>{{ t('title.restore_prefs') }}</h2>
+    <a :href="restoreUrl" class="restore">{{ restoreUrl }}</a>
+  </template>
 
   <footer>
     {{ date }}
@@ -402,8 +405,18 @@ h2 {
 h2,
 h3,
 label,
-footer {
+footer,
+.restore {
   text-align: center;
+  word-break: break-word;
+}
+.restore {
+  padding: 0.5rem;
+  margin: 1rem 0;
+  background: var(--color-background-mute);
+  border-radius: 0.25rem;
+  font-weight: bold;
+  letter-spacing: 0.05rem;
 }
 input[type='number'] {
   width: 4.5rem;
@@ -445,21 +458,6 @@ label[for^='pref-chk'] {
 table {
   width: 100%;
 }
-th,
-td {
-  margin: 0.25rem 0.5rem;
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.125rem;
-  background-color: var(--color-background-mute);
-}
-th {
-  font-weight: bolder;
-}
-td {
-  text-align: center;
-  max-width: 40vw;
-  overflow-wrap: break-word;
-}
 td.bi {
   color: indianred;
   font-size: 1.25rem;
@@ -468,7 +466,7 @@ td.bi[data-active='true'] {
   color: var(--color-foreground);
 }
 footer {
-  margin-bottom: 2rem;
+  margin: 1rem 0;
 }
 footer .bi::before {
   font-size: 1.75rem;

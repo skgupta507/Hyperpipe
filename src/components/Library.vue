@@ -488,7 +488,9 @@ onMounted(async () => {
       </p>
     </form>
 
-    <button v-if="auth" @click="Logout" class="logout textbox">{{ t('title.logout') }}</button>
+    <button v-if="auth" @click="Logout" class="logout textbox">
+      {{ t('title.logout') }}
+    </button>
   </div>
 </template>
 

@@ -204,6 +204,7 @@ button {
   background: transparent;
   color: var(--color-text);
   appearance: none;
+  cursor: pointer;
 }
 button:focus {
   outline: none;
@@ -396,6 +397,23 @@ img {
   [data-compact] .grid-3 {
     --col: 5;
   }
+}
+
+/* Table */
+th,
+td {
+  margin: 0.25rem 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.125rem;
+  background-color: var(--color-background-mute);
+}
+th {
+  font-weight: bolder;
+}
+td {
+  text-align: center;
+  max-width: 40vw;
+  overflow-wrap: break-word;
 }
 
 /* Animations */

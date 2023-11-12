@@ -29,67 +29,63 @@ function audioCanPlay() {
 
 async function Stream() {
   const res = player.state,
-    shaka = import('shaka-player/dist/shaka-player.compiled.js');
+    shaka = await import('shaka-player/dist/shaka-player.compiled.js').then(
+      mod => mod.default,
+    );
 
   const { url, mime } = await useManifest(res);
 
   if (!window.audioPlayer) {
-    shaka
-      .then(shaka => shaka.default)
-      .then(shaka => {
-        shaka.polyfill.installAll();
+    shaka.polyfill.installAll();
 
-        if (shaka.Player.isBrowserSupported()) {
-          const audioPlayer = new shaka.Player(audio.value),
-            codecs = store.getItem('codec');
+    if (shaka.Player.isBrowserSupported()) {
+      const audioPlayer = new shaka.Player(audio.value),
+        codecs = store.getItem('codec');
 
-          audioPlayer
-            .getNetworkingEngine()
-            .registerRequestFilter((_type, req) => {
-              const headers = req.headers;
+      audioPlayer.getNetworkingEngine().registerRequestFilter((_type, req) => {
+        const headers = req.headers;
 
-              let url = new URL(req.uris[0]);
+        let url = new URL(req.uris[0]);
 
-              if (url.pathname.indexOf('/videoplayback') > -1) {
-                if (headers.Range) {
-                  url.searchParams.set('range', headers.Range.split('=')[1]);
-                  req.headers = {};
-                  req.uris[0] = url.toString();
-                }
-              }
-            });
-
-          window.offline = new shaka.offline.Storage(audioPlayer);
-          window.offline.configure({
-            offline: {
-              progressCallback: ({ appMetadata: { title, artist } }, prog) =>
-                a.add(`${title} by ${artist}: ${Math.floor(prog * 100)}%`),
-              trackSelectionCallback: tracks => [
-                tracks
-                  .sort((a, b) => a.bandwidth - b.bandwidth)
-                  .find(i => i.type == 'variant'),
-              ],
-            },
-          });
-
-          audioPlayer.configure({
-            preferredAudioCodecs: codecs ? codecs.split(':') : ['opus', 'mp4a'],
-            manifest: {
-              disableVideo: true,
-            },
-            streaming: {
-              segmentPrefetchLimit: 2,
-            },
-          });
-
-          window.audioPlayer = audioPlayer;
+        if (url.pathname.indexOf('/videoplayback') > -1) {
+          if (headers.Range) {
+            url.searchParams.set('range', headers.Range.split('=')[1]);
+            req.headers = {};
+            req.uris[0] = url.toString();
+          }
         }
       });
+
+      window.offline = new shaka.offline.Storage(audioPlayer);
+      window.offline.configure({
+        offline: {
+          progressCallback: ({ appMetadata: { title, artist } }, prog) =>
+            a.add(`${title} by ${artist}: ${Math.floor(prog * 100)}%`),
+          trackSelectionCallback: tracks => [
+            tracks
+              .sort((a, b) => a.bandwidth - b.bandwidth)
+              .find(i => i.type == 'variant'),
+          ],
+        },
+      });
+
+      audioPlayer.configure({
+        preferredAudioCodecs: codecs ? codecs.split(':') : ['opus', 'mp4a'],
+        manifest: {
+          disableVideo: true,
+        },
+        streaming: {
+          segmentPrefetchLimit: 2,
+        },
+      });
+
+      window.audioPlayer = audioPlayer;
+    }
   }
 
   const quality = store.getItem('quality');
 
-  if (url) {
+  if (url)
     window.audioPlayer
       .load(url, 0, mime)
       .then(() => {
@@ -116,7 +112,6 @@ async function Stream() {
         console.error(err);
         a.add('Error: ' + err.code);
       });
-  }
 }
 
 function destroy() {
