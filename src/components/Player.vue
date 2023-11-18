@@ -1,9 +1,6 @@
 <script setup>
 import { ref, watch, onMounted, onBeforeUnmount, onUnmounted } from 'vue';
 
-import muxjs from 'mux.js';
-window.muxjs = muxjs;
-
 import { useStore, useRoute, useManifest } from '@/scripts/util.js';
 import { useData, usePlayer } from '@/stores/player.js';
 import { useAlert } from '@/stores/misc';
@@ -28,6 +25,7 @@ function audioCanPlay() {
 }
 
 async function Stream() {
+  
   const res = player.state,
     shaka = await import('shaka-player/dist/shaka-player.compiled.js').then(
       mod => mod.default,
@@ -35,12 +33,17 @@ async function Stream() {
 
   const { url, mime } = await useManifest(res);
 
+  if (mime == 'application/x-mpegURL')
+    window.muxjs ??= await import ('mux.js').then(mod => mod.default)
+
   if (!window.audioPlayer) {
     shaka.polyfill.installAll();
 
     if (shaka.Player.isBrowserSupported()) {
-      const audioPlayer = new shaka.Player(audio.value),
+      const audioPlayer = new shaka.Player(),
         codecs = store.getItem('codec');
+
+      audioPlayer.attach(audio.value)
 
       audioPlayer.getNetworkingEngine().registerRequestFilter((_type, req) => {
         const headers = req.headers;
