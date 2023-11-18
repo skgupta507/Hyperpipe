@@ -43,7 +43,7 @@ async function Stream() {
       const audioPlayer = new shaka.Player(),
         codecs = store.getItem('codec');
 
-      audioPlayer.attach(audio.value)
+      await audioPlayer.attach(audio.value)
 
       audioPlayer.getNetworkingEngine().registerRequestFilter((_type, req) => {
         const headers = req.headers;
