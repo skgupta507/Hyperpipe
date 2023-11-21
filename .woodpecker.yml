@@ -9,7 +9,6 @@ steps:
       - npm install && npm audit fix
       - npm run build
     when:
-      branch: *
       event: ['push', 'pull_request']
 
   surge:
