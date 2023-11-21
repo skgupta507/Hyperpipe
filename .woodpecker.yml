@@ -1,3 +1,7 @@
+when:
+  branch: main
+  event: ['push']
+
 steps:
   build:
     image: node:alpine
@@ -5,30 +9,25 @@ steps:
       - npm install && npm audit fix
       - npm run build
     when:
+      branch: *
       event: ['push', 'pull_request']
 
   surge:
     image: node:alpine
+    secrets: [surge_login, surge_token]
     commands:
       - npm install surge
       - cp dist/index.html dist/200.html
       - npx surge ./dist --domain https://hyperpipe.surge.sh
-    secrets: [surge_login, surge_token]
-    when:
-      branch: main
-      event: ['push']
 
   docker:
-    image: woodpeckerci/plugin-docker-buildx:2
+    image: woodpeckerci/plugin-docker-buildx
     settings:
       platforms: linux/amd64,linux/arm64
       repo: codeberg.org/hyperpipe/hyperpipe
       registry: codeberg.org
-      tags: latest
+      tag: latest
       username:
         from_secret: cb_user
       password:
         from_secret: cb_token
-    when:
-      branch: main
-      event: ['push']
