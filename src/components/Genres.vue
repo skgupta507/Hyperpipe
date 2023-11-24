@@ -124,10 +124,7 @@ onMounted(get);
 }
 .btn-grid {
   display: grid;
-  align-self: center;
-  max-width: 100%;
-  grid-template-columns: repeat(auto-fill, 8rem);
-  grid-auto-rows: 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
   gap: 0.125rem;
   padding: 1rem 0;
 }
@@ -153,10 +150,5 @@ onMounted(get);
   margin-top: 1.75rem;
   text-align: center;
   text-transform: capitalize;
-}
-@media (max-width: 600px) {
-  .btn-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
 }
 </style>
