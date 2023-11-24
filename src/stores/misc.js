@@ -86,13 +86,13 @@ export const SUPPORTED_LOCALES = [
     cc: 'NL',
   },
   {
-    code: 'pt',
-    name: 'Português',
+    code: 'pt_pt',
+    name: 'Português (Portugal)',
     cc: 'PT',
   },
   {
     code: 'pt_br',
-    name: 'Português Brasileiro',
+    name: 'Português (Brasil)',
     cc: 'BR',
   },
   {
