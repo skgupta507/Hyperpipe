@@ -33,9 +33,6 @@ async function Stream() {
 
   const { url, mime } = await useManifest(res);
 
-  if (mime == 'application/x-mpegURL')
-    window.muxjs ??= await import ('mux.js').then(mod => mod.default)
-
   if (!window.audioPlayer) {
     shaka.polyfill.installAll();
 
@@ -113,7 +110,8 @@ async function Stream() {
       })
       .catch(err => {
         console.error(err);
-        a.add('Error: ' + err.code);
+        if (err.code == 3016) a.add('MediaError: ' + err.data[0])
+        else a.add('Error: ' + err.code);
       });
 }
 
