@@ -26,7 +26,8 @@
         "playlists": "播放列表",
         "feeds": "订阅源",
         "offline": "离线",
-        "logout": "登出"
+        "logout": "登出",
+        "restore_prefs": "还原偏好"
     },
     "action": {
         "add": "添加",
@@ -50,10 +51,10 @@
         "volume": "默认音量",
         "theme": "主题",
         "tab": "默认标签页",
-        "blur": "模糊",
+        "blur": "深色（模糊）",
         "dark": "深色（默认）",
         "light": "亮色",
-        "blur_light": "模糊（亮色）",
+        "blur_light": "亮色（模糊）",
         "dracula": "Dracula",
         "nord": "Nord",
         "home": "主页",
@@ -63,7 +64,11 @@
         "compact": "紧凑视图",
         "prm": "偏好减少动态效果",
         "language": "语言",
-        "cc": "自动选择排行榜对应的地区"
+        "cc": "自动选择排行榜对应的地区",
+        "blur_nord": "Nord（模糊）",
+        "blur_dracula": "Dracula（模糊）",
+        "black": "黑色",
+        "blur_black": "黑色（模糊）"
     },
     "info": {
         "see_all": "显示全部",
