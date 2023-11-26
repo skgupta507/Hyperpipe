@@ -22,15 +22,16 @@ export const useData = defineStore('data', () => {
 
   async function getSong(e) {
     const hash = new URLSearchParams(e.substring(e.indexOf('?'))).get('v'),
-      json = await getJsonPiped('/streams/' + hash);
+      json = await getJsonPiped('/streams/' + hash),
+      unamp = txt => txt.replace(AMP, '&');
 
-    state.art = json.thumbnailUrl.replace(AMP, '&');
+    state.art = unamp(json.thumbnailUrl);
     state.description = json.description;
-    state.title = json.title.replace(AMP, '&');
-    state.artist = json.uploader.replace(' - Topic', '').replace(AMP, '&');
+    state.title = unamp(json.title);
+    state.artist = unamp(json.uploader.replace(' - Topic', ''));
     state.artistUrl = json.uploaderUrl;
     player.state.duration = json.duration;
-    player.state.hls = json.hls;
+    player.state.hls = unamp(json.hls);
     player.state.streams = json.audioStreams;
     state.url = e;
 
