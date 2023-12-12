@@ -2,14 +2,17 @@
 import { ref, onMounted } from 'vue';
 import Sortable from 'sortablejs/modular/sortable.core.esm.js';
 
+import { useShuffle } from '@/scripts/util.js';
+import { useCreatePlaylist } from '@/scripts/db.js';
 import { useData, usePlayer } from '@/stores/player.js';
-import { useI18n } from '@/stores/misc.js';
+import { useI18n, useAlert } from '@/stores/misc.js';
 
 const emit = defineEmits(['playthis']);
 
 const { t } = useI18n(),
   player = usePlayer(),
-  data = useData();
+  data = useData(),
+  { add: addal } = useAlert();
 
 const pl = ref(null);
 
@@ -39,6 +42,35 @@ onMounted(() => {
       ref="pl"
       class="pl-modal placeholder"
       :data-placeholder="t('playlist.add')">
+      <div v-if="data.state.urls && data.state.urls.length > 0" class="pl-bar">
+        <button
+          class="bi bi-shuffle pl-btn"
+          title="shuffle queue"
+          @click="
+            () => {
+              data.state.urls = useShuffle(data.state.urls);
+              $emit('playthis', data.state.urls[0]);
+            }
+          "></button>
+        <button
+          class="bi bi-bookmark-plus pl-btn"
+          title="save queue"
+          @click="
+            () => {
+              let urls = data.state.urls.map(i => ({
+                title: i.title,
+                url: i.url,
+              }));
+              useCreatePlaylist(new Date().toISOString(), urls, () =>
+                addal(t('info.saved')),
+              );
+            }
+          "></button>
+        <button
+          class="bi bi-dash-lg pl-btn"
+          title="clear queue"
+          @click="data.state.urls = []"></button>
+      </div>
       <div
         v-for="plurl in data.state.urls"
         class="pl-item"
@@ -87,21 +119,40 @@ onMounted(() => {
 .placeholder:empty::before {
   --ico: '\f64d';
 }
+.pl-bar {
+  display: flex;
+  margin-bottom: 0.25rem;
+}
+.pl-btn {
+  height: 2.5rem;
+  aspect-ratio: 1;
+  line-height: 2.5rem;
+}
+.pl-item,
+.pl-btn {
+  border-radius: 0.35rem;
+  margin: 0.125rem;
+  background: var(--color-background);
+}
+.pl-btn:first-child + .pl-btn {
+  margin-left: auto;
+}
 .pl-item {
   display: flex;
   align-items: center;
   min-height: 3.55rem;
   column-gap: 0.4rem;
   padding: 0.4rem;
-  margin: 0.125rem;
-  border-radius: 0.25rem;
-  background: var(--color-background);
+  margin-left: 0;
+  margin-right: 0;
   transition: background-color 0.1s ease;
 }
-.pl-item:hover {
+.pl-item:hover,
+.pl-btn:hover {
   background: var(--color-background-soft);
 }
-.pl-item:active {
+.pl-item:active,
+.pl-btn:active {
   background: var(--color-border);
 }
 .pl-main {

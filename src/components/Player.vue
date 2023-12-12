@@ -5,6 +5,8 @@ import { useStore, useRoute, useManifest } from '@/scripts/util.js';
 import { useData, usePlayer } from '@/stores/player.js';
 import { useAlert } from '@/stores/misc';
 
+let shaka;
+
 const player = usePlayer(),
   data = useData(),
   store = useStore(),
@@ -25,11 +27,11 @@ function audioCanPlay() {
 }
 
 async function Stream() {
-  
-  const res = player.state,
-    shaka = await import('shaka-player/dist/shaka-player.compiled.js').then(
-      mod => mod.default,
-    );
+  const res = player.state;
+
+  shaka ??= await import('shaka-player/dist/shaka-player.compiled.js').then(
+    mod => mod.default,
+  );
 
   const { url, mime } = await useManifest(res);
 
@@ -40,7 +42,7 @@ async function Stream() {
       const audioPlayer = new shaka.Player(),
         codecs = store.getItem('codec');
 
-      await audioPlayer.attach(audio.value)
+      await audioPlayer.attach(audio.value);
 
       audioPlayer.getNetworkingEngine().registerRequestFilter((_type, req) => {
         const headers = req.headers;
@@ -110,7 +112,7 @@ async function Stream() {
       })
       .catch(err => {
         console.error(err);
-        if (err.code == 3016) a.add('MediaError: ' + err.data[0])
+        if (err.code == 3016) a.add('MediaError: ' + err.data[0]);
         else a.add('Error: ' + err.code);
       });
 }

@@ -93,7 +93,9 @@ export function useMetadata(url, urls, data) {
 export async function useManifest({ streams, duration, hls }) {
   let url, mime;
 
-  if (window.MediaSource !== undefined && streams.length > 0) {
+  const mse = window.MediaSource || window.ManagedMediaSource;
+
+  if (mse !== undefined && streams.length > 0) {
     const { useDash } = await import('./dash.js');
 
     const dash = useDash(streams, duration);
@@ -109,4 +111,20 @@ export async function useManifest({ streams, duration, hls }) {
   }
 
   return { url, mime };
+}
+
+export function useShuffle(songs) {
+  let copy = [],
+    nos = songs.length;
+
+  while (nos) {
+    const i = Math.floor(Math.random() * nos--);
+
+    copy.push(songs[i]);
+
+    songs[i] = songs[nos];
+    delete songs[nos];
+  }
+
+  return copy;
 }

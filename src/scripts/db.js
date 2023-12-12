@@ -69,7 +69,7 @@ export function useCreatePlaylist(key, obj, cb = () => null) {
 
         cb(res);
       } else {
-        console.error(e.target.result);
+        console.error(res);
         alert(`Error: Playlist with name ${key} exists`);
       }
     };
@@ -125,9 +125,7 @@ export function useListPlaylists(cb = () => null) {
       if (pl) {
         pls.push(pl.value);
         pl.continue();
-      } else {
-        cb(pls);
-      }
+      } else cb(pls);
     };
   }
 }

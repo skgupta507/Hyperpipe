@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 
 import AddToPlaylist from '@/components/AddToPlaylist.vue';
 
@@ -97,16 +97,13 @@ const openSong = el => {
 
     useShare(data);
   };
-
-onMounted(() => {
-  console.log(props.channel, artist.state.playlistId);
-});
 </script>
 <template>
   <AddToPlaylist
     v-if="showPl"
     :song="play"
     :title="title"
+    :artist="author"
     @show="e => (showPl = e)" />
 
   <div
@@ -117,7 +114,12 @@ onMounted(() => {
     <img class="pop-2 bg-img song-bg" loading="lazy" :src="art" alt />
 
     <span class="flex content">
-      <h4>{{ title }}</h4>
+      <h4>
+        <template v-if="results.items?.songs?.title"
+          >{{ index + 1 }}.
+        </template>
+        {{ title }}
+      </h4>
       <a
         class="ign"
         :href="channel"

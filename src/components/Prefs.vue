@@ -25,20 +25,13 @@ const { t, setupLocale } = useI18n(),
   compact = ref(false),
   prm = ref(false),
   cc = ref(false),
-  restoreUrl = ref('');
+  restoreUrl = ref(''),
+  prompt = txt => window.prompt(txt);
 
-getJson('https://piped-instances.kavin.rocks')
-  .then(i => i || getJson('https://instances.tokhmi.xyz'))
-  .then(i => {
-    instances.value = i;
-    console.log(i);
-  });
+getJson('https://piped-instances.kavin.rocks').then(i => (instances.value = i));
 
 getJson('https://raw.codeberg.page/Hyperpipe/pages/api/backend.json').then(
-  i => {
-    hypInstances.value = i;
-    console.log(i);
-  },
+  i => (hypInstances.value = i),
 );
 
 const getRestoreUrl = () => {
@@ -317,7 +310,12 @@ onMounted(() => {
     v-if="instances"
     class="input"
     :value="getStore('pipedapi') || PIPED_INSTANCE"
-    @change="setStore('pipedapi', $event.target.value)">
+    @change="
+      e => {
+        const v = e.target.value;
+        setStore('pipedapi', v == 'x' ? prompt('instance') : v);
+      }
+    ">
     <option
       v-for="i in instances"
       :key="i.name"
@@ -328,6 +326,8 @@ onMounted(() => {
     <option v-if="!verifyPipedApi">
       {{ getStore('pipedapi') || PIPED_INSTANCE }}
     </option>
+
+    <option value="x">Custom</option>
   </select>
 
   <h3>{{ t('instances.auth') }}</h3>

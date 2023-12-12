@@ -15,7 +15,7 @@ const params = ref({}),
 onMounted(() => {
   const urlParams = new URLSearchParams(window.location.search);
   urlParams.forEach((val, key) => {
-    params.value[key] = val
+    params.value[key] = val;
   });
 });
 </script>

@@ -25,8 +25,8 @@ const Genres = defineAsyncComponent(() => import('@/components/Genres.vue')),
   Charts = defineAsyncComponent(() => import('@/components/Charts.vue')),
   Library = defineAsyncComponent(() => import('@/components/Library.vue')),
   Prefs = defineAsyncComponent(() => import('@/components/Prefs.vue')),
-  RestorePrefs = defineAsyncComponent(() =>
-    import('@/components/RestorePrefs.vue'),
+  RestorePrefs = defineAsyncComponent(
+    () => import('@/components/RestorePrefs.vue'),
   );
 
 /* Composables */

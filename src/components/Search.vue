@@ -17,7 +17,13 @@ import {
   getPipedQuery,
   useAuthRemovePlaylist,
 } from '@/scripts/fetch.js';
-import { useVerifyAuth, useRoute, useWrap, useShare } from '@/scripts/util.js';
+import {
+  useVerifyAuth,
+  useRoute,
+  useWrap,
+  useShare,
+  useShuffle,
+} from '@/scripts/util.js';
 import { useCreatePlaylist, useRemovePlaylist } from '@/scripts/db.js';
 
 import { useResults, useArtist } from '@/stores/results.js';
@@ -42,27 +48,15 @@ const plId = computed(
 
 const shuffleAdd = () => {
     const songs = results.items.songs.items.map(i => ({
-        url: i.url,
-        title: i.title,
-        thumbnails: [{ url: i.thumbnail }],
-        thumbnail: i.thumbnail,
-        offlineUri: i.offlineUri,
-        duration: i.duration,
-      })),
-      copy = [];
+      url: i.url,
+      title: i.title,
+      thumbnails: [{ url: i.thumbnail }],
+      thumbnail: i.thumbnail,
+      offlineUri: i.offlineUri,
+      duration: i.duration,
+    }));
 
-    let nos = songs.length;
-
-    while (nos) {
-      const i = Math.floor(Math.random() * nos--);
-
-      copy.push(songs[i]);
-
-      songs[i] = songs[nos];
-      delete songs[nos];
-    }
-
-    emit('play-urls', copy);
+    emit('play-urls', useShuffle(songs));
   },
   openSong = (song, nxt = false) => {
     if (results.items?.songs?.title && !nxt) {
@@ -112,6 +106,7 @@ const shuffleAdd = () => {
     const urls = results.items?.songs?.items?.map(item => ({
       url: item.url,
       title: item.title,
+      artist: item.uploaderName || item.artist || item.subtitle,
     }));
 
     let title = results.items?.songs?.title;
@@ -339,7 +334,9 @@ onDeactivated(() => {
         :author="song.uploaderName || song.artist || song.subtitle"
         :title="song.title || song.name"
         :channel="
-          song.uploaderUrl || song.artistUrl || '/channel/' + song.subId
+          song.uploaderUrl ||
+          song.artistUrl ||
+          (song.subId && '/channel/' + song.subId)
         "
         :play="song.url || '/watch?v=' + song.id"
         :art="

@@ -19,6 +19,7 @@ const props = defineProps({
     show: Boolean,
     song: String,
     title: String,
+    artist: String,
   }),
   emit = defineEmits(['show']);
 
@@ -29,6 +30,7 @@ const pl = ref(''),
 
 const url = () => props.song || data.state.url,
   title = () => props.title || data.state.title,
+  artist = () => props.artist || data.state.artist,
   show = {
     get is() {
       return props.song ? true : player.state.add;
@@ -43,9 +45,13 @@ function Save() {
     if (plRemote.value == true && store.auth) {
       useAuthAddToPlaylist(pl.value, url());
     } else if (plRemote.value == false) {
-      useUpdatePlaylist(pl.value, { url: url(), title: title() }, e => {
-        if (e === true) console.log('Added Song');
-      });
+      useUpdatePlaylist(
+        pl.value,
+        { url: url(), title: title(), artist: artist() },
+        e => {
+          if (e === true) console.log('Added Song');
+        },
+      );
     }
   }
 }
