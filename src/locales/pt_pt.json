@@ -14,7 +14,11 @@
         "local": "Local",
         "remote": "Remoto",
         "search": "Pesquisar",
-        "feeds": "Feeds"
+        "feeds": "Feeds",
+        "restore_prefs": "Restaurar preferências",
+        "singles": "Singles",
+        "offline": "Offline",
+        "logout": "Sair"
     },
     "action": {
         "import": "Importar",
@@ -24,7 +28,8 @@
         "cancel": "Cancelar",
         "send": "Enviar",
         "receive": "Receber",
-        "export": "Exportar"
+        "export": "Exportar",
+        "register_on": "Não tem uma conta? Cadastre"
     },
     "pref": {
         "dracula": "Drácula",
@@ -46,7 +51,15 @@
         "auto": "automática",
         "best": "melhor",
         "worst": "pior",
-        "volume": "Volume Padrão"
+        "volume": "Volume Padrão",
+        "home": "Início",
+        "blur_nord": "Nord (Desfocado)",
+        "language": "Idioma",
+        "prm": "Reduzir movimentos",
+        "cc": "Usar país do idioma na guia em alta",
+        "blur_dracula": "Dracula (Desfocado)",
+        "black": "Preto",
+        "blur_black": "Preto (Desfocado)"
     },
     "instances": {
         "up_to_date": "Atualizado",
@@ -56,11 +69,13 @@
         "auth": "Instância de Autenticação",
         "name": "Nome",
         "loc": "Localizações",
-        "cdn": "CDN"
+        "cdn": "CDN",
+        "default": "Padrão"
     },
     "lyrics": {
         "load": "Buscando Letras",
-        "void": "Sem Letras"
+        "void": "Sem Letras",
+        "lyrics": "Letras"
     },
     "playlist": {
         "local": "Playlists Locais",
@@ -74,6 +89,85 @@
     "info": {
         "see_all": "Ver Tudo",
         "search": "Comece a pesquisar",
-        "no_info": "Nenhuma Informação Disponível"
+        "no_info": "Nenhuma Informação Disponível",
+        "saved": "Gravado!",
+        "copied_to_clipboard": "Copiado para a área de transferência"
+    },
+    "countries": {
+        "DE": "Alemanha",
+        "DK": "Dinamarca",
+        "NI": "Nicarágua",
+        "CO": "Colômbia",
+        "ES": "Espanha",
+        "LU": "Luxemburgo",
+        "PY": "Paraguai",
+        "RO": "Roménia",
+        "RS": "Sérvia",
+        "IE": "Irlanda",
+        "CA": "Canadá",
+        "HU": "Hungria",
+        "FR": "França",
+        "CH": "Suíça",
+        "PL": "Polónia",
+        "GT": "Guatemala",
+        "MX": "México",
+        "ZA": "África do Sul",
+        "PA": "Panamá",
+        "KE": "Quénia",
+        "BR": "Brasil",
+        "EE": "Estónia",
+        "KR": "Coreia do Sul",
+        "AR": "Argentina",
+        "ZW": "Zimbabué",
+        "NG": "Nigéria",
+        "CL": "Chile",
+        "PE": "Peru",
+        "SE": "Suécia",
+        "IL": "Israel",
+        "GB": "Reino Unido",
+        "BO": "Bolívia",
+        "JP": "Japão",
+        "UA": "Ucrânia",
+        "EC": "Equador",
+        "TZ": "Tanzânia",
+        "PT": "Portugal",
+        "NO": "Noruega",
+        "UY": "Uruguai",
+        "CR": "Costa Rica",
+        "SA": "Arábia Saudita",
+        "IN": "Índia",
+        "NL": "Países Baixos",
+        "FI": "Finlândia",
+        "AE": "Emirados Árabes Unidos",
+        "HN": "Honduras",
+        "EG": "Egito",
+        "NZ": "Nova Zelândia",
+        "DO": "República Dominicana",
+        "BE": "Bélgica",
+        "ID": "Indonésia",
+        "SV": "El Salvador",
+        "TR": "Turquia",
+        "RU": "Rússia",
+        "UG": "Uganda",
+        "AU": "Austrália",
+        "US": "Estados Unidos",
+        "IT": "Itália",
+        "CZ": "República Checa",
+        "IS": "Islândia",
+        "ZZ": "Global",
+        "AT": "Áustria"
+    },
+    "statusBar": {
+        "loop": "Loop",
+        "add_current_to_playlist": "Adicionar música atual a uma playlist",
+        "currentPlaylist": "Playlist atual"
+    },
+    "general": {
+        "password": "Palavra-passe",
+        "username": "Nome de utilizador"
+    },
+    "artist": {
+        "subs": "Inscritos",
+        "subscribers": "Assinadores"
     }
 }
