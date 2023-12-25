@@ -15,7 +15,10 @@
         "spotlight": "Rampenlicht",
         "playlists": "Wiedergabelisten",
         "remote": "Remote",
-        "feeds": "Feeds"
+        "feeds": "Feeds",
+        "restore_prefs": "Einstellungen wiederherstellen",
+        "offline": "Offline",
+        "logout": "Abmelden"
     },
     "action": {
         "back": "Zurück",
@@ -55,8 +58,8 @@
         "tab": "Standard-Registerkarte",
         "dark": "Dunkel (Standard)",
         "light": "Hell",
-        "blur": "Unschärfe",
-        "blur_light": "Unschärfe (hell)",
+        "blur": "Dunkel (Unschärfe)",
+        "blur_light": "Hell (Unschärfe)",
         "dracula": "Drakula",
         "nord": "Nord",
         "library": "Bibliothek",
@@ -64,7 +67,11 @@
         "explore": "Erkunden",
         "home": "Startseite",
         "compact": "Kompakte Ansicht",
-        "prm": "Bevorzugt reduzierte Animationen"
+        "prm": "Bevorzugt reduzierte Animationen",
+        "blur_nord": "Nord (Unschärfe)",
+        "blur_dracula": "Dracula (Unschärfe)",
+        "black": "Schwarz",
+        "blur_black": "Schwarz (Unschärfe)"
     },
     "info": {
         "no_info": "Keine Informationen verfügbar",
@@ -90,8 +97,8 @@
         "lyrics": "Liedtexte"
     },
     "statusBar": {
-        "currentPlaylist": "Aktuelle Wiedergabeliste", 
-        "loop": "Schleife", 
+        "currentPlaylist": "Aktuelle Wiedergabeliste",
+        "loop": "Schleife",
         "add_current_to_playlist": "Füge aktuelles Lied einer Wiedergabeliste hinzu"
     },
     "general": {
