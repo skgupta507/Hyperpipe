@@ -86,7 +86,10 @@
         "auth": "Instancia de autenticación",
         "name": "Nombre",
         "loc": "Ubicaciones",
-        "default": "Por defecto"
+        "default": "Por defecto",
+        "uptime_7d": "Tiempo de actividad (7d)",
+        "uptime_30d": "Tiempo de actividad (30d)",
+        "uptime_24h": "Tiempo de actividad (24h)"
     },
     "lyrics": {
         "load": "Buscando letras",
