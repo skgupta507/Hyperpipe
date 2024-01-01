@@ -13,7 +13,10 @@
         "playlists": "Các danh sách phát",
         "featured": "Nổi bật",
         "feeds": "Nguồn cấp dữ liệu",
-        "spotlight": "Tiêu điểm"
+        "spotlight": "Tiêu điểm",
+        "restore_prefs": "Lưu lại các lựa chọn",
+        "offline": "Ngoại tuyến",
+        "logout": "Đăng xuất"
     },
     "pref": {
         "auto": "tự động",
@@ -26,8 +29,8 @@
         "theme": "Giao diện",
         "dark": "Tối (Mặc định)",
         "light": "Sáng",
-        "blur": "Mờ",
-        "blur_light": "Mờ (Sáng)",
+        "blur": "Tối (Mờ)",
+        "blur_light": "Sáng (Mờ)",
         "nord": "Nord",
         "dracula": "Dracula",
         "auto_queue": "Tự động xếp hàng các bài hát",
@@ -38,7 +41,12 @@
         "charts": "Xếp hạng",
         "compact": "Chế độ xem nhỏ gọn",
         "prm": "Tắt hiệu ứng chuyển động",
-        "language": "Ngôn ngữ"
+        "language": "Ngôn ngữ",
+        "blur_nord": "Nord (Mờ)",
+        "cc": "Tự động suy ra quốc gia cho biểu đồ",
+        "blur_dracula": "Dracula (Mờ)",
+        "black": "Đen",
+        "blur_black": "Đen (Mờ)"
     },
     "action": {
         "cancel": "Hủy",
@@ -58,7 +66,9 @@
         "loc": "Các vị trí",
         "up_to_date": "Phiên bản mới nhất",
         "auth": "Instance xác thực",
-        "default": "Mặc định"
+        "default": "Mặc định",
+        "hyp": "Các instance Hyperpipe",
+        "piped": "Các instance Piped"
     },
     "playlist": {
         "create": "Tạo một danh sách phát mới",
@@ -84,7 +94,8 @@
         "subs": "người đăng ký"
     },
     "general": {
-        "password": "mật khẩu"
+        "password": "mật khẩu",
+        "username": "tên người dùng (username)"
     },
     "countries": {
         "DE": "Đức",
@@ -117,7 +128,25 @@
         "IS": "Iceland",
         "NL": "Hà Lan",
         "RO": "Romania",
-        "ZW": "Zimbabwe"
+        "ZW": "Zimbabwe",
+        "LU": "Luxembourg",
+        "HU": "Hungary",
+        "GT": "Guatemala",
+        "ZA": "Cộng hòa Nam Phi",
+        "KE": "Kenya",
+        "EE": "Estonia",
+        "AR": "Argentina",
+        "BO": "Bolivia",
+        "EC": "Ecuador",
+        "UY": "Uruguay",
+        "CR": "Costa Rica",
+        "AE": "Các tiểu Vương quốc Ả rập Thống nhất",
+        "HN": "Honduras",
+        "DO": "Cộng hòa Dominica",
+        "BE": "Bỉ",
+        "AU": "Úc (Australia)",
+        "CZ": "Séc",
+        "AT": "Áo"
     },
     "statusBar": {
         "currentPlaylist": "Danh sách phát hiện tại",
