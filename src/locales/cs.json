@@ -59,7 +59,10 @@
         "hyp": "Instance Hyperpipe",
         "piped": "Instance Piped",
         "auth": "Autentifikační instance",
-        "default": "Výchozí"
+        "default": "Výchozí",
+        "uptime_7d": "Doba online (7d)",
+        "uptime_30d": "Doba online (30d)",
+        "uptime_24h": "Doba online (24h)"
     },
     "lyrics": {
         "load": "Načítání textů",
