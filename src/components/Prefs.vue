@@ -86,14 +86,13 @@ function getStoreBool(key, ele, def) {
 }
 
 function toPerc(n) {
-  return n.toFixed(0) + '%'
+  return n.toFixed(0) + '%';
 }
 
 function setCustom(key, e) {
-  
-        let v = e.target.value;
-        v = v == 'x' ? prompt('instance') : v
-        v && setStore(key, v);
+  let v = e.target.value;
+  v = v == 'x' ? prompt('instance') : v;
+  v && setStore(key, v);
 }
 
 async function setAuth(e) {
