@@ -86,7 +86,10 @@
         "cdn": "İçerik Teslim Ağı",
         "up_to_date": "Güncel",
         "version": "Sürüm",
-        "default": "Öntanımlı"
+        "default": "Öntanımlı",
+        "uptime_7d": "Çalışma Süresi (7g)",
+        "uptime_30d": "Çalışma Süresi (30g)",
+        "uptime_24h": "Çalışma Süresi (24sa)"
     },
     "lyrics": {
         "load": "Sözler Getiriliyor",
