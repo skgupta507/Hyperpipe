@@ -16,7 +16,9 @@
         "spotlight": "Tiêu điểm",
         "restore_prefs": "Lưu lại các lựa chọn",
         "offline": "Ngoại tuyến",
-        "logout": "Đăng xuất"
+        "logout": "Đăng xuất",
+        "local": "Cục bộ (Nội bộ)",
+        "remote": "Được kết nối từ Piped"
     },
     "pref": {
         "auto": "tự động",
@@ -75,7 +77,9 @@
         "name": "Tên danh sách phát",
         "add": "Thêm bài hát vào danh sách phát",
         "sync": "Đồng bộ hóa các danh sách phát",
-        "select": "Lựa chọn danh sách phát để thêm"
+        "select": "Lựa chọn danh sách phát để thêm",
+        "local": "Các danh sách phát cục bộ (nội bộ)",
+        "remote": "Các danh sách phát kết nối được từ Piped"
     },
     "info": {
         "search": "Bắt đầu tìm kiếm",
@@ -146,7 +150,20 @@
         "BE": "Bỉ",
         "AU": "Úc (Australia)",
         "CZ": "Séc",
-        "AT": "Áo"
+        "AT": "Áo",
+        "NI": "Nicaragua",
+        "PY": "Paraguay",
+        "RS": "Serbia",
+        "PA": "Panama",
+        "NG": "Nigeria",
+        "PE": "Peru",
+        "UA": "Ukraine",
+        "TZ": "Tanzania",
+        "NO": "Na Uy",
+        "SA": "Ả Rập Xê-út",
+        "NZ": "New Zealand",
+        "SV": "El Salvador",
+        "UG": "Uganda"
     },
     "statusBar": {
         "currentPlaylist": "Danh sách phát hiện tại",
