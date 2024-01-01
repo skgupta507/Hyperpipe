@@ -86,10 +86,10 @@ onMounted(() => {
         </span>
         <div v-else-if="plurl.thumbnails" class="pl-img">
           <img
+            loading="lazy"
             :src="plurl.thumbnails[0].url"
             :height="plurl.thumbnails[0].height"
-            :width="plurl.thumbnails[0].width"
-            loading="lazy" />
+            :width="plurl.thumbnails[0].width" />
         </div>
         <span class="pl-main caps">{{ plurl.title }}</span>
         <span class="bi bi-grip-horizontal pl-handle clickable"></span>

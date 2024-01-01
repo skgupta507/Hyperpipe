@@ -25,8 +25,7 @@ const { t, setupLocale } = useI18n(),
   compact = ref(false),
   prm = ref(false),
   cc = ref(false),
-  restoreUrl = ref(''),
-  prompt = txt => window.prompt(txt);
+  restoreUrl = ref('');
 
 getJson('https://piped-instances.kavin.rocks').then(i => (instances.value = i));
 
@@ -86,7 +85,18 @@ function getStoreBool(key, ele, def) {
   ele.value = getStore(key) || def;
 }
 
-async function setAuth(key) {
+function toPerc(n) {
+  return n.toFixed(0) + '%'
+}
+
+function setCustom(key, e) {
+  
+        let v = e.target.value;
+        v = v == 'x' ? prompt('instance') : v
+        v && setStore(key, v);
+}
+
+async function setAuth(e) {
   if (getStore('authapi')) {
     if (!confirm('This requires a logout. Confirm logout?')) return;
 
@@ -98,7 +108,7 @@ async function setAuth(key) {
   }
 
   store.removeItem('auth');
-  setStore('authapi', key);
+  setCustom('authapi', e);
 }
 
 const verifyApi = computed(() =>
@@ -264,7 +274,7 @@ onMounted(() => {
     v-if="hypInstances"
     class="input"
     :value="getStore('api') || HYPERPIPE_INSTANCE"
-    @change="setStore('api', $event.target.value)">
+    @change="setCustom('api', $event)">
     <option
       v-for="i in hypInstances"
       :key="i.name"
@@ -275,6 +285,8 @@ onMounted(() => {
     <option v-if="!verifyApi">
       {{ getStore('api') || HYPERPIPE_INSTANCE }}
     </option>
+
+    <option value="x">Custom</option>
   </select>
 
   <div class="table-wrap">
@@ -310,12 +322,7 @@ onMounted(() => {
     v-if="instances"
     class="input"
     :value="getStore('pipedapi') || PIPED_INSTANCE"
-    @change="
-      e => {
-        const v = e.target.value;
-        setStore('pipedapi', v == 'x' ? prompt('instance') : v);
-      }
-    ">
+    @change="setCustom('pipedapi', $event)">
     <option
       v-for="i in instances"
       :key="i.name"
@@ -336,7 +343,7 @@ onMounted(() => {
     v-if="instances"
     class="input"
     :value="getStore('authapi') || PIPED_INSTANCE"
-    @change="setAuth($event.target.value)">
+    @change="setAuth">
     <option
       v-for="i in instances"
       :key="i.name"
@@ -347,6 +354,8 @@ onMounted(() => {
     <option v-if="!verifyAuthApi">
       {{ getStore('authapi') || PIPED_INSTANCE }}
     </option>
+
+    <option value="x">Custom</option>
   </select>
 
   <div class="table-wrap">
@@ -358,6 +367,9 @@ onMounted(() => {
           <th>{{ t('instances.cdn') }}</th>
           <th>{{ t('instances.up_to_date') }}</th>
           <th>{{ t('instances.version') }}</th>
+          <th>{{ t('instances.uptime_24h') }}</th>
+          <th>{{ t('instances.uptime_7d') }}</th>
+          <th>{{ t('instances.uptime_30d') }}</th>
         </tr>
       </thead>
       <tbody v-for="i in instances" :key="i.name">
@@ -373,6 +385,9 @@ onMounted(() => {
           <td>
             {{ i.version }}
           </td>
+          <td>{{ toPerc(i.uptime_24h) }}</td>
+          <td>{{ toPerc(i.uptime_7d) }}</td>
+          <td>{{ toPerc(i.uptime_30d) }}</td>
         </tr>
       </tbody>
     </table>

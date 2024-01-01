@@ -91,7 +91,7 @@ You can use the [Redirector](https://github.com/einaregilsson/Redirector) extens
 
 Hyperpipe
 
-Copyright (C) 2022-23  Shiny Nematoda
+Copyright (C) 2022-24  Shiny Nematoda
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -137,7 +137,7 @@ You can reach out to me personally on:
 
 - [Beatbump](https://github.com/snuffyDev/Beatbump) -> Alternative YouTube Music frontend built with Svelte/SvelteKit
 
-- [MellowMusic](https://github.com/you-apps/MellowMusic) -> Music player app using Piped API to fetch music
+- [VibeYou](https://github.com/you-apps/VibeYou) -> Privacy focused music player built with MD3
 
 ---
 
