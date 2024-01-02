@@ -70,7 +70,10 @@
         "auth": "Instance xác thực",
         "default": "Mặc định",
         "hyp": "Các instance Hyperpipe",
-        "piped": "Các instance Piped"
+        "piped": "Các instance Piped",
+        "uptime_7d": "Thời gian hoạt động (7 ngày)",
+        "uptime_30d": "Thời gian hoạt động (30 ngày)",
+        "uptime_24h": "Thời gian hoạt động (24 tiếng)"
     },
     "playlist": {
         "create": "Tạo một danh sách phát mới",
