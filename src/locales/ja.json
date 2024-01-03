@@ -86,7 +86,10 @@
         "cdn": "CDN",
         "up_to_date": "最新版",
         "version": "バージョン",
-        "default": "標準"
+        "default": "標準",
+        "uptime_7d": "稼働率 (7日)",
+        "uptime_30d": "稼働率 (30日)",
+        "uptime_24h": "稼働率 (24時間)"
     },
     "lyrics": {
         "load": "歌詞 取得中",
