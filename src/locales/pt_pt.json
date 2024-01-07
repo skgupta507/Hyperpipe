@@ -70,7 +70,10 @@
         "name": "Nome",
         "loc": "Localizações",
         "cdn": "CDN",
-        "default": "Padrão"
+        "default": "Padrão",
+        "uptime_24h": "Tempo de atividade (24d)",
+        "uptime_7d": "Tempo de atividade (7d)",
+        "uptime_30d": "Tempo de atividade (30d)"
     },
     "lyrics": {
         "load": "Buscando Letras",
