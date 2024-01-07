@@ -86,7 +86,10 @@
         "name": "名称",
         "loc": "地区",
         "cdn": "CDN",
-        "default": "默认"
+        "default": "默认",
+        "uptime_7d": "运行时间（7天）",
+        "uptime_24h": "运行时间（24小时）",
+        "uptime_30d": "运行时间（30天）"
     },
     "lyrics": {
         "load": "正在加载歌词",
