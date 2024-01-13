@@ -47,7 +47,10 @@
         "cdn": "CDN",
         "up_to_date": "Aktualna",
         "version": "Verzija",
-        "default": "Zadano"
+        "default": "Zadano",
+        "uptime_7d": "Vrijeme neprekidnog rada (7 dana)",
+        "uptime_24h": "Vrijeme neprekidnog rada (24 sata)",
+        "uptime_30d": "Vrijeme neprekidnog rada (30 dana)"
     },
     "pref": {
         "codec": "Kodek",
