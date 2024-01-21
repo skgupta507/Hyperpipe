@@ -45,7 +45,7 @@
         "player": "Reproductor de música",
         "codec": "Códec de audio",
         "quality": "Calidad",
-        "auto": "Automática",
+        "auto": "Automático",
         "volume": "Volumen predeterminado",
         "auto_queue": "Canciones en la cola de reproducción automáticamente",
         "worst": "La peor",
