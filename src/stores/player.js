@@ -62,6 +62,8 @@ export const useData = defineStore('data', () => {
         ? '/watch?v=' + json.songs[0].id
         : '/watch?v=' + hash;
 
+      json.songs[0] &&= { ...json.songs[0], ...{ lyrics: json.lyricsId } };
+
       state.urls =
         json.songs.length > 0
           ? json.songs.map(i => ({
@@ -72,34 +74,25 @@ export const useData = defineStore('data', () => {
               },
             }))
           : state.urls;
+    } else if (state.urls.length == 0)
+      state.urls = [
+        {
+          title: state.title,
+          url: state.url,
+        },
+      ];
 
-      useMetadata(state.url, state.urls, {
-        title: state.title,
-        artist: state.artist,
-        art: state.art,
-      });
-    } else {
-      if (state.urls.length == 0) {
-        state.urls = [
-          {
-            title: state.title,
-            url: state.url,
-          },
-        ];
-      }
-
-      useMetadata(state.url, state.urls, {
-        title: state.title,
-        artist: state.artist,
-        art: state.art,
-      });
-    }
+    useMetadata(state.current(), {
+      title: state.title,
+      artist: state.artist,
+      art: state.art,
+    });
   }
 
   function playNext() {
     const i = state.urls.findIndex(s => s.url === state.url);
 
-    if (player.state.loop == 2) getSong(state.url);
+    if (player.state.loop == 2) play(state.urls[i]);
     else if (
       state.urls.length > i &&
       state.urls.length != 0 &&
@@ -117,8 +110,8 @@ export const useData = defineStore('data', () => {
 
     if (state.urls[i - 1]) play(state.urls[i - 1]);
     else if (player.state.loop == 1) {
-      state.url = state.urls[state.urls.length - 1].url;
-      play(state.urls[state.urls.length - 1]);
+      state.url = state.urls.at(-1).url;
+      play(state.urls.at(-1));
     } else state.urls = [];
   }
 
@@ -132,7 +125,11 @@ export const useData = defineStore('data', () => {
     } else state.urls = [];
   }
 
-  return { state, getSong, play, playNext, prevTrack, nextTrack };
+  function current() {
+    return state.urls.find(i => i.url == state.url);
+  }
+
+  return { state, getSong, play, playNext, prevTrack, nextTrack, current };
 });
 
 export const usePlayer = defineStore('player', () => {

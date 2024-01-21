@@ -11,6 +11,14 @@ export function useSanitize(txt) {
   });
 }
 
+export function useAutoTheme(t) {
+  return t == 'auto'
+    ? matchMedia('(prefers-color-scheme: light)').matches
+      ? 'light'
+      : 'dark'
+    : t;
+}
+
 export function useVerifyAuth(hash) {
   return PL_EXP.test(hash);
 }
@@ -62,10 +70,8 @@ export function useShare(data) {
   }
 }
 
-export function useMetadata(url, urls, data) {
+export function useMetadata(now, data) {
   if ('mediaSession' in navigator) {
-    const now = urls.find(u => u.url === url);
-
     let artwork = [],
       album = undefined;
 
@@ -73,7 +79,7 @@ export function useMetadata(url, urls, data) {
       album = now.subtitle;
 
       if (now.thumbnails) {
-        artwork = now.thumbnails.map(t => ({
+        artwork = now.thumbnails.reverse().map(t => ({
           sizes: t.width && t.height ? t.width + 'x' + t.height : '512x512',
           src: t.url,
           type: 'image/webp',

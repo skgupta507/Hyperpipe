@@ -30,7 +30,7 @@ const Genres = defineAsyncComponent(() => import('@/components/Genres.vue')),
   );
 
 /* Composables */
-import { useStore, useUnwrap } from '@/scripts/util.js';
+import { useStore, useUnwrap, useAutoTheme } from '@/scripts/util.js';
 import { useSetupDB, useUpdatePlaylist } from '@/scripts/db.js';
 
 /* Stores */
@@ -134,11 +134,14 @@ function playList(a) {
 /* Lifestyle hooks */
 onBeforeMount(() => {
   /* Set the default theme if set */
-  if (store.theme) document.body.setAttribute('data-theme', store.theme);
+  if (store.theme)
+    document.body.setAttribute('data-theme', useAutoTheme(store.theme));
+
   if (store.compact == 'true') document.body.setAttribute('data-compact', '');
 
   /* Prefers Reduced Motion */
-  if (store.prm == 'true') document.body.classList.add('prm');
+  if (store.prm == 'true' || matchMedia('(prefers-reduced-motion)').matches)
+    document.body.classList.add('prm');
 
   /* Set the default locale if set */
   const loc =

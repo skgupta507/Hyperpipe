@@ -8,7 +8,7 @@ import {
   useAuthLogout,
 } from '@/scripts/fetch.js';
 
-import { useStore } from '@/scripts/util.js';
+import { useStore, useAutoTheme } from '@/scripts/util.js';
 import { SUPPORTED_LOCALES, useI18n } from '@/stores/misc.js';
 
 const date = ref('unknown');
@@ -60,7 +60,7 @@ function getTheme() {
 }
 
 function setTheme(theme) {
-  document.body.setAttribute('data-theme', theme);
+  document.body.setAttribute('data-theme', useAutoTheme(theme));
   setStore('theme', theme);
 }
 
@@ -142,6 +142,7 @@ onMounted(() => {
     class="input"
     :value="getTheme()"
     @change="setTheme($event.target.value)">
+    <option value="auto">{{ t('pref.auto') }}</option>
     <option value="dark">{{ t('pref.dark') }}</option>
     <option value="light">{{ t('pref.light') }}</option>
     <option value="black">{{ t('pref.black') }}</option>

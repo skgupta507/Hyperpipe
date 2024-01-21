@@ -24,13 +24,18 @@ function set(id) {
 function get() {
   status.value = false;
 
-  if (data.state.lyrics && data.state.urls === data.state.url) {
-    set(data.state.lyrics);
+  const now = data.current();
+
+  if (now.lyrics) {
+    set(now.lyrics);
   } else if (data.state.url) {
     getJsonHyp(
       '/next/' + data.state.url.replace('/watch?v=', '') + '?queue=avoid',
     ).then(({ lyricsId }) => {
-      if (lyricsId) set(lyricsId);
+      if (lyricsId) {
+        set(lyricsId);
+        now.lyrics = lyricsId;
+      }
     });
   }
 }
