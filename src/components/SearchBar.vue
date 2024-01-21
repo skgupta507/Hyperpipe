@@ -24,6 +24,7 @@ watch(
 <template>
   <button
     class="bi bi-search popup-wrap"
+    aria-label="Search"
     @mouseenter="nav.state.show = true"
     @mouseleave="nav.state.show = false"
     @keydown.enter="nav.show()">

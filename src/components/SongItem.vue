@@ -111,7 +111,11 @@ const openSong = el => {
     tabindex="0"
     @click="openSong($event.target)"
     @keydown.enter="openSong($event.target)">
-    <img class="pop-2 bg-img song-bg" loading="lazy" :src="art" alt />
+    <img
+      class="pop-2 bg-img song-bg"
+      :loading="index > 4 ? 'lazy' : 'eager'"
+      :src="art"
+      alt />
 
     <span class="flex content">
       <h4>
