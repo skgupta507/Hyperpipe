@@ -82,7 +82,7 @@ export const useData = defineStore('data', () => {
         },
       ];
 
-    useMetadata(state.current(), {
+    useMetadata(current(), {
       title: state.title,
       artist: state.artist,
       art: state.art,
