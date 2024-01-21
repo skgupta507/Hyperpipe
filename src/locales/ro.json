@@ -47,9 +47,9 @@
         "quality": "Calitate",
         "auto_queue": "Coadă automată melodii",
         "tab": "Filă implicită",
-        "best": "cel mai bun",
-        "auto": "auto",
-        "worst": "cel mai rău",
+        "best": "Cel mai bun",
+        "auto": "Auto",
+        "worst": "Cel mai rău",
         "volume": "Volum implicit",
         "blur": "Întunecat (Ceață)",
         "dark": "Întunecat (implicit)",
@@ -79,7 +79,10 @@
         "name": "Nume",
         "loc": "Locații",
         "version": "Versiune",
-        "default": "Implicit"
+        "default": "Implicit",
+        "uptime_7d": "Uptime (7 zile)",
+        "uptime_24h": "Uptime (24 de ore)",
+        "uptime_30d": "Uptime (30 zile)"
     },
     "info": {
         "search": "Începeți căutarea",
