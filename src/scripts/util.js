@@ -79,7 +79,7 @@ export function useMetadata(now, data) {
       album = now.subtitle;
 
       if (now.thumbnails) {
-        artwork = now.thumbnails.reverse().map(t => ({
+        artwork = [...now.thumbnails].reverse().map(t => ({
           sizes: t.width && t.height ? t.width + 'x' + t.height : '512x512',
           src: t.url,
           type: 'image/webp',
