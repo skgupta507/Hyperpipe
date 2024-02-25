@@ -185,21 +185,8 @@ onMounted(() => {
       document.title = document.title.replace(titleState[0], titleState[1]);
     });
 
-    navigator.mediaSession.setActionHandler('previoustrack', () => {
-      if (data.state.urls.length > 2) {
-        const i = data.state.urls.findIndex(s => s.url == data.state.url);
-
-        data.play(data.state.urls[i - 1]);
-      }
-    });
-
-    navigator.mediaSession.setActionHandler('nexttrack', () => {
-      if (data.state.urls.length > 2) {
-        const i = data.state.urls.findIndex(s => s.url == data.state.url);
-
-        data.play(data.state.urls[i + 1]);
-      }
-    });
+    navigator.mediaSession.setActionHandler('previoustrack', () => data.prevTrack());
+    navigator.mediaSession.setActionHandler('nexttrack', () => data.nextTrack());
 
     navigator.mediaSession.setActionHandler('seekbackward', () => {
       audio.value.currentTime -= 10;

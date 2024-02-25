@@ -24,12 +24,10 @@ onMounted(() => {
   new Sortable(pl.value, {
     handle: '.pl-handle',
     animation: 150,
-    onEnd: e => {
-      data.state.urls.splice(
-        e.newIndex,
-        0,
-        data.state.urls.splice(e.oldIndex, 1)[0],
-      );
+    onUpdate: ({ oldIndex, newIndex }) => {
+      const { urls } = data.state;
+      urls.splice(newIndex-1, 0, urls.splice(oldIndex-1, 1)[0]);
+      data.state.urls = urls;
     },
   });
 });
