@@ -185,8 +185,12 @@ onMounted(() => {
       document.title = document.title.replace(titleState[0], titleState[1]);
     });
 
-    navigator.mediaSession.setActionHandler('previoustrack', () => data.prevTrack());
-    navigator.mediaSession.setActionHandler('nexttrack', () => data.nextTrack());
+    navigator.mediaSession.setActionHandler('previoustrack', () =>
+      data.prevTrack(),
+    );
+    navigator.mediaSession.setActionHandler('nexttrack', () =>
+      data.nextTrack(),
+    );
 
     navigator.mediaSession.setActionHandler('seekbackward', () => {
       audio.value.currentTime -= 10;

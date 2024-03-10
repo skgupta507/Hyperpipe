@@ -198,6 +198,12 @@ body {
   height: 0.75rem;
 }
 
+button,
+input,
+select {
+  font-family: inherit;
+}
+
 button {
   padding: 1px 6px;
   border: none;

@@ -26,7 +26,7 @@ onMounted(() => {
     animation: 150,
     onUpdate: ({ oldIndex, newIndex }) => {
       const { urls } = data.state;
-      urls.splice(newIndex-1, 0, urls.splice(oldIndex-1, 1)[0]);
+      urls.splice(newIndex - 1, 0, urls.splice(oldIndex - 1, 1)[0]);
       data.state.urls = urls;
     },
   });
