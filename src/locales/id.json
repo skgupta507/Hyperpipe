@@ -86,7 +86,10 @@
         "cdn": "CDN",
         "version": "Versi",
         "up_to_date": "Terkini",
-        "default": "Bawaan"
+        "default": "Bawaan",
+        "uptime_7d": "Waktu aktif (7hari)",
+        "uptime_24h": "Waktu aktif (24jam)",
+        "uptime_30d": "Waktu aktif (30hari)"
     },
     "lyrics": {
         "void": "Tidak Ada Lirik",
