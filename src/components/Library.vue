@@ -204,6 +204,9 @@ const setProxy = async () => {
     conn.on('error', err => {
       console.log(err);
     });
+  },
+  copyPeerId = () => {
+    if (sync.id[3] == '-') navigator.clipboard.writeText(sync.id);
   };
 
 const Login = async () => {
@@ -369,7 +372,11 @@ onMounted(async () => {
         </div>
 
         <div v-else-if="sync.type == 'rec'">
-          <pre>ID: {{ sync.id }}</pre>
+          <div class="id-wrap">
+            <span class="id-box">ID</span>
+            <pre>{{ sync.id }}</pre>
+            <i class="bi bi-clipboard id-copy clickable" @click="copyPeerId"></i>
+          </div>
         </div>
       </template>
 
@@ -472,7 +479,7 @@ onMounted(async () => {
         class="textbox"
         type="password"
         :placeholder="t('general.password')"
-        autocomplete="password"
+        autocomplete="current-password"
         @change="user.password = $event.target.value"
         required />
       <button @click="Login" class="textbox">{{ t('title.login') }}</button>
@@ -539,7 +546,8 @@ pre {
 }
 .tabs button[data-active='true'],
 .login button,
-button.logout {
+button.logout,
+.id-box {
   font-weight: bold;
   color: var(--color-background);
   background: linear-gradient(135deg, cornflowerblue, #88c0d0);
@@ -568,6 +576,23 @@ input[type='file']::file-selector-button {
 }
 .tabs button:last-child {
   border-radius: 0 0.25rem 0.25rem 0;
+}
+.id-wrap {
+  background-color: var(--color-background);
+}
+.id-wrap, .id-box {
+  border-radius: .25rem;
+  padding: .25rem .75rem;
+}
+.id-wrap > * {
+  width: unset;
+  display: inline-block;
+}
+.id-copy {
+  float: right;
+  margin: 0;
+  padding: 0;
+  bottom: -0.125rem;
 }
 .login {
   display: block;

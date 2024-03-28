@@ -23,6 +23,10 @@ export function useVerifyAuth(hash) {
   return PL_EXP.test(hash);
 }
 
+export function useTitle(t) {
+  document.title = `${t} - Hyperpipe`;
+}
+
 export function useRoute(l) {
   history.pushState({}, '', l);
 }

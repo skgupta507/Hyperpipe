@@ -4,7 +4,7 @@ import { defineStore } from 'pinia';
 import { useNav } from '@/stores/misc.js';
 
 import { getJsonPiped, getJsonHyp, getJsonAuth } from '@/scripts/fetch.js';
-import { useVerifyAuth, useRoute } from '@/scripts/util.js';
+import { useVerifyAuth, useRoute, useTitle } from '@/scripts/util.js';
 
 export const useResults = defineStore('results', () => {
   const items = ref({}),
@@ -62,6 +62,7 @@ export const useResults = defineStore('results', () => {
       title: json.name,
     });
 
+    useTitle(json.name);
     useRoute('/playlist?list=' + hash);
     useNav().state.page = 'home';
     document.body.scrollIntoView();
@@ -126,6 +127,7 @@ export const useArtist = defineStore('artist', () => {
     reset();
     set(json);
 
+    useTitle(json.title);
     useRoute('/channel/' + e);
     useNav().state.page = 'home';
     document.body.scrollIntoView();
