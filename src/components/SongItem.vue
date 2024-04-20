@@ -136,7 +136,7 @@ const openSong = el => {
       class="bi bi-three-dots-vertical popup-wrap ign"
       @mouseenter="show = true"
       @mouseleave="show = false"
-      @click.enter="show = player.toggle('tooltipIsOpen')">
+      @click.enter="show ? show = false : show = true">
       <Transition name="fade">
         <div v-if="show" class="popup ign">
           <button
