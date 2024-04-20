@@ -132,30 +132,36 @@ const openSong = el => {
       </a>
     </span>
 
-    <span
+    <button
       class="bi bi-three-dots-vertical popup-wrap ign"
       @mouseenter="show = true"
-      @mouseleave="show = false">
+      @mouseleave="show = false"
+      @click.enter="show = player.toggle('tooltipIsOpen')"
+    >
       <Transition name="fade">
         <div v-if="show" class="popup ign">
-          <span
+          <button
             v-if="playlistId || offlineUri"
             class="bi bi-dash-lg clickable ign"
-            @click="Remove"></span>
-          <span
+            @click="Remove">
+          </button>
+          <button
             class="bi bi-chevron-bar-right clickable ign"
-            @click="appendSong"></span>
-          <span
+            @click="appendSong">
+          </button>
+          <button
             class="bi bi-collection clickable ign"
-            @click="showPl = true"></span>
-          <span
+            @click="showPl = true">
+          </button>
+          <button
             class="bi bi-broadcast clickable ign"
-            @click="$emit('nxt-song')"></span>
-          <span class="bi bi-plus-lg clickable ign" @click="addSong"></span>
-          <span class="bi bi-share clickable ign" @click="Share"></span>
+            @click="$emit('nxt-song')">
+          </button>
+          <button class="bi bi-plus-lg clickable ign" @click="addSong"></button>
+          <button class="bi bi-share clickable ign" @click="Share"></button>
         </div>
       </Transition>
-    </span>
+    </button>
   </div>
 </template>
 
@@ -176,6 +182,9 @@ span.content {
 }
 span.bi-three-dots-vertical {
   margin: 2rem;
+}
+button.bi-three-dots-vertical {
+  border: none;
 }
 .popup {
   line-height: auto;
