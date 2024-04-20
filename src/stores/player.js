@@ -148,7 +148,6 @@ export const usePlayer = defineStore('player', () => {
     info: false,
     add: false,
     vol: store.vol ? store.vol / 100 : 1,
-    tooltipIsOpen: false,
   });
 
   function toggle(i) {
