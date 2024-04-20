@@ -142,20 +142,16 @@ const openSong = el => {
           <button
             v-if="playlistId || offlineUri"
             class="bi bi-dash-lg clickable ign"
-            @click="Remove">
-          </button>
+            @click="Remove"></button>
           <button
             class="bi bi-chevron-bar-right clickable ign"
-            @click="appendSong">
-          </button>
+            @click="appendSong"></button>
           <button
             class="bi bi-collection clickable ign"
-            @click="showPl = true">
-          </button>
+            @click="showPl = true"></button>
           <button
             class="bi bi-broadcast clickable ign"
-            @click="$emit('nxt-song')">
-          </button>
+            @click="$emit('nxt-song')"></button>
           <button class="bi bi-plus-lg clickable ign" @click="addSong"></button>
           <button class="bi bi-share clickable ign" @click="Share"></button>
         </div>
