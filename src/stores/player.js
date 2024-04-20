@@ -17,7 +17,6 @@ export const useData = defineStore('data', () => {
       lyrics: '',
       src: [],
       urls: [],
-      tooltipIsOpen: false,
     }),
     player = usePlayer();
 
@@ -153,12 +152,7 @@ export const usePlayer = defineStore('player', () => {
   });
 
   function toggle(i) {
-    console.log(i)
-    console.log(state[i])
-    if (typeof state[i] == 'boolean') {
-      console.log(state[i])
-      return state[i] = !state[i]
-    }
+    if (typeof state[i] == 'boolean') state[i] = !state[i];
   }
 
   function setTime(t) {
