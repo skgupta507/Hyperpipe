@@ -117,7 +117,7 @@ p.more {
 }
 .subs:hover,
 .subs[data-active='true'] {
-  background-color: var(--color-foreground);
+  background: var(--color-gradient);
   color: var(--color-background);
   background-clip: border-box;
 }

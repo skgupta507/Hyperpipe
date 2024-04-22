@@ -19,7 +19,7 @@ defineEmits(['click']);
   color: var(--color-text);
   padding: 0;
   line-height: 0;
-  background: var(--color-foreground);
+  background: var(--color-gradient);
   border-radius: 50%;
   vertical-align: -1rem;
   text-align: center;
@@ -27,7 +27,7 @@ defineEmits(['click']);
   margin-right: auto;
 }
 .bi-play {
-  color: var(--color-background-soft);
+  color: var(--color-background);
   box-shadow: 0 0 1rem var(--color-foreground);
   transition: all 0.4s ease;
 }

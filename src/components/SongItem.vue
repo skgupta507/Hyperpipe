@@ -4,7 +4,6 @@ import { ref } from 'vue';
 import AddToPlaylist from '@/components/AddToPlaylist.vue';
 
 import { getJsonAuth } from '@/scripts/fetch.js';
-import { useRand } from '@/scripts/colors.js';
 import { useStore, useShare } from '@/scripts/util.js';
 import { useUpdatePlaylist } from '@/scripts/db.js';
 
@@ -12,8 +11,7 @@ import { useResults, useArtist } from '@/stores/results.js';
 import { useData, usePlayer } from '@/stores/player.js';
 import { useI18n } from '@/stores/misc.js';
 
-const rand = useRand(),
-  data = useData(),
+const data = useData(),
   results = useResults(),
   player = usePlayer(),
   artist = useArtist(),
@@ -193,7 +191,6 @@ button.bi-three-dots-vertical {
   padding: 0.5rem;
 }
 .song-bg {
-  --grad: v-bind('rand');
   width: 120px;
   height: 120px;
 }

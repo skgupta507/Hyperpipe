@@ -1,9 +1,7 @@
 <script setup>
-import { useRand } from '@/scripts/colors.js';
 import { useI18n } from '@/stores/misc.js';
 
-const rand = useRand(),
-  { t } = useI18n();
+const { t } = useI18n();
 
 defineProps({
   name: String,
@@ -11,7 +9,6 @@ defineProps({
     type: String,
     default: '',
   },
-  grad: String,
   art: {
     type: String,
     default: '/1x1.png',
@@ -45,7 +42,6 @@ defineEmits(['open-album']);
   margin: auto;
 }
 .card-bg {
-  --grad: v-bind('grad || rand');
   height: 13rem;
   width: 13rem;
 }
