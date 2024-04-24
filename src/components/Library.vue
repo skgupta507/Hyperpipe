@@ -4,8 +4,7 @@ import { ref, reactive, watch, onMounted } from 'vue';
 import AlbumItem from './AlbumItem.vue';
 import Modal from './Modal.vue';
 
-import { useRand, parseThumb } from '@/scripts/colors.js';
-import { useStore } from '@/scripts/util.js';
+import { useStore, parseThumb } from '@/scripts/util.js';
 
 import {
   useListPlaylists,
@@ -444,7 +443,6 @@ onMounted(async () => {
     <div class="grid-3">
       <AlbumItem
         :name="t('title.offline')"
-        :grad="useRand()"
         @open-album="OpenOffline" />
       <AlbumItem
         v-for="i in list"
@@ -452,7 +450,6 @@ onMounted(async () => {
         :name="i.name"
         :author="t('title.songs') + ' • ' + i.urls.length"
         :art="parseThumb(i.urls[0]?.url, proxy)"
-        :grad="useRand()"
         @open-album="Open(i.name)" />
     </div>
 
