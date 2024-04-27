@@ -18,7 +18,8 @@
     "search": "Search",
     "feeds": "Feeds",
     "offline": "Offline",
-    "restore_prefs": "Restore preferences"
+    "restore_prefs": "Restore preferences",
+    "now_playing": "Now Playing"
   },
   "action": {
     "back": "Back",
