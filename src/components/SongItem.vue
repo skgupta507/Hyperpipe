@@ -4,7 +4,6 @@ import { ref } from 'vue';
 import AddToPlaylist from '@/components/AddToPlaylist.vue';
 
 import { getJsonAuth } from '@/scripts/fetch.js';
-import { useRand } from '@/scripts/colors.js';
 import { useStore, useShare } from '@/scripts/util.js';
 import { useUpdatePlaylist } from '@/scripts/db.js';
 
@@ -12,8 +11,7 @@ import { useResults, useArtist } from '@/stores/results.js';
 import { useData, usePlayer } from '@/stores/player.js';
 import { useI18n } from '@/stores/misc.js';
 
-const rand = useRand(),
-  data = useData(),
+const data = useData(),
   results = useResults(),
   player = usePlayer(),
   artist = useArtist(),
@@ -130,13 +128,17 @@ const openSong = el => {
         @click.prevent="artist.getArtist(channel.replace('/channel/', ''))">
         <i class="ign">{{ author ? author.replaceAll(' - Topic', '') : '' }}</i>
       </a>
+      <span v-if="title === data.state?.title">
+        <span class="bi-play"></span>
+        <span>{{ t('title.now_playing') }}</span>
+      </span>
     </span>
 
     <button
       class="bi bi-three-dots-vertical popup-wrap ign"
       @mouseenter="show = true"
       @mouseleave="show = false"
-      @click.enter="show = !show">
+      @keyup.enter="show = !show">
       <Transition name="fade">
         <div v-if="show" class="popup ign">
           <button
@@ -193,7 +195,6 @@ button.bi-three-dots-vertical {
   padding: 0.5rem;
 }
 .song-bg {
-  --grad: v-bind('rand');
   width: 120px;
   height: 120px;
 }

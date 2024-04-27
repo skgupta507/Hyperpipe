@@ -183,7 +183,6 @@ onMounted(() => {
     <img
       v-if="data.state.art"
       class="art"
-      loading="lazy"
       :src="data.state.art" />
 
     <div class="wrapper">
