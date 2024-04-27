@@ -128,13 +128,17 @@ const openSong = el => {
         @click.prevent="artist.getArtist(channel.replace('/channel/', ''))">
         <i class="ign">{{ author ? author.replaceAll(' - Topic', '') : '' }}</i>
       </a>
+      <span v-if="title === data.state?.title">
+        <span class="bi-play"></span>
+        <span>{{ t('title.now_playing') }}</span>
+      </span>
     </span>
 
     <button
       class="bi bi-three-dots-vertical popup-wrap ign"
       @mouseenter="show = true"
       @mouseleave="show = false"
-      @click.enter="show = !show">
+      @keyup.enter="show = !show">
       <Transition name="fade">
         <div v-if="show" class="popup ign">
           <button
