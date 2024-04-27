@@ -128,7 +128,7 @@ const openSong = el => {
         @click.prevent="artist.getArtist(channel.replace('/channel/', ''))">
         <i class="ign">{{ author ? author.replaceAll(' - Topic', '') : '' }}</i>
       </a>
-      <span v-if="title === data.state?.title">
+      <span v-if="play === data.state?.url">
         <span class="bi-play"></span>
         <span>{{ t('title.now_playing') }}</span>
       </span>
