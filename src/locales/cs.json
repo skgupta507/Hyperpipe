@@ -18,7 +18,8 @@
         "feeds": "Zdroje",
         "offline": "Offline",
         "logout": "Odhlásit se",
-        "restore_prefs": "Obnovit nastavení"
+        "restore_prefs": "Obnovit nastavení",
+        "now_playing": "Právě hraje"
     },
     "pref": {
         "codec": "Kodek",
