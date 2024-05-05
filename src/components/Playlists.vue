@@ -44,6 +44,7 @@ onMounted(() => {
         <button
           class="bi bi-shuffle pl-btn"
           title="shuffle queue"
+          :aria-label="t('queue.shuffle')"
           @click="
             () => {
               data.state.urls = useShuffle(data.state.urls);
@@ -52,7 +53,8 @@ onMounted(() => {
           "></button>
         <button
           class="bi bi-bookmark-plus pl-btn"
-          title="save queue"
+          :title="t('playlist.save')"
+          :aria-label="t('playlist.save')"
           @click="
             () => {
               let urls = data.state.urls.map(i => ({
@@ -67,13 +69,17 @@ onMounted(() => {
         <button
           class="bi bi-dash-lg pl-btn"
           title="clear queue"
+          :aria-label="t('queue.clear')"
           @click="data.state.urls = []"></button>
       </div>
       <div
         v-for="plurl in data.state.urls"
         class="pl-item"
         :key="plurl.url"
-        @click="handleClick(plurl, $event)">
+        @click="handleClick(plurl, $event)"
+        tabindex="0"
+        @keydown.enter="handleClick(plurl, $event)"
+        :aria-label="`Play track: ${plurl.title}`">
         <span
           v-if="data.state.url == plurl.url"
           class="bars-wrap"

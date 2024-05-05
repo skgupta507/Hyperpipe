@@ -77,10 +77,16 @@ async function Like() {
 <template>
   <div id="statusbar" class="flex">
     <div class="flex statusbar-progress-container">
-      <span>{{ getFormattedTime(player.state.realTime) }}</span>
-      <div id="statusbar-progress" class="range-wrap">
+      <span
+        :aria-label="t('info.time_elapsed')">
+        {{ getFormattedTime(player.state.realTime) }}
+      </span>
+      <div
+        id="statusbar-progress"
+        class="range-wrap"
+        :aria-label="t('action.change_time')">
         <input
-          aria-label="Change Time"
+          :aria-label="t('action.change_time')"
           :value="player.state.time"
           type="range"
           name="statusbar-progress"
@@ -90,7 +96,10 @@ async function Like() {
               ($event.target.value / 100) * player.state.duration
           " />
       </div>
-      <span>{{ getFormattedTime(player.state.duration) }}</span>
+      <span
+        :aria-label="t('info.track_duration')">
+        {{ getFormattedTime(player.state.duration) }}
+      </span>
     </div>
 
     <div class="flex statusbar-controls-container">
@@ -150,7 +159,7 @@ async function Like() {
                 : 'hidden',
           }"
           id="btn-nexttrack"
-          aria-label="Play next track"
+          :aria-label="t('action.play_next_track')"
           class="bi bi-chevron-bar-right clickable"
           @click="data.nextTrack"></button>
       </div>
@@ -179,7 +188,7 @@ async function Like() {
 
         <button
           class="bi bi-three-dots clickable"
-          aria-label="More Controls"
+          :aria-label="t('action.more_controls')"
           @click="
             showme.menu = !showme.menu;
             showme.vol = false;
@@ -189,14 +198,16 @@ async function Like() {
             <button
               id="info-btn"
               class="bi bi-info-circle clickable"
-              aria-label="Show Information About Song"
+              :title="t('action.show_information_about_track')"
+              :aria-label="t('action.show_information_about_track')"
               :data-active="player.state.info"
               @click="player.toggle('info')"></button>
 
             <button
               v-if="store.auth"
               id="like-btn"
-              title="Add song to favorites"
+              :title="t('action.add_track_to_favorites')"
+              :aria-label="t('action.add_track_to_favorites')"
               class="bi blink clickable"
               :class="data.state.url == liked ? 'bi-heart-fill' : 'bi-heart'"
               :data-active="data.state.url == liked"
@@ -205,14 +216,15 @@ async function Like() {
 
             <button
               id="dl-btn"
-              title="Save for Offline Playback"
+              :title="t('action.save_for_offline_playback')"
+              :aria-label="t('action.save_for_offline_playback')"
               class="bi bi-download clickable"
               @click="Offline"></button>
 
             <button
               id="addToPlaylist"
-              :title="t('statusBar.add_current_to_playlist')"
-              :aria-label="t('statusBar.add_current_to_playlist')"
+              :title="t('playlist.add')"
+              :aria-label="t('playlist.add')"
               class="bi bi-collection clickable"
               @click="
                 player.toggle('add');
