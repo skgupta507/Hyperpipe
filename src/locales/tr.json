@@ -18,7 +18,8 @@
         "feeds": "Akışlar",
         "restore_prefs": "Tercihleri geri yükle",
         "offline": "Çevrim dışı",
-        "logout": "Oturumu kapat"
+        "logout": "Oturumu kapat",
+        "now_playing": "Şimdi Oynatılıyor"
     },
     "action": {
         "back": "Geri",

@@ -18,7 +18,8 @@
         "feeds": "Umpan",
         "offline": "Luring",
         "logout": "Keluar",
-        "restore_prefs": "Kembalikan pengaturan"
+        "restore_prefs": "Kembalikan pengaturan",
+        "now_playing": "Sekarang Memutar"
     },
     "playlist": {
         "select": "Pilih Daftar Putar yang Ingin Ditambahkan",
@@ -31,13 +32,13 @@
     },
     "pref": {
         "auto_queue": "Antrekan Lagu Secara Otomatis",
-        "best": "paling tinggi",
+        "best": "Paling tinggi",
         "theme": "Tema",
         "player": "Pemutar Audio",
         "quality": "Kualitas",
         "codec": "Codec",
-        "worst": "paling rendah",
-        "auto": "otomatis",
+        "worst": "Paling rendah",
+        "auto": "Otomatis",
         "volume": "Volume Default",
         "light": "Terang",
         "nord": "Nord",

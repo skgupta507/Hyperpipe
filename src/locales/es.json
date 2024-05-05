@@ -18,7 +18,8 @@
         "feeds": "Fuentes",
         "offline": "Sin conexión",
         "logout": "Cerrar la sesión",
-        "restore_prefs": "Restablecer las preferencias"
+        "restore_prefs": "Restablecer las preferencias",
+        "now_playing": "Reproduciendo"
     },
     "action": {
         "back": "Atrás",
@@ -48,7 +49,7 @@
         "auto": "Automático",
         "volume": "Volumen predeterminado",
         "auto_queue": "Canciones en la cola de reproducción automáticamente",
-        "worst": "La peor",
+        "worst": "El peor",
         "best": "La mejor",
         "tab": "Ficha predeterminada",
         "dark": "Oscuro (Por defecto)",

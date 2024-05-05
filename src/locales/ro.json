@@ -18,7 +18,8 @@
         "feeds": "Fluxuri",
         "offline": "Offline",
         "logout": "Deloghează-te",
-        "restore_prefs": "Restaurați preferințele"
+        "restore_prefs": "Restaurați preferințele",
+        "now_playing": "Redarea Acum"
     },
     "action": {
         "back": "Înapoi",

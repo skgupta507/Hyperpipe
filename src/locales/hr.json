@@ -18,7 +18,8 @@
         "feeds": "Feedovi",
         "offline": "Offline",
         "logout": "Odjava",
-        "restore_prefs": "Obnovi postavke"
+        "restore_prefs": "Obnovi postavke",
+        "now_playing": "Upravo svira"
     },
     "info": {
         "search": "Započni pretraživanje",
