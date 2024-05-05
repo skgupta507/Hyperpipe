@@ -128,30 +128,45 @@ const openSong = el => {
         @click.prevent="artist.getArtist(channel.replace('/channel/', ''))">
         <i class="ign">{{ author ? author.replaceAll(' - Topic', '') : '' }}</i>
       </a>
+      <span v-if="play === data.state?.url">
+        <span class="bi-play" aria-hidden="true"></span>
+        <span>{{ t('title.now_playing') }}</span>
+      </span>
     </span>
 
     <button
       class="bi bi-three-dots-vertical popup-wrap ign"
       @mouseenter="show = true"
       @mouseleave="show = false"
-      @click.enter="show = !show">
+      @keyup.enter="show = !show"
+      :aria-label="t('action.more_controls')">
       <Transition name="fade">
         <div v-if="show" class="popup ign">
           <button
             v-if="playlistId || offlineUri"
             class="bi bi-dash-lg clickable ign"
+            :aria-label="t('action.remove_from_playlist')"
             @click="Remove"></button>
           <button
             class="bi bi-chevron-bar-right clickable ign"
+            :aria-label="t('action.play_next')"
             @click="appendSong"></button>
           <button
             class="bi bi-collection clickable ign"
+            :aria-label="t('action.add_current_to_playlist')"
             @click="showPl = true"></button>
           <button
             class="bi bi-broadcast clickable ign"
+            :aria-label="t('action.play_now')"
             @click="$emit('nxt-song')"></button>
-          <button class="bi bi-plus-lg clickable ign" @click="addSong"></button>
-          <button class="bi bi-share clickable ign" @click="Share"></button>
+          <button
+            class="bi bi-plus-lg clickable ign"
+            :aria-label="t('action.add_to_playlist')"
+            @click="addSong"></button>
+          <button
+            class="bi bi-share clickable ign"
+            :aria-label="t('action.share')"
+            @click="Share"></button>
         </div>
       </Transition>
     </button>

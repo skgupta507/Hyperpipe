@@ -18,7 +18,8 @@
     "search": "Search",
     "feeds": "Feeds",
     "offline": "Offline",
-    "restore_prefs": "Restore preferences"
+    "restore_prefs": "Restore preferences",
+    "now_playing": "Now Playing"
   },
   "action": {
     "back": "Back",
@@ -29,16 +30,36 @@
     "receive": "Receive",
     "import": "Import",
     "export": "Export",
-    "register_on": "Don't have an account? Register on"
+    "register_on": "Don't have an account? Register on",
+    "remove_from_playlist": "Remove from playlist",
+    "play_next": "Play next",
+    "add_current_to_playlist": "Add current track to a playlist",
+    "play_now": "Play now",
+    "add_to_playlist": "Add to playlist",
+    "share": "Share",
+    "play_next_track": "Play next track",
+    "change_time": "Change time",
+    "add_track_to_favorites": "Add track to favorites",
+    "save_for_offline_playback": "Save for offline playback",
+    "show_information_about_track": "Show information about track",
+    "more_controls": "More controls",
+    "three-dots": "More controls",
+    "remove_playlist": "Remove playlist",
+    "shuffle": "Shuffle",
+    "save_album": "Save album"
   },
   "playlist": {
     "local": "Local Playlists",
     "remote": "Remote Playlists",
     "name": "Playlist name",
     "add": "Add Songs to Playlist",
+    "add_album_to_playlist": "Add album to playlist",
     "create": "Create a new Playlist",
     "sync": "Sync playlists",
-    "select": "Select Playlist to Add"
+    "select": "Select Playlist to Add",
+    "clear_queue": "Clear queue",
+    "save_queue": "Save queue",
+    "shuffle_queue": "Shuffle queue"
   },
   "artist": {
     "subscribers": "Subscribers",
@@ -79,7 +100,9 @@
     "search": "Start Searching",
     "no_info": "No Information Available",
     "saved": "Saved!",
-    "copied_to_clipboard": "Copied to Clipboard"
+    "copied_to_clipboard": "Copied to Clipboard",
+    "time_elapsed": "Time elapsed",
+    "track_duration": "Track duration"
   },
   "instances": {
     "hyp": "Hyperpipe Instance",

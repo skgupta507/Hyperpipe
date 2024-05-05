@@ -1,12 +1,17 @@
 <script setup>
 defineProps(['ico']);
 defineEmits(['click']);
+
+import { useI18n } from '@/stores/misc.js';
+const {t} = useI18n()
 </script>
 
 <template>
   <button
-    :class="'bi clickable bi-' + (ico ? ico : 'play')"
-    @click="$emit('click')">
+    :class="'bi clickable bi-' + (ico ?? 'play')"
+    @click="$emit('click')"
+    :aria-label="ico ? t(`action.${ico}`) : 'play'"
+    :title="ico ? t(`action.${ico}`) : 'play'">
     <slot name="menu"></slot>
   </button>
 </template>

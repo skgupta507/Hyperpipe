@@ -28,7 +28,12 @@ function set(page) {
 
 <template>
   <nav>
-    <h1 class="bi" @click="home">
+    <h1
+      class="bi"
+      @click="home"
+      @keydown.enter="home"
+      tabindex="0"
+      aria-label="Home">
       <IcoHyp />
     </h1>
 
