@@ -145,15 +145,15 @@ const openSong = el => {
           <button
             v-if="playlistId || offlineUri"
             class="bi bi-dash-lg clickable ign"
-            :aria-label="t('action.remove_from_playlist')"
+            :aria-label="t('playlist.remove_from')"
             @click="Remove"></button>
           <button
             class="bi bi-chevron-bar-right clickable ign"
-            :aria-label="t('action.play_next')"
+            :aria-label="t('queue.add_to_top')"
             @click="appendSong"></button>
           <button
             class="bi bi-collection clickable ign"
-            :aria-label="t('action.add_current_to_playlist')"
+            :aria-label="t('playlist.add')"
             @click="showPl = true"></button>
           <button
             class="bi bi-broadcast clickable ign"
@@ -161,7 +161,7 @@ const openSong = el => {
             @click="$emit('nxt-song')"></button>
           <button
             class="bi bi-plus-lg clickable ign"
-            :aria-label="t('action.add_to_playlist')"
+            :aria-label="t('queue.add_to_bottom')"
             @click="addSong"></button>
           <button
             class="bi bi-share clickable ign"
