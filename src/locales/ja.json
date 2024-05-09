@@ -18,8 +18,7 @@
         "feeds": "フィード",
         "offline": "オフライン",
         "logout": "ログアウト",
-        "restore_prefs": "設定用URLから復元",
-        "now_playing": "再生中"
+        "restore_prefs": "設定用URLから復元"
     },
     "action": {
         "back": "戻る",
