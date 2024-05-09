@@ -275,7 +275,7 @@ onDeactivated(() => {
             <button
               class="bi bi-bookmark-plus clickable"
               @click="saveAlbum"
-              :aria-label="t('action.save_album')"></button>
+              :aria-label="t('playlist.save')"></button>
 
             <button
               class="bi bi-share clickable"
@@ -293,7 +293,7 @@ onDeactivated(() => {
                   })),
                 )
               "
-              :aria-label="t('playlist.add_album_to_playlist')"></button>
+              :aria-label="t('queue.add')"></button>
 
             <button
               class="bi bi-shuffle clickable"
@@ -304,7 +304,7 @@ onDeactivated(() => {
               v-if="plId"
               class="bi bi-trash3 clickable"
               @click="removePlaylist"
-              :aria-label="t('action.remove_playlist')"></button>
+              :aria-label="t('playlist.remove')"></button>
           </div>
         </Transition>
       </template>

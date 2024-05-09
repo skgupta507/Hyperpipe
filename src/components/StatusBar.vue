@@ -223,8 +223,8 @@ async function Like() {
 
             <button
               id="addToPlaylist"
-              :title="t('action.add_current_to_playlist')"
-              :aria-label="t('action.add_current_to_playlist')"
+              :title="t('playlist.add')"
+              :aria-label="t('playlist.add')"
               class="bi bi-collection clickable"
               @click="
                 player.toggle('add');

@@ -31,11 +31,7 @@
     "import": "Import",
     "export": "Export",
     "register_on": "Don't have an account? Register on",
-    "remove_from_playlist": "Remove from playlist",
-    "play_next": "Play next",
-    "add_current_to_playlist": "Add current track to a playlist",
     "play_now": "Play now",
-    "add_to_playlist": "Add to playlist",
     "share": "Share",
     "play_next_track": "Play next track",
     "change_time": "Change time",
@@ -44,22 +40,26 @@
     "show_information_about_track": "Show information about track",
     "more_controls": "More controls",
     "three-dots": "More controls",
-    "remove_playlist": "Remove playlist",
-    "shuffle": "Shuffle",
-    "save_album": "Save album"
+    "shuffle": "Shuffle"
   },
   "playlist": {
     "local": "Local Playlists",
     "remote": "Remote Playlists",
     "name": "Playlist name",
-    "add": "Add Songs to Playlist",
-    "add_album_to_playlist": "Add album to playlist",
+    "add": "Add to Playlist",
     "create": "Create a new Playlist",
     "sync": "Sync playlists",
     "select": "Select Playlist to Add",
-    "clear_queue": "Clear queue",
-    "save_queue": "Save queue",
-    "shuffle_queue": "Shuffle queue"
+    "remove_from": "Remove from playlist",
+    "remove": "Remove playlist",
+    "save": "Save as playlist"
+  },
+  "queue": {
+    "clear": "Clear queue",
+    "shuffle": "Shuffle queue",
+    "add": "Add to queue",
+    "add_to_top": "Add to top of queue",
+    "add_to_bottom": "Add to bottom of queue"
   },
   "artist": {
     "subscribers": "Subscribers",
@@ -125,8 +125,7 @@
   },
   "statusBar": {
     "currentPlaylist": "Current Playlist",
-    "loop": "Loop",
-    "add_current_to_playlist": "Add Current Song to a Playlist"
+    "loop": "Loop"
   },
   "general": {
     "username": "username",

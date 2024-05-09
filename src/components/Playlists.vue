@@ -44,7 +44,7 @@ onMounted(() => {
         <button
           class="bi bi-shuffle pl-btn"
           title="shuffle queue"
-          :aria-label="t('playlist.shuffle_queue')"
+          :aria-label="t('queue.shuffle')"
           @click="
             () => {
               data.state.urls = useShuffle(data.state.urls);
@@ -53,8 +53,8 @@ onMounted(() => {
           "></button>
         <button
           class="bi bi-bookmark-plus pl-btn"
-          title="save queue"
-          :aria-label="t('playlist.save_queue')"
+          :title="t('playlist.save')"
+          :aria-label="t('playlist.save')"
           @click="
             () => {
               let urls = data.state.urls.map(i => ({
@@ -69,7 +69,7 @@ onMounted(() => {
         <button
           class="bi bi-dash-lg pl-btn"
           title="clear queue"
-          :aria-label="t('playlist.clear_queue')"
+          :aria-label="t('queue.clear')"
           @click="data.state.urls = []"></button>
       </div>
       <div
