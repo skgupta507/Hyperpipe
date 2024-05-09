@@ -274,9 +274,13 @@ onDeactivated(() => {
           <div v-if="albumMenu" class="alb popup">
             <button
               class="bi bi-bookmark-plus clickable"
-              @click="saveAlbum"></button>
+              @click="saveAlbum"
+              :aria-label="t('playlist.save')"></button>
 
-            <button class="bi bi-share clickable" @click="shareAlbum"></button>
+            <button
+              class="bi bi-share clickable"
+              @click="shareAlbum"
+              :aria-label="t('action.share')"></button>
 
             <button
               class="bi bi-plus-lg clickable"
@@ -288,16 +292,19 @@ onDeactivated(() => {
                     thumbnails: [{ url: i.thumbnail }],
                   })),
                 )
-              "></button>
+              "
+              :aria-label="t('queue.add')"></button>
 
             <button
               class="bi bi-shuffle clickable"
-              @click="shuffleAdd"></button>
+              @click="shuffleAdd"
+              :aria-label="t('action.shuffle')"></button>
 
             <button
               v-if="plId"
               class="bi bi-trash3 clickable"
-              @click="removePlaylist"></button>
+              @click="removePlaylist"
+              :aria-label="t('playlist.remove')"></button>
           </div>
         </Transition>
       </template>
