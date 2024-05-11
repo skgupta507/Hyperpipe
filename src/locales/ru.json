@@ -18,7 +18,8 @@
         "feeds": "Ленты",
         "offline": "Оффлайн",
         "restore_prefs": "Восстановить настройки",
-        "logout": "Выйти"
+        "logout": "Выйти",
+        "now_playing": "Сейчас играет"
     },
     "action": {
         "back": "Назад",
