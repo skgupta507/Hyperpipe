@@ -27,7 +27,8 @@
         "feeds": "订阅源",
         "offline": "离线",
         "logout": "登出",
-        "restore_prefs": "还原偏好"
+        "restore_prefs": "还原偏好",
+        "now_playing": "正在播放"
     },
     "action": {
         "add": "添加",
