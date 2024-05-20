@@ -1,9 +1,9 @@
-when:
+swhen:
   branch: main
   event: ['push']
 
 steps:
-  build:
+  - name: build
     image: node:alpine
     commands:
       - npm install && npm audit fix
@@ -11,7 +11,7 @@ steps:
     when:
       event: ['push', 'pull_request']
 
-  surge:
+  - name: surge
     image: node:alpine
     secrets: [surge_login, surge_token]
     commands:
@@ -19,7 +19,7 @@ steps:
       - cp dist/index.html dist/200.html
       - npx surge ./dist --domain https://hyperpipe.surge.sh
 
-  docker:
+  - name: docker
     image: woodpeckerci/plugin-docker-buildx
     settings:
       platforms: linux/amd64,linux/arm64
