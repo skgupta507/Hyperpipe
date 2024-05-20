@@ -79,7 +79,17 @@
         "receive": "Obdržet",
         "import": "Importovat",
         "export": "Exportovat",
-        "register_on": "Nemáte účet? Zaregistrujte se na"
+        "register_on": "Nemáte účet? Zaregistrujte se na",
+        "play_now": "Přehrát nyní",
+        "share": "Sdílet",
+        "save_for_offline_playback": "Uložit pro přehrání offline",
+        "three-dots": "Další ovládání",
+        "play_next_track": "Přehrát další skladbu",
+        "change_time": "Změnit čas",
+        "add_track_to_favorites": "Přidat skladbu do oblíbených",
+        "more_controls": "Další ovládání",
+        "show_information_about_track": "Zobrazit informace o skladbě",
+        "shuffle": "Náhodně"
     },
     "playlist": {
         "local": "Místní playlisty",
