@@ -30,16 +30,29 @@
         "send": "Gönder",
         "export": "Dışa aktar",
         "import": "İçe aktar",
-        "register_on": "Hesabınız yok mu? Buradan kaydolun:"
+        "register_on": "Hesabınız yok mu? Buradan kaydolun:",
+        "show_information_about_track": "Parça hakkında bilgi göster",
+        "play_now": "Şimdi oynat",
+        "share": "Paylaş",
+        "play_next_track": "Sonraki parçayı oynat",
+        "change_time": "Zamanı değiştir",
+        "add_track_to_favorites": "Parçayı sık kullanılanlara ekle",
+        "save_for_offline_playback": "Çevrim dışı oynatma için kaydet",
+        "more_controls": "Daha fazla denetim",
+        "three-dots": "Daha fazla denetim",
+        "shuffle": "Karıştır"
     },
     "playlist": {
         "local": "Yerel Oynatma Listeleri",
         "name": "Oynatma listesi adı",
-        "add": "Oynatma Listesine Şarkı Ekle",
+        "add": "Oynatma Listesine Ekle",
         "create": "Yeni bir Oynatma Listesi Oluştur",
         "sync": "Oynatma listelerini eşzamanla",
         "select": "Eklenecek Oynatma Listesini Seçin",
-        "remote": "Uzaktan Oynatma Listeleri"
+        "remote": "Uzaktan Oynatma Listeleri",
+        "remove_from": "Oynatma listesinden kaldır",
+        "remove": "Oynatma listesini kaldır",
+        "save": "Oynatma listesi olarak kaydet"
     },
     "pref": {
         "theme": "Tema",
@@ -76,7 +89,9 @@
         "search": "Aramaya Başla",
         "no_info": "Bilgi Yok",
         "saved": "Kaydedildi!",
-        "copied_to_clipboard": "Panoya Kopyalandı"
+        "copied_to_clipboard": "Panoya Kopyalandı",
+        "time_elapsed": "Geçen zaman",
+        "track_duration": "Parça süresi"
     },
     "instances": {
         "hyp": "Hyperpipe Örneği",
@@ -173,5 +188,12 @@
     "artist": {
         "subs": "Abnlr",
         "subscribers": "Aboneler"
+    },
+    "queue": {
+        "clear": "Sırayı temizle",
+        "shuffle": "Sırayı karıştır",
+        "add": "Sıraya ekle",
+        "add_to_top": "Sıranın başına ekle",
+        "add_to_bottom": "Sıranın sonuna ekle"
     }
 }
