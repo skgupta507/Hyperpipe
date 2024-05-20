@@ -95,17 +95,22 @@
         "local": "Místní playlisty",
         "create": "Vytvořit nový playlist",
         "remote": "Vzdálené playlisty",
-        "add": "Přidat skladby do playlistu",
+        "add": "Přidat do playlistu",
         "select": "Vyberte playlisty k přidání",
         "name": "Název playlistu",
-        "sync": "Synchronizovat playlisty"
+        "sync": "Synchronizovat playlisty",
+        "remove_from": "Odstranit z playlistu",
+        "remove": "Odstranit playlist",
+        "save": "Uložit jako playlist"
     },
     "info": {
         "see_all": "Zobrazit vše",
         "search": "Začněte hledat",
         "no_info": "Nejsou dostupné žádné informace",
         "saved": "Uloženo!",
-        "copied_to_clipboard": "Zkopírováno do schránky"
+        "copied_to_clipboard": "Zkopírováno do schránky",
+        "time_elapsed": "Uplynulý čas",
+        "track_duration": "Délka skladby"
     },
     "statusBar": {
         "currentPlaylist": "Aktuální playlist",
@@ -183,5 +188,12 @@
     "general": {
         "username": "uživatelské jméno",
         "password": "heslo"
+    },
+    "queue": {
+        "add_to_bottom": "Přidat na konec fronty",
+        "add": "Přidat do fronty",
+        "clear": "Vymazat frontu",
+        "add_to_top": "Přidat na začátek fronty",
+        "shuffle": "Zamíchat frontu"
     }
 }
