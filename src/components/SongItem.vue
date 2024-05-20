@@ -199,6 +199,7 @@ button.bi-three-dots-vertical {
   height: auto;
   right: 0;
   bottom: 0;
+  padding: 0.75rem 0.5rem;
   box-shadow: var(--shadow);
   border-radius: 0.25rem;
 }
