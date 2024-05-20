@@ -30,16 +30,28 @@
         "receive": "受信",
         "import": "インポート",
         "export": "エクスポート",
-        "register_on": "アカウントがなければ登録 →"
+        "register_on": "アカウントがなければ登録 →",
+        "play_now": "今すぐ再生",
+        "share": "共有",
+        "add_track_to_favorites": "曲をお気に入りに追加",
+        "save_for_offline_playback": "オフライン再生用に保存",
+        "show_information_about_track": "曲の情報を表示",
+        "more_controls": "ほかの操作",
+        "play_next_track": "次の曲を再生",
+        "three-dots": "ほかの操作",
+        "shuffle": "シャッフル"
     },
     "playlist": {
         "local": "端末内の再生リスト",
         "remote": "Piped 上の再生リスト",
         "name": "再生リスト名",
-        "add": "再生リストに曲を追加",
+        "add": "再生リストに追加",
         "create": "新しい再生リストを作成",
         "sync": "再生リストを同期",
-        "select": "追加先リストを選択"
+        "select": "追加するリストを選択",
+        "save": "再生リストとして保存",
+        "remove_from": "再生リストから除去",
+        "remove": "再生リストを削除"
     },
     "pref": {
         "theme": "テーマ",
@@ -76,7 +88,9 @@
         "search": "検索中",
         "no_info": "情報がありません",
         "saved": "保存しました！",
-        "copied_to_clipboard": "クリップボードにコピーしました"
+        "copied_to_clipboard": "クリップボードにコピーしました",
+        "track_duration": "曲の長さ",
+        "time_elapsed": "経過時間"
     },
     "instances": {
         "hyp": "Hyperpipe インスタンス",
@@ -173,5 +187,12 @@
         "SV": "エルサルバドル",
         "TZ": "タンザニア",
         "ZZ": "国際"
+    },
+    "queue": {
+        "shuffle": "再生キューをシャッフル",
+        "clear": "再生キューを消去",
+        "add": "再生キューに追加",
+        "add_to_top": "再生キューの先頭に追加",
+        "add_to_bottom": "再生キューの最後に追加"
     }
 }
