@@ -30,16 +30,29 @@
         "cancel": "Cancelar",
         "import": "Importar",
         "export": "Exportar",
-        "register_on": "¿No tienes una cuenta? Registraste en"
+        "register_on": "¿No tienes una cuenta? Registraste en",
+        "play_next_track": "Reproducir la siguiente pista",
+        "show_information_about_track": "Mostrar información sobre la pista",
+        "more_controls": "Más controles",
+        "three-dots": "Más controles",
+        "shuffle": "Aleatorio",
+        "play_now": "Reproducir ahora",
+        "share": "Compartir",
+        "change_time": "Cambio de hora",
+        "add_track_to_favorites": "Agregar pista a favoritos",
+        "save_for_offline_playback": "Guardar para reproducir sin conexión"
     },
     "playlist": {
         "local": "Listas de reproducción locales",
         "remote": "Listas de reproducción remotas",
         "name": "Nombre de la lista de reproducción",
-        "add": "Agregar canciones a la lista de reproducción",
+        "add": "Agregar a la lista de reproducción",
         "create": "Crear una nueva lista de reproducción",
         "sync": "Sincronizar las listas de reproducción",
-        "select": "Seleccionar lista de reproducción para agregar"
+        "select": "Seleccionar lista de reproducción para agregar",
+        "remove_from": "Eliminar de la lista de reproducción",
+        "remove": "Eliminar lista de reproducción",
+        "save": "Guardar como lista de reproducción"
     },
     "pref": {
         "theme": "Tema",
@@ -76,7 +89,9 @@
         "search": "Empezar a buscar",
         "no_info": "No hay información disponible",
         "saved": "¡Guardado!",
-        "copied_to_clipboard": "Copiado al portapapeles"
+        "copied_to_clipboard": "Copiado al portapapeles",
+        "time_elapsed": "Tiempo transcurrido",
+        "track_duration": "Duración de la pista"
     },
     "instances": {
         "piped": "Instancia de Piped",
@@ -173,5 +188,12 @@
     "general": {
         "username": "nombre de usuario",
         "password": "contraseña"
+    },
+    "queue": {
+        "clear": "Borrar la cola",
+        "shuffle": "Cola de reproducción aleatoria",
+        "add": "Añadir a la cola",
+        "add_to_top": "Añadir al principio de la cola",
+        "add_to_bottom": "Añadir al final de la cola"
     }
 }
