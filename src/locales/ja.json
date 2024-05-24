@@ -39,7 +39,8 @@
         "more_controls": "ほかの操作",
         "play_next_track": "次の曲を再生",
         "three-dots": "ほかの操作",
-        "shuffle": "シャッフル"
+        "shuffle": "シャッフル",
+        "change_time": "時間を変更"
     },
     "playlist": {
         "local": "端末内の再生リスト",
