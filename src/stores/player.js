@@ -23,7 +23,7 @@ export const useData = defineStore('data', () => {
   async function getSong(e) {
     const hash = new URLSearchParams(e.substring(e.indexOf('?'))).get('v'),
       json = await getJsonPiped('/streams/' + hash),
-      unamp = txt => txt.replace(AMP, '&');
+      unamp = txt => txt?.replace(AMP, '&');
 
     state.art = unamp(json.thumbnailUrl);
     state.description = json.description;
