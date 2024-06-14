@@ -26,7 +26,9 @@
         "no_info": "Nema informacija",
         "see_all": "Pokaži sve",
         "saved": "Spremljeno!",
-        "copied_to_clipboard": "Kopirano u međuspremnik"
+        "copied_to_clipboard": "Kopirano u međuspremnik",
+        "track_duration": "Trajanje pjesme",
+        "time_elapsed": "Proteklo vrijeme"
     },
     "action": {
         "cancel": "Otkaži",
@@ -37,7 +39,17 @@
         "add": "Dodaj",
         "import": "Uvezi",
         "export": "Izvezi",
-        "register_on": "Nemaš račun? Registriraj se na"
+        "register_on": "Nemaš račun? Registriraj se na",
+        "add_track_to_favorites": "Dodaj pjesmu u favorite",
+        "share": "Dijeli",
+        "change_time": "Promijeni vrijeme",
+        "save_for_offline_playback": "Spremi za lokalnu reprodukciju",
+        "play_next_track": "Sviraj sljedeću pjesmu",
+        "show_information_about_track": "Prikaži informacije o pjesmi",
+        "play_now": "Sviraj sada",
+        "more_controls": "Više kontrola",
+        "three-dots": "Više kontrola",
+        "shuffle": "Promijeni slijed"
     },
     "instances": {
         "loc": "Lokacije",
@@ -93,9 +105,12 @@
         "sync": "Sinkroniziraj playliste",
         "local": "Lokalne playliste",
         "name": "Ime playliste",
-        "add": "Dodaj pjesme u playlistu",
+        "add": "Dodaj u playlistu",
         "create": "Stvori novu playlistu",
-        "select": "Odaberi playlistu za dodavanje"
+        "select": "Odaberi playlistu za dodavanje",
+        "remove_from": "Ukloni iz playliste",
+        "remove": "Ukloni playlistu",
+        "save": "Spremi kao playlistu"
     },
     "artist": {
         "subs": "Pretplate",
@@ -173,5 +188,12 @@
     "general": {
         "password": "lozinka",
         "username": "korisničko ime"
+    },
+    "queue": {
+        "add": "Dodaj u listu",
+        "add_to_top": "Dodaj na vrh liste",
+        "add_to_bottom": "Dodaj na kraj liste",
+        "clear": "Isprazni listu",
+        "shuffle": "Promijeni slijed liste"
     }
 }
