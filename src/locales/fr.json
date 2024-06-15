@@ -18,23 +18,27 @@
         "feeds": "Flux",
         "offline": "Hors ligne",
         "restore_prefs": "Rétablir les préférences",
-        "logout": "Déconnection"
+        "logout": "Déconnection",
+        "now_playing": "À l'écoute"
     },
     "playlist": {
         "local": "Listes de lecture locales",
         "remote": "Listes de lecture distantes",
         "name": "Nom de la liste de lecture",
         "sync": "Synchroniser les listes de lecture",
-        "add": "Ajouter des chansons à la liste de lecture",
+        "add": "Ajouter à la liste de lecture",
         "create": "Créer une nouvelle liste de lecture",
-        "select": "Sélectionnez la liste de lecture à ajouter"
+        "select": "Sélectionnez la liste de lecture à ajouter",
+        "remove_from": "Retirer de la liste de lecture",
+        "remove": "Retirer la liste de lecture",
+        "save": "Enregistrer comme liste de lecture"
     },
     "pref": {
-        "best": "la meilleure",
-        "auto": "automatique",
+        "best": "La meilleure",
+        "auto": "Automatique",
         "volume": "Volume par défaut",
         "quality": "Qualité",
-        "worst": "la pire",
+        "worst": "La pire",
         "theme": "Thème",
         "player": "Lecteur audio",
         "auto_queue": "Mettre automatiquement les chansons en file d'attente",
@@ -64,7 +68,9 @@
         "search": "Commencer la recherche",
         "no_info": "Aucune information disponible",
         "saved": "Sauvegardé !",
-        "copied_to_clipboard": "Copié dans le presse-papiers"
+        "copied_to_clipboard": "Copié dans le presse-papiers",
+        "time_elapsed": "Temps écoulé",
+        "track_duration": "Durée du titre"
     },
     "action": {
         "send": "Envoyer",
@@ -75,7 +81,17 @@
         "receive": "Recevoir",
         "import": "Importer",
         "export": "Exporter",
-        "register_on": "Vous n'avez pas de compte ? Inscrivez-vous sur"
+        "register_on": "Vous n'avez pas de compte ? Inscrivez-vous sur",
+        "add_track_to_favorites": "Ajouter le titre aux favoris",
+        "more_controls": "Plus de commandes",
+        "shuffle": "Aléatoire",
+        "save_for_offline_playback": "Enregistrer pour la lecture hors ligne",
+        "three-dots": "Plus de commandes",
+        "play_now": "Lire maintenant",
+        "share": "Partager",
+        "play_next_track": "Jouer la piste suivante",
+        "change_time": "Changer l'heure",
+        "show_information_about_track": "Afficher les informations sur la piste"
     },
     "instances": {
         "up_to_date": "À jour",
@@ -86,7 +102,10 @@
         "name": "Nom",
         "loc": "Emplacements",
         "cdn": "CDN",
-        "default": "Défaut"
+        "default": "Défaut",
+        "uptime_7d": "Heures supplémentaires (7 j)",
+        "uptime_24h": "Heures supplémentaires (24 h)",
+        "uptime_30d": "Heures supplémentaires (30 j)"
     },
     "lyrics": {
         "load": "Récupération des paroles",
@@ -169,5 +188,12 @@
     "artist": {
         "subs": "Abos",
         "subscribers": "Abonnés"
+    },
+    "queue": {
+        "clear": "Effacer la file d'attente",
+        "shuffle": "File d'attente aléatoire",
+        "add": "Ajouter à la file d'attente",
+        "add_to_top": "Ajouter en haut de la file",
+        "add_to_bottom": "Ajouter au bas de la file"
     }
 }
