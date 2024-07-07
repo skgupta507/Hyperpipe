@@ -10,6 +10,7 @@ import {
 
 import { useStore, useAutoTheme } from '@/scripts/util.js';
 import { SUPPORTED_LOCALES, useI18n } from '@/stores/misc.js';
+import { usePlayer } from '@/stores/player.js';
 
 const date = ref('unknown');
 
@@ -19,6 +20,7 @@ import('@/assets/version.json').then(v => {
 
 const { t, setupLocale } = useI18n(),
   store = useStore(),
+  player = usePlayer(),
   instances = ref([]),
   hypInstances = ref([]),
   next = ref(false),
@@ -79,6 +81,11 @@ function setPRM(prm) {
   setStore('prm', prm);
   if (prm) document.body.classList.add('prm');
   else document.body.classList.remove('prm');
+}
+
+function setPitch(pitch) {
+  setStore('pitch', pitch);
+  player.state.pitch = pitch;
 }
 
 function getStoreBool(key, ele, def) {
@@ -266,6 +273,33 @@ onMounted(() => {
       min="0"
       :value="getStore('vol') || 100"
       @change="setStore('vol', $event.target.value)" />
+  </div>
+
+  <div class="left">
+    <label for="pref-playback-rate">{{ t('pref.playback_rate') }}</label>
+    <input
+      type="number"
+      name="pref-playback-rate"
+      id="pref-playback-rate"
+      class="input"
+      min="0.1"
+      step="0.1"
+      :value="getStore('rate') || 1"
+      @change="(e) => {
+        setStore('rate', e.target.value);
+        player.state.rate = e.target.value;
+      }" />
+  </div>
+
+  <div class="left">
+    <input
+      type="checkbox"
+      name="pref-chk-preserve-pitch"
+      id="pref-chk-preserve-pitch"
+      class="input"
+      @change="setPitch($event.target.checked)"
+      v-model="player.state.pitch" />
+    <label for="pref-chk-preserve-pitch">{{ t('pref.preserves_pitch') }}</label>
   </div>
 
   <h2>{{ t('instances.hyp') }}</h2>

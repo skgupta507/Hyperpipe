@@ -93,7 +93,9 @@
     "home": "Home",
     "explore": "Explore",
     "charts": "Charts",
-    "library": "Library"
+    "library": "Library",
+    "playback_rate": "Playback Rate",
+    "preserves_pitch": "Preserve Pitch"
   },
   "info": {
     "see_all": "See All",

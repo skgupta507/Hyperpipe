@@ -148,6 +148,8 @@ export const usePlayer = defineStore('player', () => {
     info: false,
     add: false,
     vol: store.vol ? store.vol / 100 : 1,
+    rate: parseFloat(store.rate || '1'),
+    pitch: store.pitch != 'false',
   });
 
   function toggle(i) {
