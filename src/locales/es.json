@@ -82,7 +82,9 @@
         "black": "Oscuro",
         "blur_nord": "Nord (Desenfoque)",
         "blur_dracula": "Drácula (desenfoque)",
-        "blur_black": "Oscuro (Difuminado)"
+        "blur_black": "Oscuro (Difuminado)",
+        "preserves_pitch": "Conservar la tonalidad del sonido",
+        "playback_rate": "Velocidad de reproducción"
     },
     "info": {
         "see_all": "Ver todo",
