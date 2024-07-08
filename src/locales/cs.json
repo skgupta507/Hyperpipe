@@ -49,7 +49,9 @@
         "black": "Černý",
         "blur_nord": "Nord (rozmazaný)",
         "blur_dracula": "Drákula (rozmazaný)",
-        "blur_black": "Černý (rozmazaný)"
+        "blur_black": "Černý (rozmazaný)",
+        "playback_rate": "Rychlost přehrávání",
+        "preserves_pitch": "Zachovat výšku"
     },
     "instances": {
         "name": "Název",
