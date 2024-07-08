@@ -82,7 +82,9 @@
         "cc": "Grafikler için ülkeyi otomatik çıkar",
         "blur_dracula": "Dracula (Bulanık)",
         "black": "Siyah",
-        "blur_black": "Siyah (Bulanık)"
+        "blur_black": "Siyah (Bulanık)",
+        "playback_rate": "Oynatma Hızı",
+        "preserves_pitch": "Aralığı Koru"
     },
     "info": {
         "see_all": "Hepsini Gör",
