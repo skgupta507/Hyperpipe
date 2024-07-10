@@ -51,7 +51,8 @@
         "blur_dracula": "Drákula (rozmazaný)",
         "blur_black": "Černý (rozmazaný)",
         "playback_rate": "Rychlost přehrávání",
-        "preserves_pitch": "Zachovat výšku"
+        "preserves_pitch": "Zachovat výšku",
+        "hls": "Preferovat HLS namísto DASH"
     },
     "instances": {
         "name": "Název",
