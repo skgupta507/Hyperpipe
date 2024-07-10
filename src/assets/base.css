@@ -34,7 +34,11 @@ body[date-theme^='black'] {
 
   --color-shadow: #000;
   --color-blur: #11111190;
-  --color-gradient: linear-gradient(45deg, oklab(0.9 -0.05 -0.04), oklab(0.57 -0.03 -0.09));
+  --color-gradient: linear-gradient(
+    45deg,
+    oklab(0.9 -0.05 -0.04),
+    oklab(0.57 -0.03 -0.09)
+  );
   --color-scrollbar: var(--vt-c-blue);
 
   --color-heading: var(--vt-c-text-dark-1);
@@ -75,7 +79,7 @@ body[data-theme^='nord'] {
   --color-shadow: #4c566a;
   --color-scrollbar: var(--color-foreground);
 
-  --color-gradient: linear-gradient(45deg, var(--color-foreground), #5E81AC);
+  --color-gradient: linear-gradient(45deg, var(--color-foreground), #5e81ac);
 
   --color-heading: #d8dee9;
   --color-text: #d8dee9;
@@ -93,7 +97,11 @@ body[data-theme^='dracula'] {
   --color-shadow: #6272a4;
   --color-scrollbar: var(--color-foreground);
 
-  --color-gradient: linear-gradient(45deg, var(--color-foreground), var(--color-shadow));
+  --color-gradient: linear-gradient(
+    45deg,
+    var(--color-foreground),
+    var(--color-shadow)
+  );
 
   --color-heading: var(--vt-c-text-dark-1);
   --color-text: var(--vt-c-text-dark-2);

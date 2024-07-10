@@ -43,11 +43,12 @@ async function Stream() {
         codecs = store.getItem('codec');
 
       await audioPlayer.attach(audio.value);
-      
+
       for (const [playerKey, audioKey] of Object.entries({
         rate: 'playbackRate',
         pitch: 'preservesPitch',
-      })) audio.value[audioKey] = player.state[playerKey];
+      }))
+        audio.value[audioKey] = player.state[playerKey];
 
       audioPlayer.getNetworkingEngine().registerRequestFilter((_type, req) => {
         const headers = req.headers;
@@ -90,7 +91,7 @@ async function Stream() {
         },
         dash: {
           ignoreMinBufferTime: true,
-        }
+        },
       });
 
       window.audioPlayer = audioPlayer;
@@ -170,17 +171,17 @@ watch(() => player.state.streams, Stream);
 
 watch(
   () => player.state.currentTime,
-  cur => audio.value.currentTime = cur,
+  cur => (audio.value.currentTime = cur),
 );
 
 watch(
   () => player.state.rate,
-  cur => audio.value.playbackRate = cur,
+  cur => (audio.value.playbackRate = cur),
 );
 
 watch(
   () => player.state.pitch,
-  cur => audio.value.preservesPitch = cur,
+  cur => (audio.value.preservesPitch = cur),
 );
 
 onMounted(() => {

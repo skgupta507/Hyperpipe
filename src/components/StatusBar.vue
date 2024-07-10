@@ -77,8 +77,7 @@ async function Like() {
 <template>
   <div id="statusbar" class="flex">
     <div class="flex statusbar-progress-container">
-      <span
-        :aria-label="t('info.time_elapsed')">
+      <span :aria-label="t('info.time_elapsed')">
         {{ getFormattedTime(player.state.realTime) }}
       </span>
       <div
@@ -96,8 +95,7 @@ async function Like() {
               ($event.target.value / 100) * player.state.duration
           " />
       </div>
-      <span
-        :aria-label="t('info.track_duration')">
+      <span :aria-label="t('info.track_duration')">
         {{ getFormattedTime(player.state.duration) }}
       </span>
     </div>
@@ -128,8 +126,9 @@ async function Like() {
       <div class="statusbar-control-item center">
         <button
           :class="{
-            hidden: data.state.urls[
-                data.state.urls.findIndex((s) => s.url == data.state.url) - 1
+            hidden:
+              data.state.urls[
+                data.state.urls.findIndex(s => s.url == data.state.url) - 1
               ] == undefined &&
               (player.state.loop != 1 || data.state.urls.length == 0),
           }"
@@ -143,8 +142,12 @@ async function Like() {
           id="btn-rewind"
           aria-label="Rewind 10 seconds"
           class="bi bi-chevron-left clickable"
-          @click="player.state.currentTime =
-            Math.max(0, player.state.currentTime - 10)"></button>
+          @click="
+            player.state.currentTime = Math.max(
+              0,
+              player.state.currentTime - 10,
+            )
+          "></button>
 
         <button
           id="btn-play-pause"
@@ -158,13 +161,18 @@ async function Like() {
           id="btn-forward"
           aria-label="Forward 10 seconds"
           class="bi bi-chevron-right clickable"
-          @click="player.state.currentTime =
-            Math.min(player.state.duration, player.state.currentTime + 10)"></button>
+          @click="
+            player.state.currentTime = Math.min(
+              player.state.duration,
+              player.state.currentTime + 10,
+            )
+          "></button>
 
         <button
           :class="{
-            hidden: data.state.urls[
-                data.state.urls.findIndex((s) => s.url == data.state.url) + 1
+            hidden:
+              data.state.urls[
+                data.state.urls.findIndex(s => s.url == data.state.url) + 1
               ] == undefined &&
               (player.state.loop != 1 || data.state.urls.length == 0),
           }"

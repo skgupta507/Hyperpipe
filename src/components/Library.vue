@@ -374,7 +374,9 @@ onMounted(async () => {
           <div class="id-wrap">
             <span class="id-box">ID</span>
             <pre>{{ sync.id }}</pre>
-            <i class="bi bi-clipboard id-copy clickable" @click="copyPeerId"></i>
+            <i
+              class="bi bi-clipboard id-copy clickable"
+              @click="copyPeerId"></i>
           </div>
         </div>
       </template>
@@ -441,9 +443,7 @@ onMounted(async () => {
     <h2 v-if="list.length > 0">{{ t('playlist.local') }}</h2>
 
     <div class="grid-3">
-      <AlbumItem
-        :name="t('title.offline')"
-        @open-album="OpenOffline" />
+      <AlbumItem :name="t('title.offline')" @open-album="OpenOffline" />
       <AlbumItem
         v-for="i in list"
         :key="i.name"
@@ -577,9 +577,10 @@ input[type='file']::file-selector-button {
 .id-wrap {
   background-color: var(--color-background);
 }
-.id-wrap, .id-box {
-  border-radius: .25rem;
-  padding: .25rem .75rem;
+.id-wrap,
+.id-box {
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.75rem;
 }
 .id-wrap > * {
   width: unset;

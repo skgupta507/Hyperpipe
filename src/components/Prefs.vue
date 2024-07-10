@@ -298,10 +298,12 @@ onMounted(() => {
       min="0.1"
       step="0.1"
       :value="getStore('rate') || 1"
-      @change="(e) => {
-        setStore('rate', e.target.value);
-        player.state.rate = e.target.value;
-      }" />
+      @change="
+        e => {
+          setStore('rate', e.target.value);
+          player.state.rate = e.target.value;
+        }
+      " />
   </div>
 
   <div class="left pt">

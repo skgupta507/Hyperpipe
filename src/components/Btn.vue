@@ -3,7 +3,7 @@ defineProps(['ico']);
 defineEmits(['click']);
 
 import { useI18n } from '@/stores/misc.js';
-const {t} = useI18n()
+const { t } = useI18n();
 </script>
 
 <template>

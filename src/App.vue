@@ -180,10 +180,7 @@ onMounted(() => {
   </template>
 
   <header v-if="!artist.state.title">
-    <img
-      v-if="data.state.art"
-      class="art"
-      :src="data.state.art" />
+    <img v-if="data.state.art" class="art" :src="data.state.art" />
 
     <div class="wrapper">
       <NowPlaying @get-artist="artist.getArtist" />
