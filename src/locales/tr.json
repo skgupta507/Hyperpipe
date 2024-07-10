@@ -84,7 +84,8 @@
         "black": "Siyah",
         "blur_black": "Siyah (Bulanık)",
         "playback_rate": "Oynatma Hızı",
-        "preserves_pitch": "Aralığı Koru"
+        "preserves_pitch": "Aralığı Koru",
+        "hls": "DASH yerine HLS tercih et"
     },
     "info": {
         "see_all": "Hepsini Gör",
