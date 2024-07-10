@@ -14,7 +14,7 @@
     "dompurify": "^3.1.6",
     "peerjs": "^1.5.4",
     "pinia": "^2.1.7",
-    "shaka-player": "^4.10.2",
+    "shaka-player": "^4.10.4",
     "sortablejs": "^1.15.2",
     "vue": "^3.2.38"
   },
