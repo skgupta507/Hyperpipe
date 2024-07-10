@@ -80,10 +80,17 @@ async function Stream() {
         preferredAudioCodecs: codecs ? codecs.split(':') : ['opus', 'mp4a'],
         manifest: {
           disableVideo: true,
+          disableThumbnails: true,
         },
         streaming: {
           segmentPrefetchLimit: 2,
+          bufferBehind: 50,
+          rebufferingGoal: 1,
+          stallEnabled: true,
         },
+        dash: {
+          ignoreMinBufferTime: true,
+        }
       });
 
       window.audioPlayer = audioPlayer;

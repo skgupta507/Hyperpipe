@@ -95,7 +95,8 @@
     "charts": "Charts",
     "library": "Library",
     "playback_rate": "Playback Rate",
-    "preserves_pitch": "Preserve Pitch"
+    "preserves_pitch": "Preserve Pitch",
+    "hls": "Prefer HLS over DASH"
   },
   "info": {
     "see_all": "See All",

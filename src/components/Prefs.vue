@@ -24,6 +24,7 @@ const { t, setupLocale } = useI18n(),
   instances = ref([]),
   hypInstances = ref([]),
   next = ref(false),
+  hls = ref(false),
   compact = ref(false),
   prm = ref(false),
   cc = ref(false),
@@ -136,6 +137,7 @@ const verifyApi = computed(() =>
 onMounted(() => {
   getRestoreUrl();
   getStoreBool('next', next, true);
+  getStoreBool('hls', hls, false);
   getStoreBool('compact', compact, false);
   getStoreBool('prm', prm, false);
   getStoreBool('cc', cc, false);
@@ -248,6 +250,17 @@ onMounted(() => {
     </select>
   </div>
 
+  <div class="left pt">
+    <input
+      type="checkbox"
+      name="pref-chk-hls"
+      id="pref-chk-hls"
+      class="input"
+      @change="setStore('hls', $event.target.checked)"
+      v-model="hls" />
+    <label for="pref-chk-next">{{ t('pref.hls') }}</label>
+  </div>
+
   <div class="left">
     <label for="pref-quality">{{ t('pref.quality') }}</label>
     <select
@@ -291,7 +304,7 @@ onMounted(() => {
       }" />
   </div>
 
-  <div class="left">
+  <div class="left pt">
     <input
       type="checkbox"
       name="pref-chk-preserve-pitch"
@@ -498,6 +511,9 @@ label[for^='pref-chk'] {
 }
 .left + .left {
   padding: 0;
+}
+.left.pt {
+  padding-top: 1rem;
 }
 .table-wrap {
   overflow-x: auto;

@@ -111,11 +111,11 @@ export function useMetadata(now, data) {
 export async function useManifest({ streams, duration, hls }) {
   let url, mime;
 
-  const mse = window.MediaSource || window.ManagedMediaSource;
+  const mse = window.MediaSource || window.ManagedMediaSource !== undefined;
+  const prefer_hls = useStore().getItem('hls') == 'true';
 
-  if (mse !== undefined && streams.length > 0) {
+  if (mse && streams.length > 0 && !prefer_hls) {
     const { useDash } = await import('./dash.js');
-
     const dash = useDash(streams, duration);
 
     url = 'data:application/dash+xml;charset=utf-8;base64,' + btoa(dash);

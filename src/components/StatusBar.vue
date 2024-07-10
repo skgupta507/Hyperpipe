@@ -127,19 +127,24 @@ async function Like() {
       </div>
       <div class="statusbar-control-item center">
         <button
-          :style="{
-            visibility:
-              data.state.urls[
-                data.state.urls.map(s => s.url).indexOf(data.state.url) - 1
-              ] ||
-              (player.state.loop == 1 && data.state.urls.length > 1)
-                ? 'visible'
-                : 'hidden',
+          :class="{
+            hidden: data.state.urls[
+                data.state.urls.findIndex((s) => s.url == data.state.url) - 1
+              ] == undefined &&
+              (player.state.loop != 1 || data.state.urls.length == 0),
           }"
           id="btn-previoustrack"
           aria-label="Play previous track"
           class="bi bi-chevron-bar-left clickable"
           @click="data.prevTrack"></button>
+
+        <button
+          :class="{ hidden: player.state.duration == 0 }"
+          id="btn-rewind"
+          aria-label="Rewind 10 seconds"
+          class="bi bi-chevron-left clickable"
+          @click="player.state.currentTime =
+            Math.max(0, player.state.currentTime - 10)"></button>
 
         <button
           id="btn-play-pause"
@@ -149,14 +154,19 @@ async function Like() {
           @click="player.toggle('play')"></button>
 
         <button
-          :style="{
-            visibility:
-              data.state.urls[
-                data.state.urls.map(s => s.url).indexOf(data.state.url) + 1
-              ] ||
-              (player.state.loop == 1 && data.state.urls.length > 1)
-                ? 'visible'
-                : 'hidden',
+          :class="{ hidden: player.state.duration == 0 }"
+          id="btn-forward"
+          aria-label="Forward 10 seconds"
+          class="bi bi-chevron-right clickable"
+          @click="player.state.currentTime =
+            Math.min(player.state.duration, player.state.currentTime + 10)"></button>
+
+        <button
+          :class="{
+            hidden: data.state.urls[
+                data.state.urls.findIndex((s) => s.url == data.state.url) + 1
+              ] == undefined &&
+              (player.state.loop != 1 || data.state.urls.length == 0),
           }"
           id="btn-nexttrack"
           :aria-label="t('action.play_next_track')"
