@@ -84,7 +84,8 @@
         "blur_dracula": "Drácula (desenfoque)",
         "blur_black": "Oscuro (Difuminado)",
         "preserves_pitch": "Conservar la tonalidad del sonido",
-        "playback_rate": "Velocidad de reproducción"
+        "playback_rate": "Velocidad de reproducción",
+        "hls": "Preferir HLS sobre DASH"
     },
     "info": {
         "see_all": "Ver todo",
