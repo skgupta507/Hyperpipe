@@ -23,12 +23,15 @@
     },
     "playlist": {
         "select": "Pilih Daftar Putar yang Ingin Ditambahkan",
-        "add": "Tambah Lagu ke Daftar Putar",
+        "add": "Tambahkan ke Daftar Putar",
         "sync": "Sinkronisasi Daftar Putar",
         "local": "Daftar Putar Lokal",
         "remote": "Daftar Putar Jarak Jauh",
         "name": "Judul Daftar Putar",
-        "create": "Buat Daftar Putar Baru"
+        "create": "Buat Daftar Putar Baru",
+        "remove_from": "Hapus dari daftar putar",
+        "remove": "Hapus daftar putar",
+        "save": "Simpan sebagai daftar putar"
     },
     "pref": {
         "auto_queue": "Antrekan Lagu Secara Otomatis",
@@ -58,14 +61,19 @@
         "blur_nord": "Nord (Buram)",
         "blur_dracula": "Drakula (Buram)",
         "black": "Hitam",
-        "blur_black": "Hitam (Buram)"
+        "blur_black": "Hitam (Buram)",
+        "playback_rate": "Kecepatan Pemutaran",
+        "preserves_pitch": "Jaga Nada",
+        "hls": "Utamakan HLS daripada DASH"
     },
     "info": {
         "no_info": "Tidak Ada Informasi Tersedia",
         "search": "Mulai Pencarian",
         "see_all": "Tampilkan Semua",
         "saved": "Disimpan!",
-        "copied_to_clipboard": "Disalin ke Papan Klip"
+        "copied_to_clipboard": "Disalin ke Papan Klip",
+        "time_elapsed": "Waktu berlalu",
+        "track_duration": "Durasi trek"
     },
     "action": {
         "add": "Tambah",
@@ -76,7 +84,17 @@
         "back": "Kembali",
         "import": "Impor",
         "export": "Ekspor",
-        "register_on": "Belum punya akun? Daftarkan di"
+        "register_on": "Belum punya akun? Daftarkan di",
+        "play_now": "Putar sekarang",
+        "share": "Bagikan",
+        "play_next_track": "Putar trek berikutnya",
+        "change_time": "Ubah waktu",
+        "add_track_to_favorites": "Tambahkan trek ke favorit",
+        "save_for_offline_playback": "Simpan untuk pemutaran luring",
+        "show_information_about_track": "Tampilkan informasi tentang trek",
+        "more_controls": "Lebih banyak kontrol",
+        "three-dots": "Lebih banyak kontrol",
+        "shuffle": "Acak"
     },
     "instances": {
         "piped": "Instance Piped",
@@ -173,5 +191,12 @@
         "UY": "Uruguay",
         "ZA": "Afrika Selatan",
         "ZW": "Zimbabwe"
+    },
+    "queue": {
+        "clear": "Hapus antrean",
+        "shuffle": "Acak antrean",
+        "add": "Tambahkan ke antrean",
+        "add_to_bottom": "Tambahkan ke bawah antrean",
+        "add_to_top": "Tambahkan ke atas antrean"
     }
 }
