@@ -82,7 +82,10 @@
         "black": "黒",
         "blur_nord": "Nord (透かし)",
         "blur_dracula": "DraculDracula",
-        "blur_black": "黒 (透かし)"
+        "blur_black": "黒 (透かし)",
+        "playback_rate": "再生速度",
+        "preserves_pitch": "ピッチを維持",
+        "hls": "DASHよりHLSを優先"
     },
     "info": {
         "see_all": "すべて表示",
