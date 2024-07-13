@@ -30,6 +30,8 @@ export const useData = defineStore('data', () => {
     state.title = unamp(json.title);
     state.artist = unamp(json.uploader.replace(' - Topic', ''));
     state.artistUrl = json.uploaderUrl;
+    player.state.currentTime = 0;
+    player.setTime(0);
     player.state.duration = json.duration;
     player.state.hls = unamp(json.hls);
     player.state.streams = json.audioStreams;
