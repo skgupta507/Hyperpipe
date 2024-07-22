@@ -424,8 +424,6 @@ input[type='range']::-moz-range-track {
   height: 0.1rem;
 }
 
-/* Playlist addition */
-
 @media (max-width: 500px) {
   .statusbar-progress-container {
     min-width: initial;
@@ -433,6 +431,9 @@ input[type='range']::-moz-range-track {
   #menu {
     left: auto;
     right: -0.5rem;
+  }
+  #btn-rewind, #btn-forward {
+    display: none;
   }
 }
 </style>
