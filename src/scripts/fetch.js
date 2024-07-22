@@ -32,7 +32,10 @@ export async function getJson(url, opts) {
     );
 
     console.error(res.message);
-  } else if (res) return JSON.parse(useSanitize(JSON.stringify(res)));
+    return {};
+  }
+
+  return res;
 }
 
 export async function getJsonPiped(path, opts) {

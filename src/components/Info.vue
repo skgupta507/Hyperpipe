@@ -12,8 +12,8 @@ const { t } = useI18n(),
 <template>
   <TextModal>
     <template #content>
-      <pre class="placeholder" :data-placeholder="t('info.no_info')">{{ 
-        text ? parse(text.replaceAll('<br>', '\n')) : ''
+      <pre class="placeholder" :data-placeholder="t('info.no_info')">{{
+        text && parse(text.replaceAll('<br>', '\n'))
       }}</pre>
     </template>
   </TextModal>

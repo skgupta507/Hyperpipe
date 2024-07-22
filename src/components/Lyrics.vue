@@ -44,9 +44,7 @@ get();
 
 watch(
   () => data.state.url,
-  () => {
-    get();
-  },
+  () => get(),
 );
 </script>
 

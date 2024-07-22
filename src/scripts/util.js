@@ -1,4 +1,3 @@
-import DOMPurify from 'dompurify';
 import { useI18n } from '@/stores/misc.js';
 
 export const AMP = /&amp;/g;
@@ -6,9 +5,10 @@ export const PL_EXP =
   /[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}/;
 
 export function useSanitize(txt) {
-  return DOMPurify.sanitize(txt, {
-    ALLOWED_TAGS: ['br'],
-  });
+  return ('' + txt).replace(AMP, '&')
+          .replace(/&/g, '&amp;')
+          .replace(/>/g, '&gt;')
+          .replace(/</g, '&lt;');
 }
 
 export function useAutoTheme(t) {

@@ -1,3 +1,5 @@
+import { useSanitize } from '@/scripts/util.js';
+
 function useAttr(json) {
   let attrs = '';
 
@@ -28,11 +30,7 @@ function useElems(json) {
         } else elems += '/>';
         break;
       case 'string':
-        elems += ('' + elem)
-          .replace(/&amp;/g, '&')
-          .replace(/&/g, '&amp;')
-          .replace(/>/g, '&gt;')
-          .replace(/</g, '&lt;');
+        elems += useSanitize(elem);
         break;
     }
   });

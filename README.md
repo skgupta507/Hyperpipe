@@ -123,7 +123,6 @@ You can reach out to me personally on:
 - ViteJS -> [MIT][vite]
 - shaka-player -> [Apache-2.0][shaka]
 - PeerJS -> [MIT][peer]
-- DOMPurify -> [Apache-2.0][purify]
 - SortableJS -> [MIT][sortable]
 - Bootstrap Icons -> [MIT][bi]
 - VueJS theme -> [MIT][vuetheme]
@@ -151,7 +150,6 @@ You can reach out to me personally on:
 [bi]: https://github.com/twbs/icons/blob/main/LICENSE.md
 [peer]: https://github.com/peers/peerjs/blob/master/LICENSE
 [shaka]: https://github.com/shaka-project/shaka-player/blob/main/LICENSE
-[purify]: https://github.com/cure53/DOMPurify/blob/main/LICENSE
 [sortable]: https://github.com/SortableJS/Sortable/blob/master/LICENSE
 [nord]: https://github.com/arcticicestudio/nord/blob/develop/LICENSE.md
 [vuetheme]: https://github.com/vuejs/theme/blob/main/LICENSE
