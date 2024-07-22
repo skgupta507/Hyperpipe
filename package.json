@@ -13,14 +13,14 @@
     "bootstrap-icons": "^1.11.3",
     "peerjs": "^1.5.4",
     "pinia": "^2.1.7",
-    "shaka-player": "^4.10.5",
+    "shaka-player": "^4.10.8",
     "sortablejs": "^1.15.2",
     "vue": "^3.2.38"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",
     "prettier": "^3.3.3",
-    "vite": "^5.3.3",
+    "vite": "^5.3.4",
     "vite-plugin-pwa": "^0.20.0"
   }
 }
