@@ -82,15 +82,15 @@ async function Stream() {
         manifest: {
           disableVideo: true,
           disableThumbnails: true,
+          dash: {
+            ignoreMinBufferTime: true,
+          },
         },
         streaming: {
           segmentPrefetchLimit: 2,
           bufferBehind: 50,
           rebufferingGoal: 1,
           stallEnabled: true,
-        },
-        dash: {
-          ignoreMinBufferTime: true,
         },
       });
 
