@@ -118,7 +118,7 @@ export const useArtist = defineStore('artist', () => {
     for (let i in json.items)
       results.setItem(i, {
         items: json.items[i],
-        more: json.more[i] ? { ...json.more[i], ...{ id: e } } : null,
+        more: json.more[i],
       });
 
     json.items = undefined;
