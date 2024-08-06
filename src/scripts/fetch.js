@@ -55,12 +55,8 @@ export async function getJsonHyp(path) {
 
 export async function getJsonAuth(path, opts = {}) {
   const root = useStore().getItem('authapi') || PIPED_INSTANCE;
-
-  return await fetch('https://' + root + path, opts)
-    .then(res => res.json())
-    .catch(err => {
-      useAlert().add(err);
-    });
+  
+  return await getJson('https://' + root + path, opts);
 }
 
 function useAuthToken() {
