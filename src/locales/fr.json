@@ -61,7 +61,9 @@
         "blur_nord": "Nord (flou)",
         "blur_dracula": "Dracula (flou)",
         "black": "Noir",
-        "blur_black": "Noir (flou)"
+        "blur_black": "Noir (flou)",
+        "playback_rate": "Taux de lecture",
+        "hls": "Préférer HLS à DASH"
     },
     "info": {
         "see_all": "Voir tout",
