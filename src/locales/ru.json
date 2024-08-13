@@ -84,7 +84,8 @@
         "black": "Черная",
         "blur_black": "Черная (с размытием)",
         "playback_rate": "Скорость воспроизведения",
-        "hls": "Предпочитать HLS вместо DASH"
+        "hls": "Предпочитать HLS вместо DASH",
+        "preserves_pitch": "Сохранить тональность"
     },
     "instances": {
         "piped": "Инстанс Piped",
