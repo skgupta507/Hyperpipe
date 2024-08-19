@@ -93,7 +93,10 @@
         "blur_nord": "Nord (zamućeno)",
         "blur_dracula": "Drakula (zamućeno)",
         "black": "Crna",
-        "blur_black": "Crna (zamućeno)"
+        "blur_black": "Crna (zamućeno)",
+        "playback_rate": "Brzina reprodukcije",
+        "preserves_pitch": "Sačuvaj visinu",
+        "hls": "HLS prije DASH protokola"
     },
     "lyrics": {
         "load": "Dohvaćanje tekstova",
